@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>screenify+ · Terms of Service</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --red: #ff1a2e;
+      --glow: rgba(255, 26, 46, 0.5);
+      --glow2: rgba(255, 26, 46, 0.2);
+      --bg: #060608;
+      --s1: #0d0d10;
+      --s2: #141418;
+      --s3: #1c1c22;
+      --s4: #242430;
+      --txt: #fff;
+      --muted: #8888a0;
+      --green: #2dff8e;
+      --gold: #ffd700;
+      --r: 12px;
+      --nav: 68px;
+      --grad: linear-gradient(135deg, #ff1a2e 0%, #ff6b35 100%);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--txt);
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    img {
+      display: block;
+    }
+
+    button {
+      font-family: 'Outfit', sans-serif;
+      cursor: pointer;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 2px;
+    }
+
+    /* ----- NAVIGATION (identical style) ----- */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 900;
+      height: var(--nav);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4%;
+      background: rgba(6, 6, 8, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .n-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 3px;
+      cursor: pointer;
+      filter: drop-shadow(0 0 15px rgba(255, 26, 46, 0.4));
+      transition: transform 0.2s ease;
+    }
+    .n-logo:hover {
+      transform: scale(1.02);
+    }
+
+    .n-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      margin-left: 36px;
+    }
+    .n-links a {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      padding: 6px 0;
+      position: relative;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+    .n-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--grad);
+      border-radius: 2px;
+      transition: width 0.3s;
+    }
+    .n-links a:hover,
+    .n-links a.active {
+      color: #fff;
+    }
+    .n-links a:hover::after,
+    .n-links a.active::after {
+      width: 100%;
+    }
+    .n-left {
+      display: flex;
+      align-items: center;
+    }
+    .n-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .n-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      padding: 8px;
+      border-radius: 8px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+    }
+    .n-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    /* main container */
+    .terms-wrapper {
+      padding-top: calc(var(--nav) + 30px);
+      padding-bottom: 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-left: 5%;
+      padding-right: 5%;
+    }
+
+    .terms-card {
+      background: rgba(13, 13, 16, 0.7);
+      backdrop-filter: blur(2px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 28px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s;
+    }
+
+    .terms-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      letter-spacing: 2px;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+    }
+    .terms-sub {
+      color: var(--red);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      border-left: 3px solid var(--red);
+      padding-left: 12px;
+    }
+    .terms-updated {
+      color: var(--muted);
+      font-size: 0.75rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 1rem;
+    }
+    .terms-section {
+      margin-bottom: 2rem;
+    }
+    .terms-section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      color: #fff;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .terms-section h2::before {
+      content: '';
+      width: 8px;
+      height: 28px;
+      background: var(--red);
+      border-radius: 8px;
+      display: inline-block;
+    }
+    .terms-section p, .terms-section li {
+      color: rgba(255, 255, 255, 0.82);
+      line-height: 1.65;
+      font-size: 0.95rem;
+      margin-bottom: 0.8rem;
+    }
+    .terms-section ul, .terms-section ol {
+      margin-left: 1.6rem;
+      margin-bottom: 1rem;
+    }
+    .highlight-box {
+      background: rgba(255, 26, 46, 0.08);
+      border-left: 4px solid var(--red);
+      padding: 1.2rem 1.5rem;
+      border-radius: 16px;
+      margin: 1.5rem 0;
+      backdrop-filter: blur(4px);
+    }
+    .highlight-box strong {
+      color: var(--red);
+      font-weight: 800;
+    }
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 800;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      margin-top: 1.8rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    .btn-back:hover {
+      background: #e8e8e8;
+      transform: scale(1.02);
+      box-shadow: 0 0 18px var(--glow);
+    }
+    .btn-back svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2.5;
+    }
+    .feature-badge {
+      background: linear-gradient(145deg, #1a1a22, #0c0c10);
+      border-radius: 24px;
+      padding: 1.2rem 1.6rem;
+      margin: 1.6rem 0;
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    .feature-badge h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      color: var(--gold);
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+    .footer-note {
+      margin-top: 3rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.75rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 1.8rem;
+    }
+    @media (max-width: 680px) {
+      .terms-card {
+        padding: 1.6rem;
+      }
+      .terms-title {
+        font-size: 2.2rem;
+      }
+      .n-links {
+        display: none;
+      }
+      .terms-wrapper {
+        padding-top: calc(var(--nav) + 20px);
+      }
+      .btn-back {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+    @keyframes fadeSlide {
+      0% { opacity: 0; transform: translateY(12px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .terms-card {
+      animation: fadeSlide 0.5s ease-out;
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="n-left">
+    <div class="n-logo" onclick="window.location.href='https://screenifyplus.xo.je/'">screenify+</div>
+    <ul class="n-links">
+      <li><a href="https://screenifyplus.xo.je/" class="active">Home</a></li>
+      <li><a href="https://screenifyplus.xo.je/">Movies</a></li>
+      <li><a href="https://screenifyplus.xo.je/">TV Shows</a></li>
+      <li><a href="https://screenifyplus.xo.je/">Anime</a></li>
+    </ul>
+  </div>
+  <div class="n-right">
+    <button class="n-btn" title="App Info" onclick="alert('✨ screenify+ — your ultimate free streaming destination. No registration, pure entertainment.')">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+    </button>
+  </div>
+</nav>
+
+<main class="terms-wrapper">
+  <div class="terms-card">
+    <h1 class="terms-title">TERMS OF SERVICE</h1>
+    <div class="terms-sub">Agreement & Liability · Streaming Guidelines</div>
+    <div class="terms-updated">📅 Last revised: March 2026 · Effective for all screenify+ users</div>
+
+    <div class="terms-section">
+      <h2>1. Acceptance of Terms</h2>
+      <p>By accessing or using screenify+ (the "Website"), you acknowledge that you have read, understood, and agree to be bound by these Terms of Service. If you do not agree with any part of these terms, you must refrain from using our platform. <strong>Your continued use constitutes acceptance.</strong></p>
+      <p>screenify+ is a premium free streaming website where you can watch movies, TV shows, and anime online without registration. We do not require any sign‑up, payment, or personal data. With a massive constantly updated database, lightning‑fast streaming, and an intuitive interface, we are confident that screenify+ is the best free movies online website in the space — an experience you simply can’t miss.</p>
+    </div>
+
+    <div class="terms-section">
+      <h2>2. What Makes screenify+ Unique</h2>
+      <p>screenify+ is built to offer the ultimate streaming freedom. No registration walls, no hidden fees, just pure entertainment. Our platform aggregates high‑quality external sources and presents them in a sleek, easy‑to‑navigate interface. Whether you're into Hollywood blockbusters, binge‑worthy series, anime, or international cinema, screenify+ brings everything together in one place.</p>
+      
+      <div class="feature-badge">
+        <h3>🎬 The Best Free Streaming Experience – Zero Registration</h3>
+        <p style="color: rgba(255,255,210,0.9); margin-bottom: 6px;"><strong>⭐ Massive database · No sign‑up · Instant playback ⭐</strong></p>
+        <p>screenify+ prides itself on being the top free movie and series website. With thousands of titles, smart categorization, and a beautiful design, we deliver an unmatched streaming experience. No email, no password — just click and watch. You can explore trending content, save your favorites to "My List," and continue watching where you left off, all without ever creating an account. That’s the screenify+ promise.</p>
+      </div>
+      <p>Our platform uses trusted third‑party video hosts and metadata from The Movie Database (TMDB) to ensure you always have the most up‑to‑date information. We do not host any files ourselves; instead, we serve as the ultimate gateway to free, high‑quality entertainment.</p>
+    </div>
+
+    <div class="terms-section">
+      <h2>3. No Registration Required · User Responsibility</h2>
+      <p>screenify+ does <strong>not</strong> require registration, payment, or collection of personal data to enjoy full access to the catalogue. Your privacy is paramount. However, you are solely responsible for complying with local laws regarding copyright and streaming. Some jurisdictions may restrict access to certain third‑party content; it is your responsibility to ensure compliance.</p>
+      <p>By using screenify+ you confirm that you are of legal age in your region to access streaming media or have parental consent.</p>
+    </div>
+
+    <div class="highlight-box">
+      <strong>📢 BY USING THIS WEBSITE, YOU AGREE:</strong> That screenify+ acts as a discovery and index platform. We do not guarantee uninterrupted access, nor do we endorse any copyright infringement. The Website is provided “AS IS” without warranties of any kind. However, we strive to maintain the best free streaming environment.
+    </div>
+
+    <div class="terms-section">
+      <h2>4. Intellectual Property & Third‑Party Content</h2>
+      <p>All trademarks, logos, and media content belong to their respective owners. screenify+ uses the TMDB API for metadata, but does not claim ownership of any movie/show posters or descriptions. If you are a copyright holder and believe any linked content infringes your rights, please contact the responsible third‑party host directly. We will cooperate with valid takedown requests regarding our indexes.</p>
+    </div>
+
+    <div class="terms-section">
+      <h2>5. Disclaimer of Warranties & Limitation of Liability</h2>
+      <p>screenify+ is provided for entertainment purposes. We make no representation or warranty of any kind, express or implied, regarding the completeness, accuracy, reliability, suitability, or availability of third‑party streaming links. Under no circumstances shall screenify+, its operators, or affiliates be liable for any direct, indirect, incidental, or consequential damages arising from your use of the website or from third‑party content.</p>
+      <ul>
+        <li>We do not host any video files — all streams are served by external sources.</li>
+        <li>We do not guarantee that external links will remain active or safe from malicious code.</li>
+        <li>Users are encouraged to use antivirus software and ad‑blockers as a precaution.</li>
+      </ul>
+    </div>
+
+    <div class="terms-section">
+      <h2>6. Changes to Terms & Termination</h2>
+      <p>screenify+ reserves the right to modify these Terms at any time. The updated version will be posted with a new revision date. Continued use of the site after changes constitutes acceptance. We may also suspend or terminate access for users who violate these terms.</p>
+    </div>
+
+    <div class="terms-section">
+      <h2>7. Why screenify+ Is the Best Free Movies Website</h2>
+      <p>We believe that streaming should be effortless. That’s why screenify+ offers:</p>
+      <ul>
+        <li><strong>No registration ever</strong> — watch instantly without creating an account.</li>
+        <li><strong>Massive library</strong> — movies, series, anime, and originals from around the world.</li>
+        <li><strong>Smart features</strong> — continue watching, personal watchlist, and advanced search.</li>
+        <li><strong>Beautiful UI</strong> — inspired by premium streaming services, but completely free.</li>
+        <li><strong>Regular updates</strong> — new content added daily, trending sections refreshed weekly.</li>
+      </ul>
+      <p>Whether you're looking for the latest blockbuster or a hidden indie gem, screenify+ delivers. We're confident that once you experience our platform, you'll see why we're the go‑to destination for free online streaming. No subscriptions, no barriers — just entertainment.</p>
+    </div>
+
+    <div class="terms-section">
+      <h2>8. Contact & Acknowledgment</h2>
+      <p>If you have any questions regarding these Terms, please reach out via the feedback channel inside the main app. By using screenify+, you explicitly agree to all terms above, including the acknowledgment that external video hosts operate independently and that screenify+ provides the best free, registration‑free streaming experience with a massive database and cutting‑edge features.</p>
+      <p><strong style="color: var(--red);">Important:</strong> You agree not to hold screenify+ responsible for the content or availability of external sources. Our mission is to offer the finest free streaming hub — and we deliver exactly that.</p>
+    </div>
+
+    <div style="text-align: center; margin: 2rem 0 1rem;">
+      <button class="btn-back" onclick="window.location.href='https://screenifyplus.xo.je/'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Go back to screenify+
+      </button>
+    </div>
+
+    <div class="footer-note">
+      © 2026 screenify+ — The ultimate free streaming platform. No registration, huge database, unmatched experience. All third‑party trademarks and content are property of their respective owners. We do not host any copyrighted material.
+      <br>🍿 Enjoy the best free movies online without registration — only on screenify+.
+    </div>
+  </div>
+</main>
+
+<script>
+  // Highlight active nav link (aesthetic)
+  document.querySelectorAll('.n-links a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      if(link.getAttribute('href') === '#') e.preventDefault();
+      document.querySelectorAll('.n-links a').forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
