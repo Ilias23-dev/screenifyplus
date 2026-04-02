@@ -304,24 +304,124 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 /* ── PLAYER & LOADER ── */
 #player{display:none;position:fixed;inset:0;background:#000;z-index:4000;flex-direction:column}
 #player.on{display:flex}
-#pbar-top{background:rgba(0,0,0,.97);padding:12px 20px;display:flex;align-items:center;gap:14px;border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0; position:relative; z-index:20;}
-#pbar-top button{background:none;border:none;color:#fff;font-size:1rem;padding:5px;border-radius:6px;transition:color .2s;display:flex;align-items:center; cursor:pointer;}
-#pbar-top button:hover{color:var(--red)}
-#p-title{font-size:.88rem;font-weight:600;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#p-sel{background:var(--s2);color:#fff;border:1px solid rgba(255,255,255,.1);padding:6px 12px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:.78rem;cursor:pointer}
-#p-iframe{flex:1;width:100%;border:none; transition: opacity 0.3s ease; position:relative; z-index:5;}
 
-#p-loader{position:absolute; inset:0; z-index:10; background:#000; display:none; align-items:center; justify-content:center; overflow:hidden;}
-#p-loader-bg{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0.3; filter:blur(15px); transform:scale(1.05);}
-.p-spinner{width:60px; height:60px; border:4px solid rgba(255,26,46,0.2); border-top-color:var(--red); border-radius:50%; animation:spinLoader 1s linear infinite; position:relative; z-index:11; box-shadow:0 0 20px rgba(255,26,46,0.3);}
-@keyframes spinLoader { to { transform:rotate(360deg); } }
+/* The bar is an OVERLAY on top of the iframe — not above it in DOM flow */
+#pbar-top{
+  position:absolute;top:0;left:0;right:0;z-index:50;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.4) 70%,transparent 100%);
+  backdrop-filter:blur(0px);
+  padding:0 14px;
+  height:64px;
+  display:flex;align-items:center;gap:8px;
+  transition:opacity .35s, transform .35s;
+  pointer-events:auto;
+}
+/* Auto-hide bar when user is idle */
+#player.bar-hidden #pbar-top{opacity:0;transform:translateY(-8px);pointer-events:none;}
+/* Season/ep row */
+#p-ep-row{
+  position:absolute;bottom:0;left:0;right:0;z-index:50;
+  background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.4) 70%,transparent 100%);
+  padding:10px 14px 14px;
+  display:none;align-items:center;gap:8px;flex-wrap:wrap;
+  transition:opacity .35s,transform .35s;
+}
+#player.bar-hidden #p-ep-row{opacity:0;transform:translateY(8px);pointer-events:none;}
+#player.is-tv #p-ep-row{display:flex;}
 
-#p-prog{background:var(--s1);padding:5px 18px;flex-shrink:0;display:none}
-.pb-out{height:3px;background:#1c1c22;border-radius:2px}.pb-in{height:100%;background:var(--grad);border-radius:2px;transition:width .5s linear}
-#ep-bar{background:var(--s1);border-top:1px solid rgba(255,255,255,.05);display:none;gap:8px;padding:10px 16px;overflow-x:auto;flex-shrink:0;max-height:62px;scrollbar-width:none}
-#ep-bar::-webkit-scrollbar{display:none}
-.epb{flex-shrink:0;padding:6px 14px;border-radius:8px;background:var(--s2);border:1px solid rgba(255,255,255,.06);color:var(--muted);font-size:.76rem;cursor:pointer;transition:all .2s;white-space:nowrap;font-family:'Outfit',sans-serif}
-.epb:hover,.epb.on{background:var(--red);border-color:var(--red);color:#fff}
+.pbar-glass-sel{
+  background:rgba(255,255,255,0.1);
+  color:#fff;
+  border:1px solid rgba(255,255,255,0.18);
+  padding:5px 9px;border-radius:8px;
+  font-family:'Outfit',sans-serif;font-size:.74rem;
+  cursor:pointer;outline:none;transition:border-color .2s;
+  backdrop-filter:blur(8px);
+  max-width:120px;
+}
+.pbar-glass-sel:hover{border-color:rgba(255,26,46,0.6);}
+.pbar-glass-sel option{background:#141418;}
+.pbar-ep-label{font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.55);}
+
+.pbar-icon-btn{
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.14);
+  backdrop-filter:blur(8px);
+  color:rgba(255,255,255,0.9);
+  width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .18s;flex-shrink:0;
+}
+.pbar-icon-btn:hover{background:rgba(255,26,46,0.3);border-color:rgba(255,26,46,0.6);color:#fff;}
+.pbar-divider{width:1px;height:20px;background:rgba(255,255,255,0.1);flex-shrink:0;}
+#p-title{font-size:.84rem;font-weight:600;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:rgba(255,255,255,0.92);letter-spacing:.2px;text-shadow:0 1px 6px rgba(0,0,0,0.8);}
+.pbar-server-wrap{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.pbar-server-label{font-size:.58rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);white-space:nowrap;}
+#p-server-sel{
+  background:rgba(255,255,255,0.1);color:#fff;
+  border:1px solid rgba(255,255,255,0.18);
+  padding:5px 9px;border-radius:8px;
+  font-family:'Outfit',sans-serif;font-size:.74rem;
+  cursor:pointer;max-width:110px;outline:none;transition:border-color .2s;
+  backdrop-filter:blur(8px);
+}
+#p-server-sel:hover{border-color:rgba(255,26,46,0.6);}
+#p-server-sel option{background:#141418;}
+/* The iframe fills the whole player */
+/* Pause info overlay — center of player */
+#p-pause-overlay{
+  position:absolute;inset:0;z-index:40;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  pointer-events:none;
+  opacity:0;transition:opacity .3s;
+}
+#p-pause-overlay.show{opacity:1;pointer-events:auto;}
+.p-pause-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.2) 70%,transparent 100%);
+  pointer-events:none;
+}
+.p-pause-content{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  text-align:center;padding:0 24px;
+}
+.p-pause-thumb{
+  width:90px;height:130px;border-radius:10px;object-fit:cover;
+  box-shadow:0 8px 40px rgba(0,0,0,0.8);border:2px solid rgba(255,255,255,0.12);
+  display:none;
+}
+.p-pause-thumb.show{display:block;}
+.p-pause-title{
+  font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,4vw,2.8rem);
+  letter-spacing:2px;text-shadow:0 2px 20px rgba(0,0,0,0.9);
+  line-height:1.1;
+}
+.p-pause-sub{
+  font-size:.82rem;color:rgba(255,255,255,0.65);
+  background:rgba(0,0,0,0.4);backdrop-filter:blur(6px);
+  padding:5px 14px;border-radius:20px;
+  border:1px solid rgba(255,255,255,0.1);
+}
+.p-pause-actions{display:flex;gap:10px;align-items:center;margin-top:4px;}
+.p-pause-btn{
+  background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);
+  color:#fff;border-radius:10px;padding:9px 18px;
+  font-family:'Outfit',sans-serif;font-size:.8rem;font-weight:600;
+  cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:6px;
+  backdrop-filter:blur(8px);
+}
+.p-pause-btn:hover{background:rgba(255,26,46,0.3);border-color:rgba(255,26,46,0.6);}
+.p-pause-btn.red{background:var(--red);border-color:var(--red);}
+.p-pause-btn.red:hover{opacity:.85;}
+#p-iframe{position:absolute;inset:0;width:100%;height:100%;border:none;transition:opacity 0.3s ease;z-index:5;}
+
+#p-loader{position:absolute;inset:0;z-index:10;background:#000;display:none;align-items:center;justify-content:center;overflow:hidden;}
+#p-loader-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.3;filter:blur(15px);transform:scale(1.05);}
+.p-spinner{width:60px;height:60px;border:4px solid rgba(255,26,46,0.2);border-top-color:var(--red);border-radius:50%;animation:spinLoader 1s linear infinite;position:relative;z-index:11;box-shadow:0 0 20px rgba(255,26,46,0.3);}
+@keyframes spinLoader{to{transform:rotate(360deg);}}
+#p-prog{display:none}
+#ep-bar{display:none}
 
 /* ── MY LIST ── */
 #page-list{display:none;padding:calc(var(--nav) + 60px) 4% 110px}
@@ -412,8 +512,8 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
     </ul>
   </div>
   <div class="n-right">
-    <button class="n-btn" onclick="openAppInfo()" title="App Info">
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+    <button class="n-btn" onclick="openAppInfo()" title="How to use">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
     </button>
     <button class="n-btn" onclick="openSearchPage()" title="Search Actors & Titles">
       <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -608,21 +708,70 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 </div>
 
 <div id="player">
+  <!-- Loader -->
   <div id="p-loader">
     <img id="p-loader-bg" src="" alt="">
     <div class="p-spinner"></div>
   </div>
+
+  <!-- The iframe fills everything -->
+  <iframe id="p-iframe" allowfullscreen webkitallowfullscreen mozallowfullscreen
+    allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+    onload="hidePlayerLoader()"></iframe>
+
+  <!-- Top overlay bar (auto-hides) -->
   <div id="pbar-top">
-    <button onclick="closePlayer()">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    <button class="pbar-icon-btn" onclick="closePlayer()" title="Back">
+      <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
     </button>
+    <div class="pbar-divider"></div>
     <div id="p-title">Now Playing</div>
-    <select id="p-sel" onchange="chSeason(this.value)"></select>
-    <button onclick="closePlayer()" style="margin-left:auto">✕</button>
+    <div class="pbar-divider"></div>
+    <div class="pbar-server-wrap">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" style="color:rgba(255,255,255,.45);flex-shrink:0"><rect x="2" y="3" width="20" height="5" rx="2"/><rect x="2" y="10" width="20" height="5" rx="2"/><rect x="2" y="17" width="20" height="5" rx="2"/></svg>
+      <span class="pbar-server-label">Server</span>
+      <select id="p-server-sel" onchange="switchServer(this.value)" title="Change server"></select>
+    </div>
+    <div class="pbar-divider"></div>
+    <button class="pbar-icon-btn" onclick="toggleFullscreen()" id="p-fs-btn" title="Fullscreen">
+      <svg id="p-fs-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+    </button>
+    <button class="pbar-icon-btn" onclick="closePlayer()" title="Close">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
   </div>
-  <div id="p-prog"><div class="pb-out"><div class="pb-in" id="pb-in" style="width:0%"></div></div></div>
-  <iframe id="p-iframe" allowfullscreen allow="autoplay; fullscreen; picture-in-picture" sandbox="allow-scripts allow-same-origin allow-forms allow-presentation" onload="hidePlayerLoader()"></iframe>
-  <div id="ep-bar"></div>
+
+  <!-- Bottom overlay: season/episode pickers (only shown for TV) -->
+  <div id="p-ep-row">
+    <span class="pbar-ep-label">Season</span>
+    <select id="p-season-sel" class="pbar-glass-sel" onchange="playerChangeSeason(this.value)"></select>
+    <span class="pbar-ep-label">Episode</span>
+    <select id="p-episode-sel" class="pbar-glass-sel" onchange="playerChangeEpisode(this.value)"></select>
+  </div>
+
+  <!-- Legacy hidden elements (keep for compat) -->
+  <div id="p-prog" style="display:none"></div>
+  <div id="ep-bar" style="display:none"></div>
+
+  <!-- Center pause/info overlay -->
+  <div id="p-pause-overlay">
+    <div class="p-pause-bg"></div>
+    <div class="p-pause-content">
+      <img id="p-pause-thumb" class="p-pause-thumb" src="" alt="">
+      <div class="p-pause-title" id="p-pause-title"></div>
+      <div class="p-pause-sub" id="p-pause-sub" style="display:none"></div>
+      <div class="p-pause-actions">
+        <button class="p-pause-btn" onclick="closePlayer()">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          Exit
+        </button>
+        <button class="p-pause-btn red" onclick="hidePauseOverlay()">
+          <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Resume
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="modal-overlay" id="app-info-modal" onclick="if(event.target===this)closeAppInfo()">
@@ -638,7 +787,13 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
           <li><strong>Sharing:</strong> Share direct links that automatically open the title's page!</li>
         </ul>
     </div>
-    <button class="modal-btn-primary" style="width:100%" onclick="closeAppInfo()">Got it!</button>
+    <div style="display:flex;gap:10px;flex-direction:column">
+      <a href="https://screenifyplus.online/how" target="_blank" class="modal-btn-primary" style="display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;border:none;padding:13px 24px;border-radius:10px;font-weight:700;font-size:.9rem;cursor:pointer" onclick="closeAppInfo()">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+        See Detailed Guide
+      </a>
+      <button class="modal-btn-secondary" style="width:100%" onclick="closeAppInfo()">Got it!</button>
+    </div>
   </div>
 </div>
 
@@ -701,6 +856,17 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
       <div class="pm-label">Tagline</div>
       <input class="pm-input" id="pm-tagline-inp" type="text" placeholder="e.g. Movie addict" maxlength="40">
     </div>
+    <div class="pm-field" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <div>
+        <div class="pm-label">Sync Position When Switching Servers</div>
+        <div style="font-size:.72rem;color:var(--muted);margin-top:3px;line-height:1.4">Resume from the same timestamp when you change server</div>
+      </div>
+      <label style="position:relative;display:inline-block;width:42px;height:24px;flex-shrink:0">
+        <input type="checkbox" id="pm-sync-pos" style="opacity:0;width:0;height:0;position:absolute">
+        <span id="pm-sync-track" style="position:absolute;inset:0;border-radius:12px;background:var(--s4);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:background .2s"></span>
+        <span id="pm-sync-thumb" style="position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;pointer-events:none"></span>
+      </label>
+    </div>
     <div class="modal-actions" style="margin-top:20px;">
       <button class="modal-btn-secondary" onclick="closeProfileModal()">Cancel</button>
       <button class="modal-btn-primary" onclick="saveProfile()">Save Changes</button>
@@ -738,10 +904,20 @@ const KEY='8265bd1679663a7ea12ac168da84d2e8',
   MD='https://image.tmdb.org/t/p/w500',
   LG='https://image.tmdb.org/t/p/w1280',
   FACE='https://image.tmdb.org/t/p/w185',
-  VK='https://www.vidking.net/embed',
   COL='ff1a2e';
 
+/* ════════════════════════════ SERVERS ════════════════════════════ */
+const SERVERS = {
+  vidsrc:     { label:'VidSrc',      movie: id=>`https://vidsrc.net/embed/movie/${id}`,                          tv: (id,s,e)=>`https://vidsrc.net/embed/tv/${id}/${s}/${e}` },
+  vidsrc2:    { label:'VidSrc 2',    movie: id=>`https://vidsrc.to/embed/movie/${id}`,                           tv: (id,s,e)=>`https://vidsrc.to/embed/tv/${id}/${s}/${e}` },
+  vidlink:    { label:'VidLink',     movie: id=>`https://vidlink.pro/movie/${id}?autoplay=true`,                  tv: (id,s,e)=>`https://vidlink.pro/tv/${id}/${s}/${e}?autoplay=true` },
+  multiembed: { label:'MultiEmbed',  movie: id=>`https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1`, tv: (id,s,e)=>`https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${s}&e=${e}` },
+  autoembed:  { label:'AutoEmbed',   movie: id=>`https://autoembed.cc/movie/tmdb/${id}`,                         tv: (id,s,e)=>`https://autoembed.cc/tv/tmdb/${id}-${s}-${e}` },
+  vidkingg:   { label:'VidKingg',    movie: id=>`https://www.vidking.net/embed/movie/${id}?color=${COL}&autoPlay=true`, tv: (id,s,e)=>`https://www.vidking.net/embed/tv/${id}/${s}/${e}?color=${COL}&autoPlay=true&nextEpisode=true&episodeSelector=true` },
+};
+
 /* ════════════════════════════ STATE ════════════════════════════ */
+let curServer = localStorage.getItem('lwa_server') || 'vidsrc';
 let myList   = JSON.parse(localStorage.getItem('lwa_l')||'[]');
 let contW    = JSON.parse(localStorage.getItem('lwa_c')||'[]').map(x=>({...x,id:+x.id}));
 let profile  = JSON.parse(localStorage.getItem('lwa_profile')||'{"name":"","tagline":"","color":"#ff1a2e","photo":""}');
@@ -911,6 +1087,18 @@ function openProfileModal(){
   const cc=document.getElementById('pm-colors');
   cc.innerHTML=PM_COLORS.map(c=>`<div class="pm-color${profile.color===c?' sel':''}" style="background:${c}" onclick="selectPmColor('${c}')"></div>`).join('');
   document.getElementById('profile-modal').classList.add('on');
+  // Sync position toggle
+  const syncEnabled = profile.syncPos !== false;
+  const cb = document.getElementById('pm-sync-pos');
+  const track = document.getElementById('pm-sync-track');
+  const thumb = document.getElementById('pm-sync-thumb');
+  cb.checked = syncEnabled;
+  track.style.background = syncEnabled ? 'var(--red)' : 'var(--s4)';
+  thumb.style.transform = syncEnabled ? 'translateX(18px)' : 'translateX(0)';
+  cb.onchange = function() {
+    track.style.background = this.checked ? 'var(--red)' : 'var(--s4)';
+    thumb.style.transform = this.checked ? 'translateX(18px)' : 'translateX(0)';
+  };
 }
 function closeProfileModal(){document.getElementById('profile-modal').classList.remove('on');}
 function selectPmColor(c){
@@ -951,6 +1139,7 @@ function handleAvatarUpload(e){
 function saveProfile(){
   profile.name=document.getElementById('pm-name-inp').value.trim();
   profile.tagline=document.getElementById('pm-tagline-inp').value.trim();
+  profile.syncPos=document.getElementById('pm-sync-pos').checked;
   localStorage.setItem('lwa_profile',JSON.stringify(profile));
   applyProfileToNav();
   closeProfileModal();
@@ -1732,39 +1921,174 @@ function closeInfoPage(noPush = false){
 }
 
 /* ════════════════════════════ PLAYER INSTANT LOAD ════════════════════════════ */
+let pBarTimer = null;
+let tvSeasonData = {}; // cache: {seasonNum: [episodes]}
+
+/* ════════════════════════════ PAUSE OVERLAY ════════════════════════════ */
+let pauseOverlayTimer = null;
+let playerIsPaused = false;
+
+function updatePauseOverlayContent() {
+  if(!curP) return;
+  const titleEl = document.getElementById('p-title');
+  document.getElementById('p-pause-title').textContent = titleEl.textContent || 'Now Playing';
+  const sub = document.getElementById('p-pause-sub');
+  if(curP.type === 'tv') {
+    sub.textContent = `Season ${curP.season}  ·  Episode ${curP.episode}`;
+    sub.style.display = 'block';
+  } else {
+    sub.style.display = 'none';
+  }
+  const thumb = document.getElementById('p-pause-thumb');
+  const loaderBg = document.getElementById('p-loader-bg').src;
+  if(loaderBg) { thumb.src = loaderBg; thumb.classList.add('show'); }
+}
+
+function showPauseOverlay() {
+  playerIsPaused = true;
+  updatePauseOverlayContent();
+  document.getElementById('p-pause-overlay').classList.add('show');
+  // Keep bar visible while paused
+  clearTimeout(pBarTimer);
+  document.getElementById('player').classList.remove('bar-hidden');
+}
+
+function hidePauseOverlay(autoHideBar = true) {
+  playerIsPaused = false;
+  document.getElementById('p-pause-overlay').classList.remove('show');
+  // Auto-hide bar after 5s when resuming
+  if(autoHideBar) {
+    clearTimeout(pBarTimer);
+    pBarTimer = setTimeout(() => document.getElementById('player').classList.add('bar-hidden'), 5000);
+  }
+}
+
+// Toggle pause overlay on click in the player (not on controls)
+document.getElementById('player').addEventListener('click', function(e) {
+  // Ignore clicks on actual controls
+  if(e.target.closest('#pbar-top, #p-ep-row, #p-pause-overlay .p-pause-actions, #p-loader')) return;
+  if(playerIsPaused) {
+    hidePauseOverlay();
+  } else {
+    showPauseOverlay();
+  }
+});
+
+function showPlayerBar() {
+  const p = document.getElementById('player');
+  p.classList.remove('bar-hidden');
+  clearTimeout(pBarTimer);
+  // Don't auto-hide if paused
+  if(!playerIsPaused) {
+    pBarTimer = setTimeout(() => p.classList.add('bar-hidden'), 3500);
+  }
+}
+
+document.getElementById('player').addEventListener('mousemove', showPlayerBar);
+document.getElementById('player').addEventListener('touchstart', showPlayerBar, {passive:true});
+
 async function openPlayer(id, type, season=1, episode=1, noPush=false){
   if(!noPush) updateURL({ play: type + '_' + id + '_' + season + '_' + episode });
   
-  curP={id,type,season,episode};
+  curP={id,type,season:+season,episode:+episode};
   const player = document.getElementById('player');
   const iframe = document.getElementById('p-iframe');
   const loader = document.getElementById('p-loader');
 
   player.classList.add('on');
-  loader.style.display = 'flex'; // Trigger loader UI
-  iframe.style.opacity = '0'; // Hide iframe momentarily
-  
-  // Set fallback timeout in case iframe fails to trigger onload due to cross-origin blocks
+  player.classList.toggle('is-tv', type === 'tv');
+  player.classList.remove('bar-hidden');
+  playerIsPaused = false;
+  document.getElementById('p-pause-overlay').classList.remove('show');
+  initServerSel();
+  loader.style.display = 'flex';
+  iframe.style.opacity = '0';
   setTimeout(() => hidePlayerLoader(), 3500);
 
-  let title=myList.find(x=>x.id===id)?.title||'';
-  let poster=myList.find(x=>x.id===id)?.poster||'';
+  let title = myList.find(x=>x.id===id)?.title || '';
+  let poster = myList.find(x=>x.id===id)?.poster || '';
   if(!title){
-      try {
-          const det=await api(`/${type}/${id}`);
-          title=det.title||det.name||'Playing';
-          poster=det.backdrop_path ? `${LG}${det.backdrop_path}` : (det.poster_path ? `${MD}${det.poster_path}` : poster);
-      }catch{}
+    try {
+      const det = await api(`/${type}/${id}`);
+      title = det.title || det.name || 'Playing';
+      poster = det.backdrop_path ? `${LG}${det.backdrop_path}` : (det.poster_path ? `${MD}${det.poster_path}` : poster);
+      if(type === 'tv') {
+        // Build season selector
+        const seasons = (det.seasons || []).filter(s => s.season_number > 0);
+        const sSel = document.getElementById('p-season-sel');
+        sSel.innerHTML = seasons.map(s => `<option value="${s.season_number}" ${s.season_number==season?'selected':''}>${s.name||'Season '+s.season_number}</option>`).join('');
+        await loadEpisodeSel(id, +season, +episode);
+      }
+    } catch(e){}
+  } else if(type === 'tv') {
+    try {
+      const det = await api(`/${type}/${id}`);
+      const seasons = (det.seasons || []).filter(s => s.season_number > 0);
+      const sSel = document.getElementById('p-season-sel');
+      sSel.innerHTML = seasons.map(s => `<option value="${s.season_number}" ${s.season_number==season?'selected':''}>${s.name||'Season '+s.season_number}</option>`).join('');
+      await loadEpisodeSel(id, +season, +episode);
+    } catch(e){}
   }
-  
+
   document.getElementById('p-loader-bg').src = poster;
-  updateCont(id,type,season,episode,title,poster);
+  document.getElementById('p-title').textContent = type === 'tv'
+    ? `${title} · S${season} E${episode}`
+    : (title || 'Now Playing');
+  updateCont(id, type, season, episode, title, poster);
 
-  const src=type==='tv'
-    ?`${VK}/tv/${id}/${season}/${episode}?color=${COL}&autoPlay=true&nextEpisode=true&episodeSelector=true`
-    :`${VK}/movie/${id}?color=${COL}&autoPlay=true`;
+  iframe.src = buildSrc(type, id, season, episode);
 
-  iframe.src=src;
+  // Auto-hide bar after 3.5s
+  clearTimeout(pBarTimer);
+  pBarTimer = setTimeout(() => document.getElementById('player').classList.add('bar-hidden'), 3500);
+}
+
+async function loadEpisodeSel(id, season, curEp) {
+  const key = `${id}_${season}`;
+  if(!tvSeasonData[key]) {
+    try {
+      const d = await api(`/tv/${id}/season/${season}`);
+      tvSeasonData[key] = d.episodes || [];
+    } catch(e) { tvSeasonData[key] = []; }
+  }
+  const eps = tvSeasonData[key];
+  const eSel = document.getElementById('p-episode-sel');
+  eSel.innerHTML = eps.map(ep =>
+    `<option value="${ep.episode_number}" ${ep.episode_number==curEp?'selected':''}>Ep ${ep.episode_number}${ep.name?' – '+ep.name.slice(0,22):''}</option>`
+  ).join('');
+}
+
+async function playerChangeSeason(s) {
+  if(!curP) return;
+  curP.season = +s;
+  curP.episode = 1;
+  await loadEpisodeSel(curP.id, +s, 1);
+  document.getElementById('p-episode-sel').value = '1';
+  applyPlayerSrc();
+}
+
+function playerChangeEpisode(e) {
+  if(!curP) return;
+  curP.episode = +e;
+  applyPlayerSrc();
+}
+
+function applyPlayerSrc() {
+  const iframe = document.getElementById('p-iframe');
+  const loader = document.getElementById('p-loader');
+  loader.style.display = 'flex';
+  iframe.style.opacity = '0';
+  setTimeout(() => hidePlayerLoader(), 3500);
+
+  // Update title
+  const titleEl = document.getElementById('p-title');
+  const base = titleEl.textContent.split(' · ')[0];
+  titleEl.textContent = curP.type === 'tv'
+    ? `${base} · S${curP.season} E${curP.episode}`
+    : base;
+
+  iframe.src = buildSrc(curP.type, curP.id, curP.season, curP.episode);
+  if(!document.getElementById('player').classList.contains('bar-hidden')) showPlayerBar();
 }
 
 function hidePlayerLoader() {
@@ -1781,14 +2105,99 @@ function updateCont(id,type,s,ep,t,p){
   renderCont();
 }
 
+/* ════════════════════════════ SERVER HELPERS ════════════════════════════ */
+function buildSrc(type, id, season, episode) {
+  const srv = SERVERS[curServer] || SERVERS.vidsrc;
+  return type === 'tv' ? srv.tv(id, season, episode) : srv.movie(id);
+}
+
+function initServerSel() {
+  const sel = document.getElementById('p-server-sel');
+  sel.innerHTML = Object.entries(SERVERS).map(([k,v]) =>
+    `<option value="${k}" ${k===curServer?'selected':''}>${v.label}</option>`
+  ).join('');
+}
+
+function switchServer(key) {
+  if(!SERVERS[key]) return;
+  const prevServer = curServer;
+  curServer = key;
+  localStorage.setItem('lwa_server', key);
+
+  if(curP) {
+    // Timestamp sync: try to get current time from iframe (same-origin only, silently fails cross-origin)
+    const syncEnabled = JSON.parse(localStorage.getItem('lwa_profile') || '{}').syncPos !== false;
+    let startTime = 0;
+    if(syncEnabled) {
+      try {
+        const vid = document.getElementById('p-iframe').contentDocument?.querySelector('video');
+        if(vid && vid.currentTime > 5) startTime = Math.floor(vid.currentTime);
+      } catch(e) { /* cross-origin — silent */ }
+    }
+
+    const iframe = document.getElementById('p-iframe');
+    const loader = document.getElementById('p-loader');
+    loader.style.display = 'flex';
+    iframe.style.opacity = '0';
+    setTimeout(() => hidePlayerLoader(), 3500);
+
+    let src = buildSrc(curP.type, curP.id, curP.season, curP.episode);
+    // Append start time if we got one and the new server supports it
+    if(startTime > 0) {
+      // vidsrc.net, vidsrc.to, vidlink support ?start= or #t= params
+      if(key === 'vidsrc' || key === 'vidsrc2') src += (src.includes('?') ? '&' : '?') + `start=${startTime}`;
+      else if(key === 'vidlink') src += (src.includes('?') ? '&' : '?') + `start=${startTime}`;
+    }
+    iframe.src = src;
+    showToast(startTime > 0 ? `Switched to ${SERVERS[key].label} · resuming ~${fmtTime(startTime)}` : `Server: ${SERVERS[key].label}`);
+  } else {
+    showToast('Server: ' + SERVERS[key].label);
+  }
+}
+
+function fmtTime(s) {
+  const m = Math.floor(s/60), sec = s%60;
+  return m > 0 ? `${m}m ${sec}s` : `${sec}s`;
+}
+
+/* ════════════════════════════ FULLSCREEN ════════════════════════════ */
+function toggleFullscreen() {
+  const el = document.getElementById('player');
+  if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+    const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen;
+    if(req) req.call(el);
+  } else {
+    const exit = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen;
+    if(exit) exit.call(document);
+  }
+}
+
+function onFsChange() {
+  const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+  const icon = document.getElementById('p-fs-icon');
+  if(icon) {
+    icon.innerHTML = isFs
+      ? '<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>'
+      : '<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>';
+  }
+}
+document.addEventListener('fullscreenchange', onFsChange);
+document.addEventListener('webkitfullscreenchange', onFsChange);
+
 function closePlayer(noPush = false){
-  document.getElementById('player').classList.remove('on');
-  document.getElementById('p-iframe').src='';
-  
+  if(document.fullscreenElement || document.webkitFullscreenElement) {
+    const exit = document.exitFullscreen || document.webkitExitFullscreen;
+    if(exit) exit.call(document);
+  }
+  clearTimeout(pBarTimer);
+  playerIsPaused = false;
+  document.getElementById('p-pause-overlay').classList.remove('show');
+  document.getElementById('player').classList.remove('on','bar-hidden','is-tv');
+  document.getElementById('p-iframe').src = '';
+  tvSeasonData = {};
   if(!noPush){
-      // Revert back to info screen natively if it was open, else revert to hub
-      if(curInfo) updateURL({ v: curInfo.type + '_' + curInfo.id });
-      else updateURL({ p: currentHub });
+    if(curInfo) updateURL({ v: curInfo.type + '_' + curInfo.id });
+    else updateURL({ p: currentHub });
   }
 }
 
@@ -1831,8 +2240,4 @@ function esc2(s){return s?s.replace(/'/g,"\\'"):'';}
     <div class="footer-logo">SCREENIFY +</div>
     <p class="footer-legal">By using SCREENIFY +, you agree to our no‑registration, free streaming service and accept that all content is provided by third‑party sources.</p>
     <p class="footer-legal">You acknowledge that we are not liable for external content and that you are responsible for complying with local laws.</p>
-    <a href="https://screenifyplus.xo.je/terms.html" target="_blank" class="footer-terms-btn">See Terms</a>
-  </div>
-</footer>
-</body>
-</html>
+    <p class="footer-legal">Having an issue? Contact us at <a href="/cdn-cgi/l/email-protection#5b3834352f3a382f1b2838293e3e35323d222b372e287534353732353e" style="color:var(--red);text-decoration:none;font-weight:600"><span class="__cf_email__" data-cfemail="e98a86879d888a9da99a8a9b8c8c87808f9099859c9ac786878580878c">[email&#160;protected]<
