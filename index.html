@@ -311,17 +311,22 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
   background:linear-gradient(to bottom,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.4) 70%,transparent 100%);
   backdrop-filter:blur(0px);
   padding:0 14px;
-  min-height:64px;
-  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  height:64px;
+  display:flex;align-items:center;gap:8px;
   transition:opacity .35s, transform .35s;
   pointer-events:auto;
 }
 /* Auto-hide bar when user is idle */
 #player.bar-hidden #pbar-top{opacity:0;transform:translateY(-8px);pointer-events:none;}
-/* Season/ep row — now inline inside top bar */
+/* Season/ep row */
 #p-ep-row{
-  display:none;align-items:center;gap:6px;flex-shrink:0;
+  position:absolute;bottom:0;left:0;right:0;z-index:50;
+  background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.4) 70%,transparent 100%);
+  padding:10px 14px 14px;
+  display:none;align-items:center;gap:8px;flex-wrap:wrap;
+  transition:opacity .35s,transform .35s;
 }
+#player.bar-hidden #p-ep-row{opacity:0;transform:translateY(8px);pointer-events:none;}
 #player.is-tv #p-ep-row{display:flex;}
 
 .pbar-glass-sel{
@@ -446,60 +451,7 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 #mnav li svg{width:22px;height:22px}
 #mnav li.on svg{color:var(--red)}
 
-/* ── MINI NOW-PLAYING BAR ── */
-#mini-player{
-  display:none;
-  position:fixed;
-  bottom:90px; /* above mobile nav */
-  left:50%;transform:translateX(-50%);
-  z-index:1500;
-  background:rgba(10,10,14,0.92);
-  backdrop-filter:blur(20px) saturate(160%);
-  -webkit-backdrop-filter:blur(20px) saturate(160%);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:16px;
-  padding:10px 14px;
-  display:none;
-  align-items:center;
-  gap:12px;
-  min-width:260px;
-  max-width:min(420px,90vw);
-  box-shadow:0 8px 40px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,26,46,0.15);
-  cursor:pointer;
-  animation:mIn .25s ease;
-}
-#mini-player.show{display:flex;}
-@media(min-width:769px){
-  #mini-player{bottom:24px;}
-}
-.mp-thumb{
-  width:38px;height:54px;border-radius:7px;object-fit:cover;
-  flex-shrink:0;background:var(--s3);
-  border:1px solid rgba(255,255,255,0.08);
-}
-.mp-info{flex:1;min-width:0;}
-.mp-title{font-size:.8rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;}
-.mp-sub{font-size:.67rem;color:var(--muted);margin-top:2px;}
-.mp-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
-.mp-btn{
-  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.14);
-  color:#fff;border-radius:8px;width:32px;height:32px;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all .18s;flex-shrink:0;
-}
-.mp-btn:hover{background:rgba(255,26,46,0.3);border-color:rgba(255,26,46,0.6);}
-.mp-btn.play-btn{background:var(--red);border-color:var(--red);width:36px;height:36px;}
-.mp-btn.play-btn:hover{opacity:.85;}
-.mp-pulse{
-  width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0;
-  animation:blink 1.5s infinite;
-}
-
-/* Always show play button on touch devices */
-@media(hover:none){
-  .cov{opacity:1 !important;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 60%) !important;}
-  .cb.pl{opacity:1;}
-}
+/* ── TOAST ── */
 #toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(10px);background:rgba(14,14,18,.97);border:1px solid rgba(255,255,255,.1);color:#fff;padding:12px 24px;border-radius:12px;font-size:.85rem;font-weight:600;z-index:9999;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.5)}
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 
@@ -775,14 +727,6 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
     <div class="pbar-divider"></div>
     <div id="p-title">Now Playing</div>
     <div class="pbar-divider"></div>
-    <!-- Season/Episode selectors (only shown for TV) — centered between title & server -->
-    <div id="p-ep-row">
-      <span class="pbar-ep-label">S</span>
-      <select id="p-season-sel" class="pbar-glass-sel" onchange="playerChangeSeason(this.value)"></select>
-      <span class="pbar-ep-label">Ep</span>
-      <select id="p-episode-sel" class="pbar-glass-sel" onchange="playerChangeEpisode(this.value)"></select>
-      <div class="pbar-divider"></div>
-    </div>
     <div class="pbar-server-wrap">
       <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" style="color:rgba(255,255,255,.45);flex-shrink:0"><rect x="2" y="3" width="20" height="5" rx="2"/><rect x="2" y="10" width="20" height="5" rx="2"/><rect x="2" y="17" width="20" height="5" rx="2"/></svg>
       <span class="pbar-server-label">Server</span>
@@ -795,6 +739,14 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
     <button class="pbar-icon-btn" onclick="closePlayer()" title="Close">
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
     </button>
+  </div>
+
+  <!-- Bottom overlay: season/episode pickers (only shown for TV) -->
+  <div id="p-ep-row">
+    <span class="pbar-ep-label">Season</span>
+    <select id="p-season-sel" class="pbar-glass-sel" onchange="playerChangeSeason(this.value)"></select>
+    <span class="pbar-ep-label">Episode</span>
+    <select id="p-episode-sel" class="pbar-glass-sel" onchange="playerChangeEpisode(this.value)"></select>
   </div>
 
   <!-- Legacy hidden elements (keep for compat) -->
@@ -942,24 +894,6 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
   </ul>
 </nav>
 
-<!-- Mini now-playing bar -->
-<div id="mini-player" onclick="reopenPlayer()">
-  <div class="mp-pulse"></div>
-  <img id="mp-thumb" class="mp-thumb" src="" alt="">
-  <div class="mp-info">
-    <div class="mp-title" id="mp-title">Now Playing</div>
-    <div class="mp-sub" id="mp-sub">Tap to return</div>
-  </div>
-  <div class="mp-actions">
-    <button class="mp-btn play-btn" onclick="ev(event);reopenPlayer()" title="Return to player">
-      <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-    </button>
-    <button class="mp-btn" onclick="ev(event);closeMiniPlayer()" title="Close">
-      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.8" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
-  </div>
-</div>
-
 <div id="toast"></div>
 
 <script>
@@ -974,11 +908,11 @@ const KEY='8265bd1679663a7ea12ac168da84d2e8',
 
 /* ════════════════════════════ SERVERS ════════════════════════════ */
 const SERVERS = {
-  vidsrc:     { label:'VidSrc',      movie: id=>`https://vidsrc.cc/v2/embed/movie/${id}?autoPlay=true&autoNext=true&poster=true`,                         tv: (id,s,e)=>`https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}?autoPlay=true&autoNext=true&poster=true` },
-  vidsrc2:    { label:'VidSrc 2',    movie: id=>`https://vidsrc.to/embed/movie/${id}?ds_langs=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr,nl,pl,sv,da,fi,no,cs,ro`,  tv: (id,s,e)=>`https://vidsrc.to/embed/tv/${id}/${s}/${e}?ds_langs=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr,nl,pl,sv,da,fi,no,cs,ro` },
-  vidlink:    { label:'VidLink',     movie: id=>`https://vidlink.pro/movie/${id}?autoplay=true&title=false&primaryColor=${COL}&iconColor=${COL}&subs=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr,nl,pl,sv,da,fi,no,cs,ro`, tv: (id,s,e)=>`https://vidlink.pro/tv/${id}/${s}/${e}?autoplay=true&title=false&primaryColor=${COL}&iconColor=${COL}&subs=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr,nl,pl,sv,da,fi,no,cs,ro` },
-  multiembed: { label:'MultiEmbed',  movie: id=>`https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1`,  tv: (id,s,e)=>`https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${s}&e=${e}` },
-  autoembed:  { label:'AutoEmbed',   movie: id=>`https://autoembed.cc/movie/tmdb/${id}`,                          tv: (id,s,e)=>`https://autoembed.cc/tv/tmdb/${id}-${s}-${e}` },
+  vidsrc:     { label:'VidSrc',      movie: id=>`https://vidsrc.net/embed/movie/${id}`,                          tv: (id,s,e)=>`https://vidsrc.net/embed/tv/${id}/${s}/${e}` },
+  vidsrc2:    { label:'VidSrc 2',    movie: id=>`https://vidsrc.to/embed/movie/${id}`,                           tv: (id,s,e)=>`https://vidsrc.to/embed/tv/${id}/${s}/${e}` },
+  vidlink:    { label:'VidLink',     movie: id=>`https://vidlink.pro/movie/${id}?autoplay=true`,                  tv: (id,s,e)=>`https://vidlink.pro/tv/${id}/${s}/${e}?autoplay=true` },
+  multiembed: { label:'MultiEmbed',  movie: id=>`https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1`, tv: (id,s,e)=>`https://multiembed.mov/directstream.php?video_id=${id}&tmdb=1&s=${s}&e=${e}` },
+  autoembed:  { label:'AutoEmbed',   movie: id=>`https://autoembed.cc/movie/tmdb/${id}`,                         tv: (id,s,e)=>`https://autoembed.cc/tv/tmdb/${id}-${s}-${e}` },
   vidkingg:   { label:'VidKingg',    movie: id=>`https://www.vidking.net/embed/movie/${id}?color=${COL}&autoPlay=true`, tv: (id,s,e)=>`https://www.vidking.net/embed/tv/${id}/${s}/${e}?color=${COL}&autoPlay=true&nextEpisode=true&episodeSelector=true` },
 };
 
@@ -2064,7 +1998,6 @@ async function openPlayer(id, type, season=1, episode=1, noPush=false){
   player.classList.add('on');
   player.classList.toggle('is-tv', type === 'tv');
   player.classList.remove('bar-hidden');
-  hideMiniPlayer();
   playerIsPaused = false;
   document.getElementById('p-pause-overlay').classList.remove('show');
   initServerSel();
@@ -2262,43 +2195,13 @@ function closePlayer(noPush = false){
   document.getElementById('player').classList.remove('on','bar-hidden','is-tv');
   document.getElementById('p-iframe').src = '';
   tvSeasonData = {};
-  // Show mini bar so user can easily return
-  if(curP) showMiniPlayer();
   if(!noPush){
     if(curInfo) updateURL({ v: curInfo.type + '_' + curInfo.id });
     else updateURL({ p: currentHub });
   }
 }
 
-/* ════════════════════════════ MINI PLAYER ════════════════════════════ */
-function showMiniPlayer() {
-  if(!curP) return;
-  const bar = document.getElementById('mini-player');
-  const titleEl = document.getElementById('p-title');
-  document.getElementById('mp-title').textContent = titleEl.textContent || 'Now Playing';
-  const sub = document.getElementById('mp-sub');
-  if(curP.type === 'tv') sub.textContent = `S${curP.season} · E${curP.episode} · Tap to return`;
-  else sub.textContent = 'Tap to return';
-  const poster = document.getElementById('p-loader-bg').src;
-  const thumb = document.getElementById('mp-thumb');
-  if(poster) thumb.src = poster; else thumb.style.display = 'none';
-  bar.classList.add('show');
-}
-
-function hideMiniPlayer() {
-  document.getElementById('mini-player').classList.remove('show');
-}
-
-function closeMiniPlayer() {
-  hideMiniPlayer();
-  curP = null; // discard session
-}
-
-function reopenPlayer() {
-  if(!curP) return;
-  hideMiniPlayer();
-  openPlayer(curP.id, curP.type, curP.season, curP.episode, true);
-}
+/* ════════════════════════════ UTIL ════════════════════════════ */
 function toggleList(id,title,poster,type){
   const idx=myList.findIndex(m=>m.id===id);
   if(idx>-1){myList.splice(idx,1);showToast('Removed from list');}
@@ -2337,4 +2240,4 @@ function esc2(s){return s?s.replace(/'/g,"\\'"):'';}
     <div class="footer-logo">SCREENIFY +</div>
     <p class="footer-legal">By using SCREENIFY +, you agree to our no‑registration, free streaming service and accept that all content is provided by third‑party sources.</p>
     <p class="footer-legal">You acknowledge that we are not liable for external content and that you are responsible for complying with local laws.</p>
-<
+    <p class="footer-legal">Having an issue? Contact us at <a href="/cdn-cgi/l/email-protection#5b3834352f3a382f1b2838293e3e35323d222b372e287534353732353e" style="color:var(--red);text-decoration:none;font-weight:600"><span class="__cf_email__" data-cfemail="e98a86879d888a9da99a8a9b8c8c87808f9099859c9ac786878580878c">[email&#160;protected]<
