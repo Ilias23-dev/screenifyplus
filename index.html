@@ -331,7 +331,7 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 /* Mobile tap-hint — visible only when bar is hidden on touch screens */
 @media(hover:none){
   #player.bar-hidden::after{
-    content:'Tap to show controls';
+    content:'Hold to show controls';
     position:absolute;
     top:10px;left:50%;transform:translateX(-50%);
     background:rgba(0,0,0,0.55);
@@ -1489,8 +1489,8 @@ document.getElementById('sa-search-inp').addEventListener('input', function(){
     }
     // Block hentai searches
     if(/hentai/i.test(q)){
-        document.getElementById('sa-grid').innerHTML = '<div class="sa-empty">No results found.</div>';
-        document.getElementById('sa-count').textContent = '0 results';
+        document.getElementById('sa-grid').innerHTML = '<div class="sa-empty">🚫 Banned word — not available in Movies or TV Series.</div>';
+        document.getElementById('sa-count').textContent = '';
         return;
     }
     typeTimer = setTimeout(() => {
@@ -2100,19 +2100,26 @@ function showPlayerBar(touch = false) {
 document.getElementById('player').addEventListener('mousemove', () => showPlayerBar(false));
 document.getElementById('player').addEventListener('touchstart', () => showPlayerBar(true), {passive:true});
 
-// Touch catcher: taps on the iframe area (mobile only) hit this div
-document.getElementById('p-touch-catcher').addEventListener('touchend', function(e) {
-  e.preventDefault(); // prevent ghost click
-  const p = document.getElementById('player');
-  if(p.classList.contains('bar-hidden')) {
-    // Bar was hidden — just reveal it, nothing else
+// Touch catcher: long press (600ms) shows the bar — normal taps do nothing
+let _lpTimer = null;
+let _lpFired = false;
+
+document.getElementById('p-touch-catcher').addEventListener('touchstart', function(e) {
+  _lpFired = false;
+  _lpTimer = setTimeout(() => {
+    _lpFired = true;
     showPlayerBar(true);
-  } else {
-    // Bar is visible — hide it (toggle off)
-    clearTimeout(pBarTimer);
-    p.classList.add('bar-hidden');
-  }
-}, {passive:false});
+  }, 600);
+}, {passive: true});
+
+document.getElementById('p-touch-catcher').addEventListener('touchend', function(e) {
+  clearTimeout(_lpTimer);
+  if(_lpFired) e.preventDefault(); // prevent ghost click only when long press fired
+}, {passive: false});
+
+document.getElementById('p-touch-catcher').addEventListener('touchmove', function() {
+  clearTimeout(_lpTimer); // cancel if finger moves (scrolling)
+}, {passive: true});
 
 // On desktop: clicking the player area (not controls) shows/hides pause overlay
 document.getElementById('player').addEventListener('click', function(e) {
