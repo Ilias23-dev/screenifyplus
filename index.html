@@ -144,6 +144,26 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .arr{position:absolute;top:50%;transform:translateY(-55%);background:rgba(6,6,8,.9);border:1px solid rgba(255,255,255,.1);color:#fff;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;font-size:1.2rem;transition:all .22s;box-shadow:0 4px 20px rgba(0,0,0,.7)}
 .arr:hover{background:var(--red);border-color:var(--red)}.arr.L{left:-12px}.arr.R{right:-12px}
 
+/* ── BECAUSE YOU WATCHED ROW ── */
+.byw-row { margin-bottom:44px; padding:0 3%; }
+.byw-hdr { margin-bottom:14px; }
+.byw-hdr-label { font-size:.62rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:rgba(255,107,53,0.9); margin-bottom:4px; }
+.byw-hdr-title { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:1.5px; }
+.byw-hdr-seed { display:inline-flex; align-items:center; gap:8px; margin-top:6px; }
+.byw-seed-poster { width:32px; height:48px; border-radius:5px; object-fit:cover; background:var(--s3); border:1px solid rgba(255,255,255,0.1); flex-shrink:0; }
+.byw-seed-name { font-size:.8rem; font-weight:700; color:rgba(255,255,255,0.7); }
+.byw-track { display:flex; gap:12px; overflow-x:auto; scroll-behavior:smooth; scrollbar-width:none; padding:4px 0 12px; }
+.byw-track::-webkit-scrollbar { display:none; }
+.byw-card { flex-shrink:0; width:clamp(130px,18vw,200px); cursor:pointer; position:relative; border-radius:10px; overflow:hidden; background:var(--s2); transition:transform .28s cubic-bezier(.34,1.56,.64,1), box-shadow .28s; }
+.byw-card:hover { transform:scale(1.07) translateY(-5px); box-shadow:0 16px 40px rgba(0,0,0,.9), 0 0 20px var(--glow2); }
+.byw-card-img { width:100%; aspect-ratio:2/3; object-fit:cover; display:block; }
+.byw-card-body { position:absolute; bottom:0; left:0; right:0; padding:22px 8px 8px; background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.5) 60%,transparent 100%); }
+.byw-card-name { font-size:.72rem; font-weight:700; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:3px; }
+.byw-card-meta { font-size:.6rem; color:var(--green); font-weight:700; }
+.byw-card-play { position:absolute; top:8px; right:8px; background:rgba(255,26,46,0.85); border:none; color:#fff; border-radius:50%; width:30px; height:30px; display:flex; align-items:center; justify-content:center; font-size:.6rem; opacity:0; transition:opacity .2s, transform .2s; cursor:pointer; }
+.byw-card:hover .byw-card-play { opacity:1; transform:scale(1.1); }
+@media(hover:none) { .byw-card-play { opacity:1; } }
+
 /* ── CARDS ── */
 .card{flex-shrink:0;width:clamp(150px,20vw,240px);border-radius:var(--r);overflow:visible;cursor:pointer;position:relative;z-index:1;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
 .card:hover{transform:scale(1.08) translateY(-6px);z-index:60;filter:drop-shadow(0 16px 40px rgba(0,0,0,.9)) drop-shadow(0 0 20px var(--glow2))}
@@ -305,56 +325,51 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 #player{display:none;position:fixed;inset:0;background:#000;z-index:4000}
 #player.on{display:block}
 
-/* Fullscreen iframe */
+/* Fullscreen iframe — always fills screen, always interactive */
 #p-iframe{position:absolute;inset:0;width:100%;height:100%;border:none;z-index:5;}
 
-/* Simple back arrow — top left, fades with controls */
+/* Top controls bar — slides in/out like a native player overlay */
 #pbar-top{
-  position:absolute;top:16px;left:16px;z-index:50;
+  position:absolute;top:0;left:0;right:0;z-index:50;
   display:flex;align-items:center;gap:10px;
-  transition:opacity .4s, transform .4s;
-  pointer-events:auto;
+  padding:14px 16px 36px;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.8) 0%,transparent 100%);
+  transition:opacity .3s, transform .3s;
+  /* CRITICAL: bar background is invisible to touches — iframe stays fully interactive */
+  pointer-events:none;
 }
-/* Season/Episode selectors for TV */
+/* Only the actual buttons/selects inside receive touches */
+#pbar-top button,
+#pbar-top select,
+#pbar-top .pbar-glass-sel,
+#pbar-top .pbar-icon-btn,
+#p-ep-row select,
+#pbar-server-container select { pointer-events:auto; }
+
+/* Season/Episode selectors — TV only */
 #p-ep-row{
   display:none;align-items:center;gap:6px;flex-shrink:0;
-  background:rgba(0,0,0,0.65);backdrop-filter:blur(10px);
+  background:rgba(0,0,0,0.6);backdrop-filter:blur(12px);
   border:1px solid rgba(255,255,255,0.12);border-radius:10px;
-  padding:5px 10px;
+  padding:5px 10px;pointer-events:auto;
 }
 #player.is-tv #p-ep-row{display:flex;}
-/* Server selector — also in top area when controls visible */
+
+/* Server selector */
 .pbar-server-wrap{
   display:flex;align-items:center;gap:6px;
-  background:rgba(0,0,0,0.65);backdrop-filter:blur(10px);
+  background:rgba(0,0,0,0.6);backdrop-filter:blur(12px);
   border:1px solid rgba(255,255,255,0.12);border-radius:10px;
-  padding:5px 10px;
+  padding:5px 10px;pointer-events:auto;
 }
 
-/* Touch catcher — transparent, sits over iframe, passes ALL touches through normally */
-#p-touch-catcher{
-  position:absolute;inset:0;z-index:6;
-  background:transparent;pointer-events:none;
-}
-@media(hover:none){
-  #p-touch-catcher{pointer-events:auto;}
-}
+/* Touch catcher — gone, iframe handles touches directly */
+#p-touch-catcher{ display:none; }
 
-/* Auto-hide: fade out entire top area */
-#player.bar-hidden #pbar-top{opacity:0;transform:translateY(-6px);pointer-events:none;}
-/* While hidden, show a subtle tap-hint on touch */
-@media(hover:none){
-  #player.bar-hidden::after{
-    content:'Tap to show controls';
-    position:absolute;top:10px;left:50%;transform:translateX(-50%);
-    background:rgba(0,0,0,0.45);color:rgba(255,255,255,0.45);
-    font-size:.6rem;font-family:'Outfit',sans-serif;
-    padding:4px 12px;border-radius:20px;
-    pointer-events:none;z-index:60;letter-spacing:.5px;
-    animation:fadePulse 3s ease-in-out infinite;
-  }
+/* Auto-hide: slide up */
+#player.bar-hidden #pbar-top{
+  opacity:0; transform:translateY(-100%); pointer-events:none !important;
 }
-@keyframes fadePulse{0%,100%{opacity:0.3}50%{opacity:0.8}}
 
 .pbar-glass-sel{
   background:rgba(255,255,255,0.1);
@@ -727,6 +742,10 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
           <div class="ip-sec-title">Episodes</div>
           <div class="season-tabs" id="ip-stabs"></div>
           <div class="eps-grid" id="ip-eps"></div>
+          <div id="ip-season-chars" style="display:none;margin-top:18px">
+            <div class="ip-sec-title" style="margin-bottom:10px">Characters this Season</div>
+            <div class="cast-grid" id="ip-season-chars-grid"></div>
+          </div>
         </div>
         <div class="ip-sec"><div class="ip-sec-title">More Like This</div><div class="similar-grid" id="ip-similar"></div></div>
       </div>
@@ -1337,11 +1356,17 @@ async function loadHub(hubId, noPush = false) {
           <button class="arr R" onclick="scrollR('${rCfg.id}',1)">&#8250;</button>
         </div>`;
     } else if(rCfg.special === 'byw') {
-      // BYW header uses a special pill badge showing the source title
-      el.innerHTML=`<div class="row-hdr"><div class="row-hdr-left"><span>${rCfg.title}</span><span class="row-tag" id="byw-tag-${rCfg.id}" style="background:rgba(255,107,53,0.85)">…</span></div></div>
+      // BYW gets its own separate styled section — built by loadBYWRow
+      el.className = 'byw-row'; // override .row class
+      el.innerHTML = `
+        <div class="byw-hdr">
+          <div class="byw-hdr-label">✦ Recommended for you</div>
+          <div class="byw-hdr-title">Because You Watched</div>
+          <div class="byw-seed-name" id="byw-seed-name-${rCfg.id}" style="color:var(--muted);font-size:.8rem;margin-top:4px"></div>
+        </div>
         <div class="row-wrap">
           <button class="arr L" onclick="scrollR('${rCfg.id}',-1)">&#8249;</button>
-          <div class="row-track" id="rt-${rCfg.id}">${skels(12,'')}</div>
+          <div class="byw-track" id="rt-${rCfg.id}">${skels(10,'')}</div>
           <button class="arr R" onclick="scrollR('${rCfg.id}',1)">&#8250;</button>
         </div>`;
     } else {
@@ -1901,55 +1926,75 @@ function scrollR(id,dir){
 
 /* ════════════════════════════ BECAUSE YOU WATCHED ════════════════════════════ */
 async function loadBYWRow(rCfg) {
-  if(!contW.length) return; // no history — row stays hidden
+  if(!contW.length) return;
 
   // Filter watch history by hub type
   let candidates = [...contW];
   if(rCfg.byType === 'movie') candidates = candidates.filter(x => x.type === 'movie');
-  else if(rCfg.byType === 'tv') candidates = candidates.filter(x => x.type === 'tv');
-  else if(rCfg.byType === 'anime') candidates = candidates.filter(x => x.type === 'tv'); // anime is tv
+  else if(rCfg.byType === 'tv' || rCfg.byType === 'anime') candidates = candidates.filter(x => x.type === 'tv');
   if(!candidates.length) return;
 
-  // Pick a random item from history (not just the last one)
+  // Pick randomly from last 5 watched
   const seed = candidates[Math.floor(Math.random() * Math.min(candidates.length, 5))];
   const seedType = seed.type;
   const seedId = seed.id;
-  const seedTitle = (seed.title || '').split(':')[0].trim().slice(0, 22);
 
-  // Fetch recommendations from TMDB
+  const el = document.getElementById('row-' + rCfg.id);
+  const track = document.getElementById('rt-' + rCfg.id);
+  if(!el || !track) return;
+
   try {
-    const d = await api(`/${seedType}/${seedId}/recommendations`, '&page=1');
-    let items = (d.results || []).filter(x =>
-      x.poster_path &&
-      !/hentai/i.test(x.title || x.name || x.original_title || x.original_name || '') &&
-      +x.id !== +seedId
-    );
+    // Fetch recommendations + similar in parallel for more results
+    const [recData, simData, seedDet] = await Promise.all([
+      api(`/${seedType}/${seedId}/recommendations`, '&page=1'),
+      api(`/${seedType}/${seedId}/similar`, '&page=1'),
+      api(`/${seedType}/${seedId}`)
+    ]);
 
-    // For anime hub, filter to animation genre (16)
-    if(rCfg.byType === 'anime') {
-      items = items.filter(x => (x.genre_ids || []).includes(16));
-    }
-    // For movie hub, keep movies only
-    if(rCfg.byType === 'movie') {
-      items = items.filter(x => (x.media_type || 'movie') === 'movie');
-    }
-    // For tv hub, keep tv only
-    if(rCfg.byType === 'tv') {
-      items = items.filter(x => (x.media_type || seedType) === 'tv');
+    const seen = new Set([+seedId]);
+    let items = [];
+    for(const it of [...(recData.results||[]), ...(simData.results||[])]) {
+      if(seen.has(+it.id)) continue;
+      if(!it.poster_path) continue;
+      if(/hentai/i.test(it.title||it.name||'')) continue;
+      seen.add(+it.id);
+      items.push(it);
     }
 
-    if(!items.length) return; // nothing to show
+    // Filter by hub type
+    if(rCfg.byType === 'anime') items = items.filter(x => (x.genre_ids||[]).includes(16));
+    else if(rCfg.byType === 'movie') items = items.filter(x => (x.media_type||'movie') === 'movie');
+    else if(rCfg.byType === 'tv') items = items.filter(x => (x.media_type||seedType) === 'tv');
 
-    const el = document.getElementById('row-' + rCfg.id);
-    const track = document.getElementById('rt-' + rCfg.id);
-    const tag = document.getElementById('byw-tag-' + rCfg.id);
-    if(!el || !track) return;
+    // Sort by vote_average then popularity for best quality results
+    items.sort((a,b) => ((b.vote_average||0)*10 + (b.popularity||0)*0.01) - ((a.vote_average||0)*10 + (a.popularity||0)*0.01));
 
-    if(tag) tag.textContent = seedTitle;
-    const type = seedType;
-    track.innerHTML = items.slice(0, 18).map(it =>
-      cHTML(it, (it.media_type && it.media_type !== 'unknown') ? it.media_type : type)
-    ).join('');
+    if(!items.length) return;
+
+    // Update header with seed info
+    const seedTitle = seedDet.title || seedDet.name || seed.title || '';
+    const seedPoster = seedDet.poster_path ? `${MD}${seedDet.poster_path}` : '';
+    const nameEl = document.getElementById('byw-seed-name-' + rCfg.id);
+    if(nameEl) nameEl.innerHTML = seedPoster
+      ? `<span style="display:inline-flex;align-items:center;gap:7px"><img src="${seedPoster}" style="width:24px;height:36px;border-radius:4px;object-fit:cover;vertical-align:middle;border:1px solid rgba(255,255,255,0.15)"> <span style="color:rgba(255,255,255,0.6)">${esc(seedTitle)}</span></span>`
+      : `<span style="color:rgba(255,255,255,0.5)">${esc(seedTitle)}</span>`;
+
+    // Render beautiful BYW cards
+    track.innerHTML = items.slice(0, 20).map(it => {
+      const t = (it.media_type && it.media_type !== 'unknown') ? it.media_type : seedType;
+      const name = esc(it.title || it.name || '');
+      const rat = (it.vote_average || 0).toFixed(1);
+      const yr = (it.release_date || it.first_air_date || '').slice(0,4);
+      return `<div class="byw-card" onclick="openInfoPage(${it.id},'${t}')">
+        <img class="byw-card-img" loading="lazy" src="${MD}${it.poster_path}" alt="${name}" onerror="this.style.background='var(--s3)'">
+        <button class="byw-card-play" onclick="event.stopPropagation();openPlayer(${it.id},'${t}')">▶</button>
+        <div class="byw-card-body">
+          <div class="byw-card-name">${name}</div>
+          <div class="byw-card-meta">★${rat}${yr?' · '+yr:''}</div>
+        </div>
+      </div>`;
+    }).join('');
+
     el.style.display = 'block';
   } catch(e) {}
 }
@@ -2037,9 +2082,35 @@ async function loadIPSeason(tvId,sn){
   document.querySelectorAll('.stab2').forEach(t=>t.classList.toggle('on',+t.dataset.sn===sn));
   const g=document.getElementById('ip-eps');
   g.innerHTML='<div style="color:var(--muted);font-size:.8rem;padding:8px">Loading…</div>';
+
+  // Hide chars while loading
+  const charsWrap = document.getElementById('ip-season-chars');
+  const charsGrid = document.getElementById('ip-season-chars-grid');
+  if(charsWrap) charsWrap.style.display='none';
+
   const k=`${tvId}_${sn}`;
   if(!mSeasonCache[k]){const d=await api(`/tv/${tvId}/season/${sn}`);mSeasonCache[k]=d.episodes||[];}
   g.innerHTML=mSeasonCache[k].map(ep=>`<div class="epc2" onclick="openPlayer(${tvId},'tv',${sn},${ep.episode_number})"><img class="ep-thumb" loading="lazy" src="${ep.still_path?SM+ep.still_path:''}" onerror="this.style.background='var(--s4)'"><div class="ep-info"><h4>E${ep.episode_number}: ${esc(ep.name||'Episode '+ep.episode_number)}</h4><span>${(ep.air_date||'').slice(0,4)}${ep.runtime?' · '+ep.runtime+'min':''}</span></div><button class="ep-play-btn">▶</button></div>`).join('');
+
+  // Fetch season credits for character list
+  try {
+    const ck = `chars_${tvId}_${sn}`;
+    if(!mSeasonCache[ck]) {
+      const cd = await api(`/tv/${tvId}/season/${sn}/credits`);
+      mSeasonCache[ck] = (cd.cast||[]).filter(c=>c.profile_path||c.character);
+    }
+    const chars = mSeasonCache[ck];
+    if(chars.length && charsGrid && charsWrap) {
+      charsGrid.innerHTML = chars.slice(0,12).map(c=>
+        `<div class="cast-card" onclick="openPerson(${c.id},'${esc2(c.name)}')">
+          <img class="cast-avatar" loading="lazy" src="${c.profile_path?FACE+c.profile_path:''}" onerror="this.style.background='var(--s4)';this.src=''">
+          <div class="cast-name">${esc(c.character||c.name||'')}</div>
+          <div class="cast-role">${esc(c.name||'')}</div>
+        </div>`
+      ).join('');
+      charsWrap.style.display = 'block';
+    }
+  } catch(e) {}
 }
 
 function closeInfoPage(noPush = false){
@@ -2102,52 +2173,49 @@ function hidePauseOverlay(autoHideBar = true) {
   }
 }
 
-// ── Bar show/hide helpers ──────────────────────────────────────────────────
-// On touch devices we distinguish "reveal tap" (bar was hidden) from
-// "action tap" (bar was already visible).  Only the second tap triggers
-// the pause overlay so the user always gets a chance to see the controls.
-let _barJustRevealed = false;
+// ── Bar show/hide ──────────────────────────────────────────────────────────
+// Desktop: mousemove anywhere → show bar (auto-hides after 3.5s idle)
+// Mobile: iframe captures all touch events from the OS, parent div doesn't
+//         get touchstart. Solution: a thin transparent tap zone at the very
+//         top of the screen (above the iframe content) that the user can tap
+//         to toggle controls. The iframe itself stays 100% usable at all times.
 
-function showPlayerBar(touch = false) {
+function showPlayerBar() {
   const p = document.getElementById('player');
-  const wasHidden = p.classList.contains('bar-hidden');
   p.classList.remove('bar-hidden');
   clearTimeout(pBarTimer);
-  if(!playerIsPaused) {
-    // Touch gets a generous 6 s window; mouse gets 3.5 s
-    const delay = touch ? 6000 : 3500;
-    pBarTimer = setTimeout(() => p.classList.add('bar-hidden'), delay);
-  }
-  if(touch && wasHidden) {
-    // Flag so the click handler knows this tap only revealed the bar
-    _barJustRevealed = true;
-    setTimeout(() => { _barJustRevealed = false; }, 400);
-  }
+  pBarTimer = setTimeout(() => p.classList.add('bar-hidden'), 3500);
 }
 
-// (pause overlay toggle moved below, combined with touch catcher setup)
-
-document.getElementById('player').addEventListener('mousemove', () => showPlayerBar(false));
-document.getElementById('player').addEventListener('touchstart', () => showPlayerBar(true), {passive:true});
-
-// Touch catcher: a normal tap toggles the bar visibility
-// Pass-through is handled by pointer-events:none in CSS, this div only fires on touch devices
-document.getElementById('p-touch-catcher').addEventListener('click', function(e) {
+function togglePlayerBar() {
   const p = document.getElementById('player');
   if(p.classList.contains('bar-hidden')) {
-    showPlayerBar(true);
+    showPlayerBar();
   } else {
-    // If bar is already showing, a second tap hides it again
     clearTimeout(pBarTimer);
     p.classList.add('bar-hidden');
   }
-});
+}
 
-// On desktop: clicking the player area (not controls) shows/hides pause overlay
+// Desktop: any mouse movement → show bar
+document.getElementById('player').addEventListener('mousemove', showPlayerBar, {passive:true});
+
+// Mobile: small tap zone at top reveals/hides the bar without blocking iframe
+(function() {
+  const zone = document.createElement('div');
+  zone.id = 'p-tap-zone';
+  zone.style.cssText = 'position:absolute;top:0;left:0;right:0;height:48px;z-index:49;pointer-events:auto;';
+  document.getElementById('player').appendChild(zone);
+  zone.addEventListener('touchend', function(e) {
+    e.stopPropagation();
+    togglePlayerBar();
+  }, {passive:true});
+})();
+
+// Desktop click on player background → toggle pause overlay
 document.getElementById('player').addEventListener('click', function(e) {
-  // Skip on touch devices — handled by touch catcher above
   if(window.matchMedia('(hover:none)').matches) return;
-  if(e.target.closest('#pbar-top, #p-ep-row, #p-pause-overlay .p-pause-actions, #p-loader, #p-touch-catcher')) return;
+  if(e.target.closest('#pbar-top, #p-pause-overlay, #p-loader, #p-tap-zone')) return;
   if(playerIsPaused) hidePauseOverlay();
   else showPauseOverlay();
 });
