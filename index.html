@@ -302,56 +302,59 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .sim-card-meta{font-size:.62rem;color:var(--muted)}
 
 /* ── PLAYER & LOADER ── */
-#player{display:none;position:fixed;inset:0;background:#000;z-index:4000;flex-direction:column}
-#player.on{display:flex}
+#player{display:none;position:fixed;inset:0;background:#000;z-index:4000}
+#player.on{display:block}
 
-/* The bar is an OVERLAY on top of the iframe — not above it in DOM flow */
+/* Fullscreen iframe */
+#p-iframe{position:absolute;inset:0;width:100%;height:100%;border:none;z-index:5;}
+
+/* Simple back arrow — top left, fades with controls */
 #pbar-top{
-  position:absolute;top:0;left:0;right:0;z-index:50;
-  background:linear-gradient(to bottom,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.4) 70%,transparent 100%);
-  backdrop-filter:blur(0px);
-  padding:0 14px;
-  min-height:64px;
-  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
-  transition:opacity .35s, transform .35s;
+  position:absolute;top:16px;left:16px;z-index:50;
+  display:flex;align-items:center;gap:10px;
+  transition:opacity .4s, transform .4s;
   pointer-events:auto;
 }
-/* Touch catcher — sits over the iframe so mobile taps reach the JS */
-#p-touch-catcher{
-  position:absolute;inset:0;z-index:6; /* above iframe(5), below bar(50) */
-  background:transparent;
-  /* On desktop: pointer-events off so mouse still goes to iframe */
-  pointer-events:none;
-}
-/* On touch-only devices, enable it */
-@media(hover:none){
-  #p-touch-catcher{ pointer-events:auto; }
-}
-
-/* Mobile tap-hint — visible only when bar is hidden on touch screens */
-@media(hover:none){
-  #player.bar-hidden::after{
-    content:'Hold to show controls';
-    position:absolute;
-    top:10px;left:50%;transform:translateX(-50%);
-    background:rgba(0,0,0,0.55);
-    color:rgba(255,255,255,0.55);
-    font-size:.65rem;font-family:'Outfit',sans-serif;
-    padding:5px 14px;border-radius:20px;
-    pointer-events:none;z-index:60;
-    letter-spacing:.5px;
-    animation:fadePulse 2.5s ease-in-out infinite;
-  }
-}
-@keyframes fadePulse{0%,100%{opacity:0.4}50%{opacity:1}}
-
-/* Auto-hide bar when user is idle */
-#player.bar-hidden #pbar-top{opacity:0;transform:translateY(-8px);pointer-events:none;}
-/* Season/ep row — now inline inside top bar */
+/* Season/Episode selectors for TV */
 #p-ep-row{
   display:none;align-items:center;gap:6px;flex-shrink:0;
+  background:rgba(0,0,0,0.65);backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.12);border-radius:10px;
+  padding:5px 10px;
 }
 #player.is-tv #p-ep-row{display:flex;}
+/* Server selector — also in top area when controls visible */
+.pbar-server-wrap{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(0,0,0,0.65);backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.12);border-radius:10px;
+  padding:5px 10px;
+}
+
+/* Touch catcher — transparent, sits over iframe, passes ALL touches through normally */
+#p-touch-catcher{
+  position:absolute;inset:0;z-index:6;
+  background:transparent;pointer-events:none;
+}
+@media(hover:none){
+  #p-touch-catcher{pointer-events:auto;}
+}
+
+/* Auto-hide: fade out entire top area */
+#player.bar-hidden #pbar-top{opacity:0;transform:translateY(-6px);pointer-events:none;}
+/* While hidden, show a subtle tap-hint on touch */
+@media(hover:none){
+  #player.bar-hidden::after{
+    content:'Tap to show controls';
+    position:absolute;top:10px;left:50%;transform:translateX(-50%);
+    background:rgba(0,0,0,0.45);color:rgba(255,255,255,0.45);
+    font-size:.6rem;font-family:'Outfit',sans-serif;
+    padding:4px 12px;border-radius:20px;
+    pointer-events:none;z-index:60;letter-spacing:.5px;
+    animation:fadePulse 3s ease-in-out infinite;
+  }
+}
+@keyframes fadePulse{0%,100%{opacity:0.3}50%{opacity:0.8}}
 
 .pbar-glass-sel{
   background:rgba(255,255,255,0.1);
@@ -378,8 +381,7 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 }
 .pbar-icon-btn:hover{background:rgba(255,26,46,0.3);border-color:rgba(255,26,46,0.6);color:#fff;}
 .pbar-divider{width:1px;height:20px;background:rgba(255,255,255,0.1);flex-shrink:0;}
-#p-title{font-size:.84rem;font-weight:600;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:rgba(255,255,255,0.92);letter-spacing:.2px;text-shadow:0 1px 6px rgba(0,0,0,0.8);}
-.pbar-server-wrap{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+#p-title{display:none;}
 .pbar-server-label{font-size:.58rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);white-space:nowrap;}
 #p-server-sel{
   background:rgba(255,255,255,0.1);color:#fff;
@@ -474,55 +476,6 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 #mnav li:hover{color:#fff}
 #mnav li svg{width:22px;height:22px}
 #mnav li.on svg{color:var(--red)}
-
-/* ── MINI NOW-PLAYING BAR ── */
-#mini-player{
-  display:none;
-  position:fixed;
-  bottom:90px; /* above mobile nav */
-  left:50%;transform:translateX(-50%);
-  z-index:1500;
-  background:rgba(10,10,14,0.92);
-  backdrop-filter:blur(20px) saturate(160%);
-  -webkit-backdrop-filter:blur(20px) saturate(160%);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:16px;
-  padding:10px 14px;
-  display:none;
-  align-items:center;
-  gap:12px;
-  min-width:260px;
-  max-width:min(420px,90vw);
-  box-shadow:0 8px 40px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,26,46,0.15);
-  cursor:pointer;
-  animation:mIn .25s ease;
-}
-#mini-player.show{display:flex;}
-@media(min-width:769px){
-  #mini-player{bottom:24px;}
-}
-.mp-thumb{
-  width:38px;height:54px;border-radius:7px;object-fit:cover;
-  flex-shrink:0;background:var(--s3);
-  border:1px solid rgba(255,255,255,0.08);
-}
-.mp-info{flex:1;min-width:0;}
-.mp-title{font-size:.8rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;}
-.mp-sub{font-size:.67rem;color:var(--muted);margin-top:2px;}
-.mp-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
-.mp-btn{
-  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.14);
-  color:#fff;border-radius:8px;width:32px;height:32px;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all .18s;flex-shrink:0;
-}
-.mp-btn:hover{background:rgba(255,26,46,0.3);border-color:rgba(255,26,46,0.6);}
-.mp-btn.play-btn{background:var(--red);border-color:var(--red);width:36px;height:36px;}
-.mp-btn.play-btn:hover{opacity:.85;}
-.mp-pulse{
-  width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0;
-  animation:blink 1.5s infinite;
-}
 
 /* Always show play button on touch devices */
 @media(hover:none){
@@ -796,44 +749,37 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
     allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
     onload="hidePlayerLoader()"></iframe>
 
-  <!-- Touch catcher: transparent layer over the iframe so mobile taps register -->
+  <!-- Touch catcher: transparent pass-through on mobile -->
   <div id="p-touch-catcher"></div>
 
-  <!-- Top overlay bar (auto-hides) -->
+  <!-- Top overlay: back arrow + optional TV/server controls (auto-hides) -->
   <div id="pbar-top">
-    <button class="pbar-icon-btn" onclick="closePlayer()" title="Back">
-      <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    <!-- Back arrow -->
+    <button class="pbar-icon-btn" onclick="closePlayer()" title="Back" style="background:rgba(0,0,0,0.7);border-color:rgba(255,255,255,0.2);width:42px;height:42px;border-radius:50%;">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
     </button>
-    <div class="pbar-divider"></div>
-    <div id="p-title">Now Playing</div>
-    <div class="pbar-divider"></div>
-    <!-- Season/Episode selectors (only shown for TV) — centered between title & server -->
+
+    <!-- Season/Episode selectors (TV only) -->
     <div id="p-ep-row">
       <span class="pbar-ep-label">S</span>
       <select id="p-season-sel" class="pbar-glass-sel" onchange="playerChangeSeason(this.value)"></select>
       <span class="pbar-ep-label">Ep</span>
       <select id="p-episode-sel" class="pbar-glass-sel" onchange="playerChangeEpisode(this.value)"></select>
-      <div class="pbar-divider"></div>
     </div>
-    <div class="pbar-server-wrap">
-      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" style="color:rgba(255,255,255,.45);flex-shrink:0"><rect x="2" y="3" width="20" height="5" rx="2"/><rect x="2" y="10" width="20" height="5" rx="2"/><rect x="2" y="17" width="20" height="5" rx="2"/></svg>
+
+    <!-- Server selector (only shown when multiserver is ON in settings) -->
+    <div class="pbar-server-wrap" id="pbar-server-container" style="display:none">
       <span class="pbar-server-label">Server</span>
-      <select id="p-server-sel" onchange="switchServer(this.value)" title="Change server"></select>
+      <select id="p-server-sel" onchange="switchServer(this.value)"></select>
     </div>
-    <div class="pbar-divider"></div>
-    <button class="pbar-icon-btn" onclick="toggleFullscreen()" id="p-fs-btn" title="Fullscreen">
-      <svg id="p-fs-icon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-    </button>
-    <button class="pbar-icon-btn" onclick="closePlayer()" title="Close">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
   </div>
 
-  <!-- Legacy hidden elements (keep for compat) -->
+  <!-- Hidden elements for compat -->
   <div id="p-prog" style="display:none"></div>
   <div id="ep-bar" style="display:none"></div>
+  <div id="p-title" style="display:none"></div>
 
-  <!-- Center pause/info overlay -->
+  <!-- Center pause/info overlay (desktop only) -->
   <div id="p-pause-overlay">
     <div class="p-pause-bg"></div>
     <div class="p-pause-content">
@@ -947,6 +893,17 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
         <span id="pm-sync-thumb" style="position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;pointer-events:none"></span>
       </label>
     </div>
+    <div class="pm-field" style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <div>
+        <div class="pm-label">Multiple Servers</div>
+        <div style="font-size:.72rem;color:var(--muted);margin-top:3px;line-height:1.4">Show server selector in player. By default only Videasy is used.</div>
+      </div>
+      <label style="position:relative;display:inline-block;width:42px;height:24px;flex-shrink:0">
+        <input type="checkbox" id="pm-multi-server" style="opacity:0;width:0;height:0;position:absolute">
+        <span id="pm-ms-track" style="position:absolute;inset:0;border-radius:12px;background:var(--s4);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:background .2s"></span>
+        <span id="pm-ms-thumb" style="position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;pointer-events:none"></span>
+      </label>
+    </div>
     <div class="modal-actions" style="margin-top:20px;">
       <button class="modal-btn-secondary" onclick="closeProfileModal()">Cancel</button>
       <button class="modal-btn-primary" onclick="saveProfile()">Save Changes</button>
@@ -974,23 +931,6 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
   </ul>
 </nav>
 
-<!-- Mini now-playing bar -->
-<div id="mini-player" onclick="reopenPlayer()">
-  <div class="mp-pulse"></div>
-  <img id="mp-thumb" class="mp-thumb" src="" alt="">
-  <div class="mp-info">
-    <div class="mp-title" id="mp-title">Now Playing</div>
-    <div class="mp-sub" id="mp-sub">Tap to return</div>
-  </div>
-  <div class="mp-actions">
-    <button class="mp-btn play-btn" onclick="ev(event);reopenPlayer()" title="Return to player">
-      <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-    </button>
-    <button class="mp-btn" onclick="ev(event);closeMiniPlayer()" title="Close">
-      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.8" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
-  </div>
-</div>
 
 <div id="toast"></div>
 
@@ -1016,11 +956,11 @@ const SERVERS = {
 };
 
 /* ════════════════════════════ STATE ════════════════════════════ */
-let curServer = localStorage.getItem('lwa_server') || 'videasy';
-if(!SERVERS[curServer]) { curServer = 'videasy'; localStorage.setItem('lwa_server','videasy'); }
 let myList   = JSON.parse(localStorage.getItem('lwa_l')||'[]');
 let contW    = JSON.parse(localStorage.getItem('lwa_c')||'[]').map(x=>({...x,id:+x.id}));
 let profile  = JSON.parse(localStorage.getItem('lwa_profile')||'{"name":"","tagline":"","color":"#ff1a2e","photo":""}');
+let curServer = (profile.multiServer === true ? (localStorage.getItem('lwa_server') || 'videasy') : 'videasy');
+if(!SERVERS[curServer]) { curServer = 'videasy'; localStorage.setItem('lwa_server','videasy'); }
 let allProviders = [];
 
 let currentHub = 'home';
@@ -1199,6 +1139,18 @@ function openProfileModal(){
     track.style.background = this.checked ? 'var(--red)' : 'var(--s4)';
     thumb.style.transform = this.checked ? 'translateX(18px)' : 'translateX(0)';
   };
+  // Multiple servers toggle
+  const msEnabled = profile.multiServer === true;
+  const msCb = document.getElementById('pm-multi-server');
+  const msTrack = document.getElementById('pm-ms-track');
+  const msThumb = document.getElementById('pm-ms-thumb');
+  msCb.checked = msEnabled;
+  msTrack.style.background = msEnabled ? 'var(--red)' : 'var(--s4)';
+  msThumb.style.transform = msEnabled ? 'translateX(18px)' : 'translateX(0)';
+  msCb.onchange = function() {
+    msTrack.style.background = this.checked ? 'var(--red)' : 'var(--s4)';
+    msThumb.style.transform = this.checked ? 'translateX(18px)' : 'translateX(0)';
+  };
 }
 function closeProfileModal(){document.getElementById('profile-modal').classList.remove('on');}
 function selectPmColor(c){
@@ -1240,8 +1192,11 @@ function saveProfile(){
   profile.name=document.getElementById('pm-name-inp').value.trim();
   profile.tagline=document.getElementById('pm-tagline-inp').value.trim();
   profile.syncPos=document.getElementById('pm-sync-pos').checked;
+  profile.multiServer=document.getElementById('pm-multi-server').checked;
   localStorage.setItem('lwa_profile',JSON.stringify(profile));
   applyProfileToNav();
+  // If multiserver was just disabled, switch back to videasy
+  if(!profile.multiServer){ curServer='videasy'; localStorage.setItem('lwa_server','videasy'); }
   closeProfileModal();
   showToast('✓ Profile saved');
 }
@@ -1251,24 +1206,28 @@ function saveProfile(){
 const HUBS = {
   home: {
     hero: '/trending/all/week',
-    rows: ['cont', 'tr_all', 'top10_m', 'top10_t', 'providers', 'pop_mov', 'pop_tv', 'action', 'comedy', 'horror']
+    rows: ['cont', 'byw', 'tr_all', 'top10_m', 'top10_t', 'providers', 'pop_mov', 'pop_tv', 'action', 'comedy', 'horror']
   },
   movies: {
     hero: '/trending/movie/week',
-    rows: ['cont', 'top10_m', 'providers', 'pop_mov', 'action', 'comedy', 'horror', 'scifi', 'romance']
+    rows: ['cont', 'byw_movie', 'top10_m', 'providers', 'pop_mov', 'action', 'comedy', 'horror', 'scifi', 'romance']
   },
   tv: {
     hero: '/trending/tv/week',
-    rows: ['cont', 'top10_t', 'pop_tv', 'action_tv', 'comedy_tv', 'drama_tv', 'scifi_tv']
+    rows: ['cont', 'byw_tv', 'top10_t', 'pop_tv', 'action_tv', 'comedy_tv', 'drama_tv', 'scifi_tv']
   },
   anime: {
     hero: '/discover/tv?with_genres=16&with_keywords=210024&without_keywords=210032,9799,158718,156186&without_genres=10749&sort_by=popularity.desc',
-    rows: ['cont', 'pop_anime', 'top_anime', 'action_anime', 'fantasy_anime']
+    rows: ['cont', 'byw_anime', 'pop_anime', 'top_anime', 'action_anime', 'fantasy_anime']
   }
 };
 
 const ALL_ROWS = {
   cont: { id:'cont', title:'Continue Watching', special:'cont' },
+  byw:  { id:'byw',  title:'Because You Watched', special:'byw',  byType:'all' },
+  byw_movie: { id:'byw_movie', title:'Because You Watched', special:'byw', byType:'movie' },
+  byw_tv:    { id:'byw_tv',    title:'Because You Watched', special:'byw', byType:'tv' },
+  byw_anime: { id:'byw_anime', title:'Because You Watched', special:'byw', byType:'anime' },
   tr_all: { id:'tr_all', title:'Trending This Week', p:'/trending/all/week', t:'auto' },
   top10_m: { id:'top10_m', title:'Top 10 Movies Today', p:'/movie/popular', t:'movie', top10:true },
   top10_t: { id:'top10_t', title:'Top 10 Shows Today', p:'/tv/popular', t:'tv', top10:true },
@@ -1358,6 +1317,9 @@ async function loadHub(hubId, noPush = false) {
     if (rCfg.special === 'cont') {
        if(!contW.length) el.style.display='none';
        rowAction = `<button onclick="promptClearCont()">Clear List ✕</button>`;
+    } else if (rCfg.special === 'byw') {
+       el.style.display='none'; // hidden until populated
+       rowAction = '';
     } else if (rCfg.special === 'providers') {
        rowAction = `<button onclick="openAllProviders()">See all →</button>`;
     } else {
@@ -1372,6 +1334,14 @@ async function loadHub(hubId, noPush = false) {
         <div class="row-wrap">
           <button class="arr L" onclick="scrollR('${rCfg.id}',-1)">&#8249;</button>
           <div class="row-track" id="rt-${rCfg.id}">${skels(15,'aspect-ratio:1; border-radius:16px; width:clamp(90px,15vw,130px);')}</div>
+          <button class="arr R" onclick="scrollR('${rCfg.id}',1)">&#8250;</button>
+        </div>`;
+    } else if(rCfg.special === 'byw') {
+      // BYW header uses a special pill badge showing the source title
+      el.innerHTML=`<div class="row-hdr"><div class="row-hdr-left"><span>${rCfg.title}</span><span class="row-tag" id="byw-tag-${rCfg.id}" style="background:rgba(255,107,53,0.85)">…</span></div></div>
+        <div class="row-wrap">
+          <button class="arr L" onclick="scrollR('${rCfg.id}',-1)">&#8249;</button>
+          <div class="row-track" id="rt-${rCfg.id}">${skels(12,'')}</div>
           <button class="arr R" onclick="scrollR('${rCfg.id}',1)">&#8250;</button>
         </div>`;
     } else {
@@ -1412,10 +1382,16 @@ async function loadHub(hubId, noPush = false) {
       document.getElementById('row-providers').style.display = 'none';
   }
 
+  // Load BYW rows (async, non-blocking)
+  cfg.rows.forEach(rId => {
+    const rCfg = ALL_ROWS[rId];
+    if(rCfg && rCfg.special === 'byw') loadBYWRow(rCfg);
+  });
+
   // Populate actual row data
   await Promise.all(cfg.rows.map(async rId => {
     const rCfg = ALL_ROWS[rId];
-    if(rCfg.special === 'cont' || rCfg.special === 'providers') return;
+    if(rCfg.special === 'cont' || rCfg.special === 'providers' || rCfg.special === 'byw') return;
     try{
       const d = await api(rCfg.p, (rCfg.x||'')+'&page=1');
       const items = (d.results||[]).filter(x=>x.poster_path && !/hentai/i.test(x.title||x.name||x.original_title||x.original_name||''));
@@ -1923,6 +1899,61 @@ function scrollR(id,dir){
   if(t)t.scrollBy({left:dir*700,behavior:'smooth'});
 }
 
+/* ════════════════════════════ BECAUSE YOU WATCHED ════════════════════════════ */
+async function loadBYWRow(rCfg) {
+  if(!contW.length) return; // no history — row stays hidden
+
+  // Filter watch history by hub type
+  let candidates = [...contW];
+  if(rCfg.byType === 'movie') candidates = candidates.filter(x => x.type === 'movie');
+  else if(rCfg.byType === 'tv') candidates = candidates.filter(x => x.type === 'tv');
+  else if(rCfg.byType === 'anime') candidates = candidates.filter(x => x.type === 'tv'); // anime is tv
+  if(!candidates.length) return;
+
+  // Pick a random item from history (not just the last one)
+  const seed = candidates[Math.floor(Math.random() * Math.min(candidates.length, 5))];
+  const seedType = seed.type;
+  const seedId = seed.id;
+  const seedTitle = (seed.title || '').split(':')[0].trim().slice(0, 22);
+
+  // Fetch recommendations from TMDB
+  try {
+    const d = await api(`/${seedType}/${seedId}/recommendations`, '&page=1');
+    let items = (d.results || []).filter(x =>
+      x.poster_path &&
+      !/hentai/i.test(x.title || x.name || x.original_title || x.original_name || '') &&
+      +x.id !== +seedId
+    );
+
+    // For anime hub, filter to animation genre (16)
+    if(rCfg.byType === 'anime') {
+      items = items.filter(x => (x.genre_ids || []).includes(16));
+    }
+    // For movie hub, keep movies only
+    if(rCfg.byType === 'movie') {
+      items = items.filter(x => (x.media_type || 'movie') === 'movie');
+    }
+    // For tv hub, keep tv only
+    if(rCfg.byType === 'tv') {
+      items = items.filter(x => (x.media_type || seedType) === 'tv');
+    }
+
+    if(!items.length) return; // nothing to show
+
+    const el = document.getElementById('row-' + rCfg.id);
+    const track = document.getElementById('rt-' + rCfg.id);
+    const tag = document.getElementById('byw-tag-' + rCfg.id);
+    if(!el || !track) return;
+
+    if(tag) tag.textContent = seedTitle;
+    const type = seedType;
+    track.innerHTML = items.slice(0, 18).map(it =>
+      cHTML(it, (it.media_type && it.media_type !== 'unknown') ? it.media_type : type)
+    ).join('');
+    el.style.display = 'block';
+  } catch(e) {}
+}
+
 /* ════════════════════════════ INFO PAGE ════════════════════════════ */
 async function openInfoPage(id, type, noPush = false){
   if(!noPush) updateURL({ v: type + '_' + id });
@@ -2039,8 +2070,7 @@ let playerIsPaused = false;
 
 function updatePauseOverlayContent() {
   if(!curP) return;
-  const titleEl = document.getElementById('p-title');
-  document.getElementById('p-pause-title').textContent = titleEl.textContent || 'Now Playing';
+  document.getElementById('p-pause-title').textContent = curP._title || 'Now Playing';
   const sub = document.getElementById('p-pause-sub');
   if(curP.type === 'tv') {
     sub.textContent = `Season ${curP.season}  ·  Episode ${curP.episode}`;
@@ -2100,26 +2130,18 @@ function showPlayerBar(touch = false) {
 document.getElementById('player').addEventListener('mousemove', () => showPlayerBar(false));
 document.getElementById('player').addEventListener('touchstart', () => showPlayerBar(true), {passive:true});
 
-// Touch catcher: long press (600ms) shows the bar — normal taps do nothing
-let _lpTimer = null;
-let _lpFired = false;
-
-document.getElementById('p-touch-catcher').addEventListener('touchstart', function(e) {
-  _lpFired = false;
-  _lpTimer = setTimeout(() => {
-    _lpFired = true;
+// Touch catcher: a normal tap toggles the bar visibility
+// Pass-through is handled by pointer-events:none in CSS, this div only fires on touch devices
+document.getElementById('p-touch-catcher').addEventListener('click', function(e) {
+  const p = document.getElementById('player');
+  if(p.classList.contains('bar-hidden')) {
     showPlayerBar(true);
-  }, 600);
-}, {passive: true});
-
-document.getElementById('p-touch-catcher').addEventListener('touchend', function(e) {
-  clearTimeout(_lpTimer);
-  if(_lpFired) e.preventDefault(); // prevent ghost click only when long press fired
-}, {passive: false});
-
-document.getElementById('p-touch-catcher').addEventListener('touchmove', function() {
-  clearTimeout(_lpTimer); // cancel if finger moves (scrolling)
-}, {passive: true});
+  } else {
+    // If bar is already showing, a second tap hides it again
+    clearTimeout(pBarTimer);
+    p.classList.add('bar-hidden');
+  }
+});
 
 // On desktop: clicking the player area (not controls) shows/hides pause overlay
 document.getElementById('player').addEventListener('click', function(e) {
@@ -2141,7 +2163,6 @@ async function openPlayer(id, type, season=1, episode=1, noPush=false){
   player.classList.add('on');
   player.classList.toggle('is-tv', type === 'tv');
   player.classList.remove('bar-hidden');
-  hideMiniPlayer();
   playerIsPaused = false;
   document.getElementById('p-pause-overlay').classList.remove('show');
   initServerSel();
@@ -2175,9 +2196,7 @@ async function openPlayer(id, type, season=1, episode=1, noPush=false){
   }
 
   document.getElementById('p-loader-bg').src = poster;
-  document.getElementById('p-title').textContent = type === 'tv'
-    ? `${title} · S${season} E${episode}`
-    : (title || 'Now Playing');
+  curP._title = title || 'Now Playing';
   updateCont(id, type, season, episode, title, poster);
 
   iframe.src = buildSrc(type, id, season, episode);
@@ -2257,8 +2276,17 @@ function buildSrc(type, id, season, episode) {
 }
 
 function initServerSel() {
+  const multiOn = profile.multiServer === true;
+  const container = document.getElementById('pbar-server-container');
+  if(container) container.style.display = multiOn ? 'flex' : 'none';
+  if(!multiOn) {
+    // Force videasy when multiserver is off
+    curServer = 'videasy';
+    localStorage.setItem('lwa_server','videasy');
+    return;
+  }
   const sel = document.getElementById('p-server-sel');
-  sel.innerHTML = Object.entries(SERVERS).map(([k,v]) =>
+  if(sel) sel.innerHTML = Object.entries(SERVERS).map(([k,v]) =>
     `<option value="${k}" ${k===curServer?'selected':''}>${v.label}</option>`
   ).join('');
 }
@@ -2340,43 +2368,14 @@ function closePlayer(noPush = false){
   document.getElementById('player').classList.remove('on','bar-hidden','is-tv');
   document.getElementById('p-iframe').src = '';
   tvSeasonData = {};
-  // Show mini bar so user can easily return
-  if(curP) showMiniPlayer();
   if(!noPush){
     if(curInfo) updateURL({ v: curInfo.type + '_' + curInfo.id });
     else updateURL({ p: currentHub });
   }
+  curP = null;
 }
 
-/* ════════════════════════════ MINI PLAYER ════════════════════════════ */
-function showMiniPlayer() {
-  if(!curP) return;
-  const bar = document.getElementById('mini-player');
-  const titleEl = document.getElementById('p-title');
-  document.getElementById('mp-title').textContent = titleEl.textContent || 'Now Playing';
-  const sub = document.getElementById('mp-sub');
-  if(curP.type === 'tv') sub.textContent = `S${curP.season} · E${curP.episode} · Tap to return`;
-  else sub.textContent = 'Tap to return';
-  const poster = document.getElementById('p-loader-bg').src;
-  const thumb = document.getElementById('mp-thumb');
-  if(poster) thumb.src = poster; else thumb.style.display = 'none';
-  bar.classList.add('show');
-}
-
-function hideMiniPlayer() {
-  document.getElementById('mini-player').classList.remove('show');
-}
-
-function closeMiniPlayer() {
-  hideMiniPlayer();
-  curP = null; // discard session
-}
-
-function reopenPlayer() {
-  if(!curP) return;
-  hideMiniPlayer();
-  openPlayer(curP.id, curP.type, curP.season, curP.episode, true);
-}
+/* ════════════════════════════ LIST & SHARING ════════════════════════════ */
 function toggleList(id,title,poster,type){
   const idx=myList.findIndex(m=>m.id===id);
   if(idx>-1){myList.splice(idx,1);showToast('Removed from list');}
@@ -2416,9 +2415,6 @@ function esc2(s){return s?s.replace(/'/g,"\\'"):'';}
     <p class="footer-legal">By using SCREENIFY +, you agree to our no‑registration, free streaming service and accept that all content is provided by third‑party sources.</p>
     <p class="footer-legal">You acknowledge that we are not liable for external content and that you are responsible for complying with local laws.</p>
     <p class="footer-legal" style="margin-top:14px">
-      <a href="mailto:contact@screenifyplus.online" style="color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">✉ contact@screenifyplus.online</a>
+      <a href="/cdn-cgi/l/email-protection#65060a0b110406112516061700000b0c031c150910164b0a0b090c0b00" style="color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">✉ <span class="__cf_email__" data-cfemail="64070b0a100507102417071601010a0d021d140811174a0b0a080d0a01">[email&#160;protected]</span></a>
     </p>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;align-items:center">
-      <a href="https://screenifyplus.online/terms" target="_blank" class="footer-terms-btn">Terms of Use</a>
-    </div>
-<
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margi
