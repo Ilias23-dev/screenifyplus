@@ -289,6 +289,70 @@
       letter-spacing: 1px;
       margin-bottom: 0.5rem;
     }
+    .guide-card {
+      background: rgba(255, 26, 46, 0.05);
+      border-radius: 24px;
+      padding: 1.2rem 1.6rem;
+      margin: 1.6rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.2s;
+    }
+    .guide-card:hover {
+      background: rgba(255, 26, 46, 0.1);
+      border-color: var(--red);
+    }
+    .guide-text {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .guide-text span:first-child {
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      color: var(--gold);
+    }
+    .guide-text span:last-child {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .guide-link {
+      background: var(--red);
+      padding: 8px 22px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: transform 0.2s, background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: white;
+    }
+    .guide-link:hover {
+      background: #ff3b4e;
+      transform: scale(1.02);
+    }
+    .contact-email {
+      background: rgba(255,255,255,0.03);
+      border-radius: 60px;
+      padding: 6px 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.2s;
+    }
+    .contact-email:hover {
+      background: rgba(255,26,46,0.2);
+      border-color: var(--red);
+    }
     .footer-note {
       margin-top: 3rem;
       text-align: center;
@@ -313,6 +377,10 @@
       .btn-back {
         width: 100%;
         justify-content: center;
+      }
+      .guide-card {
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
     @keyframes fadeSlide {
@@ -348,6 +416,18 @@
     <h1 class="terms-title">TERMS OF SERVICE</h1>
     <div class="terms-sub">Agreement & Liability · Streaming Guidelines</div>
     <div class="terms-updated">📅 Last revised: March 2026 · Effective for all screenify+ users</div>
+
+    <!-- Guide to use website (prominent placement) -->
+    <div class="guide-card">
+      <div class="guide-text">
+        <span>📖 New to screenify+?</span>
+        <span>Discover how to watch movies, series & anime without registration — step-by-step guide.</span>
+      </div>
+      <a href="https://screenifyplus.online/how" class="guide-link" target="_blank" rel="noopener noreferrer">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        User Guide →
+      </a>
+    </div>
 
     <div class="terms-section">
       <h2>1. Acceptance of Terms</h2>
@@ -412,7 +492,14 @@
 
     <div class="terms-section">
       <h2>8. Contact & Acknowledgment</h2>
-      <p>If you have any questions regarding these Terms, please reach out via the feedback channel inside the main app. By using screenify+, you explicitly agree to all terms above, including the acknowledgment that external video hosts operate independently and that screenify+ provides the best free, registration‑free streaming experience with a massive database and cutting‑edge features.</p>
+      <p>If you have any questions regarding these Terms, or need support, please reach out to us directly:</p>
+      <p style="margin: 1rem 0;">
+        <a href="mailto:contact@screenifyplus.online" class="contact-email">
+          ✉️ contact@screenifyplus.online
+        </a>
+      </p>
+      <p>For a complete walkthrough on how to use all features (watchlist, continue watching, search, and more), visit our official <strong>User Guide</strong> at <a href="https://screenifyplus.online/how" style="color: var(--red); text-decoration: underline;" target="_blank">https://screenifyplus.online/how</a>.</p>
+      <p>By using screenify+, you explicitly agree to all terms above, including the acknowledgment that external video hosts operate independently and that screenify+ provides the best free, registration‑free streaming experience with a massive database and cutting‑edge features.</p>
       <p><strong style="color: var(--red);">Important:</strong> You agree not to hold screenify+ responsible for the content or availability of external sources. Our mission is to offer the finest free streaming hub — and we deliver exactly that.</p>
     </div>
 
@@ -426,6 +513,7 @@
     <div class="footer-note">
       © 2026 screenify+ — The ultimate free streaming platform. No registration, huge database, unmatched experience. All third‑party trademarks and content are property of their respective owners. We do not host any copyrighted material.
       <br>🍿 Enjoy the best free movies online without registration — only on screenify+.
+      <br>📧 Contact: <a href="mailto:contact@screenifyplus.online" style="color: #aaa; text-decoration: underline;">contact@screenifyplus.online</a> | 📖 <a href="https://screenifyplus.online/how" style="color: #aaa; text-decoration: underline;" target="_blank">User Guide</a>
     </div>
   </div>
 </main>
