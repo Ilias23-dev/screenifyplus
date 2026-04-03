@@ -316,6 +316,23 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
   transition:opacity .35s, transform .35s;
   pointer-events:auto;
 }
+/* Mobile tap-hint — visible only when bar is hidden on touch screens */
+@media(hover:none){
+  #player.bar-hidden::after{
+    content:'Tap to show controls';
+    position:absolute;
+    top:10px;left:50%;transform:translateX(-50%);
+    background:rgba(0,0,0,0.55);
+    color:rgba(255,255,255,0.55);
+    font-size:.65rem;font-family:'Outfit',sans-serif;
+    padding:5px 14px;border-radius:20px;
+    pointer-events:none;z-index:60;
+    letter-spacing:.5px;
+    animation:fadePulse 2.5s ease-in-out infinite;
+  }
+}
+@keyframes fadePulse{0%,100%{opacity:0.4}50%{opacity:1}}
+
 /* Auto-hide bar when user is idle */
 #player.bar-hidden #pbar-top{opacity:0;transform:translateY(-8px);pointer-events:none;}
 /* Season/ep row — now inline inside top bar */
@@ -2029,10 +2046,35 @@ function hidePauseOverlay(autoHideBar = true) {
   }
 }
 
+// ── Bar show/hide helpers ──────────────────────────────────────────────────
+// On touch devices we distinguish "reveal tap" (bar was hidden) from
+// "action tap" (bar was already visible).  Only the second tap triggers
+// the pause overlay so the user always gets a chance to see the controls.
+let _barJustRevealed = false;
+
+function showPlayerBar(touch = false) {
+  const p = document.getElementById('player');
+  const wasHidden = p.classList.contains('bar-hidden');
+  p.classList.remove('bar-hidden');
+  clearTimeout(pBarTimer);
+  if(!playerIsPaused) {
+    // Touch gets a generous 6 s window; mouse gets 3.5 s
+    const delay = touch ? 6000 : 3500;
+    pBarTimer = setTimeout(() => p.classList.add('bar-hidden'), delay);
+  }
+  if(touch && wasHidden) {
+    // Flag so the click handler knows this tap only revealed the bar
+    _barJustRevealed = true;
+    setTimeout(() => { _barJustRevealed = false; }, 400);
+  }
+}
+
 // Toggle pause overlay on click in the player (not on controls)
 document.getElementById('player').addEventListener('click', function(e) {
   // Ignore clicks on actual controls
   if(e.target.closest('#pbar-top, #p-ep-row, #p-pause-overlay .p-pause-actions, #p-loader')) return;
+  // On touch: if this tap just revealed the bar, don't also toggle pause
+  if(_barJustRevealed) { _barJustRevealed = false; return; }
   if(playerIsPaused) {
     hidePauseOverlay();
   } else {
@@ -2040,18 +2082,8 @@ document.getElementById('player').addEventListener('click', function(e) {
   }
 });
 
-function showPlayerBar() {
-  const p = document.getElementById('player');
-  p.classList.remove('bar-hidden');
-  clearTimeout(pBarTimer);
-  // Don't auto-hide if paused
-  if(!playerIsPaused) {
-    pBarTimer = setTimeout(() => p.classList.add('bar-hidden'), 3500);
-  }
-}
-
-document.getElementById('player').addEventListener('mousemove', showPlayerBar);
-document.getElementById('player').addEventListener('touchstart', showPlayerBar, {passive:true});
+document.getElementById('player').addEventListener('mousemove', () => showPlayerBar(false));
+document.getElementById('player').addEventListener('touchstart', () => showPlayerBar(true), {passive:true});
 
 async function openPlayer(id, type, season=1, episode=1, noPush=false){
   if(!noPush) updateURL({ play: type + '_' + id + '_' + season + '_' + episode });
@@ -2105,9 +2137,10 @@ async function openPlayer(id, type, season=1, episode=1, noPush=false){
 
   iframe.src = buildSrc(type, id, season, episode);
 
-  // Auto-hide bar after 3.5s
+  // Auto-hide bar after 6s on touch, 3.5s on desktop
   clearTimeout(pBarTimer);
-  pBarTimer = setTimeout(() => document.getElementById('player').classList.add('bar-hidden'), 3500);
+  const isTouchDev = window.matchMedia('(hover:none)').matches;
+  pBarTimer = setTimeout(() => document.getElementById('player').classList.add('bar-hidden'), isTouchDev ? 6000 : 3500);
 }
 
 async function loadEpisodeSel(id, season, curEp) {
