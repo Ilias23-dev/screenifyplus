@@ -316,6 +316,18 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
   transition:opacity .35s, transform .35s;
   pointer-events:auto;
 }
+/* Touch catcher — sits over the iframe so mobile taps reach the JS */
+#p-touch-catcher{
+  position:absolute;inset:0;z-index:6; /* above iframe(5), below bar(50) */
+  background:transparent;
+  /* On desktop: pointer-events off so mouse still goes to iframe */
+  pointer-events:none;
+}
+/* On touch-only devices, enable it */
+@media(hover:none){
+  #p-touch-catcher{ pointer-events:auto; }
+}
+
 /* Mobile tap-hint — visible only when bar is hidden on touch screens */
 @media(hover:none){
   #player.bar-hidden::after{
@@ -783,6 +795,9 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
   <iframe id="p-iframe" allowfullscreen webkitallowfullscreen mozallowfullscreen
     allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
     onload="hidePlayerLoader()"></iframe>
+
+  <!-- Touch catcher: transparent layer over the iframe so mobile taps register -->
+  <div id="p-touch-catcher"></div>
 
   <!-- Top overlay bar (auto-hides) -->
   <div id="pbar-top">
@@ -2085,6 +2100,20 @@ document.getElementById('player').addEventListener('click', function(e) {
 document.getElementById('player').addEventListener('mousemove', () => showPlayerBar(false));
 document.getElementById('player').addEventListener('touchstart', () => showPlayerBar(true), {passive:true});
 
+// Touch catcher: taps on the iframe area (mobile only) hit this div
+document.getElementById('p-touch-catcher').addEventListener('touchend', function(e) {
+  e.preventDefault(); // prevent ghost click
+  if(_barJustRevealed) { _barJustRevealed = false; return; }
+  // If bar is visible, toggle pause overlay on second tap
+  const p = document.getElementById('player');
+  if(p.classList.contains('bar-hidden')) {
+    showPlayerBar(true);
+  } else {
+    if(playerIsPaused) hidePauseOverlay();
+    else showPauseOverlay();
+  }
+}, {passive:false});
+
 async function openPlayer(id, type, season=1, episode=1, noPush=false){
   if(!noPush) updateURL({ play: type + '_' + id + '_' + season + '_' + episode });
   
@@ -2370,4 +2399,9 @@ function esc2(s){return s?s.replace(/'/g,"\\'"):'';}
     <div class="footer-logo">SCREENIFY +</div>
     <p class="footer-legal">By using SCREENIFY +, you agree to our no‑registration, free streaming service and accept that all content is provided by third‑party sources.</p>
     <p class="footer-legal">You acknowledge that we are not liable for external content and that you are responsible for complying with local laws.</p>
-<
+    <p class="footer-legal" style="margin-top:14px">
+      <a href="mailto:contact@screenifyplus.online" style="color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">✉ contact@screenifyplus.online</a>
+    </p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;align-items:center">
+      <a href="https://screenifyplus.online/terms" target="_blank" class="footer-terms-btn">Terms of Use</a>
+    </div>
