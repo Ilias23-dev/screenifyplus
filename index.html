@@ -974,8 +974,7 @@ const KEY='8265bd1679663a7ea12ac168da84d2e8',
 
 /* ════════════════════════════ SERVERS ════════════════════════════ */
 const SERVERS = {
-  vidsrc:     { label:'VidSrc',      movie: id=>`https://vidsrc.cc/v2/embed/movie/${id}?autoPlay=true&autoNext=true&poster=true`,                         tv: (id,s,e)=>`https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}?autoPlay=true&autoNext=true&poster=true` },
-  vidsrc2:    { label:'VidSrc 2',    movie: id=>`https://vidsrc.icu/embed/movie/${id}`,  tv: (id,s,e)=>`https://vidsrc.icu/embed/tv/${id}/${s}/${e}` },
+  vidsrc2:    { label:'VidSrc',      movie: id=>`https://vidsrc.icu/embed/movie/${id}`,  tv: (id,s,e)=>`https://vidsrc.icu/embed/tv/${id}/${s}/${e}` },
   vidsrcme:   { label:'VidSrc Me',   movie: id=>`https://vidsrc.me/embed/movie?tmdb=${id}`, tv: (id,s,e)=>`https://vidsrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${e}` },
   vidlink:    { label:'VidLink',     movie: id=>`https://vidlink.pro/movie/${id}?autoplay=true&title=false&primaryColor=${COL}&iconColor=${COL}&subs=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr,nl,pl,sv,da,fi,no,cs,ro`, tv: (id,s,e)=>`https://vidlink.pro/tv/${id}/${s}/${e}?autoplay=true&title=false&primaryColor=${COL}&iconColor=${COL}&subs=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr,nl,pl,sv,da,fi,no,cs,ro` },
   multiembed: { label:'MultiEmbed',  movie: id=>`https://multiembed.mov/?video_id=${id}&tmdb=1`,  tv: (id,s,e)=>`https://multiembed.mov/?video_id=${id}&tmdb=1&s=${s}&e=${e}` },
@@ -984,7 +983,7 @@ const SERVERS = {
 };
 
 /* ════════════════════════════ STATE ════════════════════════════ */
-let curServer = localStorage.getItem('lwa_server') || 'vidsrc';
+let curServer = localStorage.getItem('lwa_server') || 'vidsrc2';
 let myList   = JSON.parse(localStorage.getItem('lwa_l')||'[]');
 let contW    = JSON.parse(localStorage.getItem('lwa_c')||'[]').map(x=>({...x,id:+x.id}));
 let profile  = JSON.parse(localStorage.getItem('lwa_profile')||'{"name":"","tagline":"","color":"#ff1a2e","photo":""}');
@@ -2175,7 +2174,7 @@ function updateCont(id,type,s,ep,t,p){
 
 /* ════════════════════════════ SERVER HELPERS ════════════════════════════ */
 function buildSrc(type, id, season, episode) {
-  const srv = SERVERS[curServer] || SERVERS.vidsrc;
+  const srv = SERVERS[curServer] || SERVERS.vidsrc2;
   return type === 'tv' ? srv.tv(id, season, episode) : srv.movie(id);
 }
 
@@ -2213,7 +2212,7 @@ function switchServer(key) {
     // Append start time if we got one and the new server supports it
     if(startTime > 0) {
       // vidsrc.net, vidsrc.to, vidlink support ?start= or #t= params
-      if(key === 'vidsrc' || key === 'vidsrc2' || key === 'vidsrcme') src += (src.includes('?') ? '&' : '?') + `start=${startTime}`;
+      if(key === 'vidsrc2' || key === 'vidsrcme') src += (src.includes('?') ? '&' : '?') + `start=${startTime}`;
       else if(key === 'vidlink') src += (src.includes('?') ? '&' : '?') + `start=${startTime}`;
     }
     iframe.src = src;
