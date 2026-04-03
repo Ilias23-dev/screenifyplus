@@ -1006,16 +1006,18 @@ const KEY='8265bd1679663a7ea12ac168da84d2e8',
 
 /* ════════════════════════════ SERVERS ════════════════════════════ */
 const SERVERS = {
-  vidsrc2:    { label:'VidSrc',      movie: id=>`https://vidsrc.icu/embed/movie/${id}`,  tv: (id,s,e)=>`https://vidsrc.icu/embed/tv/${id}/${s}/${e}` },
-  vidsrcme:   { label:'VidSrc Me',   movie: id=>`https://vidsrc.me/embed/movie?tmdb=${id}`, tv: (id,s,e)=>`https://vidsrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${e}` },
-  vidlink:    { label:'VidLink',     movie: id=>`https://vidlink.pro/movie/${id}?autoplay=true&title=false&primaryColor=${COL}&iconColor=${COL}&subs=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr,nl,pl,sv,da,fi,no,cs,ro`, tv: (id,s,e)=>`https://vidlink.pro/tv/${id}/${s}/${e}?autoplay=true&title=false&primaryColor=${COL}&iconColor=${COL}&subs=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr,nl,pl,sv,da,fi,no,cs,ro` },
-  multiembed: { label:'MultiEmbed',  movie: id=>`https://multiembed.mov/?video_id=${id}&tmdb=1`,  tv: (id,s,e)=>`https://multiembed.mov/?video_id=${id}&tmdb=1&s=${s}&e=${e}` },
-  autoembed:  { label:'AutoEmbed',   movie: id=>`https://autoembed.co/movie/tmdb/${id}`,          tv: (id,s,e)=>`https://autoembed.co/tv/tmdb/${id}-${s}-${e}` },
-  embed2:     { label:'2Embed',      movie: id=>`https://www.2embed.cc/embed/${id}`,               tv: (id,s,e)=>`https://www.2embed.cc/embedtv/${id}&s=${s}&e=${e}` },
+  videasy:   { label:'Videasy (No Ads) ★', movie: id=>`https://player.videasy.net/movie/${id}?color=${COL}&nextbutton=true`,  tv: (id,s,e)=>`https://player.videasy.net/tv/${id}/${s}/${e}?color=${COL}&nextbutton=true` },
+  vidsrccc:  { label:'VidSrc CC (No Ads)', movie: id=>`https://vidsrc.cc/v2/embed/movie/${id}?autoPlay=true`, tv: (id,s,e)=>`https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}?autoPlay=true` },
+  vidsrcxyz: { label:'VidSrc XYZ (No Ads)', movie: id=>`https://vidsrc.xyz/embed/movie?tmdb=${id}`, tv: (id,s,e)=>`https://vidsrc.xyz/embed/tv?tmdb=${id}&season=${s}&episode=${e}` },
+  vidsrcme:  { label:'VidSrc Me (Few Ads)', movie: id=>`https://vidsrc.me/embed/movie?tmdb=${id}`, tv: (id,s,e)=>`https://vidsrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${e}` },
+  vidlink:   { label:'VidLink (Few Ads)',  movie: id=>`https://vidlink.pro/movie/${id}?autoplay=true&title=false&primaryColor=${COL}&iconColor=${COL}&subs=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr,nl,pl,sv,da,fi,no,cs,ro`, tv: (id,s,e)=>`https://vidlink.pro/tv/${id}/${s}/${e}?autoplay=true&title=false&primaryColor=${COL}&iconColor=${COL}&subs=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr,nl,pl,sv,da,fi,no,cs,ro` },
+  autoembed: { label:'AutoEmbed (Few Ads)', movie: id=>`https://autoembed.co/movie/tmdb/${id}`, tv: (id,s,e)=>`https://autoembed.co/tv/tmdb/${id}-${s}-${e}` },
+  vidking:   { label:'VidKing (Ads)',      movie: id=>`https://www.vidking.net/embed/movie/${id}`, tv: (id,s,e)=>`https://www.vidking.net/embed/tv/${id}?s=${s}&e=${e}` },
 };
 
 /* ════════════════════════════ STATE ════════════════════════════ */
-let curServer = localStorage.getItem('lwa_server') || 'vidsrc2';
+let curServer = localStorage.getItem('lwa_server') || 'videasy';
+if(!SERVERS[curServer]) { curServer = 'videasy'; localStorage.setItem('lwa_server','videasy'); }
 let myList   = JSON.parse(localStorage.getItem('lwa_l')||'[]');
 let contW    = JSON.parse(localStorage.getItem('lwa_c')||'[]').map(x=>({...x,id:+x.id}));
 let profile  = JSON.parse(localStorage.getItem('lwa_profile')||'{"name":"","tagline":"","color":"#ff1a2e","photo":""}');
@@ -1260,7 +1262,7 @@ const HUBS = {
     rows: ['cont', 'top10_t', 'pop_tv', 'action_tv', 'comedy_tv', 'drama_tv', 'scifi_tv']
   },
   anime: {
-    hero: '/discover/tv?with_genres=16&with_keywords=210024&sort_by=popularity.desc',
+    hero: '/discover/tv?with_genres=16&with_keywords=210024&without_keywords=210032,9799,158718,156186&without_genres=10749&sort_by=popularity.desc',
     rows: ['cont', 'pop_anime', 'top_anime', 'action_anime', 'fantasy_anime']
   }
 };
@@ -1282,10 +1284,10 @@ const ALL_ROWS = {
   comedy_tv: { id:'comedy_tv', title:'Comedy Shows', p:'/discover/tv', x:'&with_genres=35&sort_by=popularity.desc', t:'tv' },
   drama_tv: { id:'drama_tv', title:'TV Dramas', p:'/discover/tv', x:'&with_genres=18&sort_by=popularity.desc', t:'tv' },
   scifi_tv: { id:'scifi_tv', title:'Sci-Fi & Fantasy TV', p:'/discover/tv', x:'&with_genres=10765&sort_by=popularity.desc', t:'tv' },
-  pop_anime: { id:'pop_anime', title:'Popular Anime', p:'/discover/tv', x:'&with_genres=16&with_keywords=210024&sort_by=popularity.desc', t:'tv' },
-  top_anime: { id:'top_anime', title:'Top Rated Anime', p:'/discover/tv', x:'&with_genres=16&with_keywords=210024&sort_by=vote_average.desc&vote_count.gte=50', t:'tv' },
-  action_anime: { id:'action_anime', title:'Action Anime', p:'/discover/tv', x:'&with_genres=16,10759&with_keywords=210024&sort_by=popularity.desc', t:'tv' },
-  fantasy_anime: { id:'fantasy_anime', title:'Fantasy Anime', p:'/discover/tv', x:'&with_genres=16,10765&with_keywords=210024&sort_by=popularity.desc', t:'tv' }
+  pop_anime: { id:'pop_anime', title:'Popular Anime', p:'/discover/tv', x:'&with_genres=16&with_keywords=210024&without_keywords=210032,9799,158718,156186&without_genres=10749&sort_by=popularity.desc', t:'tv' },
+  top_anime: { id:'top_anime', title:'Top Rated Anime', p:'/discover/tv', x:'&with_genres=16&with_keywords=210024&without_keywords=210032,9799,158718,156186&without_genres=10749&sort_by=vote_average.desc&vote_count.gte=50', t:'tv' },
+  action_anime: { id:'action_anime', title:'Action Anime', p:'/discover/tv', x:'&with_genres=16,10759&with_keywords=210024&without_keywords=210032,9799,158718,156186&without_genres=10749&sort_by=popularity.desc', t:'tv' },
+  fantasy_anime: { id:'fantasy_anime', title:'Fantasy Anime', p:'/discover/tv', x:'&with_genres=16,10765&with_keywords=210024&without_keywords=210032,9799,158718,156186&without_genres=10749&sort_by=popularity.desc', t:'tv' }
 };
 
 const CATS = [
@@ -1329,7 +1331,7 @@ async function loadHub(hubId, noPush = false) {
   try {
       const urlParts = cfg.hero.split('?');
       const hd = await api(urlParts[0], urlParts[1] ? '&'+urlParts[1] : '');
-      heroItems = (hd.results||[]).filter(x=>x.backdrop_path&&x.overview).slice(0,5); 
+      heroItems = (hd.results||[]).filter(x=>x.backdrop_path&&x.overview&&!/hentai/i.test(x.title||x.name||x.original_title||x.original_name||'')).slice(0,5); 
       
       const dots=document.getElementById('hdots');
       dots.innerHTML=heroItems.map((_,i)=>`<div class="hdot${i===0?' on':''}" onclick="jumpHero(${i})"></div>`).join('');
@@ -1416,7 +1418,7 @@ async function loadHub(hubId, noPush = false) {
     if(rCfg.special === 'cont' || rCfg.special === 'providers') return;
     try{
       const d = await api(rCfg.p, (rCfg.x||'')+'&page=1');
-      const items = (d.results||[]).filter(x=>x.poster_path);
+      const items = (d.results||[]).filter(x=>x.poster_path && !/hentai/i.test(x.title||x.name||x.original_title||x.original_name||''));
       if(!items.length) { document.getElementById('row-'+rCfg.id).style.display='none'; return; }
       if(rCfg.top10)
         document.getElementById('rt-'+rCfg.id).innerHTML = items.slice(0,10).map((it,i)=>t10HTML(it,rCfg.t==='auto'?(it.media_type||'movie'):rCfg.t,i+1)).join('');
@@ -1483,6 +1485,12 @@ document.getElementById('sa-search-inp').addEventListener('input', function(){
     if(!q){
         document.getElementById('sa-grid').innerHTML = '';
         document.getElementById('sa-count').textContent = '';
+        return;
+    }
+    // Block hentai searches
+    if(/hentai/i.test(q)){
+        document.getElementById('sa-grid').innerHTML = '<div class="sa-empty">No results found.</div>';
+        document.getElementById('sa-count').textContent = '0 results';
         return;
     }
     typeTimer = setTimeout(() => {
@@ -1582,8 +1590,11 @@ function applyFiltersLocal() {
     const genre = document.getElementById('f-genre').value;
     const year = document.getElementById('f-year').value;
     
+    const HENTAI_RE = /hentai/i;
     saFiltered = saAllItems.filter(it => {
-        if(it.media_type === 'person') return true; // Keep people in local search filtering mostly
+        if(it.media_type === 'person') return true;
+        // Block anything with "hentai" in the title
+        if(HENTAI_RE.test(it.title || it.name || it.original_title || it.original_name || '')) return false;
         if(type && (it.media_type || 'movie') !== type) return false;
         if(genre && !(it.genre_ids || []).includes(parseInt(genre))) return false;
         if(year && (it.release_date || it.first_air_date || '').slice(0,4) !== year) return false;
@@ -1694,7 +1705,7 @@ async function loadSAPage(page,append){
   if(saLoading)return; saLoading=true;
   try{
     const d=await api(saConfig.path,saConfig.extra+'&page='+page);
-    const items=(d.results||[]).filter(x => x.poster_path || x.profile_path);
+    const items=(d.results||[]).filter(x => (x.poster_path || x.profile_path) && !/hentai/i.test(x.title||x.name||x.original_title||x.original_name||''));
     if(!append)saAllItems=[];
     saAllItems=[...saAllItems,...items];
     saFiltered=[...saAllItems];
@@ -2084,18 +2095,7 @@ function showPlayerBar(touch = false) {
   }
 }
 
-// Toggle pause overlay on click in the player (not on controls)
-document.getElementById('player').addEventListener('click', function(e) {
-  // Ignore clicks on actual controls
-  if(e.target.closest('#pbar-top, #p-ep-row, #p-pause-overlay .p-pause-actions, #p-loader')) return;
-  // On touch: if this tap just revealed the bar, don't also toggle pause
-  if(_barJustRevealed) { _barJustRevealed = false; return; }
-  if(playerIsPaused) {
-    hidePauseOverlay();
-  } else {
-    showPauseOverlay();
-  }
-});
+// (pause overlay toggle moved below, combined with touch catcher setup)
 
 document.getElementById('player').addEventListener('mousemove', () => showPlayerBar(false));
 document.getElementById('player').addEventListener('touchstart', () => showPlayerBar(true), {passive:true});
@@ -2103,16 +2103,25 @@ document.getElementById('player').addEventListener('touchstart', () => showPlaye
 // Touch catcher: taps on the iframe area (mobile only) hit this div
 document.getElementById('p-touch-catcher').addEventListener('touchend', function(e) {
   e.preventDefault(); // prevent ghost click
-  if(_barJustRevealed) { _barJustRevealed = false; return; }
-  // If bar is visible, toggle pause overlay on second tap
   const p = document.getElementById('player');
   if(p.classList.contains('bar-hidden')) {
+    // Bar was hidden — just reveal it, nothing else
     showPlayerBar(true);
   } else {
-    if(playerIsPaused) hidePauseOverlay();
-    else showPauseOverlay();
+    // Bar is visible — hide it (toggle off)
+    clearTimeout(pBarTimer);
+    p.classList.add('bar-hidden');
   }
 }, {passive:false});
+
+// On desktop: clicking the player area (not controls) shows/hides pause overlay
+document.getElementById('player').addEventListener('click', function(e) {
+  // Skip on touch devices — handled by touch catcher above
+  if(window.matchMedia('(hover:none)').matches) return;
+  if(e.target.closest('#pbar-top, #p-ep-row, #p-pause-overlay .p-pause-actions, #p-loader, #p-touch-catcher')) return;
+  if(playerIsPaused) hidePauseOverlay();
+  else showPauseOverlay();
+});
 
 async function openPlayer(id, type, season=1, episode=1, noPush=false){
   if(!noPush) updateURL({ play: type + '_' + id + '_' + season + '_' + episode });
@@ -2274,7 +2283,7 @@ function switchServer(key) {
     // Append start time if we got one and the new server supports it
     if(startTime > 0) {
       // vidsrc.net, vidsrc.to, vidlink support ?start= or #t= params
-      if(key === 'vidsrc2' || key === 'vidsrcme') src += (src.includes('?') ? '&' : '?') + `start=${startTime}`;
+      if(key === 'vidsrcxyz' || key === 'vidsrcme') src += (src.includes('?') ? '&' : '?') + `start=${startTime}`;
       else if(key === 'vidlink') src += (src.includes('?') ? '&' : '?') + `start=${startTime}`;
     }
     iframe.src = src;
@@ -2405,3 +2414,4 @@ function esc2(s){return s?s.replace(/'/g,"\\'"):'';}
     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;align-items:center">
       <a href="https://screenifyplus.online/terms" target="_blank" class="footer-terms-btn">Terms of Use</a>
     </div>
+<
