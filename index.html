@@ -541,6 +541,29 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .footer-legal{font-size:.78rem;color:var(--muted);line-height:1.7;margin-bottom:10px}
 .footer-terms-btn{display:inline-block;margin-top:16px;background:transparent;border:2px solid var(--red);color:var(--red);padding:10px 26px;border-radius:8px;font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:800;letter-spacing:.5px;cursor:pointer;transition:all .2s;text-decoration:none}
 .footer-terms-btn:hover{background:var(--red);color:#fff;box-shadow:0 0 20px var(--glow)}
+
+/* ── LIVE TV NAV BUTTON ── */
+.n-livetv-btn{display:flex;align-items:center;gap:6px;color:var(--red)!important;border:1px solid rgba(255,26,46,.3)!important;border-radius:8px!important;padding:7px 12px!important;background:rgba(255,26,46,.08)!important;transition:all .2s!important}
+.n-livetv-btn:hover{background:rgba(255,26,46,.2)!important;border-color:var(--red)!important;box-shadow:0 0 14px var(--glow2)!important}
+.n-livetv-label{font-size:.75rem;font-weight:800;letter-spacing:.5px}
+@keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.mn-live-dot{position:absolute;top:2px;right:calc(50% - 14px);width:6px;height:6px;border-radius:50%;background:var(--red);animation:livePulse 1.4s infinite}
+
+/* ── INFO PAGE EXTRA BUTTONS ── */
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.1);color:#fff;
+  border:1px solid rgba(255,255,255,.2);
+  padding:13px 18px;border-radius:10px;
+  font-size:.85rem;font-weight:600;
+  transition:all .2s;cursor:pointer;backdrop-filter:blur(5px);
+}
+@media(max-width:768px){
+  .ip-actions{grid-template-columns:1fr 1fr!important;}
+  .ip-btn-play{grid-column:1/-1!important;}
+  .ip-btn-dl,.ip-btn-list,.ip-btn-share{justify-content:center;}
+  .n-livetv-label{display:none}
+  .n-livetv-btn{padding:7px 9px!important;}
+}
 </style>
 </head>
 <body>
@@ -557,6 +580,10 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
     </ul>
   </div>
   <div class="n-right">
+    <button class="n-btn n-livetv-btn" onclick="openLiveTV()" title="Live TV">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="13" rx="2"/><polyline points="17 2 12 7 7 2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="19" x2="12" y2="21"/></svg>
+      <span class="n-livetv-label">Live TV</span>
+    </button>
     <button class="n-btn" onclick="openAppInfo()" title="How to use">
       <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
     </button>
@@ -766,7 +793,7 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
   <!-- The iframe fills everything -->
   <iframe id="p-iframe" allowfullscreen webkitallowfullscreen mozallowfullscreen
     allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-    onload="hidePlayerLoader()"></iframe>
+    onload="hidePlayerLoader(); installAdBlocker()"></iframe>
 
   <!-- Touch catcher: transparent pass-through on mobile -->
   <div id="p-touch-catcher"></div>
@@ -938,8 +965,9 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
     <li id="mn-mov" onclick="loadHub('movies')">
       <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19.8 3.2H4.2A2.2 2.2 0 0 0 2 5.4v13.2a2.2 2.2 0 0 0 2.2 2.2h15.6a2.2 2.2 0 0 0 2.2-2.2V5.4a2.2 2.2 0 0 0-2.2-2.2Z"/><path d="M7 3.2v17.6M17 3.2v17.6M2 8.5h5M17 8.5h5M2 15.5h5M17 15.5h5"/></svg>Movies
     </li>
-    <li id="mn-tv" onclick="loadHub('tv')">
-      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>TV
+    <li id="mn-live" onclick="openLiveTV()" style="position:relative">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="13" rx="2"/><polyline points="17 2 12 7 7 2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="19" x2="12" y2="21"/></svg>
+      <span class="mn-live-dot"></span>Live
     </li>
     <li id="mn-a" onclick="loadHub('anime')">
       <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Anime
@@ -965,13 +993,13 @@ const KEY='8265bd1679663a7ea12ac168da84d2e8',
 
 /* ════════════════════════════ SERVERS ════════════════════════════ */
 const SERVERS = {
-  videasy:   { label:'Videasy (No Ads) ★', movie: id=>`https://player.videasy.net/movie/${id}?color=${COL}&nextbutton=true`,  tv: (id,s,e)=>`https://player.videasy.net/tv/${id}/${s}/${e}?color=${COL}&nextbutton=true` },
+  videasy:   { label:'Videasy (No Ads) ★', movie: id=>`https://player.videasy.net/movie/${id}?color=${COL}&nextbutton=true&subs=true`,  tv: (id,s,e)=>`https://player.videasy.net/tv/${id}/${s}/${e}?color=${COL}&nextbutton=true&subs=true` },
   vidsrccc:  { label:'VidSrc CC (No Ads)', movie: id=>`https://vidsrc.cc/v2/embed/movie/${id}?autoPlay=true`, tv: (id,s,e)=>`https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}?autoPlay=true` },
   vidsrcxyz: { label:'VidSrc XYZ (No Ads)', movie: id=>`https://vidsrc.xyz/embed/movie?tmdb=${id}`, tv: (id,s,e)=>`https://vidsrc.xyz/embed/tv?tmdb=${id}&season=${s}&episode=${e}` },
   vidsrcme:  { label:'VidSrc Me (Few Ads)', movie: id=>`https://vidsrc.me/embed/movie?tmdb=${id}`, tv: (id,s,e)=>`https://vidsrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${e}` },
   vidlink:   { label:'VidLink (Few Ads)',  movie: id=>`https://vidlink.pro/movie/${id}?autoplay=true&title=false&primaryColor=${COL}&iconColor=${COL}&subs=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr,nl,pl,sv,da,fi,no,cs,ro`, tv: (id,s,e)=>`https://vidlink.pro/tv/${id}/${s}/${e}?autoplay=true&title=false&primaryColor=${COL}&iconColor=${COL}&subs=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr,nl,pl,sv,da,fi,no,cs,ro` },
   autoembed: { label:'AutoEmbed (Few Ads)', movie: id=>`https://autoembed.co/movie/tmdb/${id}`, tv: (id,s,e)=>`https://autoembed.co/tv/tmdb/${id}-${s}-${e}` },
-  vidking:   { label:'VidKing (Ads)',      movie: id=>`https://www.vidking.net/embed/movie/${id}`, tv: (id,s,e)=>`https://www.vidking.net/embed/tv/${id}?s=${s}&e=${e}` },
+  vidking:   { label:'VidKing (Ads+Subs)',  movie: id=>`https://www.vidking.net/embed/movie/${id}?sub=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr`, tv: (id,s,e)=>`https://www.vidking.net/embed/tv/${id}?s=${s}&e=${e}&sub=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr` },
 };
 
 /* ════════════════════════════ STATE ════════════════════════════ */
@@ -1016,6 +1044,8 @@ async function handleRoute(params, isPopState = false) {
   // Close all standard overlays
   document.getElementById('info-page').classList.remove('on');
   document.getElementById('player').classList.remove('on');
+  document.getElementById('player').classList.remove('bar-hidden','is-tv');
+  curP = null;
   document.getElementById('p-iframe').src='';
   closeDlModal();
   closeProfileModal();
@@ -2328,6 +2358,121 @@ function hidePlayerLoader() {
   document.getElementById('p-iframe').style.opacity = '1';
 }
 
+/* ════════════════════════════ AD / POPUP BLOCKER ════════════════════════════ */
+// Strategy: no sandbox (breaks players). Instead we:
+// 1. Override window.open to kill all popup ads
+// 2. Intercept window.location / top navigation attempts
+// 3. Watch for the page trying to navigate away and cancel it
+// 4. Put an invisible click-shield over the iframe edges where ads usually appear
+// 5. Catch blur events (tab switches caused by popups) and refocus
+
+let _adBlockInstalled = false;
+let _playerFocusGuard = null;
+
+function installAdBlocker() {
+  // Only install once
+  if (_adBlockInstalled) return;
+  _adBlockInstalled = true;
+
+  // ── 1. Kill window.open (popup ads) ───────────────────────────────────────
+  const _origOpen = window.open.bind(window);
+  window.open = function(url, target, features) {
+    // Allow legit opens (download links etc) from our own code
+    if (target === '_blank' && typeof url === 'string' && (
+      url.includes('dl.vidsrc') || url.includes('screenifyplus')
+    )) {
+      return _origOpen(url, target, features);
+    }
+    // Block everything else silently
+    console.log('[AdBlock] Blocked popup:', url);
+    return null;
+  };
+
+  // ── 2. Guard top-level navigation (some ads do location.href = "...") ─────
+  // We intercept by watching for beforeunload & visibilitychange
+  window.addEventListener('beforeunload', function(e) {
+    // If player is open and we didn't initiate this — cancel it
+    const playerOn = document.getElementById('player')?.classList.contains('on');
+    if (playerOn) {
+      e.preventDefault();
+      e.returnValue = '';
+      return '';
+    }
+  });
+
+  // ── 3. Blur guard — if player is open and window loses focus it's a popup ──
+  window.addEventListener('blur', function() {
+    const playerOn = document.getElementById('player')?.classList.contains('on');
+    if (!playerOn) return;
+    // Give it 200ms — if it was a legit tab switch focus returns naturally
+    clearTimeout(_playerFocusGuard);
+    _playerFocusGuard = setTimeout(() => {
+      // Close any opened popup window by refocusing ours
+      try { window.focus(); } catch(e) {}
+    }, 200);
+  });
+
+  // ── 4. Invisible edge shields — block click-through ad zones ──────────────
+  // Many players inject banner ads at the very bottom or corners of the iframe.
+  // A thin transparent div on top of those zones catches the click first.
+  const player = document.getElementById('player');
+  if (player) {
+    // Bottom bar shield (where banner ads usually sit)
+    const bottomShield = document.createElement('div');
+    bottomShield.id = 'ad-shield-bottom';
+    bottomShield.style.cssText = `
+      position:absolute; bottom:0; left:0; right:0; height:60px;
+      z-index:6; pointer-events:none; background:transparent;
+    `;
+    // We don't block all clicks — only react when a navigation starts
+    player.appendChild(bottomShield);
+
+    // Corner shields (top-right where X/close ads appear)
+    const cornerShield = document.createElement('div');
+    cornerShield.id = 'ad-shield-corner';
+    cornerShield.style.cssText = `
+      position:absolute; top:0; right:0; width:80px; height:80px;
+      z-index:6; pointer-events:none; background:transparent;
+    `;
+    player.appendChild(cornerShield);
+  }
+
+  // ── 5. MutationObserver — catch injected overlay ad elements ──────────────
+  // Some players inject a full-screen clickable div over the video.
+  // We can't access cross-origin iframe DOM, but we CAN watch the parent.
+  const observer = new MutationObserver((mutations) => {
+    for (const m of mutations) {
+      for (const node of m.addedNodes) {
+        if (node.nodeType !== 1) continue;
+        // If a high z-index fixed/absolute div appears outside player, nuke it
+        const style = window.getComputedStyle(node);
+        const z = parseInt(style.zIndex) || 0;
+        const pos = style.position;
+        if (z > 1000 && (pos === 'fixed' || pos === 'absolute') &&
+            !node.id?.startsWith('ad-shield') &&
+            !node.id?.startsWith('morph') &&
+            !node.id?.startsWith('p-') &&
+            !node.id?.startsWith('player') &&
+            node.id !== 'toast') {
+          console.log('[AdBlock] Removed injected overlay:', node.id || node.className);
+          node.remove();
+        }
+      }
+    }
+  });
+  observer.observe(document.body, { childList: true, subtree: false });
+}
+
+// ── Auto-reinstall blocker whenever iframe reloads ──────────────────────────
+document.getElementById('p-iframe').addEventListener('load', function() {
+  hidePlayerLoader();
+  installAdBlocker();
+  // Re-arm the navigation guard on each iframe load
+  _adBlockInstalled = false;
+  installAdBlocker();
+});
+
+
 function updateCont(id,type,s,ep,t,p){
   const numId = +id;
   contW = contW.filter(x => +x.id !== numId);
@@ -2469,11 +2614,31 @@ function closeDlModal(){document.getElementById('dl-modal').classList.remove('on
 function dlAction(q){
   if(!curInfo){closeDlModal();return;}
   const {id,type}=curInfo;
-  const url = type==='tv' ? `https://dl.vidsrc.me/tv/${id}` : `https://dl.vidsrc.me/movie/${id}`;
+  // Use multiple working download sources
+  let url;
+  if(type==='tv'){
+    const s = curP && curP.type==='tv' ? curP.season : 1;
+    const e = curP && curP.type==='tv' ? curP.episode : 1;
+    url = `https://dl.vidsrc.vip/tv/${id}/${s}/${e}`;
+  } else {
+    url = `https://dl.vidsrc.vip/movie/${id}`;
+  }
   window.open(url,'_blank');
-  showToast('Opening download page...');
+  showToast('Opening download page…');
   closeDlModal();
 }
+
+/* ════════════════════════════ LIVE TV ════════════════════════════ */
+function openLiveTV(){
+  window.open('https://screenifyplus.online/tv','_blank');
+}
+
+/* ════════════════════════════ WATCH FROM BEGINNING ════════════════════════════ */
+function watchFromBeginning(){
+  if(!curInfo) return;
+  openPlayer(curInfo.id, curInfo.type, 1, 1);
+}
+
 function esc(s){return s?s.toString().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"):s;}
 function esc2(s){return s?s.replace(/'/g,"\\'"):'';}
 </script>
@@ -2483,6 +2648,6 @@ function esc2(s){return s?s.replace(/'/g,"\\'"):'';}
     <p class="footer-legal">By using SCREENIFY +, you agree to our no‑registration, free streaming service and accept that all content is provided by third‑party sources.</p>
     <p class="footer-legal">You acknowledge that we are not liable for external content and that you are responsible for complying with local laws.</p>
     <p class="footer-legal" style="margin-top:14px">
-      <a href="/cdn-cgi/l/email-protection#65060a0b110406112516061700000b0c031c150910164b0a0b090c0b00" style="color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">✉ <span class="__cf_email__" data-cfemail="64070b0a100507102417071601010a0d021d140811174a0b0a080d0a01">[email&#160;protected]</span></a>
+      <a href="mailto:contact@screenifyplus.online" style="color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">✉ contact@screenifyplus.online</a>
     </p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;margi
