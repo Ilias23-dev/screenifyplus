@@ -500,7 +500,7 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .search-results-grid .card { width: 100%; height: 100%; margin: 0; }
 .search-results-grid .skel { width: 100%; }
 
-/* ── INFO PAGE (MOBILE-FIRST REDESIGN) ── */
+/* ── INFO PAGE (REDESIGNED TO MATCH REFERENCE) ── */
 #info-page{display:none;position:fixed;inset:0;background:var(--bg);z-index:1500;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;}
 #info-page.on{display:block;animation:infoPageIn .38s cubic-bezier(0.22,1,0.36,1)}
 @keyframes infoPageIn{from{opacity:0;transform:translateY(48px)}to{opacity:1;transform:translateY(0)}}
@@ -512,17 +512,29 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .ip-close{position:fixed;top:16px;right:16px;z-index:30;background:rgba(8,8,12,0.75);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.18);color:#fff;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;transition:all .2s;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,0.5);}
 .ip-close:hover{background:var(--red);border-color:var(--red);}
 
-/* Hero banner */
-.ip-hero{position:relative;width:100%;background:#000;overflow:hidden;}
-.ip-anim-bg{width:100%;aspect-ratio:16/9;background-size:cover;background-position:center top;animation:kenBurns 12s ease-in-out infinite alternate;display:block;}
-@keyframes kenBurns{from{transform:scale(1)}to{transform:scale(1.08) translate(-2%,-2%)}}
-.ip-vgrad{position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,rgba(5,5,7,0.55) 45%,transparent 100%);pointer-events:none;z-index:2;}
+/* ── IP HERO: Full-width backdrop like image 1 ── */
+.ip-hero{position:relative;width:100%;min-height:clamp(340px,56vw,680px);background:#000;overflow:hidden;display:flex;align-items:flex-end;}
+.ip-anim-bg{position:absolute;inset:0;width:100%;height:100%;background-size:cover;background-position:center 20%;animation:kenBurns 12s ease-in-out infinite alternate;display:block;}
+@keyframes kenBurns{from{transform:scale(1)}to{transform:scale(1.06) translate(-2%,-2%)}}
+/* dark overlay - heavy on left for text, lighter on right */
+.ip-vgrad{position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,rgba(5,5,7,.7) 35%,rgba(5,5,7,.25) 70%,rgba(5,5,7,.1) 100%),linear-gradient(to right,rgba(5,5,7,.9) 0%,rgba(5,5,7,.55) 45%,rgba(5,5,7,.1) 100%);pointer-events:none;z-index:2;}
 .ip-mute-btn{position:absolute;top:16px;right:72px;z-index:20;background:rgba(8,8,12,0.75);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.2);color:#fff;border-radius:50%;width:44px;height:44px;cursor:pointer;transition:all .2s;display:none;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(0,0,0,0.3);}
 .ip-mute-btn:hover{background:var(--red);border-color:var(--red);}
 
-/* Title block overlapping the hero */
-.ip-title-block{position:relative;padding:0 4% 20px;z-index:10;margin-top:-56px;}
-#ip-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,8vw,5rem);line-height:.92;letter-spacing:2px;margin-bottom:10px;text-shadow:0 4px 25px rgba(0,0,0,1);}
+/* IP Details panel — floated right inside hero, like image 1 */
+.ip-details-panel{position:absolute;bottom:40px;right:5%;z-index:10;background:rgba(10,10,18,0.55);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:22px 28px;min-width:260px;max-width:320px;box-shadow:0 12px 40px rgba(0,0,0,0.6);}
+.ip-details-panel .ip-srow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:.88rem;}
+.ip-details-panel .ip-srow:last-child{border-bottom:none;}
+.ip-details-panel .ip-srow span:first-child{color:var(--muted);}
+.ip-details-panel .ip-srow span:last-child{font-weight:700;text-align:right;color:#fff;}
+
+/* Title block overlapping the hero (left side) */
+.ip-title-block{position:relative;z-index:10;padding:0 5%;max-width:700px;padding-bottom:40px;}
+#ip-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,7vw,6rem);line-height:.92;letter-spacing:2px;margin-bottom:12px;text-shadow:0 4px 25px rgba(0,0,0,1);}
+.ip-genres-inline{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
+.ip-genre-dot{font-size:.9rem;font-weight:600;color:rgba(255,255,255,.85);}
+.ip-genre-dot::before{content:'• ';margin-right:2px;}
+.ip-genre-dot:first-child::before{content:'';}
 .ip-meta-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px;text-shadow:0 2px 10px rgba(0,0,0,.8);}
 .ip-rat{color:var(--green);font-weight:800;font-size:.95rem}
 .ip-chip{background:rgba(255,255,255,.12);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.2);padding:5px 13px;border-radius:20px;font-size:.8rem;font-weight:700;color:#fff;}
@@ -530,15 +542,17 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 
 /* Action buttons */
 .ip-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:0;}
-.ip-btn-play{display:flex;align-items:center;justify-content:center;gap:9px;background:var(--grad);color:#fff;border:none;padding:15px 30px;border-radius:14px;font-size:1rem;font-weight:800;transition:all .2s;cursor:pointer;box-shadow:0 6px 25px var(--glow2);flex:1;}
+.ip-btn-play{display:flex;align-items:center;justify-content:center;gap:9px;background:var(--grad);color:#fff;border:none;padding:15px 30px;border-radius:14px;font-size:1rem;font-weight:800;transition:all .2s;cursor:pointer;box-shadow:0 6px 25px var(--glow2);}
 .ip-btn-play:hover{transform:scale(1.03);box-shadow:0 8px 30px var(--glow);}
 .ip-btn-dl,.ip-btn-list,.ip-btn-share{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2);padding:14px 18px;border-radius:14px;font-size:.9rem;font-weight:700;transition:all .2s;cursor:pointer;backdrop-filter:blur(15px);}
 .ip-btn-dl:hover,.ip-btn-list:hover,.ip-btn-share:hover{background:rgba(255,255,255,.2);border-color:#fff;}
 
 /* Body */
-.ip-body{max-width:1300px;margin:0 auto;padding:20px 4% 100px;position:relative;z-index:2}
-.ip-2col{display:grid;grid-template-columns:1fr 320px;gap:48px;}
+.ip-body{max-width:1300px;margin:0 auto;padding:32px 5% 100px;position:relative;z-index:2;}
 
+/* Director / overview */
+.ip-director{font-size:.9rem;color:var(--muted);margin-bottom:10px;} 
+.ip-director strong{color:rgba(255,255,255,.9);font-weight:700;}
 #ip-overview{font-size:1rem;line-height:1.8;color:rgba(255,255,255,.85);margin-bottom:32px;text-shadow:0 1px 4px rgba(0,0,0,0.3);}
 .ip-sec{margin-bottom:38px}
 .ip-sec-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:1.5px;margin-bottom:18px;color:rgba(255,255,255,.95)}
@@ -552,10 +566,31 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .gpill{background:rgba(255,255,255,0.08);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.15);padding:8px 20px;border-radius:24px;font-size:.85rem;font-weight:600;color:rgba(255,255,255,.9);transition:all .2s;cursor:pointer}
 .gpill:hover{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 4px 15px var(--glow2);}
 
-.ip-sidebar .ip-sec{border-radius:20px;padding:24px;}
-.ip-srow{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:.9rem}
-.ip-srow:last-child{border-bottom:none}
-.ip-srow span:first-child{color:var(--muted)}.ip-srow span:last-child{font-weight:700;text-align:right}
+/* ── TRAILERS SECTION ── */
+.trailers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
+.trailer-card{position:relative;border-radius:16px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,0.1);transition:all .25s;background:var(--s2);}
+.trailer-card:hover{border-color:var(--red);transform:scale(1.02);box-shadow:0 12px 35px rgba(0,0,0,0.7);}
+.trailer-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#111;}
+.trailer-play-ovl{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.4);transition:background .2s;}
+.trailer-card:hover .trailer-play-ovl{background:rgba(0,0,0,0.2);}
+.trailer-play-btn{width:56px;height:56px;background:rgba(255,26,46,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(255,26,46,0.5);transition:transform .2s;}
+.trailer-card:hover .trailer-play-btn{transform:scale(1.1);}
+.trailer-info{padding:12px 14px;}
+.trailer-name{font-size:.88rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* Trailer modal */
+#trailer-modal{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(20px);z-index:9998;display:none;align-items:center;justify-content:center;}
+#trailer-modal.on{display:flex;}
+.trailer-modal-inner{position:relative;width:min(900px,95vw);aspect-ratio:16/9;border-radius:16px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.9);}
+.trailer-modal-inner iframe{width:100%;height:100%;border:none;display:block;}
+.trailer-modal-close{position:absolute;top:-50px;right:0;background:rgba(20,20,28,.8);border:1px solid rgba(255,255,255,.15);color:#fff;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;backdrop-filter:blur(12px);}
+.trailer-modal-close:hover{background:var(--red);border-color:var(--red);}
+
+/* ── NO SIDEBAR - replaced by panel inside hero ── */
+.ip-sidebar{display:none;}
+.ip-2col{display:block;}
+.ip-srow{display:none;} /* used only inside panel now */
+
 /* Season dropdown */
 .season-dropdown-wrap{position:relative;margin-bottom:20px;display:inline-block;min-width:200px;}
 .season-dropdown-btn{display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,26,46,0.12);border:1px solid rgba(255,26,46,0.45);color:#fff;padding:12px 18px;border-radius:14px;font-size:.95rem;font-weight:700;cursor:pointer;width:100%;font-family:'Outfit',sans-serif;transition:all .2s;backdrop-filter:blur(12px);}
@@ -608,10 +643,12 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .player-frame-wrap{width:100%;height:100%;position:relative;background:#000;}
 .player-frame-wrap iframe{width:100%;height:100%;border:none;display:block; transition: opacity 0.3s; background:#000;}
 
-#p-loader{position:absolute;inset:0;z-index:10;background:#000;display:none;align-items:center;justify-content:center;overflow:hidden; pointer-events: none;}
-#p-loader-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.3;filter:blur(20px);transform:scale(1.05);}
-.p-spinner{width:64px;height:64px;border:4px solid rgba(255,26,46,0.2);border-top-color:var(--red);border-radius:50%;animation:spinLoader 1s linear infinite;position:relative;z-index:11;box-shadow:0 0 25px rgba(255,26,46,0.4);}
-@keyframes spinLoader{to{transform:rotate(360deg);}}
+#p-loader{position:absolute;inset:0;z-index:10;background:#000;display:none;align-items:center;justify-content:center;overflow:hidden; pointer-events: none; flex-direction:column; gap:20px;}
+#p-loader-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.25;filter:blur(24px);transform:scale(1.08);}
+#p-loader-logo-wrap{position:relative;z-index:11;display:flex;align-items:center;justify-content:center;}
+#p-loader-logo{max-height:clamp(60px,14vw,120px);max-width:clamp(160px,40vw,340px);object-fit:contain;filter:drop-shadow(0 0 30px rgba(255,26,46,0.6)) drop-shadow(0 0 60px rgba(255,26,46,0.3));animation:logoPulse 1.6s ease-in-out infinite;}
+#p-loader-title{position:relative;z-index:11;font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,5vw,3.5rem);letter-spacing:3px;color:#fff;text-shadow:0 0 40px rgba(255,26,46,0.5);animation:logoPulse 1.6s ease-in-out infinite;display:none;}
+@keyframes logoPulse{0%,100%{transform:scale(1);opacity:0.8}50%{transform:scale(1.08);opacity:1;}}
 
 /* ── MY LIST ── */
 #page-list{display:none;padding:calc(var(--nav) + 60px) 4% 120px}
@@ -650,6 +687,13 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 /* ── RESPONSIVE FIXES (MOBILE HERO RE-WRITE) ── */
 @media(max-width:800px){
   .ip-2col{grid-template-columns:1fr}
+  /* On mobile, hide floating details panel (shown in body instead) */
+  .ip-details-panel{display:none !important;}
+  /* Show a compact details block inside ip-body on mobile */
+  .ip-mobile-details{display:block !important;}
+}
+@media(min-width:801px){
+  .ip-mobile-details{display:none;}
 }
 @media(max-width:768px){
   .n-links{display:none}
@@ -667,13 +711,14 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
   
   /* MOBILE INFO PAGE */
   .ip-anim-bg { aspect-ratio: 16/9; min-height: 200px; }
-  .ip-title-block { margin-top: -50px; }
+  .ip-title-block { margin-top: -50px; padding-bottom: 20px; }
+  .ip-details-panel { display: none !important; }
+  .ip-mobile-details { display: block !important; }
   /* MOBILE ACTION BUTTONS: Play full width, rest in a row */
-  .ip-actions { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-  .ip-btn-play { grid-column: 1 / -1; justify-content:center; padding:15px; font-size:1rem; }
+  .ip-actions { display:grid; grid-template-columns:1fr auto auto auto; gap:8px; }
+  .ip-btn-play { grid-column: 1 / 2; justify-content:center; padding:15px; font-size:1rem; }
   .ip-btn-dl, .ip-btn-list, .ip-btn-share {
-      flex-direction:column; padding:11px 6px; gap:5px;
-      font-size:0.72rem; text-align:center; border-radius:12px; justify-content:center;
+      padding:14px 14px; gap:0; border-radius:12px; justify-content:center;
   }
   .ip-btn-dl svg, .ip-btn-list svg, .ip-btn-share svg { width:20px; height:20px; }
   .ip-mute-btn { top: 16px; right: 70px; width: 38px; height: 38px; }
@@ -894,21 +939,28 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
     <div class="ip-anim-bg" id="ip-anim-bg"></div>
     <div class="ip-vgrad"></div>
     
+    <!-- Details panel floating right inside hero (like image 1) -->
+    <div class="ip-details-panel" id="ip-details-panel">
+      <div id="ip-details"></div>
+    </div>
+    
     <div class="ip-title-block">
+      <div class="ip-genres-inline" id="ip-genres-inline"></div>
       <h1 id="ip-title">—</h1>
       <div class="ip-meta-row" id="ip-meta"></div>
+      <div class="ip-director" id="ip-director"></div>
       <div class="ip-actions">
         <button class="ip-btn-play" id="ip-btn-play">
           <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Play
         </button>
-        <button class="ip-btn-dl" onclick="openDlModal()">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download
+        <button class="ip-btn-list" id="ip-btn-list" style="flex:0">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </button>
-        <button class="ip-btn-list" id="ip-btn-list">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> My List
+        <button class="ip-btn-dl" onclick="openDlModal()" style="flex:0">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         </button>
-        <button class="ip-btn-share" onclick="shareTitle()">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></svg> Share
+        <button class="ip-btn-share" onclick="shareTitle()" style="flex:0">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
         </button>
       </div>
     </div>
@@ -927,7 +979,20 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
         </div>
 
         <p id="ip-overview"></p>
+        
+        <!-- Mobile-only details block -->
+        <div class="ip-mobile-details ip-sec" id="ip-mobile-details" style="display:none;">
+          <div class="ip-sec-title">Details</div>
+          <div id="ip-details-mobile" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px;"></div>
+        </div>
+        
         <div class="ip-sec"><div class="ip-sec-title">Cast</div><div class="cast-grid" id="ip-cast"></div></div>
+
+        <!-- Trailers section (after cast) -->
+        <div class="ip-sec" id="ip-trailers-sec" style="display:none">
+          <div class="ip-sec-title">Trailers & Videos</div>
+          <div class="trailers-grid" id="ip-trailers-grid"></div>
+        </div>
 
         <div class="ip-sec"><div class="ip-sec-title">Genres</div><div class="genre-pills" id="ip-genres"></div></div>
         <div class="ip-sec" id="ip-seasons-sec" style="display:none">
@@ -942,9 +1007,19 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
         <div class="ip-sec"><div class="ip-sec-title">More Like This</div><div class="similar-grid" id="ip-similar"></div></div>
       </div>
       <div class="ip-sidebar">
-        <div class="ip-sec glass-panel"><div class="ip-sec-title">Details</div><div id="ip-details"></div></div>
+        <div class="ip-sec glass-panel"><div class="ip-sec-title">Details</div><div id="ip-details-old"></div></div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Trailer Lightbox Modal -->
+<div id="trailer-modal" onclick="if(event.target===this)closeTrailerModal()">
+  <div class="trailer-modal-inner">
+    <button class="trailer-modal-close" onclick="closeTrailerModal()">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <iframe id="trailer-iframe" allow="autoplay; fullscreen" allowfullscreen></iframe>
   </div>
 </div>
 
@@ -977,7 +1052,10 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
     <div class="player-frame-wrap">
       <div id="p-loader">
         <img id="p-loader-bg" src="" alt="">
-        <div class="p-spinner"></div>
+        <div id="p-loader-logo-wrap">
+          <img id="p-loader-logo" src="" alt="">
+          <div id="p-loader-title"></div>
+        </div>
       </div>
       <iframe id="player-iframe" allowfullscreen allow="autoplay; fullscreen; picture-in-picture; encrypted-media; clipboard-write" sandbox="allow-scripts allow-same-origin allow-forms allow-presentation allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation" onload="hidePlayerLoader(); installAdBlocker()"></iframe>
     </div>
@@ -1504,9 +1582,25 @@ async function loadHub(hubId, noPush = false) {
     el.className = 'row'; el.id = 'row-'+rCfg.id;
     
     let rowAction = '';
-    if (rCfg.special === 'cont') {
+    if(rCfg.special === 'cont') {
        if(!contW.length) el.style.display='none';
        rowAction = `<button onclick="promptClearCont()">Clear List <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>`;
+       el.innerHTML=`
+        <div class="row-hdr">
+          <div class="row-hdr-left">
+            <div class="cont-title-wrap" style="position:relative;display:inline-flex;align-items:center;gap:8px;cursor:pointer;" onclick="toggleContDD(event)">
+              <span style="text-decoration:underline;text-underline-offset:4px;">Continue Watching</span>
+              <svg id="cont-dd-arrow" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color:var(--red);transition:transform .25s;flex-shrink:0;"><polyline points="6 9 12 15 18 9"/></svg>
+              <div id="cont-dd-menu" style="display:none;position:absolute;top:calc(100% + 10px);left:0;min-width:260px;background:rgba(12,12,18,0.97);backdrop-filter:blur(30px);border:1px solid rgba(255,26,46,0.35);border-radius:16px;overflow:hidden;z-index:200;box-shadow:0 16px 50px rgba(0,0,0,0.85);animation:ddIn .18s ease;"></div>
+            </div>
+          </div>
+          ${rowAction}
+        </div>
+        <div class="row-wrap">
+          <button class="arr L" onclick="scrollR('cont',-1)">&#8249;</button>
+          <div class="row-track" id="rt-cont"></div>
+          <button class="arr R" onclick="scrollR('cont',1)">&#8250;</button>
+        </div>`;
     } else if (rCfg.special === 'byw') {
        el.style.display='none'; 
        rowAction = '';
@@ -2114,6 +2208,54 @@ function removeContItem(id) {
     showToast('Removed from Continue Watching');
 }
 
+function toggleContDD(e){
+  e.stopPropagation();
+  const menu = document.getElementById('cont-dd-menu');
+  const arrow = document.getElementById('cont-dd-arrow');
+  if(!menu) return;
+  const isOpen = menu.style.display === 'block';
+  if(isOpen){
+    menu.style.display='none';
+    if(arrow) arrow.style.transform='';
+  } else {
+    // Populate dropdown with contW items
+    if(!contW.length){ menu.style.display='none'; return; }
+    menu.innerHTML = contW.slice(0,8).map(it => {
+      const imgSrc = it.poster || '';
+      const tt = esc(it.title||'Unknown');
+      const sub = it.type==='tv' ? `S${it.s||1}E${it.ep||1}` : 'Movie';
+      return `<div onclick="event.stopPropagation();openPlayer(${it.id},'${it.type}',${it.s||1},${it.ep||1});closeContDD();"
+        style="display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;transition:background .15s;border-bottom:1px solid rgba(255,255,255,0.05);"
+        onmouseover="this.style.background='rgba(255,26,46,0.12)'" onmouseout="this.style.background=''"
+      >
+        ${imgSrc?`<img src="${imgSrc}" alt="${tt}" style="width:44px;height:66px;object-fit:cover;border-radius:8px;flex-shrink:0;border:1px solid rgba(255,255,255,0.1)">`:
+        `<div style="width:44px;height:66px;background:var(--s3);border-radius:8px;flex-shrink:0;"></div>`}
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:.85rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${tt}</div>
+          <div style="font-size:.72rem;color:var(--muted);margin-top:3px">${sub}</div>
+          ${it.prog?`<div style="margin-top:6px;height:3px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden"><div style="height:100%;width:${it.prog}%;background:var(--red);border-radius:2px;"></div></div>`:''}
+        </div>
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" style="color:var(--red);flex-shrink:0"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </div>`;
+    }).join('');
+    menu.style.display='block';
+    if(arrow) arrow.style.transform='rotate(180deg)';
+  }
+}
+function closeContDD(){
+  const menu = document.getElementById('cont-dd-menu');
+  const arrow = document.getElementById('cont-dd-arrow');
+  if(menu) menu.style.display='none';
+  if(arrow) arrow.style.transform='';
+}
+document.addEventListener('click', function(e){
+  const menu = document.getElementById('cont-dd-menu');
+  if(menu && menu.style.display==='block'){
+    const wrap = document.querySelector('.cont-title-wrap');
+    if(wrap && !wrap.contains(e.target)) closeContDD();
+  }
+});
+
 function renderCont(){
   const row=document.getElementById('row-cont');
   const track=document.getElementById('rt-cont');
@@ -2241,6 +2383,11 @@ async function openInfoPage(id, type, noPush = false){
   document.getElementById('ip-mute-btn').style.display = 'none';
   heroMuted = true;
   document.getElementById('ip-mute-btn').innerHTML = '<svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>';
+  // Reset genres inline and director
+  const giEl = document.getElementById('ip-genres-inline'); if(giEl) giEl.innerHTML='';
+  const dirElReset = document.getElementById('ip-director'); if(dirElReset) dirElReset.innerHTML='';
+  // Reset trailers section
+  const trSecReset = document.getElementById('ip-trailers-sec'); if(trSecReset) trSecReset.style.display='none';
   
   // Show Server Change Alert (only after user has watched something)
   if(contW.length > 0) {
@@ -2259,12 +2406,11 @@ async function openInfoPage(id, type, noPush = false){
     
     const trailers = (vids.results||[]).filter(v => v.site === 'YouTube' && v.type === 'Trailer');
     if(trailers.length > 0) {
-        const ytKey = trailers[0].key;
-        const ytStyle = "width:100%; height:100%; position:absolute; top:0; left:0; transform:scale(1.35); border:none; pointer-events:none; background:#000;";
-        document.getElementById('ip-anim-bg').innerHTML = `<iframe id="ip-hero-yt" src="https://www.youtube.com/embed/${ytKey}?autoplay=1&mute=1&controls=0&loop=1&playlist=${ytKey}&enablejsapi=1&playsinline=1" allow="autoplay" style="${ytStyle}"></iframe>`;
-        document.getElementById('ip-mute-btn').style.display = 'flex';
-    } else if(det.backdrop_path) {
-        document.getElementById('ip-anim-bg').style.backgroundImage=`url(${LG}${det.backdrop_path})`;
+        // Trailer available - we show it in trailers section below cast, NOT autoplay in hero
+        // Hero just uses backdrop image
+    }
+    if(det.backdrop_path) {
+        // This is now handled inside the new code block further below
     }
 
     const logos=(imgs.logos||[]).filter(l=>l.file_path&&l.file_path.endsWith('.png'));
@@ -2276,18 +2422,35 @@ async function openInfoPage(id, type, noPush = false){
     const rt=det.runtime?`${det.runtime} min`:(det.episode_run_time?.[0]?`~${det.episode_run_time[0]}min/ep`:'');
     document.getElementById('ip-meta').innerHTML=`<span class="ip-rat">★ ${rat}</span><span class="ip-chip">${yr}</span>${rt?`<span class="ip-chip">${rt}</span>`:''}<span class="ip-chip">${type==='tv'? 'TV Show' : 'Movie'}</span><span class="ip-chip hd">HD</span>${det.adult?'<span class="ip-chip" style="color:var(--red)">18+</span>':''}`;
     document.getElementById('ip-overview').textContent=det.overview||'No description.';
+    
+    // Genres inline above title
+    const genresInlineEl = document.getElementById('ip-genres-inline');
+    if(genresInlineEl) genresInlineEl.innerHTML = (det.genres||[]).slice(0,4).map(g=>`<span class="ip-genre-dot">${g.name}</span>`).join('');
+    
+    // Director
+    const dirEl = document.getElementById('ip-director');
+    if(dirEl){
+      const dir = type==='movie' ? (cred.crew||[]).find(c=>c.job==='Director') : null;
+      const creator = type==='tv' ? (det.created_by||[])[0] : null;
+      if(dir) dirEl.innerHTML = `<strong>Director:</strong> ${esc(dir.name)}`;
+      else if(creator) dirEl.innerHTML = `<strong>Creator:</strong> ${esc(creator.name)}`;
+      else dirEl.innerHTML = '';
+    }
+    
     const inL=myList.some(m=>m.id===id);
     const lb=document.getElementById('ip-btn-list');
     lb.innerHTML=inL?
-        '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> In My List' :
-        '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> My List';
+        '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>' :
+        '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+    lb.title = inL ? 'In My List' : 'My List';
     
     lb.onclick=()=>{
         toggleList(id,det.title||det.name,det.poster_path,type);
         const nowIn = myList.some(m=>m.id===id);
         lb.innerHTML=nowIn?
-           '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> In My List' :
-           '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> My List';
+           '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>' :
+           '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+        lb.title = nowIn ? 'In My List' : 'My List';
     };
     
     const isInCW = contW.some(m => m.id === id);
@@ -2297,10 +2460,63 @@ async function openInfoPage(id, type, noPush = false){
     
     const cast=(cred.cast||[]).slice(0,8);
     document.getElementById('ip-cast').innerHTML=cast.map(c=>`<div class="cast-card" onclick="openPerson(${c.id}, '${esc2(c.name)}')"><img class="cast-avatar" loading="lazy" src="${c.profile_path?FACE+c.profile_path:''}" onerror="this.style.background='var(--s4)';this.src=''"><div class="cast-name">${esc(c.name||'')}</div><div class="cast-role">${esc(c.character||'')}</div></div>`).join('')||'<span style="color:var(--muted);font-size:.85rem">No cast info</span>';
+    
+    // Trailers section (after cast, no autoplay)
+    const allVids = (vids.results||[]).filter(v => v.site === 'YouTube' && (v.type === 'Trailer' || v.type === 'Teaser' || v.type === 'Clip'));
+    const trailersSec = document.getElementById('ip-trailers-sec');
+    const trailersGrid = document.getElementById('ip-trailers-grid');
+    if(allVids.length && trailersSec && trailersGrid){
+      trailersGrid.innerHTML = allVids.slice(0,6).map(v=>`
+        <div class="trailer-card" onclick="openTrailerModal('${v.key}')">
+          <img class="trailer-thumb" src="https://img.youtube.com/vi/${v.key}/mqdefault.jpg" alt="${esc(v.name||'Trailer')}" loading="lazy">
+          <div class="trailer-play-ovl">
+            <div class="trailer-play-btn">
+              <svg width="22" height="22" fill="#fff" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+          </div>
+          <div class="trailer-info"><div class="trailer-name">${esc(v.name||v.type)}</div></div>
+        </div>`).join('');
+      trailersSec.style.display='block';
+    } else if(trailersSec){
+      trailersSec.style.display='none';
+    }
+    
+    // Hero backdrop only (no autoplay trailer in hero)
+    document.getElementById('ip-anim-bg').innerHTML = '';
+    if(det.backdrop_path){
+      document.getElementById('ip-anim-bg').style.backgroundImage=`url(${LG}${det.backdrop_path})`;
+    }
+    document.getElementById('ip-mute-btn').style.display = 'none';
+    
     document.getElementById('ip-genres').innerHTML=(det.genres||[]).map(g=>`<div class="gpill">${g.name}</div>`).join('');
+    
+    // Details panel inside hero
     const prod=(det.production_companies||[]).slice(0,2).map(p=>p.name).join(', ')||'—';
     const country=(det.production_countries||[]).map(c=>c.name).join(', ')||'—';
-    document.getElementById('ip-details').innerHTML=`<div class="ip-srow"><span>Status</span><span>${det.status||'—'}</span></div><div class="ip-srow"><span>Release</span><span>${yr||'—'}</span></div>${type==='tv'?`<div class="ip-srow"><span>Seasons</span><span>${det.number_of_seasons||'—'}</span></div><div class="ip-srow"><span>Episodes</span><span>${det.number_of_episodes||'—'}</span></div>`:''}<div class="ip-srow"><span>Country</span><span>${country}</span></div><div class="ip-srow"><span>Studio</span><span>${prod}</span></div><div class="ip-srow"><span>Rating</span><span>★ ${rat}</span></div>`;
+    const budget = det.budget ? '$'+det.budget.toLocaleString() : null;
+    const revenue = det.revenue ? '$'+det.revenue.toLocaleString() : null;
+    const endTime = det.runtime ? (() => { const d=new Date(); d.setMinutes(d.getMinutes()+det.runtime); return d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); })() : null;
+    
+    const detHtml = [
+      det.runtime ? `<div class="ip-srow"><span>Runtime</span><span>${det.runtime} min${endTime?' · Ends '+endTime:''}</span></div>` : '',
+      `<div class="ip-srow"><span>Language</span><span>${(det.original_language||'en').toUpperCase()}</span></div>`,
+      yr ? `<div class="ip-srow"><span>Release Date</span><span>${det.release_date||det.first_air_date||yr}</span></div>` : '',
+      budget ? `<div class="ip-srow"><span>Budget</span><span>${budget}</span></div>` : '',
+      revenue ? `<div class="ip-srow"><span>Revenue</span><span>${revenue}</span></div>` : '',
+      type==='tv' ? `<div class="ip-srow"><span>Seasons</span><span>${det.number_of_seasons||'—'}</span></div>` : '',
+      type==='tv' ? `<div class="ip-srow"><span>Episodes</span><span>${det.number_of_episodes||'—'}</span></div>` : '',
+      `<div class="ip-srow"><span>Country</span><span>${country}</span></div>`,
+      `<div class="ip-srow"><span>Studio</span><span>${prod}</span></div>`,
+      `<div class="ip-srow"><span>Status</span><span>${det.status||'—'}</span></div>`,
+    ].filter(Boolean).join('');
+    document.getElementById('ip-details').innerHTML = detHtml;
+    // Also populate mobile details block
+    const mobileDetails = document.getElementById('ip-details-mobile');
+    if(mobileDetails) mobileDetails.innerHTML = detHtml;
+    // Show mobile details block on small screens
+    const mobileDetailsWrap = document.getElementById('ip-mobile-details');
+    if(mobileDetailsWrap) mobileDetailsWrap.style.display = window.innerWidth <= 800 ? 'block' : 'none';
+    
     document.getElementById('ip-similar').innerHTML=(sim.results||[]).filter(x=>x.poster_path).slice(0,6).map(it=>`<div class="sim-card" onclick="openInfoPage(${it.id},'${type}')"><img loading="lazy" src="${MD}${it.poster_path}"><div class="sim-card-info">${esc(it.title||it.name||'')}</div><div class="sim-card-meta">★${(it.vote_average||0).toFixed(1)} · ${(it.release_date||it.first_air_date||'').slice(0,4)}</div></div>`).join('');
     if(type==='tv'){
       const seasons=(det.seasons||[]).filter(s=>s.season_number>0);
@@ -2370,6 +2586,17 @@ async function loadIPSeason(tvId,sn){
   } catch(e) {}
 }
 
+function openTrailerModal(ytKey){
+  document.getElementById('trailer-iframe').src = `https://www.youtube.com/embed/${ytKey}?autoplay=1&rel=0`;
+  document.getElementById('trailer-modal').classList.add('on');
+  document.body.style.overflow='hidden';
+}
+function closeTrailerModal(){
+  document.getElementById('trailer-modal').classList.remove('on');
+  document.getElementById('trailer-iframe').src='';
+  if(!document.getElementById('info-page').classList.contains('on')) document.body.style.overflow='';
+}
+
 function closeInfoPage(noPush = false){
   document.getElementById('info-page').classList.remove('on');
   
@@ -2415,6 +2642,28 @@ async function openPlayer(id, type, season=1, episode=1, noPush=false){
   } catch(e){}
 
   document.getElementById('p-loader-bg').src = poster;
+  
+  // Set logo for loader
+  const loaderLogo = document.getElementById('p-loader-logo');
+  const loaderTitle = document.getElementById('p-loader-title');
+  
+  // Try to get logo from current info page or fetch it
+  let logoUrl = '';
+  try {
+    const imgs = await api(`/${type}/${id}/images`, '&include_image_language=en,null');
+    const logos = (imgs.logos||[]).filter(l=>l.file_path&&l.file_path.endsWith('.png'));
+    if(logos[0]) logoUrl = `https://image.tmdb.org/t/p/w500${logos[0].file_path}`;
+  } catch(e){}
+  
+  if(logoUrl) {
+    loaderLogo.src = logoUrl;
+    loaderLogo.style.display = 'block';
+    loaderTitle.style.display = 'none';
+  } else {
+    loaderLogo.style.display = 'none';
+    loaderTitle.textContent = title;
+    loaderTitle.style.display = 'block';
+  }
   
   updateCont(id, type, season, episode, title, poster);
 
@@ -2472,17 +2721,25 @@ function installAdBlocker() {
   if (_adBlockInstalled) return;
   _adBlockInstalled = true;
 
+  const ALLOWED_DOMAINS = ['dl.vidsrc.vip','screenifyplus.online','vidlink','autoembed','vidsrc','cinesrc.st'];
+
   const _origOpen = window.open.bind(window);
   window.open = function(url, target, features) {
-    if (target === '_blank' && typeof url === 'string' && (
-      url.includes('dl.vidsrc') || url.includes('screenifyplus') || url.includes('vidlink') || url.includes('autoembed') || url.includes('vidsrc')
-    )) {
-      return _origOpen(url, target, features);
+    if (typeof url === 'string') {
+      const isAllowed = ALLOWED_DOMAINS.some(d => url.includes(d));
+      if (isAllowed) return _origOpen(url, target || '_blank', features);
     }
     console.log('[AdBlock] Blocked popup:', url);
     return null;
   };
 
+  // Block touch-triggered navigations (ads that redirect on touchstart/touchend)
+  let _lastTouchTime = 0;
+  document.addEventListener('touchstart', function(e) {
+    _lastTouchTime = Date.now();
+  }, { capture: true, passive: true });
+
+  // Intercept any navigation attempt that happens shortly after a touch on the iframe
   window.addEventListener('beforeunload', function(e) {
     const playerOn = document.getElementById('player-modal')?.classList.contains('on');
     if (playerOn) {
@@ -2492,6 +2749,7 @@ function installAdBlocker() {
     }
   });
 
+  // Block injected overlays / popunder scripts
   const observer = new MutationObserver((mutations) => {
     for (const m of mutations) {
       for (const node of m.addedNodes) {
@@ -2502,7 +2760,8 @@ function installAdBlocker() {
         if (z > 1000 && (pos === 'fixed' || pos === 'absolute') &&
             !node.id?.startsWith('p-') &&
             !node.id?.startsWith('player') &&
-            node.id !== 'toast') {
+            node.id !== 'toast' &&
+            node.id !== 'trailer-modal') {
           console.log('[AdBlock] Removed injected overlay:', node.id || node.className);
           node.remove();
         }
@@ -2510,6 +2769,22 @@ function installAdBlocker() {
     }
   });
   observer.observe(document.body, { childList: true, subtree: false });
+
+  // Kill any script that tries to set location.href from within the page context
+  // by intercepting link clicks that don't originate from our UI
+  document.addEventListener('click', function(e) {
+    const a = e.target.closest('a[href]');
+    if(!a) return;
+    const href = a.getAttribute('href') || '';
+    // Allow internal navigation and our known good domains
+    if(!href || href.startsWith('#') || href.startsWith('javascript')) return;
+    const isAllowed = ALLOWED_DOMAINS.some(d => href.includes(d)) || href.startsWith('/') || href.startsWith(window.location.origin);
+    if(!isAllowed && e.isTrusted === false) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      console.log('[AdBlock] Blocked untrusted link click:', href);
+    }
+  }, { capture: true });
 }
 
 function updateCont(id,type,s,ep,t,p){
@@ -2539,8 +2814,9 @@ function toggleList(id,title,poster,type){
       const nowIn = myList.some(m=>m.id===id);
       if(lb) {
           lb.innerHTML=nowIn?
-             '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> In My List' :
-             '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> My List';
+             '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>' :
+             '<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+          lb.title = nowIn ? 'In My List' : 'My List';
       }
   }
 }
@@ -2570,17 +2846,18 @@ function dlAction(server){
   const s = curP ? curP.season : 1;
   const e = curP ? curP.episode : 1;
   
-  if(server === 'vidsrc_net') {
+  if(server === 'vidsrc_vip') {
      url = type === 'tv' ? `https://dl.vidsrc.vip/tv/${id}/${s}/${e}` : `https://dl.vidsrc.vip/movie/${id}`;
   } else if (server === 'vidsrc_in') {
-     url = type === 'tv' ? `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}?download=1` : `https://vidsrc.cc/v2/embed/movie/${id}?download=1`;
+     url = type === 'tv' ? `https://cinesrc.st/download/tv/${id}?s=${s}&e=${e}` : `https://cinesrc.st/download/movie/${id}`;
   } else { 
      url = type === 'tv' ? `https://dl.vidsrc.vip/tv/${id}/${s}/${e}` : `https://dl.vidsrc.vip/movie/${id}`;
   }
   
-  window.open(url,'_blank');
-  showToast('Opening download server…');
   closeDlModal();
+  showToast('Opening download server…');
+  // Use a small delay after modal closes so the click is trusted
+  setTimeout(() => { window.open(url, '_blank', 'noopener'); }, 80);
 }
 
 function toggleSeasonDropdown(e){
@@ -2615,9 +2892,16 @@ function esc2(s){return s?s.replace(/'/g,"\\'"):'';}
 <footer id="site-footer">
   <div class="footer-inner">
     <div class="footer-logo">SCREENIFY +</div>
-    <p class="footer-legal">By using SCREENIFY +, you agree to our no‑registration, free streaming service and accept that all content is provided by third‑party sources.</p>
+    <p class="footer-legal">By using SCREENIFY +, you agree to our no-registration, free streaming service and accept that all content is provided by third-party sources.</p>
     <p class="footer-legal">You acknowledge that we are not liable for external content and that you are responsible for complying with local laws.</p>
     <p class="footer-legal" style="margin-top:14px">
-      <a href="/cdn-cgi/l/email-protection#e5868a8b91848691a596869780808b8c839c95899096cb8a8b898c8b80" style="color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align:middle;margin-top:-2px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> 
-        <span class="__cf_email__" data-cfemail="f99a96978d989a8db98a9a8b9c9c97909f8089958c8ad796979590979c">[email&#160;protected]</sp
+      <a href="mailto:contact@screenifyplus.online" style="color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align:middle;margin-top:-2px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        contact@screenifyplus.online
+      </a>
+    </p>
+    <a href="https://screenifyplus.online/terms" target="_blank" class="footer-terms-btn">Terms of Service</a>
+  </div>
+</footer>
+</body>
+</html>
