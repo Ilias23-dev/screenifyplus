@@ -172,7 +172,30 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .arr{position:absolute;top:45%;transform:translateY(-50%);background:rgba(10,10,15,.8);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;transition:all .25s;box-shadow:0 6px 25px rgba(0,0,0,.8)}
 .arr:hover{background:var(--red);border-color:var(--red); transform:translateY(-50%) scale(1.05);}.arr.L{left:-18px}.arr.R{right:-18px}
 
-/* ── BECAUSE YOU WATCHED ROW ── */
+/* ── COLLECTION GRID ── */
+.collection-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:16px}
+.col-card{cursor:pointer;border-radius:14px;overflow:hidden;transition:all .25s;position:relative;border:1px solid rgba(255,255,255,0.08)}
+.col-card:hover{transform:scale(1.05) translateY(-4px);box-shadow:0 14px 40px rgba(0,0,0,.85);border-color:var(--red)}
+.col-card img{width:100%;aspect-ratio:2/3;object-fit:cover;background:var(--s2);display:block}
+.col-card-info{padding:10px 10px 4px;font-size:.82rem;font-weight:700;line-height:1.3}
+.col-card-meta{font-size:.7rem;color:var(--muted);padding:0 10px 10px}
+.col-card-current{border-color:var(--red) !important;box-shadow:0 0 0 2px var(--red), 0 10px 30px rgba(255,26,46,0.3) !important;}
+.col-card-current::after{content:'NOW VIEWING';position:absolute;bottom:0;left:0;right:0;background:rgba(255,26,46,0.9);color:#fff;font-size:.6rem;font-weight:800;letter-spacing:1.5px;text-align:center;padding:5px;pointer-events:none;}
+
+
+.cs-card{flex-shrink:0;width:clamp(150px,20vw,240px);border-radius:var(--r);overflow:visible;cursor:pointer;position:relative;z-index:1;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.cs-card:hover{transform:scale(1.06) translateY(-8px);z-index:60;filter:drop-shadow(0 25px 45px rgba(0,0,0,.9)) drop-shadow(0 0 25px var(--glow2))}
+.cs-cimg{border-radius:var(--r);overflow:hidden;aspect-ratio:2/3;background:var(--s2);position:relative;border:1px solid rgba(255,255,255,0.08);transition:border-color .3s;}
+.cs-card:hover .cs-cimg{border-color:var(--red);}
+.cs-cimg img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.cs-card:hover .cs-cimg img{transform:scale(1.05)}
+.cs-badge{position:absolute;top:10px;left:10px;background:rgba(255,26,46,0.92);backdrop-filter:blur(8px);color:#fff;font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:5px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 4px 12px rgba(255,26,46,0.4);}
+.cs-date-badge{position:absolute;top:10px;right:10px;background:rgba(10,10,18,0.85);backdrop-filter:blur(10px);color:var(--gold);font-size:.7rem;font-weight:800;padding:5px 10px;border-radius:8px;border:1px solid rgba(255,215,0,0.3);text-align:center;line-height:1.3;}
+.cs-titlebar{position:absolute;bottom:0;left:0;right:0;padding:40px 12px 12px;background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.6) 50%,transparent 100%);pointer-events:none}
+.cs-titlebar-name{font-size:.85rem;font-weight:700;line-height:1.25;color:#fff;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cs-titlebar-date{font-size:.7rem;color:var(--gold);font-weight:700;margin-top:4px;display:block}
+
+
 .byw-row { margin-bottom:48px; padding:0 3%; }
 .byw-hdr { margin-bottom:16px; padding: 0 4px;}
 .byw-hdr-label { font-size:.7rem; font-weight:800; letter-spacing:2.5px; text-transform:uppercase; color:var(--red); margin-bottom:6px; display:flex; align-items:center; gap:8px;}
@@ -994,6 +1017,12 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
           <div class="trailers-grid" id="ip-trailers-grid"></div>
         </div>
 
+        <!-- Collection section (after trailers) -->
+        <div class="ip-sec" id="ip-collection-sec" style="display:none">
+          <div class="ip-sec-title" id="ip-collection-title">The Complete Collection</div>
+          <div class="collection-grid" id="ip-collection-grid"></div>
+        </div>
+
         <div class="ip-sec"><div class="ip-sec-title">Genres</div><div class="genre-pills" id="ip-genres"></div></div>
         <div class="ip-sec" id="ip-seasons-sec" style="display:none">
           <div class="ip-sec-title">Episodes</div>
@@ -1213,12 +1242,24 @@ const KEY='8265bd1679663a7ea12ac168da84d2e8',
 
 /* ════════════════════════════ SERVERS ════════════════════════════ */
 const SERVERS = {
+  cinesrc:  { 
+    label: 'CineSrc (Fast + Clean) ★', 
+    movie: id => `https://cinesrc.st/embed/movie/${id}`, 
+    tv: (id,s,e) => `https://cinesrc.st/embed/tv/${id}?s=${s}&e=${e}` 
+  },
+
   vidking:   { label:'VidKing (AutoPlay+Subs) ★', movie: id=>`https://www.vidking.net/embed/movie/${id}?color=${COL}&autoPlay=true&nextEpisode=true&episodeSelector=true&sub=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr`, tv: (id,s,e)=>`https://www.vidking.net/embed/tv/${id}/${s}/${e}?color=${COL}&autoPlay=true&nextEpisode=true&episodeSelector=true&sub=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr` },
+
   videasy:   { label:'Videasy (No Ads)', movie: id=>`https://player.videasy.net/movie/${id}?color=${COL}&nextbutton=true&subs=true&nextEpisode=true&episodeSelector=true`,  tv: (id,s,e)=>`https://player.videasy.net/tv/${id}/${s}/${e}?color=${COL}&nextbutton=true&subs=true&nextEpisode=true&episodeSelector=true` },
+
   vidsrccc:  { label:'VidSrc CC (No Ads)', movie: id=>`https://vidsrc.cc/v2/embed/movie/${id}?autoPlay=true`, tv: (id,s,e)=>`https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}?autoPlay=true` },
+
   vidsrcxyz: { label:'VidSrc XYZ (No Ads)', movie: id=>`https://vidsrc.xyz/embed/movie?tmdb=${id}`, tv: (id,s,e)=>`https://vidsrc.xyz/embed/tv?tmdb=${id}&season=${s}&episode=${e}` },
+
   vidsrcme:  { label:'VidSrc Me (Few Ads)', movie: id=>`https://vidsrc.me/embed/movie?tmdb=${id}`, tv: (id,s,e)=>`https://vidsrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${e}` },
+
   vidlink:   { label:'VidLink (Few Ads)',  movie: id=>`https://vidlink.pro/movie/${id}?autoplay=true&title=false&primaryColor=${COL}&iconColor=${COL}&subs=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr,nl,pl,sv,da,fi,no,cs,ro`, tv: (id,s,e)=>`https://vidlink.pro/tv/${id}/${s}/${e}?autoplay=true&title=false&primaryColor=${COL}&iconColor=${COL}&subs=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr,nl,pl,sv,da,fi,no,cs,ro` },
+
   autoembed: { label:'AutoEmbed (Few Ads)', movie: id=>`https://autoembed.co/movie/tmdb/${id}`, tv: (id,s,e)=>`https://autoembed.co/tv/tmdb/${id}-${s}-${e}` },
 };
 
@@ -1227,8 +1268,8 @@ let myList   = JSON.parse(localStorage.getItem('lwa_l')||'[]');
 let contW    = JSON.parse(localStorage.getItem('lwa_c')||'[]').map(x=>({...x,id:+x.id}));
 let profile  = JSON.parse(localStorage.getItem('lwa_profile')||'{"name":"","tagline":"","color":"#ff1a2e","photo":""}');
 
-let curServer = localStorage.getItem('lwa_server') || 'vidking';
-if(!SERVERS[curServer]) { curServer = 'vidking'; localStorage.setItem('lwa_server','vidking'); }
+let curServer = localStorage.getItem('lwa_server') || 'cinesrc';
+if(!SERVERS[curServer]) { curServer = 'cinesrc'; localStorage.setItem('lwa_server','cinesrc'); }
 
 const PM_COLORS = ['#ff1a2e','#ff6b35','#ffd700','#2dff8e','#00cfff','#a78bfa','#f472b6','#fb923c','#34d399','#ffffff'];
 
@@ -1477,7 +1518,7 @@ function saveProfile(){
 const HUBS = {
   home: {
     hero: '/trending/all/week',
-    rows: ['cont', 'byw', 'tr_all', 'top10_m', 'top10_t', 'providers', 'pop_mov', 'pop_tv', 'action', 'comedy', 'horror']
+    rows: ['cont', 'byw', 'tr_all', 'top10_m', 'top10_t', 'coming_soon', 'providers', 'pop_mov', 'pop_tv', 'action', 'comedy', 'horror']
   },
   movies: {
     hero: '/trending/movie/week',
@@ -1503,6 +1544,7 @@ const ALL_ROWS = {
   top10_m: { id:'top10_m', title:'Top 10 Movies Today', p:'/movie/popular', t:'movie', top10:true },
   top10_t: { id:'top10_t', title:'Top 10 Shows Today', p:'/tv/popular', t:'tv', top10:true },
   providers: { id:'providers', title:'Streaming Services', special:'providers' },
+  coming_soon: { id:'coming_soon', title:'Coming Soon', special:'coming_soon' },
   pop_mov: { id:'pop_mov', title:'Popular Movies', p:'/movie/popular', t:'movie' },
   pop_tv: { id:'pop_tv', title:'Popular TV Shows', p:'/tv/popular', t:'tv' },
   action: { id:'action', title:'Action & Adventure', p:'/discover/movie', x:'&with_genres=28&sort_by=popularity.desc', t:'movie' },
@@ -1606,6 +1648,8 @@ async function loadHub(hubId, noPush = false) {
        rowAction = '';
     } else if (rCfg.special === 'providers') {
        rowAction = `<button onclick="openAllProviders()">See all <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>`;
+    } else if (rCfg.special === 'coming_soon') {
+       rowAction = '';
     }
 
     if(rCfg.top10){
@@ -1624,11 +1668,24 @@ async function loadHub(hubId, noPush = false) {
         <div class="byw-hdr">
           <div class="byw-hdr-label"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Recommended for you</div>
           <div class="byw-hdr-title">Because You Watched</div>
-          <div class="byw-seed-name" id="byw-seed-name-${rCfg.id}" style="color:var(--muted);font-size:.9rem;margin-top:4px"></div>
+          <div style="margin-top:8px;position:relative;display:inline-block;">
+            <div onclick="toggleBYWDD('${rCfg.id}')" style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;padding:5px 0;">
+              <span id="byw-seed-name-${rCfg.id}" style="font-size:.9rem;font-weight:700;color:rgba(255,255,255,0.85);text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(255,26,46,0.6);"></span>
+              <svg id="byw-dd-arrow-${rCfg.id}" width="16" height="16" fill="none" stroke="var(--red)" stroke-width="2.5" viewBox="0 0 24 24" style="flex-shrink:0;transition:transform .25s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div id="byw-dd-menu-${rCfg.id}" style="display:none;position:absolute;top:calc(100% + 6px);left:0;min-width:260px;max-height:320px;overflow-y:auto;background:rgba(12,12,18,0.97);backdrop-filter:blur(30px);border:1px solid rgba(255,26,46,0.35);border-radius:16px;z-index:300;box-shadow:0 16px 50px rgba(0,0,0,0.85);animation:ddIn .18s ease;"></div>
+          </div>
         </div>
         <div class="row-wrap">
           <button class="arr L" onclick="scrollR('${rCfg.id}',-1)">&#8249;</button>
           <div class="byw-track" id="rt-${rCfg.id}">${skels(10,'')}</div>
+          <button class="arr R" onclick="scrollR('${rCfg.id}',1)">&#8250;</button>
+        </div>`;
+    } else if(rCfg.special === 'coming_soon') {
+      el.innerHTML=`<div class="row-hdr"><div class="row-hdr-left"><span>${rCfg.title}</span></div>${rowAction}</div>
+        <div class="row-wrap">
+          <button class="arr L" onclick="scrollR('${rCfg.id}',-1)">&#8249;</button>
+          <div class="row-track" id="rt-${rCfg.id}">${skels(8,'aspect-ratio:2/3')}</div>
           <button class="arr R" onclick="scrollR('${rCfg.id}',1)">&#8250;</button>
         </div>`;
     } else {
@@ -1670,11 +1727,12 @@ async function loadHub(hubId, noPush = false) {
   cfg.rows.forEach(rId => {
     const rCfg = ALL_ROWS[rId];
     if(rCfg && rCfg.special === 'byw') loadBYWRow(rCfg);
+    if(rCfg && rCfg.special === 'coming_soon') loadComingSoonRow();
   });
 
   await Promise.all(cfg.rows.map(async rId => {
     const rCfg = ALL_ROWS[rId];
-    if(rCfg.special === 'cont' || rCfg.special === 'providers' || rCfg.special === 'byw') return;
+    if(rCfg.special === 'cont' || rCfg.special === 'providers' || rCfg.special === 'byw' || rCfg.special === 'coming_soon') return;
     try{
       const d = await api(rCfg.p, (rCfg.x||'')+'&page=1');
       const items = (d.results||[]).filter(x=>x.poster_path && !/hentai/i.test(x.title||x.name||x.original_title||x.original_name||''));
@@ -2291,7 +2349,7 @@ function scrollR(id,dir){
 }
 
 /* ════════════════════════════ BECAUSE YOU WATCHED ════════════════════════════ */
-async function loadBYWRow(rCfg) {
+async function loadBYWRow(rCfg, forceSeedId) {
   if(!contW.length) return;
 
   let candidates = [...contW];
@@ -2299,13 +2357,44 @@ async function loadBYWRow(rCfg) {
   else if(rCfg.byType === 'tv' || rCfg.byType === 'anime') candidates = candidates.filter(x => x.type === 'tv');
   if(!candidates.length) return;
 
-  const seed = candidates[Math.floor(Math.random() * Math.min(candidates.length, 5))];
+  let seed;
+  if(forceSeedId) {
+    seed = candidates.find(x => +x.id === +forceSeedId) || candidates[0];
+  } else {
+    seed = candidates[0]; // always use most recently watched
+  }
   const seedType = seed.type;
   const seedId = seed.id;
 
   const el = document.getElementById('row-' + rCfg.id);
   const track = document.getElementById('rt-' + rCfg.id);
   if(!el || !track) return;
+
+  // Build seed dropdown HTML (all candidates listed)
+  const buildSeedDD = (currentSeedId) => {
+    return candidates.slice(0,10).map(it => {
+      const tt = esc(it.title||'Unknown');
+      const sub = it.type==='tv' ? `S${it.s||1}E${it.ep||1}` : 'Movie';
+      const imgSrc = it.poster || '';
+      const isActive = +it.id === +currentSeedId;
+      return `<div onclick="event.stopPropagation();switchBYWSeed('${rCfg.id}',${it.id});closeBYWDD('${rCfg.id}');"
+        style="display:flex;align-items:center;gap:12px;padding:11px 16px;cursor:pointer;transition:background .15s;border-bottom:1px solid rgba(255,255,255,0.05);${isActive?'background:rgba(255,26,46,0.1);':''}"
+        onmouseover="this.style.background='rgba(255,26,46,0.12)'" onmouseout="this.style.background='${isActive?'rgba(255,26,46,0.1)':''}'"
+      >
+        ${imgSrc?`<img src="${imgSrc}" alt="${tt}" style="width:36px;height:54px;object-fit:cover;border-radius:6px;flex-shrink:0;border:1px solid rgba(255,255,255,0.1)">`:
+        `<div style="width:36px;height:54px;background:var(--s3);border-radius:6px;flex-shrink:0;"></div>`}
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:.83rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;${isActive?'color:#fff;':''}">${tt}</div>
+          <div style="font-size:.7rem;color:var(--muted);margin-top:2px">${sub}</div>
+        </div>
+        ${isActive?'<svg width="14" height="14" fill="none" stroke="var(--red)" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>':''}
+      </div>`;
+    }).join('');
+  };
+
+  // Update header
+  const hdrTitle = el.querySelector('.byw-hdr');
+  // Header structure already built in template — just update seed name & dropdown content below
 
   try {
     const [recData, simData, seedDet] = await Promise.all([
@@ -2336,9 +2425,12 @@ async function loadBYWRow(rCfg) {
     const seedPoster = seedDet.poster_path ? `${MD}${seedDet.poster_path}` : '';
     const nameEl = document.getElementById('byw-seed-name-' + rCfg.id);
     if(nameEl) nameEl.innerHTML = seedPoster
-      ? `<span style="display:inline-flex;align-items:center;gap:10px"><img src="${seedPoster}" style="width:28px;height:42px;border-radius:6px;object-fit:cover;vertical-align:middle;border:1px solid rgba(255,255,255,0.15)"> <span style="color:rgba(255,255,255,0.8)">${esc(seedTitle)}</span></span>`
-      : `<span style="color:rgba(255,255,255,0.7)">${esc(seedTitle)}</span>`;
+      ? `<span style="display:inline-flex;align-items:center;gap:8px"><img src="${seedPoster}" style="width:22px;height:33px;border-radius:4px;object-fit:cover;vertical-align:middle;border:1px solid rgba(255,255,255,0.15)"> ${esc(seedTitle)}</span>`
+      : esc(seedTitle);
 
+    // Update dropdown to mark current
+    const ddMenu = document.getElementById('byw-dd-menu-' + rCfg.id);
+    if(ddMenu) ddMenu.innerHTML = buildSeedDD(seedId);
     track.innerHTML = items.slice(0, 20).map(it => {
       const t = (it.media_type && it.media_type !== 'unknown') ? it.media_type : seedType;
       const name = esc(it.title || it.name || '');
@@ -2358,6 +2450,119 @@ async function loadBYWRow(rCfg) {
 
     el.style.display = 'block';
   } catch(e) {}
+}
+
+function toggleBYWDD(rowId) {
+  const menu = document.getElementById('byw-dd-menu-' + rowId);
+  const arrow = document.getElementById('byw-dd-arrow-' + rowId);
+  if(!menu) return;
+  const isOpen = menu.style.display === 'block';
+  menu.style.display = isOpen ? 'none' : 'block';
+  if(arrow) arrow.style.transform = isOpen ? '' : 'rotate(180deg)';
+}
+
+function closeBYWDD(rowId) {
+  const menu = document.getElementById('byw-dd-menu-' + rowId);
+  const arrow = document.getElementById('byw-dd-arrow-' + rowId);
+  if(menu) menu.style.display = 'none';
+  if(arrow) arrow.style.transform = '';
+}
+
+function switchBYWSeed(rowId, newSeedId) {
+  // find the rCfg
+  const rCfg = Object.values(ALL_ROWS).find(r => r.id === rowId);
+  if(rCfg) loadBYWRow(rCfg, newSeedId);
+}
+
+// Close BYW dropdowns when clicking outside
+document.addEventListener('click', function(e) {
+  document.querySelectorAll('[id^="byw-dd-menu-"]').forEach(menu => {
+    if(menu.style.display === 'block') {
+      const rowId = menu.id.replace('byw-dd-menu-','');
+      const wrap = menu.closest('[onclick]') || menu.parentElement;
+      if(!menu.contains(e.target) && !menu.parentElement.contains(e.target)) {
+        closeBYWDD(rowId);
+      }
+    }
+  });
+});
+
+
+/* ════════════════════════════ COMING SOON ════════════════════════════ */
+async function loadComingSoonRow() {
+  const track = document.getElementById('rt-coming_soon');
+  const row = document.getElementById('row-coming_soon');
+  if(!track || !row) return;
+
+  try {
+    const today = new Date().toISOString().slice(0,10);
+    const future = new Date(Date.now() + 90*24*60*60*1000).toISOString().slice(0,10);
+
+    const [movData, tvData] = await Promise.all([
+      api('/discover/movie', `&primary_release_date.gte=${today}&primary_release_date.lte=${future}&sort_by=primary_release_date.asc&with_release_type=3|2`),
+      api('/discover/tv', `&first_air_date.gte=${today}&first_air_date.lte=${future}&sort_by=first_air_date.asc`)
+    ]);
+
+    let items = [
+      ...(movData.results||[]).map(x=>({...x,_type:'movie'})),
+      ...(tvData.results||[]).map(x=>({...x,_type:'tv'}))
+    ].filter(x => x.poster_path && !/hentai/i.test(x.title||x.name||''));
+
+    // Sort by release date ascending
+    items.sort((a,b) => {
+      const da = new Date(a.release_date||a.first_air_date||'9999');
+      const db = new Date(b.release_date||b.first_air_date||'9999');
+      return da - db;
+    });
+
+    // Remove duplicates
+    const seen = new Set();
+    items = items.filter(x => { if(seen.has(+x.id)) return false; seen.add(+x.id); return true; });
+
+    if(!items.length) { row.style.display='none'; return; }
+
+    const fmt = d => {
+      const dt = new Date(d);
+      if(isNaN(dt)) return '';
+      return dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    };
+
+    track.innerHTML = items.slice(0,20).map(it => {
+      const rd = it.release_date || it.first_air_date || '';
+      const dateStr = fmt(rd);
+      const tt = esc(it.title||it.name||'');
+      return `<div class="cs-card" onclick="openComingSoonInfo(${it.id},'${it._type}')">
+        <div class="cs-cimg">
+          <img loading="lazy" src="${MD}${it.poster_path}" alt="${tt}" onerror="this.style.background='var(--s3)'">
+          <div class="cs-badge">Coming Soon</div>
+          ${dateStr?`<div class="cs-date-badge">${dateStr.replace(' ','\n')}</div>`:''}
+          <div class="cs-titlebar">
+            <span class="cs-titlebar-name">${tt}</span>
+            ${dateStr?`<span class="cs-titlebar-date">📅 ${dateStr}</span>`:''}
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+
+    row.style.display = 'block';
+  } catch(e) { console.error(e); }
+}
+
+async function openComingSoonInfo(id, type) {
+  // Open info page but override the play button to show "Coming Soon"
+  await openInfoPage(id, type);
+  // After info page opens, replace play button
+  setTimeout(() => {
+    const playBtn = document.getElementById('ip-btn-play');
+    if(playBtn) {
+      playBtn.innerHTML = `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Coming Soon`;
+      playBtn.style.background = 'rgba(255,255,255,0.08)';
+      playBtn.style.border = '1px solid rgba(255,255,255,0.2)';
+      playBtn.style.boxShadow = 'none';
+      playBtn.style.cursor = 'default';
+      playBtn.onclick = (e) => { e.preventDefault(); showToast('Not yet available — coming soon!'); };
+    }
+  }, 600);
 }
 
 
@@ -2388,6 +2593,8 @@ async function openInfoPage(id, type, noPush = false){
   const dirElReset = document.getElementById('ip-director'); if(dirElReset) dirElReset.innerHTML='';
   // Reset trailers section
   const trSecReset = document.getElementById('ip-trailers-sec'); if(trSecReset) trSecReset.style.display='none';
+  // Reset collection section
+  const colSecReset = document.getElementById('ip-collection-sec'); if(colSecReset) colSecReset.style.display='none';
   
   // Show Server Change Alert (only after user has watched something)
   if(contW.length > 0) {
@@ -2479,6 +2686,62 @@ async function openInfoPage(id, type, noPush = false){
       trailersSec.style.display='block';
     } else if(trailersSec){
       trailersSec.style.display='none';
+    }
+
+    // Collection section (movies with belongs_to_collection, or TV franchise)
+    const colSec = document.getElementById('ip-collection-sec');
+    const colGrid = document.getElementById('ip-collection-grid');
+    const colTitle = document.getElementById('ip-collection-title');
+    if(colSec && colGrid) {
+      colSec.style.display = 'none';
+      colGrid.innerHTML = '';
+      if(type === 'movie' && det.belongs_to_collection) {
+        try {
+          const colData = await api(`/collection/${det.belongs_to_collection.id}`);
+          const colParts = (colData.parts || []).filter(x => x.poster_path);
+          colParts.sort((a,b) => {
+            const da = new Date(a.release_date||0), db = new Date(b.release_date||0);
+            return da - db;
+          });
+          if(colParts.length > 1) {
+            if(colTitle) colTitle.textContent = colData.name || 'The Complete Collection';
+            colGrid.innerHTML = colParts.map(it => {
+              const isCurrent = +it.id === +id;
+              const yy = (it.release_date||'').slice(0,4);
+              const rat = it.vote_average ? (it.vote_average).toFixed(1) : '';
+              return `<div class="col-card${isCurrent?' col-card-current':''}" onclick="openInfoPage(${it.id},'movie')">
+                <img loading="lazy" src="${MD}${it.poster_path}" alt="${esc(it.title||'')}" onerror="this.style.background='var(--s2)'">
+                <div class="col-card-info">${esc(it.title||'')}</div>
+                <div class="col-card-meta">${yy}${rat?' · ★'+rat:''}</div>
+              </div>`;
+            }).join('');
+            colSec.style.display = 'block';
+          }
+        } catch(e) {}
+      } else if(type === 'tv') {
+        // For TV: check for franchise keywords — try to get related shows by same creator/keyword
+        try {
+          const kwData = await api(`/tv/${id}/keywords`);
+          const kwIds = (kwData.results||[]).slice(0,3).map(k=>k.id).join(',');
+          if(kwIds) {
+            const frData = await api('/discover/tv', `&with_keywords=${kwIds}&sort_by=first_air_date.asc&page=1`);
+            const frParts = (frData.results||[]).filter(x => x.poster_path && x.id !== id).slice(0,8);
+            if(frParts.length >= 2) {
+              if(colTitle) colTitle.textContent = 'More in This Universe';
+              colGrid.innerHTML = frParts.map(it => {
+                const yy = (it.first_air_date||'').slice(0,4);
+                const rat = it.vote_average ? (it.vote_average).toFixed(1) : '';
+                return `<div class="col-card" onclick="openInfoPage(${it.id},'tv')">
+                  <img loading="lazy" src="${MD}${it.poster_path}" alt="${esc(it.name||'')}" onerror="this.style.background='var(--s2)'">
+                  <div class="col-card-info">${esc(it.name||'')}</div>
+                  <div class="col-card-meta">${yy}${rat?' · ★'+rat:''}</div>
+                </div>`;
+              }).join('');
+              colSec.style.display = 'block';
+            }
+          }
+        } catch(e) {}
+      }
     }
     
     // Hero backdrop only (no autoplay trailer in hero)
@@ -2895,13 +3158,8 @@ function esc2(s){return s?s.replace(/'/g,"\\'"):'';}
     <p class="footer-legal">By using SCREENIFY +, you agree to our no-registration, free streaming service and accept that all content is provided by third-party sources.</p>
     <p class="footer-legal">You acknowledge that we are not liable for external content and that you are responsible for complying with local laws.</p>
     <p class="footer-legal" style="margin-top:14px">
-      <a href="mailto:contact@screenifyplus.online" style="color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+      <a href="/cdn-cgi/l/email-protection#7f1c10110b1e1c0b3f0c1c0d1a1a111619060f130a0c5110111316111a" style="color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align:middle;margin-top:-2px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        contact@screenifyplus.online
+        <span class="__cf_email__" data-cfemail="a2c1cdccd6c3c1d6e2d1c1d0c7c7cccbc4dbd2ced7d18ccdcccecbccc7">[email&#160;protected]</span>
       </a>
-    </p>
-    <a href="https://screenifyplus.online/terms" target="_blank" class="footer-terms-btn">Terms of Service</a>
-  </div>
-</footer>
-</body>
-</html>
+ 
