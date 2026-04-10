@@ -739,11 +739,12 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
   .ip-details-panel { display: none !important; }
   .ip-mobile-details { display: block !important; }
   /* MOBILE ACTION BUTTONS: Play full width, rest in a row */
-  .ip-actions { display:grid; grid-template-columns:1fr auto auto auto; gap:8px; }
+  .ip-actions { display:grid; grid-template-columns:1fr auto auto auto auto; gap:8px; }
   .ip-btn-play { grid-column: 1 / 2; justify-content:center; padding:15px; font-size:1rem; }
   .ip-btn-dl, .ip-btn-list, .ip-btn-share {
       padding:14px 14px; gap:0; border-radius:12px; justify-content:center;
   }
+  .ip-btn-lang { padding:14px 10px; border-radius:12px; }
   .ip-btn-dl svg, .ip-btn-list svg, .ip-btn-share svg { width:20px; height:20px; }
   .ip-mute-btn { top: 16px; right: 70px; width: 38px; height: 38px; }
   .player-close { top: 12px; left: 12px; width: 40px; height: 40px;}
@@ -785,6 +786,26 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 }
 .btn-back:hover{background:rgba(255,255,255,.15); border-color:#fff; transform:translateX(-4px);}
 
+/* ── AMAZIGH FLAG NAV BTN ── */
+.n-btn-amazigh{background:none;border:none;padding:4px 6px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;opacity:.85;}
+.n-btn-amazigh:hover{opacity:1;background:rgba(255,255,255,.1);transform:scale(1.08);}
+.n-btn-amazigh img{width:24px;height:24px;object-fit:contain;border-radius:3px;}
+
+/* ── LANG DROPDOWN ON INFO PAGE ── */
+.ip-lang-wrap{position:relative;display:inline-flex;align-items:center;}
+.ip-btn-lang{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:14px 14px;border-radius:14px;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;flex:0;white-space:nowrap;}
+.ip-btn-lang:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.4);}
+.ip-btn-lang .lang-flag{font-size:1.1rem;line-height:1;}
+.ip-btn-lang .lang-chevron{width:14px;height:14px;transition:transform .2s;opacity:.7;flex-shrink:0;}
+.ip-lang-wrap.open .lang-chevron{transform:rotate(180deg);}
+.ip-lang-menu{position:absolute;bottom:calc(100% + 8px);right:0;background:rgba(14,14,20,0.97);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,.15);border-radius:14px;overflow:hidden;z-index:200;box-shadow:0 16px 50px rgba(0,0,0,.8);display:none;animation:ddIn .18s ease;min-width:180px;}
+.ip-lang-wrap.open .ip-lang-menu{display:block;}
+.ip-lang-item{display:flex;align-items:center;gap:10px;padding:13px 16px;font-size:.9rem;font-weight:700;color:var(--muted);cursor:pointer;transition:all .18s;border-bottom:1px solid rgba(255,255,255,0.05);}
+.ip-lang-item:last-child{border-bottom:none;}
+.ip-lang-item:hover,.ip-lang-item.on{background:rgba(255,255,255,.08);color:#fff;}
+.ip-lang-item.on{color:var(--red);}
+.ip-lang-item .li-flag{font-size:1.2rem;}
+
 </style>
 </head>
 <body>
@@ -797,12 +818,19 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
       <li><a id="nl-tv"  onclick="loadHub('tv')">TV Shows</a></li>
       <li><a id="nl-mov" onclick="loadHub('movies')">Movies</a></li>
       <li><a id="nl-ani" onclick="loadHub('anime')">Anime</a></li>
+      <li><a id="nl-livetv" href="https://screenifyplus.online/tv" target="_blank" style="display:flex;align-items:center;gap:6px;">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" style="flex-shrink:0;color:var(--red)"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        Live TV
+      </a></li>
       <li><a id="nl-list" onclick="goList()">My List</a></li>
     </ul>
   </div>
   <div class="n-right">
+    <button class="n-btn-amazigh" title="ⵣ Amazigh" onclick="showToast('ⵣ Amazigh Pride! 🏔️')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Berber_flag.svg/1920px-Berber_flag.svg.png?_=20231128195408" alt="Amazigh Flag">
+    </button>
     <button class="n-btn" onclick="openAppInfo()" title="How to use">
-      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><text x="12" y="16.5" text-anchor="middle" font-size="13" font-weight="700" font-family="Georgia,serif" fill="currentColor" stroke="none">?</text></svg>
     </button>
     <button class="n-btn" onclick="openSearchPage()" title="Search Actors & Titles">
       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -986,6 +1014,16 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
         <button class="ip-btn-share" onclick="shareTitle()" style="flex:0">
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
         </button>
+        <div class="ip-lang-wrap" id="ip-lang-wrap">
+          <button class="ip-btn-lang" id="ip-lang-btn" onclick="toggleIpLangMenu(event)" title="Audio Language">
+            <span class="lang-flag" id="ip-lang-flag">🇬🇧</span>
+            <svg class="lang-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="ip-lang-menu" id="ip-lang-menu">
+            <div class="ip-lang-item on" data-lang="en" onclick="selectIpLang('en')"><span class="li-flag">🇬🇧</span> English</div>
+            <div class="ip-lang-item" data-lang="fr" onclick="selectIpLang('fr')"><span class="li-flag">🇫🇷</span> Français</div>
+          </div>
+        </div>
       </div>
     </div>
     <button class="ip-mute-btn" id="ip-mute-btn" onclick="toggleHeroMute()">
@@ -1156,6 +1194,32 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
   </div>
 </div>
 
+<!-- Language Picker Modal -->
+<div class="modal-overlay" id="lang-modal" onclick="if(event.target===this)closeLangModal()">
+  <div class="modal-box glass-panel" style="max-width:380px;">
+    <div style="font-size:2rem;margin-bottom:10px;text-align:center;">🎬</div>
+    <div class="modal-title" style="font-size:1.6rem;">Audio Language</div>
+    <div class="modal-msg">Choose the audio language for this title</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <button id="lang-en-btn" class="modal-btn-secondary" style="padding:15px 20px;font-size:1rem;font-weight:800;display:flex;align-items:center;gap:14px;border-radius:16px;" onclick="confirmLang('en')">
+        <span style="font-size:1.6rem;line-height:1;">🇬🇧</span>
+        <div style="text-align:left;">
+          <div style="color:#fff;font-size:.95rem;font-weight:800;">English</div>
+          <div style="color:var(--muted);font-size:.72rem;font-weight:500;margin-top:2px;">Default — your selected server</div>
+        </div>
+      </button>
+      <button id="lang-fr-btn" class="modal-btn-secondary" style="padding:15px 20px;font-size:1rem;font-weight:800;display:flex;align-items:center;gap:14px;border-radius:16px;" onclick="confirmLang('fr')">
+        <span style="font-size:1.6rem;line-height:1;">🇫🇷</span>
+        <div style="text-align:left;">
+          <div style="color:#fff;font-size:.95rem;font-weight:800;">Français</div>
+          <div style="color:var(--muted);font-size:.72rem;font-weight:500;margin-top:2px;">French audio &amp; subtitles</div>
+        </div>
+      </button>
+    </div>
+    <button class="modal-btn-secondary" style="width:100%;margin-top:16px;padding:14px;" onclick="closeLangModal()">Cancel</button>
+  </div>
+</div>
+
 <div class="modal-overlay" id="profile-modal" onclick="if(event.target===this)closeProfileModal()">
   <div class="modal-box glass-panel">
     <div class="modal-title">Profile</div>
@@ -1223,6 +1287,9 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
     <li id="mn-a" onclick="loadHub('anime')">
       <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>Anime
     </li>
+    <li id="mn-livetv" onclick="window.open('https://screenifyplus.online/tv','_blank')">
+      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/><circle cx="12" cy="14" r="2" fill="currentColor" stroke="none" opacity=".8"/></svg>Live TV
+    </li>
     <li id="mn-s" onclick="goList()">
       <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>Saved
     </li>
@@ -1262,6 +1329,12 @@ const SERVERS = {
   vidlink:   { label:'VidLink (Few Ads)',  movie: id=>`https://vidlink.pro/movie/${id}?autoplay=true&title=false&primaryColor=${COL}&iconColor=${COL}&subs=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr,nl,pl,sv,da,fi,no,cs,ro`, tv: (id,s,e)=>`https://vidlink.pro/tv/${id}/${s}/${e}?autoplay=true&title=false&primaryColor=${COL}&iconColor=${COL}&subs=en,fr,ar,es,de,ja,ko,pt,it,ru,zh,tr,nl,pl,sv,da,fi,no,cs,ro` },
 
   autoembed: { label:'AutoEmbed (Few Ads)', movie: id=>`https://autoembed.co/movie/tmdb/${id}`, tv: (id,s,e)=>`https://autoembed.co/tv/tmdb/${id}-${s}-${e}` },
+};
+
+// French server — separate, not in SERVERS rotation
+const FRENCH_SERVER = {
+  movie: id => `https://frembed.help/embed/movie/${id}`,
+  tv:    (id,s,e) => `https://frembed.help/embed/serie/${id}?sa=${s}&epi=${e}`
 };
 
 /* ════════════════════════════ STATE ════════════════════════════ */
@@ -1328,7 +1401,7 @@ async function handleRoute(params, isPopState = false) {
   if (params.has('play')) {
      const parts = params.get('play').split('_'); 
      await loadHub(currentHub, true); 
-     openPlayer(parts[1], parts[0], parts[2]||1, parts[3]||1, true);
+     _launchPlayer(parts[1], parts[0], parts[2]||1, parts[3]||1, true, 'en');
   } else if (params.has('v')) {
      const parts = params.get('v').split('_'); 
      await loadHub(currentHub, true); 
@@ -2595,6 +2668,10 @@ async function openInfoPage(id, type, noPush = false){
   });
   document.getElementById('ip-seasons-sec').style.display='none';
   
+  // Init language UI for this title
+  const rememberedLang = titleLangs[id] || 'en';
+  updateInfoPageLangUI(rememberedLang);
+  
   document.getElementById('ip-anim-bg').innerHTML = '';
   document.getElementById('ip-anim-bg').style.backgroundImage = 'none';
   document.getElementById('ip-mute-btn').style.display = 'none';
@@ -2687,6 +2764,9 @@ async function openInfoPage(id, type, noPush = false){
       playBtn.style.boxShadow = 'none';
       playBtn.style.cursor = 'default';
       playBtn.onclick = (e) => { e.preventDefault(); showToast(`🗓️ Releasing ${releaseDate} — not available yet!`); };
+      // Hide lang dropdown for upcoming titles
+      const langWrap = document.getElementById('ip-lang-wrap');
+      if(langWrap) langWrap.style.display = 'none';
     } else {
       // Already released — show Play / Continue
       playBtn.style.background = '';
@@ -2696,6 +2776,10 @@ async function openInfoPage(id, type, noPush = false){
       playBtn.style.cursor = '';
       playBtn.innerHTML = isInCW ? '<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Continue' : '<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Play';
       playBtn.onclick = ()=>openPlayer(id,type);
+      // Show/hide lang dropdown: hide for anime
+      const langWrap = document.getElementById('ip-lang-wrap');
+      const isAnimeTitle = (type === 'tv' && currentHub === 'anime');
+      if(langWrap) langWrap.style.display = isAnimeTitle ? 'none' : 'inline-flex';
     }
     
     const cast=(cred.cast||[]).slice(0,8);
@@ -2911,7 +2995,103 @@ function closeInfoPage(noPush = false){
 }
 
 /* ════════════════════════════ FULLSCREEN PLAYER MODAL ════════════════════════════ */
-async function openPlayer(id, type, season=1, episode=1, noPush=false){
+
+// Pending play params — stored while lang modal is open
+let _pendingPlay = null;
+
+// Language definitions with flags
+const LANG_INFO = {
+  en: { flag: '🇬🇧', label: 'English' },
+  fr: { flag: '🇫🇷', label: 'Français' }
+};
+
+// Per-title language memory: { [id]: 'en'|'fr' }
+let titleLangs = JSON.parse(localStorage.getItem('lwa_tlangs') || '{}');
+
+function saveTitleLang(id, lang) {
+  titleLangs[id] = lang;
+  localStorage.setItem('lwa_tlangs', JSON.stringify(titleLangs));
+}
+
+function updateInfoPageLangUI(lang) {
+  const info = LANG_INFO[lang] || LANG_INFO.en;
+  const flagEl = document.getElementById('ip-lang-flag');
+  if (flagEl) flagEl.textContent = info.flag;
+  // Update active state in dropdown
+  document.querySelectorAll('.ip-lang-item').forEach(item => {
+    item.classList.toggle('on', item.dataset.lang === lang);
+  });
+}
+
+function toggleIpLangMenu(e) {
+  e.stopPropagation();
+  const wrap = document.getElementById('ip-lang-wrap');
+  if (wrap) wrap.classList.toggle('open');
+}
+
+function selectIpLang(lang) {
+  const wrap = document.getElementById('ip-lang-wrap');
+  if (wrap) wrap.classList.remove('open');
+  if (curInfo) saveTitleLang(curInfo.id, lang);
+  updateInfoPageLangUI(lang);
+  showToast(LANG_INFO[lang] ? LANG_INFO[lang].flag + ' ' + LANG_INFO[lang].label + ' selected' : '');
+}
+
+// Close lang dropdown on outside click
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('ip-lang-wrap');
+  if (wrap && !wrap.contains(e.target)) wrap.classList.remove('open');
+});
+
+function openPlayer(id, type, season=1, episode=1, noPush=false) {
+  // Anime: French not available — skip language picker
+  const isAnime = (type === 'tv' && currentHub === 'anime') ||
+                  (curInfo && curInfo.type === 'tv' && currentHub === 'anime');
+
+  if(isAnime) {
+    _launchPlayer(id, type, season, episode, noPush, 'en');
+    return;
+  }
+
+  // Check if we have a remembered language for this title
+  const remembered = titleLangs[id];
+  if (remembered) {
+    _launchPlayer(id, type, season, episode, noPush, remembered);
+    return;
+  }
+
+  // Show language picker
+  _pendingPlay = { id, type, season: +season, episode: +episode, noPush };
+
+  // Update modal to show last-used language highlighted if any
+  document.querySelectorAll('#lang-modal .modal-btn-secondary[id^="lang-"]').forEach(btn => {
+    btn.style.border = '';
+    btn.style.borderColor = '';
+  });
+
+  const frBtn = document.getElementById('lang-fr-btn');
+  if(frBtn) frBtn.style.display = 'flex';
+
+  document.getElementById('lang-modal').classList.add('on');
+}
+
+function closeLangModal() {
+  document.getElementById('lang-modal').classList.remove('on');
+  _pendingPlay = null;
+}
+
+function confirmLang(lang) {
+  document.getElementById('lang-modal').classList.remove('on');
+  if(!_pendingPlay) return;
+  const { id, type, season, episode, noPush } = _pendingPlay;
+  _pendingPlay = null;
+  // Remember this choice for the title
+  saveTitleLang(id, lang);
+  updateInfoPageLangUI(lang);
+  _launchPlayer(id, type, season, episode, noPush, lang);
+}
+
+async function _launchPlayer(id, type, season=1, episode=1, noPush=false, lang='en'){
   const searchOverlay = document.getElementById('search-overlay');
   if(searchOverlay.classList.contains('open')) searchOverlay.classList.remove('open');
 
@@ -2939,11 +3119,9 @@ async function openPlayer(id, type, season=1, episode=1, noPush=false){
 
   document.getElementById('p-loader-bg').src = poster;
   
-  // Set logo for loader
   const loaderLogo = document.getElementById('p-loader-logo');
   const loaderTitle = document.getElementById('p-loader-title');
   
-  // Try to get logo from current info page or fetch it
   let logoUrl = '';
   try {
     const imgs = await api(`/${type}/${id}/images`, '&include_image_language=en,null');
@@ -2963,7 +3141,17 @@ async function openPlayer(id, type, season=1, episode=1, noPush=false){
   
   updateCont(id, type, season, episode, title, poster);
 
-  iframe.src = buildSrc(type, id, season, episode);
+  // Choose source based on language
+  let src;
+  if(lang === 'fr') {
+    src = type === 'tv'
+      ? FRENCH_SERVER.tv(id, season, episode)
+      : FRENCH_SERVER.movie(id);
+  } else {
+    src = buildSrc(type, id, season, episode);
+  }
+
+  iframe.src = src;
   startLoaderFallback();
 }
 
@@ -3232,8 +3420,13 @@ function esc2(s){return s?s.replace(/'/g,"\\'"):'';}
     <p class="footer-legal">By using SCREENIFY +, you agree to our no-registration, free streaming service and accept that all content is provided by third-party sources.</p>
     <p class="footer-legal">You acknowledge that we are not liable for external content and that you are responsible for complying with local laws.</p>
     <p class="footer-legal" style="margin-top:14px">
-      <a href="/cdn-cgi/l/email-protection#7f1c10110b1e1c0b3f0c1c0d1a1a111619060f130a0c5110111316111a" style="color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+      <a href="mailto:contact@screenifyplus.online" style="color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align:middle;margin-top:-2px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        <span class="__cf_email__" data-cfemail="a2c1cdccd6c3c1d6e2d1c1d0c7c7cccbc4dbd2ced7d18ccdcccecbccc7">[email&#160;protected]</span>
+        contact@screenifyplus.online
       </a>
- 
+     </p>
+    <a href="https://screenifyplus.online/terms" target="_blank" class="footer-terms-btn">Terms of Use</a>
+  </div>
+</footer>
+</body>
+</html>
