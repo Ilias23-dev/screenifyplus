@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>SCREENIFY +</title>
 <link rel="icon" type="image/png" sizes="192x192" href="https://h.top4top.io/p_37379uc361.png">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
   --red:#ff1a2e;
@@ -102,7 +102,7 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 #hero{height:90vh;min-height:560px;position:relative;overflow:hidden;display:flex;align-items:flex-end;padding-bottom:90px}
 #hero-bg{position:absolute;inset:0;background-size:cover;background-position:center 20%; transition: opacity 0.5s ease, transform 12s ease; transform: scale(1.0);}
 #hero:hover #hero-bg{transform: scale(1.05);}
-.hero-grad{position:absolute;inset:0;background:linear-gradient(to top,#050507 0%,rgba(5,5,7,.65) 40%,rgba(5,5,7,.08) 100%),linear-gradient(to right,rgba(5,5,7,.95) 0%,rgba(5,5,7,.4) 45%,transparent 100%); pointer-events: none;}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(to top,#050507 0%,rgba(5,5,7,.4) 28%,rgba(5,5,7,0) 65%),linear-gradient(to right,rgba(5,5,7,.85) 0%,rgba(5,5,7,.2) 35%,transparent 65%); pointer-events: none;}
 .hero-c{position:relative;z-index:2;padding:0 5%;max-width:680px}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,26,46,.15);border:1px solid rgba(255,26,46,.4);backdrop-filter:blur(12px);color:var(--red);font-size:.65rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;padding:6px 14px;border-radius:24px;margin-bottom:16px; box-shadow: 0 4px 15px rgba(255,26,46,0.1);}
 .hero-badge span{width:6px;height:6px;border-radius:50%;background:var(--red);animation:blink 1.5s infinite}
@@ -183,6 +183,7 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .col-card-current::after{content:'NOW VIEWING';position:absolute;bottom:0;left:0;right:0;background:rgba(255,26,46,0.9);color:#fff;font-size:.6rem;font-weight:800;letter-spacing:1.5px;text-align:center;padding:5px;pointer-events:none;}
 
 
+.row-coming-soon-title{font-family:'Cinzel Decorative',cursive !important;font-size:1.2rem !important;letter-spacing:2px !important;background:linear-gradient(135deg,#ffd700,#ff6b35,#ff1a2e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:none;filter:drop-shadow(0 0 12px rgba(255,107,53,0.4));}
 .cs-card{flex-shrink:0;width:clamp(150px,20vw,240px);border-radius:var(--r);overflow:visible;cursor:pointer;position:relative;z-index:1;transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
 .cs-card:hover{transform:scale(1.06) translateY(-8px);z-index:60;filter:drop-shadow(0 25px 45px rgba(0,0,0,.9)) drop-shadow(0 0 25px var(--glow2))}
 .cs-cimg{border-radius:var(--r);overflow:hidden;aspect-ratio:2/3;background:var(--s2);position:relative;border:1px solid rgba(255,255,255,0.08);transition:border-color .3s;}
@@ -539,8 +540,8 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .ip-hero{position:relative;width:100%;min-height:clamp(340px,56vw,680px);background:#000;overflow:hidden;display:flex;align-items:flex-end;}
 .ip-anim-bg{position:absolute;inset:0;width:100%;height:100%;background-size:cover;background-position:center 20%;animation:kenBurns 12s ease-in-out infinite alternate;display:block;}
 @keyframes kenBurns{from{transform:scale(1)}to{transform:scale(1.06) translate(-2%,-2%)}}
-/* dark overlay - heavy on left for text, lighter on right */
-.ip-vgrad{position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,rgba(5,5,7,.7) 35%,rgba(5,5,7,.25) 70%,rgba(5,5,7,.1) 100%),linear-gradient(to right,rgba(5,5,7,.9) 0%,rgba(5,5,7,.55) 45%,rgba(5,5,7,.1) 100%);pointer-events:none;z-index:2;}
+/* dark overlay - only bottom for text legibility, top stays bright */
+.ip-vgrad{position:absolute;inset:0;background:linear-gradient(to top,var(--bg) 0%,rgba(5,5,7,.55) 25%,rgba(5,5,7,.1) 55%,rgba(5,5,7,0) 75%),linear-gradient(to right,rgba(5,5,7,.8) 0%,rgba(5,5,7,.2) 35%,transparent 60%);pointer-events:none;z-index:2;}
 .ip-mute-btn{position:absolute;top:16px;right:72px;z-index:20;background:rgba(8,8,12,0.75);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.2);color:#fff;border-radius:50%;width:44px;height:44px;cursor:pointer;transition:all .2s;display:none;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(0,0,0,0.3);}
 .ip-mute-btn:hover{background:var(--red);border-color:var(--red);}
 
@@ -637,8 +638,8 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .ep-thumb{width:100px;height:60px;object-fit:cover;border-radius:8px;flex-shrink:0;background:var(--s3);border:1px solid rgba(255,255,255,0.1);}
 .ep-info{flex:1;min-width:0;}
 .ep-info h4{font-size:.88rem;font-weight:800;margin-bottom:4px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ep-info span{font-size:.75rem;color:var(--muted)}
-.ep-play-btn{margin-left:auto;width:36px;height:36px;border-radius:50%;background:var(--red);border:none;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s; cursor:pointer;box-shadow:0 4px 12px var(--glow2);}
-.ep-play-btn:hover{transform:scale(1.1)}
+.ep-play-btn{margin-left:auto;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s; cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.3);}
+.ep-play-btn:hover{background:var(--red);border-color:var(--red);transform:scale(1.1);box-shadow:0 4px 12px var(--glow2);}
 .similar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px}
 .sim-card{cursor:pointer;border-radius:14px;overflow:hidden;transition:all .25s;position:relative;border:1px solid rgba(255,255,255,0.08)}
 .sim-card:hover{transform:scale(1.05);box-shadow:0 12px 35px rgba(0,0,0,.8);border-color:var(--red)}
@@ -1682,7 +1683,7 @@ async function loadHub(hubId, noPush = false) {
           <button class="arr R" onclick="scrollR('${rCfg.id}',1)">&#8250;</button>
         </div>`;
     } else if(rCfg.special === 'coming_soon') {
-      el.innerHTML=`<div class="row-hdr"><div class="row-hdr-left"><span>${rCfg.title}</span></div>${rowAction}</div>
+      el.innerHTML=`<div class="row-hdr"><div class="row-hdr-left"><span class="row-coming-soon-title">${rCfg.title}</span></div>${rowAction}</div>
         <div class="row-wrap">
           <button class="arr L" onclick="scrollR('${rCfg.id}',-1)">&#8249;</button>
           <div class="row-track" id="rt-${rCfg.id}">${skels(8,'aspect-ratio:2/3')}</div>
@@ -2323,7 +2324,7 @@ function renderCont(){
   track.innerHTML=contW.map(it=>{
     const imgSrc = it.poster ? it.poster : '';
     const tt=esc(it.title||'Unknown');
-    return `<div class="card" onclick="openPlayer(${it.id},'${it.type}',${it.s||1},${it.ep||1})">
+    return `<div class="card" onclick="openInfoPage(${it.id},'${it.type}')">
       <div class="cimg">
         ${imgSrc?`<img loading="lazy" src="${imgSrc}" alt="${tt}" onerror="this.style.background='var(--s3)'">`:''}
         <div class="c-titlebar">
@@ -2495,47 +2496,70 @@ async function loadComingSoonRow() {
   if(!track || !row) return;
 
   try {
-    const today = new Date().toISOString().slice(0,10);
-    const future = new Date(Date.now() + 90*24*60*60*1000).toISOString().slice(0,10);
+    // Get today's date precisely — items must release AFTER today
+    const now = new Date();
+    const today = now.toISOString().slice(0,10);
 
-    const [movData, tvData] = await Promise.all([
-      api('/discover/movie', `&primary_release_date.gte=${today}&primary_release_date.lte=${future}&sort_by=primary_release_date.asc&with_release_type=3|2`),
-      api('/discover/tv', `&first_air_date.gte=${today}&first_air_date.lte=${future}&sort_by=first_air_date.asc`)
+    // Fetch multiple pages sorted by popularity so most-anticipated come first
+    // No upper date limit — Spider-Man 2030, Avatar 2040, all welcome
+    const [m1, m2, m3, m4, tv1, tv2, upcomingOfficial] = await Promise.all([
+      api('/discover/movie', `&primary_release_date.gte=${today}&sort_by=popularity.desc&page=1`),
+      api('/discover/movie', `&primary_release_date.gte=${today}&sort_by=popularity.desc&page=2`),
+      api('/discover/movie', `&primary_release_date.gte=${today}&sort_by=popularity.desc&page=3`),
+      api('/discover/movie', `&primary_release_date.gte=${today}&sort_by=popularity.desc&page=4`),
+      api('/discover/tv',    `&first_air_date.gte=${today}&sort_by=popularity.desc&page=1`),
+      api('/discover/tv',    `&first_air_date.gte=${today}&sort_by=popularity.desc&page=2`),
+      api('/movie/upcoming', `&page=1`)
     ]);
 
-    let items = [
-      ...(movData.results||[]).map(x=>({...x,_type:'movie'})),
-      ...(tvData.results||[]).map(x=>({...x,_type:'tv'}))
-    ].filter(x => x.poster_path && !/hentai/i.test(x.title||x.name||''));
+    let raw = [
+      ...(m1.results||[]).map(x=>({...x,_type:'movie'})),
+      ...(m2.results||[]).map(x=>({...x,_type:'movie'})),
+      ...(m3.results||[]).map(x=>({...x,_type:'movie'})),
+      ...(m4.results||[]).map(x=>({...x,_type:'movie'})),
+      ...(tv1.results||[]).map(x=>({...x,_type:'tv'})),
+      ...(tv2.results||[]).map(x=>({...x,_type:'tv'})),
+      ...(upcomingOfficial.results||[]).map(x=>({...x,_type:'movie'}))
+    ];
 
-    // Sort by release date ascending
-    items.sort((a,b) => {
-      const da = new Date(a.release_date||a.first_air_date||'9999');
-      const db = new Date(b.release_date||b.first_air_date||'9999');
-      return da - db;
+    // Strictly enforce: release date must be TODAY or later
+    let items = raw.filter(x => {
+      if(!x.poster_path) return false;
+      if(/hentai/i.test(x.title||x.name||'')) return false;
+      if((x.popularity||0) < 8) return false;
+      const rd = x.release_date || x.first_air_date || '';
+      if(!rd) return false; // no date = skip
+      return rd >= today;   // strict: must be future or today
     });
 
-    // Remove duplicates
+    // Deduplicate
     const seen = new Set();
-    items = items.filter(x => { if(seen.has(+x.id)) return false; seen.add(+x.id); return true; });
+    items = items.filter(x => {
+      if(seen.has(+x.id)) return false;
+      seen.add(+x.id); return true;
+    });
+
+    // Sort by popularity so most-anticipated first
+    items.sort((a,b) => (b.popularity||0) - (a.popularity||0));
 
     if(!items.length) { row.style.display='none'; return; }
 
     const fmt = d => {
-      const dt = new Date(d);
+      // Parse date as UTC noon to avoid timezone day-shifts
+      const dt = new Date(d + 'T12:00:00Z');
       if(isNaN(dt)) return '';
       return dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
     };
 
-    track.innerHTML = items.slice(0,20).map(it => {
+    track.innerHTML = items.slice(0,30).map(it => {
       const rd = it.release_date || it.first_air_date || '';
       const dateStr = fmt(rd);
       const tt = esc(it.title||it.name||'');
-      return `<div class="cs-card" onclick="openComingSoonInfo(${it.id},'${it._type}')">
+      return `<div class="cs-card" onclick="openComingSoonInfo(${it.id},'${it._type}','${rd}')">
         <div class="cs-cimg">
           <img loading="lazy" src="${MD}${it.poster_path}" alt="${tt}" onerror="this.style.background='var(--s3)'">
           <div class="cs-badge">Coming Soon</div>
-          ${dateStr?`<div class="cs-date-badge">${dateStr.replace(' ','\n')}</div>`:''}
+          ${dateStr?`<div class="cs-date-badge">${dateStr}</div>`:''}
           <div class="cs-titlebar">
             <span class="cs-titlebar-name">${tt}</span>
             ${dateStr?`<span class="cs-titlebar-date">📅 ${dateStr}</span>`:''}
@@ -2548,21 +2572,9 @@ async function loadComingSoonRow() {
   } catch(e) { console.error(e); }
 }
 
-async function openComingSoonInfo(id, type) {
-  // Open info page but override the play button to show "Coming Soon"
+async function openComingSoonInfo(id, type, releaseDate) {
+  // openInfoPage now auto-detects future release dates and shows Coming Soon button
   await openInfoPage(id, type);
-  // After info page opens, replace play button
-  setTimeout(() => {
-    const playBtn = document.getElementById('ip-btn-play');
-    if(playBtn) {
-      playBtn.innerHTML = `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Coming Soon`;
-      playBtn.style.background = 'rgba(255,255,255,0.08)';
-      playBtn.style.border = '1px solid rgba(255,255,255,0.2)';
-      playBtn.style.boxShadow = 'none';
-      playBtn.style.cursor = 'default';
-      playBtn.onclick = (e) => { e.preventDefault(); showToast('Not yet available — coming soon!'); };
-    }
-  }, 600);
 }
 
 
@@ -2662,8 +2674,29 @@ async function openInfoPage(id, type, noPush = false){
     
     const isInCW = contW.some(m => m.id === id);
     const playBtn = document.getElementById('ip-btn-play');
-    playBtn.innerHTML = isInCW ? '<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Continue' : '<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Play';
-    playBtn.onclick=()=>openPlayer(id,type);
+    const releaseDate = det.release_date || det.first_air_date || '';
+    const today = new Date().toISOString().slice(0,10);
+    const isFutureRelease = releaseDate && releaseDate > today;
+
+    if(isFutureRelease) {
+      // Title hasn't released yet — show Coming Soon button
+      playBtn.innerHTML = `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Coming Soon`;
+      playBtn.style.background = 'rgba(255,215,0,0.12)';
+      playBtn.style.border = '1px solid rgba(255,215,0,0.35)';
+      playBtn.style.color = '#ffd700';
+      playBtn.style.boxShadow = 'none';
+      playBtn.style.cursor = 'default';
+      playBtn.onclick = (e) => { e.preventDefault(); showToast(`🗓️ Releasing ${releaseDate} — not available yet!`); };
+    } else {
+      // Already released — show Play / Continue
+      playBtn.style.background = '';
+      playBtn.style.border = '';
+      playBtn.style.color = '';
+      playBtn.style.boxShadow = '';
+      playBtn.style.cursor = '';
+      playBtn.innerHTML = isInCW ? '<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Continue' : '<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Play';
+      playBtn.onclick = ()=>openPlayer(id,type);
+    }
     
     const cast=(cred.cast||[]).slice(0,8);
     document.getElementById('ip-cast').innerHTML=cast.map(c=>`<div class="cast-card" onclick="openPerson(${c.id}, '${esc2(c.name)}')"><img class="cast-avatar" loading="lazy" src="${c.profile_path?FACE+c.profile_path:''}" onerror="this.style.background='var(--s4)';this.src=''"><div class="cast-name">${esc(c.name||'')}</div><div class="cast-role">${esc(c.character||'')}</div></div>`).join('')||'<span style="color:var(--muted);font-size:.85rem">No cast info</span>';
@@ -2827,7 +2860,7 @@ async function loadIPSeason(tvId,sn){
 
   const k=`${tvId}_${sn}`;
   if(!mSeasonCache[k]){const d=await api(`/tv/${tvId}/season/${sn}`);mSeasonCache[k]=d.episodes||[];}
-  g.innerHTML=mSeasonCache[k].map(ep=>`<div class="epc2" onclick="openPlayer(${tvId},'tv',${sn},${ep.episode_number})"><img class="ep-thumb" loading="lazy" src="${ep.still_path?SM+ep.still_path:''}" onerror="this.style.background='var(--s4)'"><div class="ep-info"><h4>E${ep.episode_number}: ${esc(ep.name||'Episode '+ep.episode_number)}</h4><span>${(ep.air_date||'').slice(0,4)}${ep.runtime?' · '+ep.runtime+'min':''}</span></div><button class="ep-play-btn"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg></button></div>`).join('');
+  g.innerHTML=mSeasonCache[k].map(ep=>`<div class="epc2" onclick="openPlayer(${tvId},'tv',${sn},${ep.episode_number})"><img class="ep-thumb" loading="lazy" src="${ep.still_path?SM+ep.still_path:''}" onerror="this.style.background='var(--s4)'"><div class="ep-info"><h4>E${ep.episode_number}: ${esc(ep.name||'Episode '+ep.episode_number)}</h4><span>${(ep.air_date||'').slice(0,4)}${ep.runtime?' · '+ep.runtime+'min':''}</span></div><button class="ep-play-btn" title="Download" onclick="event.stopPropagation();dlEpisode(${tvId},${sn},${ep.episode_number})"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button></div>`).join('');
 
   try {
     const ck = `chars_${tvId}_${sn}`;
@@ -3059,6 +3092,41 @@ function updateCont(id,type,s,ep,t,p){
   renderCont();
 }
 
+/* ════════════════════════════ KEYBOARD SHORTCUTS ════════════════════════════ */
+document.addEventListener('keydown', function(e) {
+  // ESC closes player, info page, search
+  if(e.key === 'Escape') {
+    if(document.getElementById('player-modal').classList.contains('on')) { closePlayer(); return; }
+    if(document.getElementById('info-page').classList.contains('on')) { closeInfoPage(); return; }
+    if(document.getElementById('search-overlay').classList.contains('open')) { closeSearchPage(); return; }
+    if(document.getElementById('trailer-modal').classList.contains('on')) { closeTrailerModal(); return; }
+  }
+  // Space bar pauses/resumes hero slideshow when not in a modal/input
+  if(e.key === ' ' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+    const playerOpen = document.getElementById('player-modal').classList.contains('on');
+    const infoOpen = document.getElementById('info-page').classList.contains('on');
+    if(!playerOpen && !infoOpen) { e.preventDefault(); toggleHeroPause(); }
+  }
+});
+
+/* ════════════════════════════ RANDOM PICK ════════════════════════════ */
+async function randomPick() {
+  showToast('🎲 Finding something for you…');
+  try {
+    const page = Math.floor(Math.random()*10)+1;
+    const types = ['movie','tv'];
+    const type = types[Math.floor(Math.random()*2)];
+    const endpoints = ['/movie/popular','/movie/top_rated','/tv/popular','/tv/top_rated'];
+    const ep = endpoints[Math.floor(Math.random()*endpoints.length)];
+    const t = ep.startsWith('/movie') ? 'movie' : 'tv';
+    const d = await api(ep, `&page=${page}`);
+    const items = (d.results||[]).filter(x=>x.poster_path);
+    if(!items.length) { showToast('Try again!'); return; }
+    const pick = items[Math.floor(Math.random()*items.length)];
+    openInfoPage(pick.id, t);
+  } catch(e) { showToast('Try again!'); }
+}
+
 function buildSrc(type, id, season, episode) {
   const srv = SERVERS[curServer] || SERVERS.vidking;
   return type === 'tv' ? srv.tv(id, season, episode) : srv.movie(id);
@@ -3093,6 +3161,12 @@ function showToast(m){
   const t=document.getElementById('toast');
   t.textContent=m; t.classList.add('on');
   setTimeout(()=>t.classList.remove('on'),2500);
+}
+
+function dlEpisode(tvId, season, episode){
+  const url = `https://dl.vidsrc.vip/tv/${tvId}/${season}/${episode}`;
+  showToast('Opening download server…');
+  setTimeout(()=>{ window.open(url,'_blank','noopener'); }, 80);
 }
 
 function openDlModal(){
