@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>SCREENIFY + CODES</title>
+<link rel="icon" type="image/png" sizes="192x192" href="https://h.top4top.io/p_37379uc361.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #ff1a2e;
+  --glow: rgba(255,26,46,.5);
+  --glow2: rgba(255,26,46,.2);
+  --bg: #050507;
+  --s1: #0d0d10;
+  --s2: #141418;
+  --s3: #1c1c22;
+  --txt: #fff;
+  --muted: #8888a0;
+  --grad: linear-gradient(135deg, #ff1a2e 0%, #ff6b35 100%);
+  --glass-bg: rgba(20, 20, 28, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-blur: blur(35px) saturate(200%);
+  --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  --nav: 72px;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+body { background: var(--bg); color: var(--txt); font-family: 'Outfit', sans-serif; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+[dir="rtl"] body { font-family: 'Cairo', 'Outfit', sans-serif; }
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,26,46,0.5); border-radius: 3px; }
+
+/* ── NAV ── */
+#nav { position: fixed; top: 0; left: 0; right: 0; z-index: 900; height: var(--nav); display: flex; align-items: center; justify-content: space-between; padding: 0 4%; background: rgba(10, 10, 15, 0.85); backdrop-filter: var(--glass-blur); border-bottom: 1px solid var(--glass-border); }
+.n-logo { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 3px; cursor: pointer; text-decoration: none; flex-shrink: 0; }
+.n-right { display: flex; align-items: center; gap: 24px; }
+
+.nav-links { display: flex; align-items: center; gap: 20px; }
+.nav-link { color: var(--txt); text-decoration: none; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; transition: color 0.2s; display: flex; align-items: center; gap: 6px; }
+.nav-link:hover { color: var(--red); }
+.nav-link.active { color: var(--red); }
+
+/* ── LANG DROPDOWN ── */
+.lang-wrap { position: relative; }
+.btn-lang { display: flex; align-items: center; gap: 8px; background: transparent; border: none; color: #fff; padding: 6px 0; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all .2s; font-family: inherit; }
+.btn-lang:hover { color: var(--red); }
+.btn-lang .globe-icon { width: 18px; height: 18px; }
+.btn-lang .chev-icon { width: 14px; height: 14px; transition: transform .2s; }
+.lang-wrap.open .btn-lang .chev-icon { transform: rotate(180deg); }
+.lang-menu { position: absolute; top: calc(100% + 15px); right: 0; background: rgba(14,14,20,0.95); backdrop-filter: var(--glass-blur); border: 1px solid rgba(255,255,255,.15); border-radius: 12px; overflow: hidden; display: none; min-width: 140px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+[dir="rtl"] .lang-menu { right: auto; left: 0; }
+.lang-wrap.open .lang-menu { display: block; animation: fadeIn .2s ease; }
+.lang-item { padding: 12px 16px; font-size: .9rem; font-weight: 600; color: var(--muted); cursor: pointer; transition: all .2s; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: left; }
+[dir="rtl"] .lang-item { text-align: right; }
+.lang-item:hover, .lang-item.on { background: rgba(255,26,46,0.15); color: #fff; }
+.lang-item.on { color: var(--red); }
+
+/* ── HERO ── */
+.hero { padding: calc(var(--nav) + 60px) 4% 40px; text-align: center; max-width: 800px; margin: 0 auto; }
+.hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 4.5rem); letter-spacing: 2px; margin-bottom: 16px; text-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+.hero p { color: var(--muted); font-size: 1.1rem; line-height: 1.6; margin-bottom: 30px; }
+
+/* ── CODES GRID ── */
+.container { flex: 1; padding: 0 4% 100px; max-width: 1400px; margin: 0 auto; width: 100%; }
+.codes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+.glass-panel { background: var(--glass-bg); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); border-radius: 20px; overflow: hidden; transition: transform .3s, border-color .3s; }
+.glass-panel:hover { border-color: rgba(255,26,46,0.4); transform: translateY(-4px); }
+
+.cat-header { padding: 20px 24px; background: rgba(0,0,0,0.4); border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+.cat-title { font-size: 1.2rem; font-weight: 800; color: #fff; }
+.cat-main-code { background: var(--grad); padding: 4px 12px; border-radius: 8px; font-weight: 800; font-size: .9rem; cursor: pointer; box-shadow: 0 4px 15px var(--glow2); transition: transform .2s; }
+.cat-main-code:hover { transform: scale(1.05); }
+
+.code-list { padding: 12px; max-height: 350px; overflow-y: auto; }
+.code-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: 12px; cursor: pointer; transition: background .2s; gap: 16px; }
+.code-item:hover { background: rgba(255,255,255,0.08); }
+.code-name { font-size: .9rem; color: rgba(255,255,255,0.85); font-weight: 500; line-height: 1.4; flex: 1; }
+.code-val { font-family: monospace; font-size: .95rem; color: var(--red); font-weight: 700; background: rgba(255,26,46,0.1); padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(255,26,46,0.3); }
+.code-item:hover .code-val { background: var(--red); color: #fff; }
+
+/* ── FOOTER ── */
+#site-footer { background: rgba(10,10,15,0.8); border-top: 1px solid var(--glass-border); padding: 60px 6% 80px; text-align: center; margin-top: auto; }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 3px; margin-bottom: 20px; }
+.footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 24px; flex-wrap: wrap; }
+.footer-links a { color: var(--muted); text-decoration: none; font-weight: 600; transition: color .2s; display: flex; align-items: center; gap: 8px; }
+.footer-links a:hover { color: var(--red); }
+
+/* ── TOAST ── */
+#toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px); background: rgba(255,26,46,0.95); backdrop-filter: blur(10px); color: #fff; padding: 14px 28px; border-radius: 12px; font-size: .95rem; font-weight: 700; z-index: 9999; opacity: 0; pointer-events: none; transition: all .3s; box-shadow: 0 10px 30px rgba(255,26,46,0.5); }
+#toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+@media(max-width: 768px) {
+  .nav-links { gap: 12px; }
+  .nav-link span { display: none; } /* Hide text on mobile, keep icon for back link */
+  .n-right { gap: 16px; }
+}
+@media(max-width: 600px) {
+  .codes-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 2.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="/" class="n-logo">SCREENIFY +</a>
+  <div class="n-right">
+    <div class="nav-links">
+      <a href="#" class="nav-link active" id="t-nav-codes">CODES</a>
+      <a href="https://screenifyplus.online" class="nav-link">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span id="t-nav-back">BACK TO WEBSITE</span>
+      </a>
+    </div>
+    
+    <div class="lang-wrap" id="lang-wrap">
+      <button class="btn-lang" onclick="toggleLangMenu(event)">
+        <svg class="globe-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+        <span id="current-lang">EN</span>
+        <svg class="chev-icon" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="lang-menu" id="lang-menu">
+        <div class="lang-item on" data-lang="en" onclick="setLang('en')">English</div>
+        <div class="lang-item" data-lang="fr" onclick="setLang('fr')">Français</div>
+        <div class="lang-item" data-lang="ar" onclick="setLang('ar')">العربية</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1 id="t-hero-title">SCREENIFY+ CODES</h1>
+  <p id="t-hero-sub">Unlock hidden categories and find exactly what you want to watch. Click any code to copy it.</p>
+</div>
+
+<div class="container">
+  <div class="codes-grid" id="codes-grid">
+    </div>
+</div>
+
+<footer id="site-footer">
+  <div class="footer-logo">SCREENIFY +</div>
+  <div class="footer-links">
+    <a href="https://screenifyplus.online/terms" target="_blank">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      <span id="t-terms">Terms of Service</span>
+    </a>
+    <a href="mailto:contact@screenifyplus.online">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <span id="t-contact">Contact Us</span>
+    </a>
+  </div>
+</footer>
+
+<div id="toast">Code copied!</div>
+
+<script>
+// Translations for UI elements
+const uiT = {
+  en: { title: "SCREENIFY+ CODES", sub: "Unlock hidden categories and find exactly what you want to watch. Click any code to copy it.", terms: "Terms of Service", contact: "Contact Us", copied: "Code copied!", navCodes: "CODES", navBack: "BACK TO WEBSITE" },
+  fr: { title: "CODES SCREENIFY+", sub: "Débloquez des catégories cachées et trouvez exactement ce que vous voulez. Cliquez pour copier.", terms: "Conditions d'utilisation", contact: "Nous contacter", copied: "Code copié !", navCodes: "CODES", navBack: "RETOUR AU SITE" },
+  ar: { title: "رموز SCREENIFY+", sub: "افتح الفئات المخفية واعثر بالضبط على ما تريد مشاهدته. انقر على أي رمز لنسخه.", terms: "شروط الخدمة", contact: "اتصل بنا", copied: "تم نسخ الرمز!", navCodes: "الرموز", navBack: "العودة للموقع" }
+};
+
+// Database of Codes (Filtered strictly to omit LGBTQ+ tags)
+const codeData = [
+  {
+    mainCode: '1365',
+    title: { en: 'Action & Adventure', fr: 'Action et Aventure', ar: 'أكشن ومغامرات' },
+    sub: [
+      { c: '46576', t: { en: 'Classic Action & Adventure', fr: 'Action et aventure classiques', ar: 'أكشن ومغامرات كلاسيكية' }},
+      { c: '10702', t: { en: 'Spy Action & Adventure', fr: 'Action et aventure d\'espionnage', ar: 'أكشن وجاسوسية' }},
+      { c: '2125', t: { en: 'Military Action', fr: 'Action et aventure sur l\'armée', ar: 'أكشن عسكري' }},
+      { c: '11828', t: { en: 'Foreign Action & Adventure', fr: 'Action et aventure étranger', ar: 'أكشن أجنبي' }},
+      { c: '1568', t: { en: 'Sci-Fi & Fantasy Action', fr: 'Action, SF et fantastique', ar: 'أكشن وخيال علمي وفانتازيا' }},
+      { c: '7442', t: { en: 'Adventures', fr: 'Aventure', ar: 'مغامرات' }},
+      { c: '43040', t: { en: 'Action Comedies', fr: 'Comédies d\'action', ar: 'كوميديا الأكشن' }},
+      { c: '77232', t: { en: 'Asian Action Movies', fr: 'Films d\'action asiatiques', ar: 'أفلام أكشن آسيوية' }},
+      { c: '10118', t: { en: 'Comic Book & Superhero', fr: 'Films de B.D. et super-héros', ar: 'أفلام الأبطال الخارقين والقصص المصورة' }},
+      { c: '20541', t: { en: 'Hijacking Movies', fr: 'Films de détournement d\'avion', ar: 'أفلام اختطاف الطائرات' }},
+      { c: '8985', t: { en: 'Martial Arts Movies', fr: 'Films sur les arts martiaux', ar: 'أفلام الفنون القتالية' }},
+      { c: '43048', t: { en: 'Action Thrillers', fr: 'Thrillers d\'action', ar: 'إثارة وأكشن' }},
+      { c: '7700', t: { en: 'Westerns', fr: 'Westerns', ar: 'أفلام الغرب الأمريكي (ويسترن)' }}
+    ]
+  },
+  {
+    mainCode: '7424',
+    title: { en: 'Anime', fr: 'Anime', ar: 'أنمي' },
+    sub: [
+      { c: '11881', t: { en: 'Adult Animation', fr: 'Animation pour adultes', ar: 'أنمي للبالغين' }},
+      { c: '2729', t: { en: 'Sci-Fi Anime', fr: 'Anime SF', ar: 'أنمي خيال علمي' }},
+      { c: '9302', t: { en: 'Anime Comedies', fr: 'Anime comique', ar: 'أنمي كوميدي' }},
+      { c: '2653', t: { en: 'Action Anime', fr: 'Anime d\'action', ar: 'أنمي أكشن' }},
+      { c: '10695', t: { en: 'Horror Anime', fr: 'Anime d\'horreur', ar: 'أنمي رعب' }},
+      { c: '452', t: { en: 'Anime Dramas', fr: 'Anime dramatique', ar: 'أنمي درامي' }},
+      { c: '11146', t: { en: 'Fantasy Anime', fr: 'Anime fantastique', ar: 'أنمي فانتازيا' }},
+      { c: '3063', t: { en: 'Anime Features', fr: 'Films d\'animation japonaise', ar: 'أفلام أنمي' }},
+      { c: '6721', t: { en: 'Anime Series', fr: 'Séries d\'animation japonaise', ar: 'مسلسلات أنمي' }}
+    ]
+  },
+  {
+    mainCode: '6548',
+    title: { en: 'Comedies', fr: 'Comédies', ar: 'كوميديا' },
+    sub: [
+      { c: '10256', t: { en: 'Slapstick Comedies', fr: 'Comédies burlesques', ar: 'كوميديا تهريجية' }},
+      { c: '89585', t: { en: 'Horror Comedies', fr: 'Comédies d\'horreur', ar: 'كوميديا الرعب' }},
+      { c: '1402', t: { en: 'Late Night Comedies', fr: 'Comédies de fin de soirée', ar: 'كوميديا في وقت متأخر من الليل' }},
+      { c: '869', t: { en: 'Dark Comedies', fr: 'Comédies dramatiques', ar: 'كوميديا سوداء' }},
+      { c: '9702', t: { en: 'Screwball Comedies', fr: 'Comédies farfelues', ar: 'كوميديا غريبة' }},
+      { c: '13335', t: { en: 'Musical Comedies', fr: 'Comédies musicales', ar: 'كوميديا موسيقية' }},
+      { c: '2700', t: { en: 'Political Comedies', fr: 'Comédies politiques', ar: 'كوميديا سياسية' }},
+      { c: '3519', t: { en: 'Teen Comedies', fr: 'Comédies pour ados', ar: 'كوميديا للمراهقين' }},
+      { c: '5475', t: { en: 'Romantic Comedies', fr: 'Comédies romantiques', ar: 'كوميديا رومانسية' }},
+      { c: '5286', t: { en: 'Sports Comedies', fr: 'Comédies sportives', ar: 'كوميديا رياضية' }},
+      { c: '4426', t: { en: 'Foreign Comedies', fr: 'Comédies étrangères', ar: 'كوميديا أجنبية' }},
+      { c: '26', t: { en: 'Mockumentaries', fr: 'Mockumentaires', ar: 'وثائقيات ساخرة' }},
+      { c: '11559', t: { en: 'Stand-up Comedy', fr: 'Stand-up', ar: 'عروض الستاند أب' }}
+    ]
+  },
+  {
+    mainCode: '6839',
+    title: { en: 'Documentaries', fr: 'Documentaires', ar: 'وثائقيات' },
+    sub: [
+      { c: '3652', t: { en: 'Biographical Documentaries', fr: 'Documentaires biographiques', ar: 'وثائقيات السير الذاتية' }},
+      { c: '5349', t: { en: 'Historical Documentaries', fr: 'Documentaires historiques', ar: 'وثائقيات تاريخية' }},
+      { c: '90361', t: { en: 'Music & Concert Documentaries', fr: 'Documentaires musique et concerts', ar: 'وثائقيات الموسيقى والحفلات' }},
+      { c: '9875', t: { en: 'Crime Documentaries', fr: 'Documentaires policiers', ar: 'وثائقيات الجرائم' }},
+      { c: '7018', t: { en: 'Political Documentaries', fr: 'Documentaires politiques', ar: 'وثائقيات سياسية' }},
+      { c: '10005', t: { en: 'Religious Documentaries', fr: 'Documentaires religieux', ar: 'وثائقيات دينية' }},
+      { c: '180', t: { en: 'Sports Documentaries', fr: 'Documentaires sportifs', ar: 'وثائقيات رياضية' }},
+      { c: '1159', t: { en: 'Travel & Adventure Documentaries', fr: 'Documentaires voyages et aventure', ar: 'وثائقيات السفر والمغامرة' }},
+      { c: '2595', t: { en: 'Science & Nature Docs', fr: 'Docus sciences et nature', ar: 'وثائقيات العلوم والطبيعة' }},
+      { c: '3675', t: { en: 'Social & Cultural Docs', fr: 'Docus société et culture', ar: 'وثائقيات اجتماعية وثقافية' }}
+    ]
+  },
+  {
+    mainCode: '5763',
+    title: { en: 'Dramas', fr: 'Drames', ar: 'دراما' },
+    sub: [
+      { c: '3179', t: { en: 'Biographical Dramas', fr: 'Drames biographiques', ar: 'دراما السير الذاتية' }},
+      { c: '3653', t: { en: 'Dramas Based on Real Life', fr: 'Drames inspirés de faits réels', ar: 'دراما مبنية على قصص حقيقية' }},
+      { c: '4961', t: { en: 'Dramas Based on Books', fr: 'Drames inspirés de livres', ar: 'دراما مبنية على كتب' }},
+      { c: '6889', t: { en: 'Crime Dramas', fr: 'Drames policiers', ar: 'دراما الجريمة' }},
+      { c: '6616', t: { en: 'Political Dramas', fr: 'Drames politiques', ar: 'دراما سياسية' }},
+      { c: '1255', t: { en: 'Romantic Dramas', fr: 'Drames romantiques', ar: 'دراما رومانسية' }},
+      { c: '3947', t: { en: 'Social Issue Dramas', fr: 'Drames sociaux', ar: 'دراما القضايا الاجتماعية' }},
+      { c: '7243', t: { en: 'Sports Dramas', fr: 'Drames sportifs', ar: 'دراما رياضية' }},
+      { c: '11', t: { en: 'Military Dramas', fr: 'Drames sur l\'armée', ar: 'دراما عسكرية' }},
+      { c: '5012', t: { en: 'Showbiz Dramas', fr: 'Drames sur les destins de stars', ar: 'دراما المشاهير' }}
+    ]
+  },
+  {
+    mainCode: '8711',
+    title: { en: 'Horror Movies', fr: 'Films d\'horreur', ar: 'أفلام رعب' },
+    sub: [
+      { c: '75804', t: { en: 'Vampire Horror', fr: 'Films d\'horreur avec des vampires', ar: 'رعب مصاصي الدماء' }},
+      { c: '75405', t: { en: 'Zombie Horror', fr: 'Films d\'horreur avec des zombies', ar: 'رعب الزومبي' }},
+      { c: '10944', t: { en: 'Cult Horror', fr: 'Films d\'horreur culte', ar: 'أفلام رعب كلاسيكية مقدسة' }},
+      { c: '42023', t: { en: 'Supernatural Horror', fr: 'Films d\'horreur et surnaturel', ar: 'رعب خارق للطبيعة' }},
+      { c: '45028', t: { en: 'Deep Sea Horror', fr: 'Films d\'horreur sur les abysses', ar: 'رعب أعماق البحار' }},
+      { c: '75930', t: { en: 'Werewolf Horror', fr: 'Films d\'horreur sur les loups-garous', ar: 'رعب المستذئبين' }},
+      { c: '8654', t: { en: 'Foreign Horror', fr: 'Films d\'horreur étrangers', ar: 'أفلام رعب أجنبية' }},
+      { c: '947', t: { en: 'Monster Movies', fr: 'Films de monstres', ar: 'أفلام الوحوش' }},
+      { c: '8646', t: { en: 'Slasher & Serial Killer', fr: 'Films de slashers et tueurs en série', ar: 'أفلام التقطيع والقتلة المتسلسلين' }},
+      { c: '52147', t: { en: 'Teen Screams', fr: 'Épouvante avec ados', ar: 'رعب المراهقين' }}
+    ]
+  },
+  {
+    mainCode: '78367',
+    title: { en: 'International Movies', fr: 'Films internationaux', ar: 'أفلام عالمية' },
+    sub: [
+      { c: '3761', t: { en: 'African Movies', fr: 'Films africains', ar: 'أفلام أفريقية' }},
+      { c: '58886', t: { en: 'German Movies', fr: 'Films allemands', ar: 'أفلام ألمانية' }},
+      { c: '5230', t: { en: 'Australian Movies', fr: 'Films australiens', ar: 'أفلام أسترالية' }},
+      { c: '10757', t: { en: 'British Movies', fr: 'Films british', ar: 'أفلام بريطانية' }},
+      { c: '3960', t: { en: 'Chinese Movies', fr: 'Films chinois', ar: 'أفلام صينية' }},
+      { c: '5685', t: { en: 'Korean Movies', fr: 'Films coréens', ar: 'أفلام كورية' }},
+      { c: '1613', t: { en: 'Latin American Movies', fr: 'Films d\'Amérique latine', ar: 'أفلام أمريكا اللاتينية' }},
+      { c: '5875', t: { en: 'Middle Eastern Movies', fr: 'Films du Moyen-Orient', ar: 'أفلام الشرق الأوسط' }},
+      { c: '58741', t: { en: 'Spanish Movies', fr: 'Films espagnols', ar: 'أفلام إسبانية' }},
+      { c: '58807', t: { en: 'French Movies', fr: 'Films français', ar: 'أفلام فرنسية' }},
+      { c: '10463', t: { en: 'Indian Movies', fr: 'Films indiens', ar: 'أفلام هندية' }},
+      { c: '8221', t: { en: 'Italian Movies', fr: 'Films italiens', ar: 'أفلام إيطالية' }},
+      { c: '10398', t: { en: 'Japanese Movies', fr: 'Films japonais', ar: 'أفلام يابانية' }},
+      { c: '9292', t: { en: 'Scandinavian Movies', fr: 'Films scandinaves', ar: 'أفلام إسكندنافية' }}
+    ]
+  },
+  {
+    mainCode: '783',
+    title: { en: 'Children & Family', fr: 'Films jeunesse et famille', ar: 'أطفال وعائلة' },
+    sub: [
+      { c: '67673', t: { en: 'Disney', fr: 'Disney', ar: 'ديزني' }},
+      { c: '10056', t: { en: 'Movies Based on Children\'s Books', fr: 'Films inspirés de livres jeunesse', ar: 'أفلام مبنية على كتب الأطفال' }},
+      { c: '51056', t: { en: 'Family Features', fr: 'Films pour la famille', ar: 'أفلام عائلية' }},
+      { c: '6796', t: { en: 'Movies for ages 0 to 2', fr: 'Films pour les 0-2 ans', ar: 'أفلام للأعمار من 0 إلى 2' }},
+      { c: '6218', t: { en: 'Movies for ages 3 to 4', fr: 'Films pour les 3-4 ans', ar: 'أفلام للأعمار من 3 إلى 4' }},
+      { c: '5455', t: { en: 'Movies for ages 5 to 7', fr: 'Films pour les 5-7 ans', ar: 'أفلام للأعمار من 5 إلى 7' }},
+      { c: '561', t: { en: 'Movies for ages 8 to 10', fr: 'Films pour les 8-10 ans', ar: 'أفلام للأعمار من 8 إلى 10' }},
+      { c: '6962', t: { en: 'Movies for ages 11 to 12', fr: 'Films pour les 11-12 ans', ar: 'أفلام للأعمار من 11 إلى 12' }},
+      { c: '5507', t: { en: 'Animal Tales', fr: 'Histoires d\'animaux', ar: 'قصص الحيوانات' }},
+      { c: '11177', t: { en: 'TV Cartoons', fr: 'Séries animées', ar: 'مسلسلات كرتونية' }}
+    ]
+  },
+  {
+    mainCode: '8883',
+    title: { en: 'Romantic Movies', fr: 'Films romantiques', ar: 'أفلام رومانسية' },
+    sub: [
+      { c: '31273', t: { en: 'Classic Romantic Movies', fr: 'Classiques romantiques', ar: 'أفلام رومانسية كلاسيكية' }},
+      { c: '5475', t: { en: 'Romantic Comedies', fr: 'Comédies romantiques', ar: 'كوميديا رومانسية' }},
+      { c: '1255', t: { en: 'Romantic Dramas', fr: 'Drames romantiques', ar: 'دراما رومانسية' }},
+      { c: '502675', t: { en: 'Romantic Favorites', fr: 'Films d\'amour incontournables', ar: 'رومانسية مفضلة' }},
+      { c: '9916', t: { en: 'Independent Romantic Movies', fr: 'Films romantiques indépendants', ar: 'أفلام رومانسية مستقلة' }},
+      { c: '35800', t: { en: 'Steamy Romantic Movies', fr: 'Films romantiques torrides', ar: 'رومانسية مثيرة' }},
+      { c: '7153', t: { en: 'Foreign Romantic Movies', fr: 'Films étrangers romantiques', ar: 'أفلام رومانسية أجنبية' }},
+      { c: '36103', t: { en: 'Quirky Romance', fr: 'Romance excentrique', ar: 'رومانسية غريبة' }}
+    ]
+  },
+  {
+    mainCode: '1492',
+    title: { en: 'Sci-Fi & Fantasy', fr: 'SF et fantastique', ar: 'خيال علمي وفانتازيا' },
+    sub: [
+      { c: '1568', t: { en: 'Action Sci-Fi & Fantasy', fr: 'Action, SF et fantastique', ar: 'أكشن خيال علمي وفانتازيا' }},
+      { c: '3327', t: { en: 'Alien Sci-Fi', fr: 'Aliens et SF', ar: 'كائنات فضائية' }},
+      { c: '6926', t: { en: 'Sci-Fi Adventure', fr: 'Aventures de SF', ar: 'مغامرات الخيال العلمي' }},
+      { c: '3916', t: { en: 'Sci-Fi Dramas', fr: 'Drames de SF', ar: 'دراما الخيال العلمي' }},
+      { c: '1694', t: { en: 'Sci-Fi Horror Movies', fr: 'Films d\'horreur et SF', ar: 'رعب وخيال علمي' }},
+      { c: '9744', t: { en: 'Fantasy Movies', fr: 'Films fantastiques', ar: 'أفلام فانتازيا' }},
+      { c: '4734', t: { en: 'Cult Sci-Fi & Fantasy', fr: 'SF et fantastique culte', ar: 'خيال علمي وفانتازيا كلاسيكية مقدسة' }},
+      { c: '11014', t: { en: 'Sci-Fi Thrillers', fr: 'Thrillers de SF', ar: 'إثارة الخيال العلمي' }}
+    ]
+  },
+  {
+    mainCode: '83',
+    title: { en: 'TV Series', fr: 'Séries', ar: 'مسلسلات تلفزيونية' },
+    sub: [
+      { c: '10105', t: { en: 'Docuseries', fr: 'Docu-séries', ar: 'مسلسلات وثائقية' }},
+      { c: '4814', t: { en: 'Miniseries', fr: 'Mini-séries', ar: 'مسلسلات قصيرة' }},
+      { c: '1372', t: { en: 'Sci-Fi & Fantasy TV', fr: 'Séries SF et fantastique', ar: 'مسلسلات الخيال العلمي والفانتازيا' }},
+      { c: '52117', t: { en: 'British TV Shows', fr: 'Séries british', ar: 'مسلسلات بريطانية' }},
+      { c: '46553', t: { en: 'Classic TV Shows', fr: 'Séries classiques', ar: 'مسلسلات كلاسيكية' }},
+      { c: '10375', t: { en: 'TV Comedies', fr: 'Séries comiques', ar: 'مسلسلات كوميدية' }},
+      { c: '67879', t: { en: 'Korean TV Shows', fr: 'Séries coréennes', ar: 'مسلسلات كورية' }},
+      { c: '10673', t: { en: 'TV Action & Adventure', fr: 'Séries d\'action et d\'aventure', ar: 'مسلسلات أكشن ومغامرات' }},
+      { c: '4366', t: { en: 'TV Mysteries', fr: 'Séries d\'intrigue', ar: 'مسلسلات غموض' }},
+      { c: '83059', t: { en: 'TV Horror', fr: 'Séries d\'épouvante', ar: 'مسلسلات رعب' }},
+      { c: '11714', t: { en: 'TV Dramas', fr: 'Séries dramatiques', ar: 'مسلسلات درامية' }},
+      { c: '26146', t: { en: 'Crime TV Shows', fr: 'Séries policières', ar: 'مسلسلات جريمة' }},
+      { c: '9833', t: { en: 'Reality TV', fr: 'Téléréalité', ar: 'تلفزيون الواقع' }},
+      { c: '72436', t: { en: 'Food & Travel TV', fr: 'Émissions de cuisine et voyages', ar: 'برامج الطبخ والسفر' }}
+    ]
+  },
+  {
+    mainCode: '8933',
+    title: { en: 'Thrillers', fr: 'Thrillers', ar: 'إثارة وتشويق' },
+    sub: [
+      { c: '31851', t: { en: 'Gangster Movies', fr: 'Films de gangsters', ar: 'أفلام العصابات' }},
+      { c: '9994', t: { en: 'Mysteries', fr: 'Intrigues', ar: 'غموض' }},
+      { c: '43048', t: { en: 'Action Thrillers', fr: 'Thrillers d\'action', ar: 'إثارة وأكشن' }},
+      { c: '9147', t: { en: 'Spy Thrillers', fr: 'Thrillers d\'espionnage', ar: 'إثارة وجاسوسية' }},
+      { c: '11014', t: { en: 'Sci-Fi Thrillers', fr: 'Thrillers de SF', ar: 'إثارة الخيال العلمي' }},
+      { c: '3269', t: { en: 'Independent Thrillers', fr: 'Thrillers indépendants', ar: 'إثارة مستقلة' }},
+      { c: '10499', t: { en: 'Crime Thrillers', fr: 'Thrillers policiers', ar: 'إثارة الجريمة' }},
+      { c: '10504', t: { en: 'Political Thrillers', fr: 'Thrillers politiques', ar: 'إثارة سياسية' }},
+      { c: '5505', t: { en: 'Psychological Thrillers', fr: 'Thrillers psychologiques', ar: 'إثارة نفسية' }},
+      { c: '11140', t: { en: 'Supernatural Thrillers', fr: 'Thrillers surnaturels', ar: 'إثارة خارقة للطبيعة' }},
+      { c: '972', t: { en: 'Steamy Thrillers', fr: 'Thrillers torrides', ar: 'إثارة مثيرة' }}
+    ]
+  },
+  {
+    mainCode: '1701',
+    title: { en: 'Music', fr: 'Musique', ar: 'موسيقى' },
+    sub: [
+      { c: '13335', t: { en: 'Musicals', fr: 'Comédies musicales', ar: 'أفلام موسيقية' }},
+      { c: '59433', t: { en: 'Disney Musicals', fr: 'Comédies musicales Disney', ar: 'أفلام ديزني الموسيقية' }},
+      { c: '13573', t: { en: 'Showbiz Musicals', fr: 'Comédies musicales sur les destins de stars', ar: 'أفلام المشاهير الموسيقية' }},
+      { c: '2856', t: { en: 'World Music Concerts', fr: 'Concerts de musiques du monde', ar: 'حفلات موسيقى عالمية' }},
+      { c: '3278', t: { en: 'Rock & Pop Concerts', fr: 'Concerts rock et pop', ar: 'حفلات روك وبوب' }},
+      { c: '9472', t: { en: 'Urban & Dance Concerts', fr: 'Danse et concerts urbains', ar: 'حفلات رقص' }},
+      { c: '10741', t: { en: 'Latin Music', fr: 'Musique d\'Amérique latine', ar: 'موسيقى لاتينية' }},
+      { c: '52843', t: { en: 'Kids Music', fr: 'Musique pour les enfants', ar: 'موسيقى للأطفال' }}
+    ]
+  },
+  {
+    mainCode: '1394522',
+    title: { en: 'Christmas', fr: 'Noël', ar: 'كريسماس (أعياد الميلاد)' },
+    sub: [
+      { c: '1475066', t: { en: 'Feel-good Christmas Children & Family', fr: 'Films de Noël bonne humeur jeunesse et famille', ar: 'أفلام كريسماس مبهجة للعائلة' }},
+      { c: '1474017', t: { en: 'Christmas Children & Family', fr: 'Films de Noël jeunesse et famille', ar: 'أفلام كريسماس شبابية وعائلية' }},
+      { c: '1475071', t: { en: 'Goofy Christmas Children & Family', fr: 'Films de Noël loufoques jeunesse et famille', ar: 'أفلام كريسماس مضحكة' }},
+      { c: '1394527', t: { en: 'Romantic Christmas Movies', fr: 'Films romantiques de Noël', ar: 'أفلام كريسماس رومانسية' }}
+    ]
+  },
+  {
+    mainCode: '34399',
+    title: { en: 'Others / Classics', fr: 'Autres / Classiques', ar: 'أخرى / كلاسيكيات' },
+    sub: [
+      { c: '29764', t: { en: 'Art House Movies', fr: 'Art et essai', ar: 'أفلام فنية' }},
+      { c: '7687', t: { en: 'Film Noir', fr: 'Film noir', ar: 'فيلم نوار (أفلام الجريمة الكلاسيكية)' }},
+      { c: '11079', t: { en: 'Experimental Movies', fr: 'Films expérimentaux', ar: 'أفلام تجريبية' }},
+      { c: '52804', t: { en: 'Faith & Spirituality Movies', fr: 'Films sur la foi et la spiritualité', ar: 'أفلام الإيمان والروحانيات' }},
+      { c: '6998', t: { en: 'Satanic Stories', fr: 'Histoires sataniques', ar: 'قصص شيطانية' }},
+      { c: '4922', t: { en: 'Satires', fr: 'Satires', ar: 'سخرية' }},
+      { c: '52858', t: { en: 'Epics', fr: 'Épopées', ar: 'ملاحم' }},
+      { c: '53310', t: { en: 'Silent Movies', fr: 'Films muets', ar: 'أفلام صامتة' }}
+    ]
+  }
+];
+
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  
+  // Update Dropdown UI
+  document.querySelectorAll('.lang-item').forEach(el => el.classList.toggle('on', el.dataset.lang === lang));
+  document.getElementById('current-lang').textContent = lang.toUpperCase();
+  document.getElementById('lang-menu').style.display = 'none';
+  document.getElementById('lang-wrap').classList.remove('open');
+  
+  // Update Static Text
+  document.getElementById('t-hero-title').textContent = uiT[lang].title;
+  document.getElementById('t-hero-sub').textContent = uiT[lang].sub;
+  document.getElementById('t-terms').textContent = uiT[lang].terms;
+  document.getElementById('t-contact').textContent = uiT[lang].contact;
+  document.getElementById('t-nav-codes').textContent = uiT[lang].navCodes;
+  document.getElementById('t-nav-back').textContent = uiT[lang].navBack;
+  
+  renderGrid();
+}
+
+function toggleLangMenu(e) {
+  e.stopPropagation();
+  document.getElementById('lang-wrap').classList.toggle('open');
+}
+
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('lang-wrap');
+  if (wrap && !wrap.contains(e.target)) wrap.classList.remove('open');
+});
+
+function copyCode(code) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(code).then(() => {
+      showToast();
+    });
+  } else {
+    const tempInput = document.createElement('input');
+    tempInput.value = code;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    showToast();
+  }
+}
+
+function showToast() {
+  const t = document.getElementById('toast');
+  t.textContent = uiT[currentLang].copied;
+  t.classList.add('on');
+  setTimeout(() => t.classList.remove('on'), 2500);
+}
+
+function renderGrid() {
+  const grid = document.getElementById('codes-grid');
+  grid.innerHTML = '';
+  
+  codeData.forEach(cat => {
+    const catTitleStr = cat.title[currentLang];
+    
+    const card = document.createElement('div');
+    card.className = 'glass-panel';
+    
+    const header = `
+      <div class="cat-header">
+        <div class="cat-title">${catTitleStr}</div>
+        <div class="cat-main-code" onclick="copyCode('${cat.mainCode}')" title="Copy ${cat.mainCode}">${cat.mainCode}</div>
+      </div>
+    `;
+    
+    const listHtml = cat.sub.map(s => `
+      <div class="code-item" onclick="copyCode('${s.c}')">
+        <div class="code-name">${s.t[currentLang]}</div>
+        <div class="code-val">${s.c}</div>
+      </div>
+    `).join('');
+    
+    card.innerHTML = header + `<div class="code-list">${listHtml}</div>`;
+    grid.appendChild(card);
+  });
+}
+
+// Init
+setLang('en');
+</script>
+
+</body>
+</html>
