@@ -790,6 +790,7 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .n-btn-amazigh{background:none;border:none;padding:4px 6px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;opacity:.85;}
 .n-btn-amazigh:hover{opacity:1;background:rgba(255,255,255,.1);transform:scale(1.08);}
 .n-btn-amazigh img{width:24px;height:24px;object-fit:contain;border-radius:3px;}
+@media(max-width:768px){.n-btn-amazigh{display:none;}}
 
 /* ── LANG DROPDOWN ON INFO PAGE ── */
 .ip-lang-wrap{position:relative;display:inline-flex;align-items:center;}
@@ -974,6 +975,10 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
       <button class="search-chip" data-type="movie">Movies</button>
       <button class="search-chip" data-type="tv">TV Shows</button>
       <button class="search-chip" data-type="person">Crew</button>
+      <a href="https://screenifyplus.online/codes" target="_blank" style="flex-shrink:0;padding:10px 20px;border-radius:99px;border:1px solid var(--red);background:rgba(255,26,46,0.15);color:var(--red);font-family:inherit;font-size:1rem;font-weight:800;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;" onmouseover="this.style.background='var(--red)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,26,46,0.15)';this.style.color='var(--red)'">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Search by Codes
+      </a>
     </div>
     <div class="search-results-grid" id="sa-grid"></div>
   </div>
@@ -1293,6 +1298,9 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
     <li id="mn-s" onclick="goList()">
       <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>Saved
     </li>
+    <li onclick="showToast('ⵣ Amazigh Pride! 🏔️')" style="opacity:.8;">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Berber_flag.svg/1920px-Berber_flag.svg.png?_=20231128195408" alt="ⵣ" style="width:24px;height:24px;object-fit:contain;border-radius:3px;">ⵣ
+    </li>
   </ul>
 </nav>
 
@@ -1342,8 +1350,8 @@ let myList   = JSON.parse(localStorage.getItem('lwa_l')||'[]');
 let contW    = JSON.parse(localStorage.getItem('lwa_c')||'[]').map(x=>({...x,id:+x.id}));
 let profile  = JSON.parse(localStorage.getItem('lwa_profile')||'{"name":"","tagline":"","color":"#ff1a2e","photo":""}');
 
-let curServer = localStorage.getItem('lwa_server') || 'cinesrc';
-if(!SERVERS[curServer]) { curServer = 'cinesrc'; localStorage.setItem('lwa_server','cinesrc'); }
+let curServer = localStorage.getItem('lwa_server') || 'vidking';
+if(!SERVERS[curServer]) { curServer = 'vidking'; localStorage.setItem('lwa_server','vidking'); }
 
 const PM_COLORS = ['#ff1a2e','#ff6b35','#ffd700','#2dff8e','#00cfff','#a78bfa','#f472b6','#fb923c','#34d399','#ffffff'];
 
@@ -1880,7 +1888,251 @@ document.getElementById('sa-search-inp').addEventListener('input', function(){
       return;
   }
   
-  // Easter Egg: Palestine 
+  // Screenify+ Genre Code Search
+  const SCREENIFY_GENRES = {
+    // Action & Adventure
+    '1365':  {title:'Action & Adventure',           path:'/discover/movie', extra:'&with_genres=28,12&sort_by=popularity.desc',                                            mt:'movie'},
+    '46576': {title:'Classic Action & Adventure',   path:'/discover/movie', extra:'&with_genres=28,12&sort_by=release_date.asc&vote_count.gte=50',                        mt:'movie'},
+    '10702': {title:'Spy Action & Adventure',       path:'/discover/movie', extra:'&with_genres=28&with_keywords=9713&sort_by=popularity.desc',                            mt:'movie'},
+    '2125':  {title:'Military Action & Adventure',  path:'/discover/movie', extra:'&with_genres=28,10752&sort_by=popularity.desc',                                         mt:'movie'},
+    '11828': {title:'Foreign Action & Adventure',   path:'/discover/movie', extra:'&with_genres=28,12&sort_by=popularity.desc&without_original_language=en',               mt:'movie'},
+    '1568':  {title:'Action Sci-Fi & Fantasy',      path:'/discover/movie', extra:'&with_genres=28,878&sort_by=popularity.desc',                                           mt:'movie'},
+    '7442':  {title:'Adventures',                   path:'/discover/movie', extra:'&with_genres=12&sort_by=popularity.desc',                                               mt:'movie'},
+    '43040': {title:'Action Comedies',              path:'/discover/movie', extra:'&with_genres=28,35&sort_by=popularity.desc',                                            mt:'movie'},
+    '77232': {title:'Asian Action Movies',          path:'/discover/movie', extra:'&with_genres=28&with_original_language=ko,ja,zh,th&sort_by=popularity.desc',            mt:'movie'},
+    '10118': {title:'Comic Book & Superhero Films', path:'/discover/movie', extra:'&with_keywords=9717|240546&sort_by=popularity.desc',                                   mt:'movie'},
+    '8985':  {title:'Hijacking Films',              path:'/discover/movie', extra:'&with_genres=28&sort_by=popularity.desc&vote_average.gte=6',                            mt:'movie'},
+    '9584':  {title:'Martial Arts, Boxing & Wrestling', path:'/discover/movie', extra:'&with_keywords=1701&sort_by=popularity.desc',                                       mt:'movie'},
+    '43048': {title:'Action Thrillers',             path:'/discover/movie', extra:'&with_genres=28,53&sort_by=popularity.desc',                                            mt:'movie'},
+    '7700':  {title:'Westerns',                     path:'/discover/movie', extra:'&with_genres=37&sort_by=popularity.desc',                                               mt:'movie'},
+    // Anime
+    '7424':  {title:'Anime',                        path:'/discover/tv',    extra:'&with_genres=16&with_keywords=210024&without_keywords=210032,9799&sort_by=popularity.desc', mt:'tv'},
+    '11881': {title:'Adult Animation',              path:'/discover/tv',    extra:'&with_genres=16&sort_by=popularity.desc',                                               mt:'tv'},
+    '2729':  {title:'Anime Sci-Fi',                 path:'/discover/tv',    extra:'&with_genres=16,10765&with_keywords=210024&sort_by=popularity.desc',                    mt:'tv'},
+    '9302':  {title:'Anime Comedies',               path:'/discover/tv',    extra:'&with_genres=16,35&with_keywords=210024&sort_by=popularity.desc',                       mt:'tv'},
+    '2653':  {title:'Action Anime',                 path:'/discover/tv',    extra:'&with_genres=16,10759&with_keywords=210024&sort_by=popularity.desc',                    mt:'tv'},
+    '10695': {title:'Anime Horror',                 path:'/discover/tv',    extra:'&with_genres=16&with_keywords=210024&without_genres=10749&sort_by=vote_average.desc&vote_count.gte=20', mt:'tv'},
+    '452':   {title:'Anime Dramas',                 path:'/discover/tv',    extra:'&with_genres=16,18&with_keywords=210024&sort_by=popularity.desc',                       mt:'tv'},
+    '11146': {title:'Fantasy Anime',                path:'/discover/tv',    extra:'&with_genres=16,10765&with_keywords=210024&sort_by=popularity.desc',                    mt:'tv'},
+    '3063':  {title:'Japanese Animated Movies',     path:'/discover/movie', extra:'&with_genres=16&with_original_language=ja&sort_by=popularity.desc',                    mt:'movie'},
+    '5507':  {title:'Animal Tales',                 path:'/discover/movie', extra:'&with_keywords=6054&sort_by=popularity.desc',                                           mt:'movie'},
+    '6721':  {title:'Japanese TV Animation',        path:'/discover/tv',    extra:'&with_genres=16&with_original_language=ja&sort_by=popularity.desc',                    mt:'tv'},
+    // Other
+    '29764': {title:'Art House Films',              path:'/discover/movie', extra:'&sort_by=vote_average.desc&vote_count.gte=100',                                         mt:'movie'},
+    '7687':  {title:'Film Noir',                    path:'/discover/movie', extra:'&with_genres=80,53&sort_by=release_date.asc&primary_release_date.lte=1960-01-01',       mt:'movie'},
+    '31851': {title:'Gangster Films',               path:'/discover/movie', extra:'&with_genres=80&sort_by=popularity.desc',                                               mt:'movie'},
+    '11079': {title:'Experimental Films',           path:'/discover/movie', extra:'&sort_by=vote_average.desc&vote_count.gte=20&vote_average.lte=7',                       mt:'movie'},
+    '9744':  {title:'Fantasy Films',                path:'/discover/movie', extra:'&with_genres=14&sort_by=popularity.desc',                                               mt:'movie'},
+    '52804': {title:'Faith & Spirituality Films',   path:'/discover/movie', extra:'&with_keywords=10051&sort_by=popularity.desc',                                          mt:'movie'},
+    '6998':  {title:'Satanic Stories',              path:'/discover/movie', extra:'&with_keywords=10208&sort_by=popularity.desc',                                          mt:'movie'},
+    '4922':  {title:'Satires',                      path:'/discover/movie', extra:'&with_genres=35&sort_by=vote_average.desc&vote_count.gte=100',                          mt:'movie'},
+    '11559': {title:'Stand-Up Comedy',              path:'/discover/movie', extra:'&with_keywords=9716&sort_by=popularity.desc',                                           mt:'movie'},
+    '34399': {title:'All Movies',                   path:'/discover/movie', extra:'&sort_by=popularity.desc',                                                              mt:'movie'},
+    '52858': {title:'Epics',                        path:'/discover/movie', extra:'&with_keywords=818&sort_by=popularity.desc',                                            mt:'movie'},
+    // Comedies
+    '6548':  {title:'Comedies',                     path:'/discover/movie', extra:'&with_genres=35&sort_by=popularity.desc',                                               mt:'movie'},
+    '10256': {title:'Slapstick Comedies',           path:'/discover/movie', extra:'&with_genres=35&sort_by=vote_average.desc&vote_count.gte=100',                          mt:'movie'},
+    '89585': {title:'Horror Comedies',              path:'/discover/movie', extra:'&with_genres=35,27&sort_by=popularity.desc',                                            mt:'movie'},
+    '1402':  {title:'Late Night Comedies',          path:'/discover/movie', extra:'&with_genres=35&sort_by=popularity.desc&vote_average.gte=6',                            mt:'movie'},
+    '869':   {title:'Dramedy',                      path:'/discover/movie', extra:'&with_genres=35,18&sort_by=popularity.desc',                                            mt:'movie'},
+    '9702':  {title:'Wacky Comedies',               path:'/discover/movie', extra:'&with_genres=35&sort_by=popularity.desc&vote_count.gte=50',                             mt:'movie'},
+    '13335': {title:'Musical Comedies',             path:'/discover/movie', extra:'&with_genres=35,10402&sort_by=popularity.desc',                                         mt:'movie'},
+    '2700':  {title:'Political Comedies',           path:'/discover/movie', extra:'&with_genres=35&sort_by=popularity.desc',                                               mt:'movie'},
+    '3519':  {title:'Teen Comedies',                path:'/discover/movie', extra:'&with_genres=35&certification_country=US&certification=PG-13&sort_by=popularity.desc',  mt:'movie'},
+    '5475':  {title:'Romantic Comedies',            path:'/discover/movie', extra:'&with_genres=35,10749&sort_by=popularity.desc',                                         mt:'movie'},
+    '5286':  {title:'Sports Comedies',              path:'/discover/movie', extra:'&with_genres=35,12&sort_by=popularity.desc',                                            mt:'movie'},
+    '4426':  {title:'Foreign Comedies',             path:'/discover/movie', extra:'&with_genres=35&without_original_language=en&sort_by=popularity.desc',                  mt:'movie'},
+    '26':    {title:'Mockumentaries',               path:'/discover/movie', extra:'&with_genres=35,99&sort_by=popularity.desc',                                            mt:'movie'},
+    // Documentaries
+    '6839':  {title:'Documentaries',               path:'/discover/movie', extra:'&with_genres=99&sort_by=popularity.desc',                                                mt:'movie'},
+    '3652':  {title:'Biographical Documentaries',  path:'/discover/movie', extra:'&with_genres=99&with_keywords=1299&sort_by=popularity.desc',                             mt:'movie'},
+    '5349':  {title:'Historical Documentaries',    path:'/discover/movie', extra:'&with_genres=99,36&sort_by=popularity.desc',                                             mt:'movie'},
+    '90361': {title:'Music & Concert Documentaries',path:'/discover/movie',extra:'&with_genres=99,10402&sort_by=popularity.desc',                                          mt:'movie'},
+    '9875':  {title:'Crime Documentaries',         path:'/discover/movie', extra:'&with_genres=99,80&sort_by=popularity.desc',                                             mt:'movie'},
+    '7018':  {title:'Political Documentaries',     path:'/discover/movie', extra:'&with_genres=99&sort_by=popularity.desc',                                                mt:'movie'},
+    '10005': {title:'Religious Documentaries',     path:'/discover/movie', extra:'&with_genres=99&with_keywords=10051&sort_by=popularity.desc',                            mt:'movie'},
+    '180':   {title:'Sports Documentaries',        path:'/discover/movie', extra:'&with_genres=99&sort_by=popularity.desc',                                                mt:'movie'},
+    '4006':  {title:'Military Documentaries',      path:'/discover/movie', extra:'&with_genres=99,10752&sort_by=popularity.desc',                                          mt:'movie'},
+    '1159':  {title:'Travel & Adventure Documentaries', path:'/discover/movie', extra:'&with_genres=99&sort_by=popularity.desc',                                           mt:'movie'},
+    '5161':  {title:'Foreign Documentaries',       path:'/discover/movie', extra:'&with_genres=99&without_original_language=en&sort_by=popularity.desc',                   mt:'movie'},
+    '2595':  {title:'Science & Nature Documentaries', path:'/discover/movie', extra:'&with_genres=99&sort_by=popularity.desc',                                             mt:'movie'},
+    '3675':  {title:'Society & Culture Documentaries', path:'/discover/movie', extra:'&with_genres=99&sort_by=popularity.desc',                                            mt:'movie'},
+    // Dramas
+    '5763':  {title:'Dramas',                      path:'/discover/movie', extra:'&with_genres=18&sort_by=popularity.desc',                                                mt:'movie'},
+    '3179':  {title:'Biographical Dramas',         path:'/discover/movie', extra:'&with_genres=18&with_keywords=1299&sort_by=popularity.desc',                             mt:'movie'},
+    '3653':  {title:'Dramas Based on Real Life',   path:'/discover/movie', extra:'&with_genres=18&sort_by=vote_average.desc&vote_count.gte=100',                           mt:'movie'},
+    '4961':  {title:'Dramas Based on Books',       path:'/discover/movie', extra:'&with_genres=18&with_keywords=818&sort_by=popularity.desc',                              mt:'movie'},
+    '6889':  {title:'Crime Dramas',                path:'/discover/movie', extra:'&with_genres=18,80&sort_by=popularity.desc',                                             mt:'movie'},
+    '6616':  {title:'Political Dramas',            path:'/discover/movie', extra:'&with_genres=18,10770&sort_by=popularity.desc',                                          mt:'movie'},
+    '1255':  {title:'Romantic Dramas',             path:'/discover/movie', extra:'&with_genres=18,10749&sort_by=popularity.desc',                                          mt:'movie'},
+    '3947':  {title:'Social Dramas',               path:'/discover/movie', extra:'&with_genres=18&sort_by=vote_average.desc&vote_count.gte=100',                           mt:'movie'},
+    '7243':  {title:'Sports Dramas',               path:'/discover/movie', extra:'&with_genres=18&sort_by=popularity.desc',                                                mt:'movie'},
+    '11':    {title:'Military Dramas',             path:'/discover/movie', extra:'&with_genres=18,10752&sort_by=popularity.desc',                                          mt:'movie'},
+    '5012':  {title:'Showbiz Dramas',              path:'/discover/movie', extra:'&with_genres=18&sort_by=vote_average.desc&vote_count.gte=200',                           mt:'movie'},
+    // Classic films
+    '31574': {title:'Classic Films',               path:'/discover/movie', extra:'&sort_by=vote_average.desc&vote_count.gte=200&primary_release_date.lte=1979-12-31',      mt:'movie'},
+    '31273': {title:'Classic Romance',             path:'/discover/movie', extra:'&with_genres=10749&primary_release_date.lte=1979-12-31&sort_by=vote_average.desc&vote_count.gte=50', mt:'movie'},
+    '31694': {title:'Classic Comedies',            path:'/discover/movie', extra:'&with_genres=35&primary_release_date.lte=1979-12-31&sort_by=vote_average.desc&vote_count.gte=50',    mt:'movie'},
+    '32392': {title:'Classic Musicals',            path:'/discover/movie', extra:'&with_genres=35,10402&primary_release_date.lte=1979-12-31&sort_by=vote_average.desc&vote_count.gte=30', mt:'movie'},
+    '29809': {title:'Classic Dramas',              path:'/discover/movie', extra:'&with_genres=18&primary_release_date.lte=1979-12-31&sort_by=vote_average.desc&vote_count.gte=50',     mt:'movie'},
+    '48744': {title:'Classic War Films',           path:'/discover/movie', extra:'&with_genres=10752&primary_release_date.lte=1979-12-31&sort_by=vote_average.desc&vote_count.gte=30',  mt:'movie'},
+    '53310': {title:'Silent Films',                path:'/discover/movie', extra:'&primary_release_date.lte=1929-12-31&sort_by=vote_average.desc&vote_count.gte=20',      mt:'movie'},
+    '47147': {title:'Classic Sci-Fi & Fantasy',   path:'/discover/movie', extra:'&with_genres=878,14&primary_release_date.lte=1979-12-31&sort_by=vote_average.desc&vote_count.gte=30',  mt:'movie'},
+    '46553': {title:'Classic TV Shows',            path:'/discover/tv',   extra:'&first_air_date.lte=1990-12-31&sort_by=vote_average.desc&vote_count.gte=50',              mt:'tv'},
+    '46588': {title:'Classic Thrillers',           path:'/discover/movie', extra:'&with_genres=53&primary_release_date.lte=1979-12-31&sort_by=vote_average.desc&vote_count.gte=30',     mt:'movie'},
+    '47465': {title:'Classic Westerns',            path:'/discover/movie', extra:'&with_genres=37&primary_release_date.lte=1979-12-31&sort_by=vote_average.desc&vote_count.gte=30',     mt:'movie'},
+    // Horror
+    '8711':  {title:'Horror Films',                path:'/discover/movie', extra:'&with_genres=27&sort_by=popularity.desc',                                                mt:'movie'},
+    '75804': {title:'Vampire Horror Films',        path:'/discover/movie', extra:'&with_genres=27&with_keywords=2444&sort_by=popularity.desc',                             mt:'movie'},
+    '75405': {title:'Zombie Horror Films',         path:'/discover/movie', extra:'&with_genres=27&with_keywords=12377&sort_by=popularity.desc',                            mt:'movie'},
+    '10944': {title:'Cult Horror Films',           path:'/discover/movie', extra:'&with_genres=27&sort_by=vote_average.desc&vote_count.gte=100',                           mt:'movie'},
+    '42023': {title:'Supernatural Horror Films',   path:'/discover/movie', extra:'&with_genres=27&with_keywords=9993&sort_by=popularity.desc',                             mt:'movie'},
+    '45028': {title:'Deep Sea Horror Films',       path:'/discover/movie', extra:'&with_genres=27&with_keywords=11317&sort_by=popularity.desc',                            mt:'movie'},
+    '75930': {title:'Werewolf Horror Films',       path:'/discover/movie', extra:'&with_genres=27&with_keywords=2717&sort_by=popularity.desc',                             mt:'movie'},
+    '8654':  {title:'Foreign Horror Films',        path:'/discover/movie', extra:'&with_genres=27&without_original_language=en&sort_by=popularity.desc',                   mt:'movie'},
+    '947':   {title:'Monster Movies',              path:'/discover/movie', extra:'&with_genres=27&with_keywords=11317|1299&sort_by=popularity.desc',                       mt:'movie'},
+    '8646':  {title:'Slashers & Serial Killer Films', path:'/discover/movie', extra:'&with_genres=27&with_keywords=149430&sort_by=popularity.desc',                        mt:'movie'},
+    '52147': {title:'Teen Screams',                path:'/discover/movie', extra:'&with_genres=27&certification_country=US&certification=PG-13&sort_by=popularity.desc',   mt:'movie'},
+    // Sci-Fi & Fantasy
+    '1492':  {title:'Sci-Fi & Fantasy',            path:'/discover/movie', extra:'&with_genres=878,14&sort_by=popularity.desc',                                            mt:'movie'},
+    '3327':  {title:'Alien Sci-Fi',                path:'/discover/movie', extra:'&with_genres=878&with_keywords=11037&sort_by=popularity.desc',                           mt:'movie'},
+    '6926':  {title:'Sci-Fi Adventures',           path:'/discover/movie', extra:'&with_genres=878,12&sort_by=popularity.desc',                                            mt:'movie'},
+    '3916':  {title:'Sci-Fi Dramas',               path:'/discover/movie', extra:'&with_genres=878,18&sort_by=popularity.desc',                                            mt:'movie'},
+    '1694':  {title:'Horror Sci-Fi',               path:'/discover/movie', extra:'&with_genres=878,27&sort_by=popularity.desc',                                            mt:'movie'},
+    '4734':  {title:'Cult Sci-Fi & Fantasy',       path:'/discover/movie', extra:'&with_genres=878&sort_by=vote_average.desc&vote_count.gte=100',                          mt:'movie'},
+    '6485':  {title:'Foreign Sci-Fi & Fantasy',    path:'/discover/movie', extra:'&with_genres=878,14&without_original_language=en&sort_by=popularity.desc',               mt:'movie'},
+    '11014': {title:'Sci-Fi Thrillers',            path:'/discover/movie', extra:'&with_genres=878,53&sort_by=popularity.desc',                                            mt:'movie'},
+    // Thrillers
+    '8933':  {title:'Thrillers',                   path:'/discover/movie', extra:'&with_genres=53&sort_by=popularity.desc',                                                mt:'movie'},
+    '9994':  {title:'Mysteries',                   path:'/discover/movie', extra:'&with_genres=9648&sort_by=popularity.desc',                                              mt:'movie'},
+    '9147':  {title:'Spy Thrillers',               path:'/discover/movie', extra:'&with_genres=53&with_keywords=9713&sort_by=popularity.desc',                             mt:'movie'},
+    '3269':  {title:'Independent Thrillers',       path:'/discover/movie', extra:'&with_genres=53&sort_by=vote_average.desc&vote_count.gte=100',                           mt:'movie'},
+    '10499': {title:'Crime Thrillers',             path:'/discover/movie', extra:'&with_genres=53,80&sort_by=popularity.desc',                                             mt:'movie'},
+    '10504': {title:'Political Thrillers',         path:'/discover/movie', extra:'&with_genres=53,10770&sort_by=popularity.desc',                                          mt:'movie'},
+    '5505':  {title:'Psychological Thrillers',     path:'/discover/movie', extra:'&with_genres=53,9648&sort_by=popularity.desc',                                           mt:'movie'},
+    '11140': {title:'Supernatural Thrillers',      path:'/discover/movie', extra:'&with_genres=53&with_keywords=9993&sort_by=popularity.desc',                             mt:'movie'},
+    '972':   {title:'Steamy Thrillers',            path:'/discover/movie', extra:'&with_genres=53,10749&sort_by=popularity.desc',                                          mt:'movie'},
+    '10306': {title:'Foreign Thrillers',           path:'/discover/movie', extra:'&with_genres=53&without_original_language=en&sort_by=popularity.desc',                   mt:'movie'},
+    // Romance
+    '8883':  {title:'Romantic Movies',             path:'/discover/movie', extra:'&with_genres=10749&sort_by=popularity.desc',                                             mt:'movie'},
+    '502675':{title:'Romantic Favorites',          path:'/discover/movie', extra:'&with_genres=10749&sort_by=vote_average.desc&vote_count.gte=200',                        mt:'movie'},
+    '9916':  {title:'Independent Romantic Movies', path:'/discover/movie', extra:'&with_genres=10749&sort_by=vote_average.desc&vote_count.gte=50',                         mt:'movie'},
+    '35800': {title:'Steamy Romantic Movies',      path:'/discover/movie', extra:'&with_genres=10749&sort_by=popularity.desc&vote_average.gte=6',                          mt:'movie'},
+    '7153':  {title:'Foreign Romantic Movies',     path:'/discover/movie', extra:'&with_genres=10749&without_original_language=en&sort_by=popularity.desc',                mt:'movie'},
+    '36103': {title:'Quirky Romance',              path:'/discover/movie', extra:'&with_genres=10749,35&sort_by=popularity.desc',                                          mt:'movie'},
+    // Sports
+    '4370':  {title:'Sports Movies',               path:'/discover/movie', extra:'&sort_by=popularity.desc&with_keywords=6075',                                            mt:'movie'},
+    '6695':  {title:'Martial Arts, Boxing & Wrestling', path:'/discover/movie', extra:'&with_keywords=1701|2102&sort_by=popularity.desc',                                  mt:'movie'},
+    '12443': {title:'Boxing Movies',               path:'/discover/movie', extra:'&with_keywords=2102&sort_by=popularity.desc',                                            mt:'movie'},
+    '12549': {title:'Soccer Movies',               path:'/discover/movie', extra:'&with_keywords=1752&sort_by=popularity.desc',                                            mt:'movie'},
+    '12339': {title:'Baseball Movies',             path:'/discover/movie', extra:'&with_keywords=9799&sort_by=popularity.desc',                                            mt:'movie'},
+    '12762': {title:'Basketball Movies',           path:'/discover/movie', extra:'&with_keywords=1701&sort_by=popularity.desc',                                            mt:'movie'},
+    '12803': {title:'Football Movies',             path:'/discover/movie', extra:'&with_keywords=6075&sort_by=popularity.desc',                                            mt:'movie'},
+    '9327':  {title:'Sports & Fitness',            path:'/discover/movie', extra:'&with_genres=99&sort_by=popularity.desc',                                                mt:'movie'},
+    // TV Series
+    '83':    {title:'TV Shows',                    path:'/discover/tv',   extra:'&sort_by=popularity.desc',                                                                mt:'tv'},
+    '10105': {title:'Docuseries',                  path:'/discover/tv',   extra:'&with_genres=99&sort_by=popularity.desc',                                                 mt:'tv'},
+    '4814':  {title:'Miniseries',                  path:'/discover/tv',   extra:'&with_keywords=182439&sort_by=popularity.desc',                                           mt:'tv'},
+    '1372':  {title:'Sci-Fi & Fantasy TV Shows',   path:'/discover/tv',   extra:'&with_genres=10765&sort_by=popularity.desc',                                              mt:'tv'},
+    '52117': {title:'British TV Shows',            path:'/discover/tv',   extra:'&with_original_language=en&production_countries=GB&sort_by=popularity.desc',              mt:'tv'},
+    '10375': {title:'TV Comedies',                 path:'/discover/tv',   extra:'&with_genres=35&sort_by=popularity.desc',                                                 mt:'tv'},
+    '67879': {title:'Korean TV Shows',             path:'/discover/tv',   extra:'&with_original_language=ko&sort_by=popularity.desc',                                      mt:'tv'},
+    '74652': {title:'Cult TV Shows',               path:'/discover/tv',   extra:'&sort_by=vote_average.desc&vote_count.gte=200',                                           mt:'tv'},
+    '10673': {title:'Action & Adventure TV Shows', path:'/discover/tv',   extra:'&with_genres=10759&sort_by=popularity.desc',                                              mt:'tv'},
+    '4366':  {title:'TV Mysteries',                path:'/discover/tv',   extra:'&with_genres=9648&sort_by=popularity.desc',                                               mt:'tv'},
+    '83059': {title:'Horror TV Shows',             path:'/discover/tv',   extra:'&with_genres=10765&sort_by=popularity.desc',                                              mt:'tv'},
+    '11714': {title:'TV Dramas',                   path:'/discover/tv',   extra:'&with_genres=18&sort_by=popularity.desc',                                                 mt:'tv'},
+    '26146': {title:'Crime TV Shows',              path:'/discover/tv',   extra:'&with_genres=80&sort_by=popularity.desc',                                                 mt:'tv'},
+    '25804': {title:'Military TV Shows',           path:'/discover/tv',   extra:'&with_genres=10768&sort_by=popularity.desc',                                              mt:'tv'},
+    '9833':  {title:'Reality TV',                  path:'/discover/tv',   extra:'&with_genres=10764&sort_by=popularity.desc',                                              mt:'tv'},
+    '72436': {title:'Food & Travel TV',            path:'/discover/tv',   extra:'&with_genres=10764&sort_by=popularity.desc',                                              mt:'tv'},
+    '52780': {title:'Science & Nature TV',         path:'/discover/tv',   extra:'&with_genres=99&sort_by=popularity.desc',                                                 mt:'tv'},
+    // International
+    '78367': {title:'International Films',         path:'/discover/movie', extra:'&without_original_language=en&sort_by=popularity.desc',                                  mt:'movie'},
+    '3761':  {title:'African Films',               path:'/discover/movie', extra:'&region=ZA,NG,EG&sort_by=popularity.desc',                                               mt:'movie'},
+    '58886': {title:'German Films',                path:'/discover/movie', extra:'&with_original_language=de&sort_by=popularity.desc',                                     mt:'movie'},
+    '5230':  {title:'Australian Films',            path:'/discover/movie', extra:'&with_original_language=en&region=AU&sort_by=popularity.desc',                           mt:'movie'},
+    '262':   {title:'Belgian Films',               path:'/discover/movie', extra:'&with_original_language=fr,nl&region=BE&sort_by=popularity.desc',                        mt:'movie'},
+    '10757': {title:'British Films',               path:'/discover/movie', extra:'&with_original_language=en&region=GB&sort_by=popularity.desc',                           mt:'movie'},
+    '3960':  {title:'Chinese Films',               path:'/discover/movie', extra:'&with_original_language=zh&sort_by=popularity.desc',                                     mt:'movie'},
+    '5685':  {title:'Korean Films',                path:'/discover/movie', extra:'&with_original_language=ko&sort_by=popularity.desc',                                     mt:'movie'},
+    '1613':  {title:'Latin American Films',        path:'/discover/movie', extra:'&with_original_language=es,pt&region=MX,BR,AR,CO&sort_by=popularity.desc',               mt:'movie'},
+    '9196':  {title:'Southeast Asian Films',       path:'/discover/movie', extra:'&with_original_language=th,id,tl,vi&sort_by=popularity.desc',                            mt:'movie'},
+    '5254':  {title:'Eastern European Films',      path:'/discover/movie', extra:'&with_original_language=ru,pl,cs,ro,hu&sort_by=popularity.desc',                         mt:'movie'},
+    '5875':  {title:'Middle Eastern Films',        path:'/discover/movie', extra:'&with_original_language=ar,fa,he,tr&sort_by=popularity.desc',                            mt:'movie'},
+    '58741': {title:'Spanish Films',               path:'/discover/movie', extra:'&with_original_language=es&region=ES&sort_by=popularity.desc',                           mt:'movie'},
+    '434295':{title:'Taiwanese Films & Series',    path:'/discover/movie', extra:'&with_original_language=zh&region=TW&sort_by=popularity.desc',                           mt:'movie'},
+    '107570':{title:'Thai Films & Series',         path:'/discover/movie', extra:'&with_original_language=th&sort_by=popularity.desc',                                     mt:'movie'},
+    '58807': {title:'French Films',                path:'/discover/movie', extra:'&with_original_language=fr&region=FR&sort_by=popularity.desc',                           mt:'movie'},
+    '61115': {title:'Greek Films',                 path:'/discover/movie', extra:'&with_original_language=el&sort_by=popularity.desc',                                     mt:'movie'},
+    '10463': {title:'Indian Films',                path:'/discover/movie', extra:'&with_original_language=hi,ta,te,ml&sort_by=popularity.desc',                            mt:'movie'},
+    '58750': {title:'Irish Films',                 path:'/discover/movie', extra:'&with_original_language=en&region=IE&sort_by=popularity.desc',                           mt:'movie'},
+    '8221':  {title:'Italian Films',               path:'/discover/movie', extra:'&with_original_language=it&sort_by=popularity.desc',                                     mt:'movie'},
+    '10398': {title:'Japanese Films',              path:'/discover/movie', extra:'&with_original_language=ja&sort_by=popularity.desc',                                     mt:'movie'},
+    '10606': {title:'Dutch Films',                 path:'/discover/movie', extra:'&with_original_language=nl&sort_by=popularity.desc',                                     mt:'movie'},
+    '63782': {title:'New Zealand Films',           path:'/discover/movie', extra:'&with_original_language=en&region=NZ&sort_by=popularity.desc',                           mt:'movie'},
+    '11567': {title:'Russian Films',               path:'/discover/movie', extra:'&with_original_language=ru&sort_by=popularity.desc',                                     mt:'movie'},
+    '9292':  {title:'Scandinavian Films',          path:'/discover/movie', extra:'&with_original_language=sv,no,da,fi&sort_by=popularity.desc',                            mt:'movie'},
+    '1133133':{title:'Turkish Films',              path:'/discover/movie', extra:'&with_original_language=tr&sort_by=popularity.desc',                                     mt:'movie'},
+    '32473': {title:'Classic Foreign Films',       path:'/discover/movie', extra:'&without_original_language=en&primary_release_date.lte=1979-12-31&sort_by=vote_average.desc&vote_count.gte=50', mt:'movie'},
+    // Family & Kids
+    '783':   {title:'Kids & Family Movies',        path:'/discover/movie', extra:'&with_genres=10751&sort_by=popularity.desc',                                             mt:'movie'},
+    '67673': {title:'Disney',                      path:'/discover/movie', extra:'&with_companies=2&sort_by=popularity.desc',                                              mt:'movie'},
+    '10056': {title:'Movies Based on Children\'s Books', path:'/discover/movie', extra:'&with_genres=10751&with_keywords=818&sort_by=popularity.desc',                     mt:'movie'},
+    '51056': {title:'Family Movies',               path:'/discover/movie', extra:'&with_genres=10751&sort_by=popularity.desc',                                             mt:'movie'},
+    '11177': {title:'Animated Series',             path:'/discover/tv',   extra:'&with_genres=16&sort_by=popularity.desc',                                                 mt:'tv'},
+    '10659': {title:'Educational Kids Movies',     path:'/discover/movie', extra:'&with_genres=10751,99&sort_by=popularity.desc',                                          mt:'movie'},
+    '27346': {title:'Movies for Kids',             path:'/discover/movie', extra:'&certification_country=US&certification=G&sort_by=popularity.desc',                      mt:'movie'},
+    // Music
+    '1701':  {title:'Music',                       path:'/discover/movie', extra:'&with_genres=10402&sort_by=popularity.desc',                                             mt:'movie'},
+    '55774': {title:'Musicals',                    path:'/discover/movie', extra:'&with_genres=35,10402&sort_by=popularity.desc',                                          mt:'movie'},
+    '59433': {title:'Disney Musicals',             path:'/discover/movie', extra:'&with_genres=10402&with_companies=2&sort_by=popularity.desc',                            mt:'movie'},
+    '13573': {title:'Showbiz Musicals',            path:'/discover/movie', extra:'&with_genres=18,10402&sort_by=popularity.desc',                                          mt:'movie'},
+    '2856':  {title:'World Music Concerts',        path:'/discover/movie', extra:'&with_genres=10402,99&sort_by=popularity.desc',                                          mt:'movie'},
+    '3278':  {title:'Rock & Pop Concerts',         path:'/discover/movie', extra:'&with_genres=10402&with_keywords=2770&sort_by=popularity.desc',                          mt:'movie'},
+    '9472':  {title:'Dance & Urban Arts',          path:'/discover/movie', extra:'&with_genres=10402&sort_by=popularity.desc',                                             mt:'movie'},
+    '10271': {title:'Jazz & Easy Listening',       path:'/discover/movie', extra:'&with_genres=10402&with_keywords=10369&sort_by=popularity.desc',                         mt:'movie'},
+    '1105':  {title:'Country & Western / Folk',   path:'/discover/movie', extra:'&with_genres=10402&sort_by=popularity.desc',                                             mt:'movie'},
+    '10741': {title:'Latin American Music',        path:'/discover/movie', extra:'&with_genres=10402&with_original_language=es,pt&sort_by=popularity.desc',                mt:'movie'},
+    '52843': {title:'Music for Kids',              path:'/discover/movie', extra:'&with_genres=10402,10751&sort_by=popularity.desc',                                       mt:'movie'},
+    // Christmas
+    '1394522':{title:'Christmas Movies',           path:'/discover/movie', extra:'&with_keywords=207317&sort_by=popularity.desc',                                          mt:'movie'},
+    '1394527':{title:'Christmas Romantic Movies',  path:'/discover/movie', extra:'&with_genres=10749&with_keywords=207317&sort_by=popularity.desc',                        mt:'movie'},
+    '1527064':{title:'British Christmas Movies',   path:'/discover/movie', extra:'&with_keywords=207317&region=GB&sort_by=popularity.desc',                                mt:'movie'},
+    '1721544':{title:'Canadian Christmas Movies',  path:'/discover/movie', extra:'&with_keywords=207317&region=CA&sort_by=popularity.desc',                                mt:'movie'},
+    '1475066':{title:'Family Christmas Movies',    path:'/discover/movie', extra:'&with_genres=10751&with_keywords=207317&sort_by=popularity.desc',                        mt:'movie'},
+    '1474017':{title:'Kids Christmas Movies',      path:'/discover/movie', extra:'&with_genres=10751&with_keywords=207317&sort_by=popularity.desc&certification_country=US&certification=G,PG', mt:'movie'},
+  };
+
+  const numCode = q.replace(/\s/g,'');
+  if(/^\d{2,7}$/.test(numCode) && SCREENIFY_GENRES[numCode]) {
+    const genre = SCREENIFY_GENRES[numCode];
+    document.getElementById('sa-grid').innerHTML = `
+      <div style="grid-column:1/-1;padding:20px 0 10px;display:flex;align-items:center;gap:12px;">
+        <div style="background:var(--red);width:4px;height:40px;border-radius:2px;flex-shrink:0;"></div>
+        <div>
+          <div style="font-size:.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:4px;">SCREENIFY+ Genre Code ${numCode}</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:1.5px;">${genre.title}</div>
+        </div>
+      </div>
+      ${Array(12).fill('<div class="skel" style="aspect-ratio:2/3"></div>').join('')}`;
+    setTimeout(async () => {
+      try {
+        const d = await api(genre.path, genre.extra + '&page=1');
+        const items = (d.results||[]).filter(x => x.poster_path && !/hentai/i.test(x.title||x.name||''));
+        const header = document.getElementById('sa-grid').children[0];
+        const headerHtml = header ? header.outerHTML : '';
+        const gridHtml = items.slice(0,20).map(it => cHTML(it, it.media_type || genre.mt)).join('')
+          || '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)">No results for this code</div>';
+        document.getElementById('sa-grid').innerHTML = headerHtml + gridHtml;
+      } catch(e) {
+        document.getElementById('sa-grid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)">Error loading genre</div>';
+      }
+    }, 50);
+    return;
+  }
+
+
   if(q === 'israel' || q === 'palestine'){
       document.getElementById('sa-grid').innerHTML = `
           <div style="grid-column:1/-1;text-align:center;padding:60px 20px;display:flex;flex-direction:column;align-items:center;gap:20px;animation:mIn .5s ease;">
@@ -2775,7 +3027,14 @@ async function openInfoPage(id, type, noPush = false){
       playBtn.style.boxShadow = '';
       playBtn.style.cursor = '';
       playBtn.innerHTML = isInCW ? '<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Continue' : '<svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Play';
-      playBtn.onclick = ()=>openPlayer(id,type);
+      playBtn.onclick = () => {
+        const savedEntry = contW.find(x => +x.id === +id);
+        if(savedEntry && savedEntry.type === 'tv') {
+          openPlayer(id, type, savedEntry.s || 1, savedEntry.ep || 1);
+        } else {
+          openPlayer(id, type);
+        }
+      };
       // Show/hide lang dropdown: hide for anime
       const langWrap = document.getElementById('ip-lang-wrap');
       const isAnimeTitle = (type === 'tv' && currentHub === 'anime');
