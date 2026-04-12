@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>404 • Screenify+</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #ff1a2e;
+    --orange: #ff6b35;
+    --bg: #07070a;
+    --card: #0f0f14;
+    --border: rgba(255,255,255,0.07);
+    --muted: #7a8099;
+    --muted2: #4a5068;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Outfit', sans-serif;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  /* Radial glow behind content */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(255,26,46,0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* Big faded 404 */
+  .bg404 {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(180px, 38vw, 480px);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.04);
+    letter-spacing: 0.05em;
+    user-select: none;
+    pointer-events: none;
+    z-index: 0;
+    white-space: nowrap;
+  }
+
+  /* Main wrapper */
+  .wrap {
+    position: relative;
+    z-index: 2;
+    max-width: 560px;
+    padding: 32px 24px;
+    animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Logo bar */
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 52px;
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #ff1a2e, #ff6b35);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .logo-icon svg { width: 16px; height: 16px; }
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: #fff;
+  }
+
+  /* TV illustration */
+  .tv-wrap {
+    position: relative;
+    width: 200px;
+    margin: 0 auto 40px;
+  }
+  .tv-wrap svg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 40px rgba(255,26,46,0.25));
+  }
+
+  /* Pill badge */
+  .badge {
+    display: inline-block;
+    background: rgba(255,26,46,0.12);
+    border: 1px solid rgba(255,26,46,0.25);
+    color: #ff6b5b;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 8vw, 72px);
+    letter-spacing: 3px;
+    line-height: 1;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 30%, rgba(255,255,255,0.55));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  p {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 44px;
+    max-width: 380px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Buttons row */
+  .btns {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 15px 36px;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    color: #fff;
+    background: linear-gradient(135deg, #ff1a2e 0%, #ff6b35 100%);
+    box-shadow: 0 0 0 1px rgba(255,107,53,0.3), 0 8px 32px rgba(255,26,46,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    transform: scale(1.05) translateY(-1px);
+    box-shadow: 0 0 0 1px rgba(255,107,53,0.4), 0 12px 48px rgba(255,26,46,0.45);
+  }
+  .btn-primary svg { width: 16px; height: 16px; }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 15px 28px;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03);
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .btn-ghost:hover {
+    color: #fff;
+    border-color: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06);
+  }
+
+  /* Suggestion strip */
+  .suggestions {
+    margin-top: 60px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+  .suggestions p {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted2);
+    margin-bottom: 16px;
+  }
+  .tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .tag {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.03);
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tag:hover {
+    color: #fff;
+    border-color: rgba(255,255,255,0.15);
+  }
+</style>
+</head>
+<body>
+
+<div class="bg404">404</div>
+
+<div class="wrap">
+
+  <!-- Logo -->
+  <a class="logo" href="https://screenifyplus.online">
+    <div class="logo-icon">
+      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 4.5C3 3.67 3.67 3 4.5 3h7c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5h-7C3.67 10 3 9.33 3 8.5v-5Z" fill="#fff" fill-opacity="0.9"/>
+        <path d="M6 12h4M8 10v2" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
+        <polygon points="6.5,5.5 10,7 6.5,8.5" fill="var(--red)"/>
+      </svg>
+    </div>
+    <span class="logo-text">Screenify+</span>
+  </a>
+
+  <!-- TV with static screen -->
+  <div class="tv-wrap">
+    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="screenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#1a0a0c"/>
+          <stop offset="100%" stop-color="#0d0d12"/>
+        </linearGradient>
+        <clipPath id="screenClip">
+          <rect x="18" y="14" width="164" height="100" rx="4"/>
+        </clipPath>
+      </defs>
+
+      <!-- TV body -->
+      <rect x="4" y="4" width="192" height="120" rx="14" fill="#1c1c24" stroke="#2e2e3a" stroke-width="1.5"/>
+      <rect x="14" y="10" width="172" height="108" rx="8" fill="#141419" stroke="#222230" stroke-width="1"/>
+
+      <!-- Screen -->
+      <rect x="18" y="14" width="164" height="100" rx="4" fill="url(#screenGrad)"/>
+
+      <!-- Static/noise lines on screen -->
+      <g clip-path="url(#screenClip)" opacity="0.35">
+        <line x1="18" y1="24" x2="182" y2="24" stroke="#fff" stroke-width="0.4" stroke-dasharray="2 4"/>
+        <line x1="18" y1="34" x2="182" y2="34" stroke="#fff" stroke-width="0.3" stroke-dasharray="3 6"/>
+        <line x1="18" y1="44" x2="182" y2="44" stroke="#fff" stroke-width="0.5" stroke-dasharray="1 7"/>
+        <line x1="18" y1="54" x2="182" y2="54" stroke="#fff" stroke-width="0.3" stroke-dasharray="4 3"/>
+        <line x1="18" y1="64" x2="182" y2="64" stroke="#fff" stroke-width="0.4" stroke-dasharray="2 5"/>
+        <line x1="18" y1="74" x2="182" y2="74" stroke="#fff" stroke-width="0.3" stroke-dasharray="3 4"/>
+        <line x1="18" y1="84" x2="182" y2="84" stroke="#fff" stroke-width="0.5" stroke-dasharray="1 6"/>
+        <line x1="18" y1="94" x2="182" y2="94" stroke="#fff" stroke-width="0.3" stroke-dasharray="4 2"/>
+        <line x1="18" y1="104" x2="182" y2="104" stroke="#fff" stroke-width="0.4" stroke-dasharray="2 8"/>
+      </g>
+
+      <!-- 404 on screen -->
+      <text x="100" y="73" text-anchor="middle" font-family="'Bebas Neue', sans-serif" font-size="42" fill="#ff1a2e" opacity="0.85" letter-spacing="4">404</text>
+
+      <!-- Red scan line shimmer -->
+      <rect x="18" y="55" width="164" height="8" rx="0" fill="rgba(255,26,46,0.08)" clip-path="url(#screenClip)"/>
+
+      <!-- TV stand -->
+      <path d="M80 124 L72 148 L128 148 L120 124Z" fill="#1c1c24" stroke="#2e2e3a" stroke-width="1"/>
+      <rect x="60" y="147" width="80" height="6" rx="3" fill="#181820" stroke="#2e2e3a" stroke-width="1"/>
+
+      <!-- Power dot -->
+      <circle cx="176" cy="118" r="3" fill="#ff1a2e" opacity="0.7"/>
+    </svg>
+  </div>
+
+  <!-- Badge -->
+  <div class="badge">Error 404</div>
+
+  <!-- Headline -->
+  <h1>Lost in the Stream</h1>
+
+  <!-- Subtext -->
+  <p>This page doesn't exist on Screenify+. The link may be broken or the content was removed from our catalog.</p>
+
+  <!-- Buttons -->
+  <div class="btns">
+    <a class="btn-primary" href="https://screenifyplus.online">
+      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 3L3 8M8 3L13 8M8 3V13" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Go Back Home
+    </a>
+    <a class="btn-ghost" href="https://screenifyplus.online/tv">
+      See Live TV
+    </a>
+  </div>
+
+  <!-- Suggestion strip -->
+  <div class="suggestions">
+    <p>Popular right now</p>
+    <div class="tags">
+      <a class="tag" href="https://screenifyplus.online">🔥 Trending</a>
+      <a class="tag" href="https://screenifyplus.online">🎬 New Releases</a>
+      <a class="tag" href="https://screenifyplus.online">⭐ Top Rated</a>
+      <a class="tag" href="https://screenifyplus.online">🎭 Drama</a>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
