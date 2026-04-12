@@ -167,7 +167,7 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .row-hdr a, .row-hdr button{background:none; border:none; color:var(--muted);font-size:.8rem;cursor:pointer;transition:color .2s;font-weight:700;display:flex;align-items:center;gap:6px; text-transform: uppercase; letter-spacing: 0.5px;}
 .row-hdr a:hover, .row-hdr button:hover{color:var(--red)}
 .row-wrap{position:relative}
-.row-track{display:flex;gap:20px;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;padding:8px 0 20px}
+.row-track{display:flex;gap:20px;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;padding:8px 0 20px;-webkit-overflow-scrolling:touch}
 .row-track::-webkit-scrollbar{display:none}
 .arr{position:absolute;top:45%;transform:translateY(-50%);background:rgba(10,10,15,.8);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:50%;width:48px;height:48px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;transition:all .25s;box-shadow:0 6px 25px rgba(0,0,0,.8)}
 .arr:hover{background:var(--red);border-color:var(--red); transform:translateY(-50%) scale(1.05);}.arr.L{left:-18px}.arr.R{right:-18px}
@@ -203,7 +203,7 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .byw-hdr-title { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:1.5px; }
 .byw-hdr-seed { display:inline-flex; align-items:center; gap:10px; margin-top:8px; }
 .byw-seed-name { font-size:.9rem; font-weight:700; color:rgba(255,255,255,0.8); }
-.byw-track { display:flex; gap:20px; overflow-x:auto; scroll-behavior:smooth; scrollbar-width:none; padding:8px 0 20px; }
+.byw-track { display:flex; gap:20px; overflow-x:auto; scroll-behavior:smooth; scrollbar-width:none; padding:8px 0 20px; -webkit-overflow-scrolling:touch; }
 .byw-track::-webkit-scrollbar { display:none; }
 .byw-card { flex-shrink:0; width:clamp(140px,20vw,220px); cursor:pointer; position:relative; border-radius:16px; overflow:hidden; background:var(--s2); border:1px solid rgba(255,255,255,0.1); transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s, border-color .3s; }
 .byw-card:hover { transform:scale(1.05) translateY(-6px); border-color:var(--red); box-shadow:0 18px 45px rgba(0,0,0,.9), 0 0 25px var(--glow2); }
@@ -631,7 +631,7 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 /* Keep old class names for JS compatibility but hide them */
 .season-tabs{display:none;}
 .stab2{display:none;}
-.eps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;max-height:520px;overflow-y:auto;padding-right:8px;}
+.eps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;max-height:520px;overflow-y:auto;padding-right:8px;-webkit-overflow-scrolling:touch;}
 .eps-grid::-webkit-scrollbar{width:6px;}
 .epc2{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.05);backdrop-filter:blur(15px);border-radius:14px;padding:12px;cursor:pointer;transition:all .25s;border:1px solid rgba(255,255,255,0.1)}
 .epc2:hover{background:rgba(232,0,28,0.15);border-color:var(--red);transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.3);}
@@ -692,6 +692,18 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
   z-index:900;
   border-radius:24px;
   padding:14px 10px;
+}
+/* ── MOBILE PERFORMANCE ── */
+.row { contain: content; }
+.card,.byw-card,.cs-card,.t10c { will-change: transform; }
+@media(max-width:768px){
+  .glass-panel { backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; }
+  #nav.solid { backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; }
+  #cat-strip { backdrop-filter: blur(12px) !important; -webkit-backdrop-filter: blur(12px) !important; }
+  .modal-overlay { backdrop-filter: blur(8px) !important; -webkit-backdrop-filter: blur(8px) !important; }
+  .card:hover { transform: none !important; filter: none !important; }
+  .byw-card:hover { transform: none !important; }
+  .cs-card:hover { transform: none !important; filter: none !important; }
 }
 #mnav ul{display:flex;justify-content:space-around;list-style:none;padding:0 5px}
 #mnav li{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;color:var(--muted);font-size:.65rem;font-weight:700;transition:all .2s;letter-spacing:.5px}
@@ -755,7 +767,7 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
   .search-input{font-size:2rem;}
   
   /* MOBILE EPISODE CARDS - full width, comfortable tap targets */
-  .eps-grid{grid-template-columns:1fr;max-height:420px;gap:10px;padding-right:4px;}
+  .eps-grid{grid-template-columns:1fr;max-height:none;max-height:65vh;gap:10px;padding-right:4px;-webkit-overflow-scrolling:touch;}
   .epc2{padding:10px;gap:10px;}
   .ep-thumb{width:88px;height:52px;border-radius:8px;}
   .ep-info h4{font-size:.82rem;}
@@ -807,6 +819,67 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .ip-lang-item.on{color:var(--red);}
 .ip-lang-item .li-flag{font-size:1.2rem;}
 
+
+/* ── RATING BADGE (visible always on mobile) ── */
+@media(hover:none){
+  .c-titlebar { opacity: 1 !important; }
+}
+
+/* ── QUICK VIEW MODAL ── */
+#quickview-modal{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:8500;display:none;align-items:center;justify-content:center;padding:16px;}
+#quickview-modal.on{display:flex;animation:fadeIn .2s ease;}
+.qv-box{background:var(--s1);border:1px solid rgba(255,255,255,.12);border-radius:20px;max-width:480px;width:100%;overflow:hidden;animation:mIn .3s cubic-bezier(0.34,1.56,0.64,1);}
+.qv-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--s2);}
+.qv-body{padding:20px;}
+.qv-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:1.5px;margin-bottom:8px;}
+.qv-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;}
+.qv-overview{font-size:.9rem;line-height:1.65;color:rgba(255,255,255,.8);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:16px;}
+.qv-actions{display:flex;gap:10px;}
+.qv-play{flex:1;background:var(--grad);border:none;color:#fff;padding:13px;border-radius:12px;font-weight:800;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 18px var(--glow2);}
+.qv-info{flex:0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:13px 18px;border-radius:12px;font-weight:700;font-size:.9rem;cursor:pointer;white-space:nowrap;}
+
+/* ── MOOD WHEEL ── */
+#mood-modal{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(15px);z-index:8600;display:none;align-items:center;justify-content:center;padding:20px;}
+#mood-modal.on{display:flex;animation:fadeIn .25s ease;}
+.mood-box{background:var(--s1);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:32px;max-width:540px;width:100%;text-align:center;animation:mIn .3s ease;}
+.mood-title{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:2px;margin-bottom:8px;}
+.mood-sub{color:var(--muted);font-size:.9rem;margin-bottom:24px;}
+.mood-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;}
+.mood-btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:18px 10px;cursor:pointer;transition:all .2s;font-size:1.8rem;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.mood-btn:hover,.mood-btn.sel{background:rgba(255,26,46,.15);border-color:rgba(255,26,46,.5);transform:scale(1.05);}
+.mood-btn span{font-size:.75rem;font-weight:700;color:var(--muted);}
+.mood-btn.sel span{color:#fff;}
+
+/* ── NIGHT DIMMER ── */
+#night-dimmer{position:fixed;inset:0;background:rgba(0,0,0,0);pointer-events:none;z-index:8900;transition:background 1s ease;}
+#night-dimmer.on{background:rgba(0,0,0,.35);}
+
+/* ── KEYBOARD SHORTCUT HINT ── */
+#kbd-hint{position:fixed;bottom:24px;right:24px;background:rgba(15,15,20,.9);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px 18px;z-index:800;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;font-size:.82rem;color:var(--muted);}
+#kbd-hint.on{opacity:1;transform:translateY(0);}
+#kbd-hint kbd{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:5px;padding:2px 7px;font-family:monospace;color:#fff;font-size:.78rem;}
+@media(max-width:768px){#kbd-hint{display:none;}}
+
+/* ── WATCHLIST EXPORT/IMPORT ── */
+.pm-export-row{display:flex;gap:10px;margin-top:8px;}
+.pm-export-btn{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;padding:11px;border-radius:12px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.82rem;cursor:pointer;transition:all .2s;text-align:center;}
+.pm-export-btn:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25);}
+
+/* ── SCROLL TO TOP ── */
+#scroll-top-btn{position:fixed;bottom:90px;right:20px;z-index:800;background:rgba(15,15,20,.85);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.15);color:#fff;width:44px;height:44px;border-radius:50%;display:none;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;box-shadow:0 4px 20px rgba(0,0,0,.5);}
+#scroll-top-btn:hover{background:var(--red);border-color:var(--red);}
+#scroll-top-btn.visible{display:flex;}
+@media(min-width:769px){#scroll-top-btn{bottom:30px;right:28px;}}
+
+/* ── PROVIDER LOAD MORE ── */
+.pcp-load-more{display:block;margin:0 auto 120px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);color:#fff;padding:14px 40px;border-radius:14px;font-family:'Outfit',sans-serif;font-weight:800;font-size:.95rem;cursor:pointer;transition:all .2s;}
+.pcp-load-more:hover{background:var(--red);border-color:var(--red);}
+
+/* ── EPISODE NEXT BUTTON (Continue Watching fix feedback) ── */
+.ep-watched{opacity:0.55;}
+.ep-watched::after{content:'✓';position:absolute;top:8px;right:8px;background:var(--green);color:#000;font-size:.65rem;font-weight:800;padding:2px 6px;border-radius:6px;}
+.epc2{position:relative;}
+
 </style>
 </head>
 <body>
@@ -829,6 +902,12 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
   <div class="n-right">
     <button class="n-btn-amazigh" title="ⵣ Amazigh" onclick="showToast('ⵣ Amazigh Pride! 🏔️')">
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Berber_flag.svg/1920px-Berber_flag.svg.png?_=20231128195408" alt="Amazigh Flag">
+    </button>
+    <button class="n-btn" id="night-btn" onclick="toggleNightMode()" title="Night Mode">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <button class="n-btn" onclick="openMoodModal()" title="Mood Picker 🎭">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
     </button>
     <button class="n-btn" onclick="openAppInfo()" title="How to use">
       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><text x="12" y="16.5" text-anchor="middle" font-size="13" font-weight="700" font-family="Georgia,serif" fill="currentColor" stroke="none">?</text></svg>
@@ -1271,6 +1350,14 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
       </label>
     </div>
     
+    <div class="pm-field" style="margin-top:8px;">
+      <div class="pm-label">Data Management</div>
+      <div class="pm-export-row">
+        <button class="pm-export-btn" onclick="exportWatchlist()">📤 Export List</button>
+        <button class="pm-export-btn" onclick="importWatchlist()">📥 Import List</button>
+        <button class="pm-export-btn" onclick="clearAllData()" style="border-color:rgba(255,26,46,.4);color:var(--red)">🗑️ Reset All</button>
+      </div>
+    </div>
     <div class="modal-actions" style="margin-top:24px;">
       <button class="modal-btn-secondary" onclick="closeProfileModal()">Cancel</button>
       <button class="modal-btn-primary" onclick="saveProfile()">Save Changes</button>
@@ -1305,6 +1392,55 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 </nav>
 
 <div id="toast"></div>
+
+<!-- Scroll to top -->
+<button id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<!-- Night dimmer -->
+<div id="night-dimmer"></div>
+
+<!-- Keyboard hint -->
+<div id="kbd-hint">
+  <kbd>S</kbd> Search &nbsp; <kbd>M</kbd> Mood &nbsp; <kbd>R</kbd> Random &nbsp; <kbd>Esc</kbd> Back
+</div>
+
+<!-- Quick View Modal -->
+<div id="quickview-modal" onclick="if(event.target===this)closeQuickView()">
+  <div class="qv-box">
+    <img id="qv-img" class="qv-img" src="" alt="">
+    <div class="qv-body">
+      <div class="qv-title" id="qv-title">—</div>
+      <div class="qv-meta" id="qv-meta"></div>
+      <p class="qv-overview" id="qv-overview"></p>
+      <div class="qv-actions">
+        <button class="qv-play" id="qv-play"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> Play Now</button>
+        <button class="qv-info" id="qv-info">More Info</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mood Wheel Modal -->
+<div id="mood-modal" onclick="if(event.target===this)closeMoodModal()">
+  <div class="mood-box">
+    <div class="mood-title">What's Your Mood?</div>
+    <div class="mood-sub">Pick a vibe and we'll find the perfect watch for you</div>
+    <div class="mood-grid" id="mood-grid">
+      <button class="mood-btn" onclick="pickMood('action')">⚡<span>Action</span></button>
+      <button class="mood-btn" onclick="pickMood('comedy')">😂<span>Comedy</span></button>
+      <button class="mood-btn" onclick="pickMood('horror')">👻<span>Horror</span></button>
+      <button class="mood-btn" onclick="pickMood('romance')">💕<span>Romance</span></button>
+      <button class="mood-btn" onclick="pickMood('scifi')">🚀<span>Sci-Fi</span></button>
+      <button class="mood-btn" onclick="pickMood('documentary')">🎥<span>Documentary</span></button>
+      <button class="mood-btn" onclick="pickMood('thriller')">🔪<span>Thriller</span></button>
+      <button class="mood-btn" onclick="pickMood('family')">👨‍👩‍👧<span>Family</span></button>
+      <button class="mood-btn" onclick="pickMood('random')">🎲<span>Surprise!</span></button>
+    </div>
+    <button class="modal-btn-secondary" style="width:100%" onclick="closeMoodModal()">Cancel</button>
+  </div>
+</div>
 
 <script>
 /* ════════════════════════════ CONSTANTS ════════════════════════════ */
@@ -1855,6 +1991,8 @@ function goList(noPush = false){
 
 /* ════════════════════════════ SEARCH & FILTERS ════════════════════════════ */
 function openSearchPage(noPush = false){
+  // Show recent searches
+  setTimeout(() => { if(!document.getElementById('sa-search-inp').value) renderRecentSearches(); }, 80);
   if(!noPush) updateURL({ p: 'search' });
   setMN('mn-s'); setNavActive('');
   saConfig = { id: 'search', title: 'Search', path: '/search/multi', type: 'auto', extra: '&query=' };
@@ -2149,6 +2287,7 @@ document.getElementById('sa-search-inp').addEventListener('input', function(){
   }
   
   typeTimer = setTimeout(() => {
+      if(q.length > 1) saveRecentSearch(q);
       saConfig.path = '/search/multi';
       saConfig.extra = '&query=' + encodeURIComponent(q);
       saAllItems = [];
@@ -2298,17 +2437,19 @@ async function openProvider(id, name, logoPath) {
   document.body.style.overflow = 'hidden';
 
   try {
-    // Fetch movies & TV shows from this provider
-    const [movPage1, movPage2, tvPage1, tvPage2] = await Promise.all([
-      api('/discover/movie', `&with_watch_providers=${id}&watch_region=US&sort_by=popularity.desc&page=1`),
-      api('/discover/movie', `&with_watch_providers=${id}&watch_region=US&sort_by=popularity.desc&page=2`),
-      api('/discover/tv',    `&with_watch_providers=${id}&watch_region=US&sort_by=popularity.desc&page=1`),
-      api('/discover/tv',    `&with_watch_providers=${id}&watch_region=US&sort_by=popularity.desc&page=2`),
-    ]);
+    // Fetch movies & TV shows - 10 pages each = 500 movies + 500 shows
+    const moviePages = await Promise.all(
+      [1,2,3,4,5,6,7,8,9,10].map(pg => api('/discover/movie', `&with_watch_providers=${id}&watch_region=US&sort_by=popularity.desc&page=${pg}`))
+    );
+    const tvPages = await Promise.all(
+      [1,2,3,4,5,6,7,8,9,10].map(pg => api('/discover/tv', `&with_watch_providers=${id}&watch_region=US&sort_by=popularity.desc&page=${pg}`))
+    );
 
-    const movies = [...(movPage1.results||[]), ...(movPage2.results||[])].map(x=>({...x, _mediaType:'movie'}));
-    const shows  = [...(tvPage1.results||[]),  ...(tvPage2.results||[])].map(x=>({...x, _mediaType:'tv'}));
+    const movies = moviePages.flatMap(d => (d.results||[]).map(x=>({...x, _mediaType:'movie'})));
+    const shows  = tvPages.flatMap(d => (d.results||[]).map(x=>({...x, _mediaType:'tv'})));
     pcpAll = [...movies, ...shows].filter(x => x.poster_path && !/hentai/i.test(x.title||x.name||''));
+    // Deduplicate
+    const seen = new Set(); pcpAll = pcpAll.filter(x => { if(seen.has(x.id)) return false; seen.add(x.id); return true; });
 
     // Update hero bg with a random backdrop
     const withBd = pcpAll.filter(x => x.backdrop_path);
@@ -2368,6 +2509,9 @@ function applyPcpFilter() {
   renderPcpGrid();
 }
 
+let pcpPage = 0;
+const PCP_PAGE_SIZE = 60;
+
 function renderPcpGrid() {
   const g = document.getElementById('pcp-grid');
   if(!pcpDisplayed.length) {
@@ -2378,7 +2522,31 @@ function renderPcpGrid() {
     </div>`;
     return;
   }
-  g.innerHTML = pcpDisplayed.map(it => cHTML(it, it._mediaType)).join('');
+  pcpPage = 0;
+  const slice = pcpDisplayed.slice(0, PCP_PAGE_SIZE);
+  g.innerHTML = slice.map(it => cHTML(it, it._mediaType)).join('');
+  // Add load more button if needed
+  const existing = document.querySelector('.pcp-load-more');
+  if(existing) existing.remove();
+  if(pcpDisplayed.length > PCP_PAGE_SIZE) {
+    const btn = document.createElement('button');
+    btn.className = 'pcp-load-more';
+    btn.textContent = `Load More (${pcpDisplayed.length - PCP_PAGE_SIZE} remaining)`;
+    btn.onclick = loadMorePcp;
+    g.after(btn);
+  }
+}
+
+function loadMorePcp() {
+  pcpPage++;
+  const start = pcpPage * PCP_PAGE_SIZE;
+  const slice = pcpDisplayed.slice(start, start + PCP_PAGE_SIZE);
+  const g = document.getElementById('pcp-grid');
+  g.innerHTML += slice.map(it => cHTML(it, it._mediaType)).join('');
+  const btn = document.querySelector('.pcp-load-more');
+  const remaining = pcpDisplayed.length - (start + PCP_PAGE_SIZE);
+  if(remaining <= 0) { if(btn) btn.remove(); }
+  else if(btn) btn.textContent = `Load More (${remaining} remaining)`;
 }
 
 function setPcpFilter(f) {
@@ -3530,14 +3698,48 @@ function installAdBlocker() {
   }, { capture: true });
 }
 
-function updateCont(id,type,s,ep,t,p){
+function updateCont(id,type,s,ep,t,p,prog){
   const numId = +id;
+  // Find existing entry to preserve progress if not explicitly given
+  const existing = contW.find(x => +x.id === numId);
   contW = contW.filter(x => +x.id !== numId);
-  contW.unshift({id:numId,type,s,ep,title:t,poster:p,ts:Date.now()});
-  if(contW.length>15)contW.pop();
+  const entry = {id:numId,type,s:+s,ep:+ep,title:t,poster:p,ts:Date.now()};
+  if(prog !== undefined) entry.prog = prog;
+  else if(existing) entry.prog = existing.prog;
+  contW.unshift(entry);
+  if(contW.length>30)contW.pop();
   localStorage.setItem('lwa_c',JSON.stringify(contW));
   renderCont();
 }
+
+// Listen for episode change messages from embedded players
+window.addEventListener('message', function(e) {
+  try {
+    const data = typeof e.data === 'string' ? JSON.parse(e.data) : e.data;
+    // VidKing / Videasy next episode signals
+    if(data && curP) {
+      if(data.event === 'nextEpisode' || data.type === 'nextEpisode' || data.action === 'nextEpisode') {
+        const nextEp = (curP.episode || 1) + 1;
+        curP.episode = nextEp;
+        updateCont(curP.id, curP.type, curP.season || 1, nextEp,
+          myList.find(x=>x.id===curP.id)?.title || '',
+          myList.find(x=>x.id===curP.id)?.poster || '');
+        showToast('▶ Now watching E' + nextEp);
+      }
+      // Progress tracking (percentage)
+      if(data.event === 'timeupdate' && data.currentTime && data.duration && data.duration > 0) {
+        const pct = Math.round((data.currentTime / data.duration) * 100);
+        if(pct > 0 && pct < 99) {
+          const existing = contW.find(x => +x.id === +curP.id);
+          if(existing) {
+            existing.prog = pct;
+            localStorage.setItem('lwa_c', JSON.stringify(contW));
+          }
+        }
+      }
+    }
+  } catch(e2) {}
+});
 
 /* ════════════════════════════ KEYBOARD SHORTCUTS ════════════════════════════ */
 document.addEventListener('keydown', function(e) {
@@ -3672,6 +3874,261 @@ document.addEventListener('click',function(e){
 
 function esc(s){return s?s.toString().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"):s;}
 function esc2(s){return s?s.replace(/'/g,"\\'"):'';}
+
+/* ════════════════════════════ FEATURE 1: SCROLL TO TOP ════════════════════════════ */
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scroll-top-btn');
+  if(btn) btn.classList.toggle('visible', window.scrollY > 600);
+}, { passive: true });
+
+/* ════════════════════════════ FEATURE 2: NIGHT / CINEMA MODE ════════════════════════════ */
+let nightMode = localStorage.getItem('lwa_night') === '1';
+function applyNightMode() {
+  const dimmer = document.getElementById('night-dimmer');
+  const btn = document.getElementById('night-btn');
+  if(dimmer) dimmer.classList.toggle('on', nightMode);
+  if(btn) {
+    btn.style.color = nightMode ? 'var(--red)' : '';
+    btn.title = nightMode ? 'Night Mode ON (click to disable)' : 'Night Mode';
+  }
+}
+function toggleNightMode() {
+  nightMode = !nightMode;
+  localStorage.setItem('lwa_night', nightMode ? '1' : '0');
+  applyNightMode();
+  showToast(nightMode ? '🌙 Night Mode ON' : '☀️ Night Mode OFF');
+}
+applyNightMode();
+
+/* ════════════════════════════ FEATURE 3: MOOD PICKER ════════════════════════════ */
+const MOOD_MAP = {
+  action:      { p:'/discover/movie', x:'&with_genres=28,12&sort_by=vote_average.desc&vote_count.gte=200', t:'movie' },
+  comedy:      { p:'/discover/movie', x:'&with_genres=35&sort_by=vote_average.desc&vote_count.gte=200', t:'movie' },
+  horror:      { p:'/discover/movie', x:'&with_genres=27&sort_by=vote_average.desc&vote_count.gte=100', t:'movie' },
+  romance:     { p:'/discover/movie', x:'&with_genres=10749&sort_by=vote_average.desc&vote_count.gte=100', t:'movie' },
+  scifi:       { p:'/discover/movie', x:'&with_genres=878&sort_by=vote_average.desc&vote_count.gte=100', t:'movie' },
+  documentary: { p:'/discover/movie', x:'&with_genres=99&sort_by=vote_average.desc&vote_count.gte=50', t:'movie' },
+  thriller:    { p:'/discover/movie', x:'&with_genres=53&sort_by=vote_average.desc&vote_count.gte=150', t:'movie' },
+  family:      { p:'/discover/movie', x:'&with_genres=10751&sort_by=vote_average.desc&vote_count.gte=100', t:'movie' },
+  random:      null
+};
+function openMoodModal() {
+  document.getElementById('mood-modal').classList.add('on');
+}
+function closeMoodModal() {
+  document.getElementById('mood-modal').classList.remove('on');
+  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('sel'));
+}
+async function pickMood(mood) {
+  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('sel'));
+  event.currentTarget.classList.add('sel');
+  closeMoodModal();
+  if(mood === 'random') { randomPick(); return; }
+  const cfg = MOOD_MAP[mood];
+  if(!cfg) return;
+  showToast('🎭 Finding the perfect match…');
+  try {
+    const page = Math.floor(Math.random()*3)+1;
+    const d = await api(cfg.p, cfg.x+'&page='+page);
+    const items = (d.results||[]).filter(x=>x.poster_path&&x.vote_average>=6.5);
+    if(!items.length){showToast('Try a different mood!');return;}
+    const pick = items[Math.floor(Math.random()*Math.min(items.length,10))];
+    openInfoPage(pick.id, cfg.t);
+  } catch(e) { showToast('Try again!'); }
+}
+
+/* ════════════════════════════ FEATURE 4: QUICK VIEW on long-press (mobile) ════════════════════════════ */
+let _qvTimer = null, _qvId = null, _qvType = null;
+function openQuickView(id, type, title, poster, overview, rating, year) {
+  _qvId = id; _qvType = type;
+  document.getElementById('qv-img').src = poster ? `https://image.tmdb.org/t/p/w780${poster}` : '';
+  document.getElementById('qv-title').textContent = title || '';
+  document.getElementById('qv-overview').textContent = overview || '';
+  document.getElementById('qv-meta').innerHTML = `<span class="ip-rat">★ ${(+rating||0).toFixed(1)}</span><span class="ip-chip">${year||''}</span><span class="ip-chip">${type==='tv'?'TV Show':'Movie'}</span>`;
+  document.getElementById('qv-play').onclick = () => { closeQuickView(); openPlayer(id, type); };
+  document.getElementById('qv-info').onclick = () => { closeQuickView(); openInfoPage(id, type); };
+  document.getElementById('quickview-modal').classList.add('on');
+}
+function closeQuickView() {
+  document.getElementById('quickview-modal').classList.remove('on');
+}
+// Inject long-press on cards via event delegation
+document.addEventListener('touchstart', function(e) {
+  const card = e.target.closest('.card');
+  if(!card) return;
+  const onclick = card.getAttribute('onclick') || '';
+  const match = onclick.match(/openInfoPage\((\d+),'(\w+)'\)/);
+  if(!match) return;
+  const id = match[1], type = match[2];
+  _qvTimer = setTimeout(() => {
+    // Get poster from img
+    const img = card.querySelector('img');
+    const titleEl = card.querySelector('.c-titlebar-name');
+    const ratEl = card.querySelector('.c-titlebar-rat');
+    openQuickView(id, type, titleEl?.textContent||'', img?.src?.replace(/\/w\d+\//,'/')?.match(/\/([^/]+)$/)?.[1]||'', '', ratEl?.textContent?.replace('★','')?.trim()||0, '');
+    e.preventDefault();
+  }, 600);
+}, { passive: false });
+document.addEventListener('touchend', () => clearTimeout(_qvTimer));
+document.addEventListener('touchmove', () => clearTimeout(_qvTimer));
+
+/* ════════════════════════════ FEATURE 5: KEYBOARD SHORTCUTS ════════════════════════════ */
+let kbdHintTimer;
+function showKbdHint() {
+  const h = document.getElementById('kbd-hint');
+  h.classList.add('on');
+  clearTimeout(kbdHintTimer);
+  kbdHintTimer = setTimeout(() => h.classList.remove('on'), 4000);
+}
+document.addEventListener('keydown', function(e) {
+  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  const playerOpen = document.getElementById('player-modal').classList.contains('on');
+  const infoOpen   = document.getElementById('info-page').classList.contains('on');
+  const anyModalOpen = playerOpen || infoOpen || document.getElementById('search-overlay').classList.contains('open');
+  if(e.key.toLowerCase() === 's' && !anyModalOpen) { e.preventDefault(); openSearchPage(); }
+  if(e.key.toLowerCase() === 'm' && !playerOpen)   { e.preventDefault(); openMoodModal(); }
+  if(e.key.toLowerCase() === 'r' && !anyModalOpen) { e.preventDefault(); randomPick(); }
+  if(e.key.toLowerCase() === 'l' && !anyModalOpen) { e.preventDefault(); goList(); }
+  if(e.key === '?' || e.key === '/') showKbdHint();
+}, true);
+
+/* ════════════════════════════ FEATURE 6: WATCHLIST EXPORT/IMPORT ════════════════════════════ */
+function exportWatchlist() {
+  const data = { list: myList, cont: contW, profile, exported: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'screenify_watchlist.json';
+  a.click(); URL.revokeObjectURL(url);
+  showToast('✓ Watchlist exported!');
+}
+function importWatchlist() {
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = '.json';
+  input.onchange = async (e) => {
+    try {
+      const text = await e.target.files[0].text();
+      const data = JSON.parse(text);
+      if(data.list) { myList = data.list; localStorage.setItem('lwa_l', JSON.stringify(myList)); }
+      if(data.cont) { contW = data.cont; localStorage.setItem('lwa_c', JSON.stringify(contW)); }
+      if(data.profile) { profile = {...profile, ...data.profile}; localStorage.setItem('lwa_profile', JSON.stringify(profile)); applyProfileToNav(); }
+      renderList(); renderCont();
+      showToast('✓ Watchlist imported! ' + (data.list?.length||0) + ' titles');
+    } catch(err) { showToast('❌ Invalid file'); }
+  };
+  input.click();
+}
+function clearAllData() {
+  if(!confirm('Reset ALL data? This will clear your list, history, and profile.')) return;
+  localStorage.clear();
+  myList=[]; contW=[];
+  profile={name:'',tagline:'',color:'#ff1a2e',photo:''};
+  renderList(); renderCont(); applyProfileToNav();
+  closeProfileModal();
+  showToast('✓ All data cleared');
+}
+
+/* ════════════════════════════ FEATURE 7: RECENTLY SEARCHED HISTORY ════════════════════════════ */
+let recentSearches = JSON.parse(localStorage.getItem('lwa_searches')||'[]');
+function saveRecentSearch(q) {
+  if(!q || q.length < 2) return;
+  recentSearches = [q, ...recentSearches.filter(s=>s!==q)].slice(0,8);
+  localStorage.setItem('lwa_searches', JSON.stringify(recentSearches));
+}
+function renderRecentSearches() {
+  const grid = document.getElementById('sa-grid');
+  if(!grid || recentSearches.length === 0) return;
+  grid.innerHTML = `<div style="grid-column:1/-1;margin-bottom:8px;">
+    <div style="font-size:.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;">
+      Recent Searches
+      <button onclick="clearRecentSearches()" style="background:none;border:none;color:var(--muted);font-size:.75rem;cursor:pointer;font-weight:700;font-family:inherit;transition:color .2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--muted)'">Clear</button>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;">
+      ${recentSearches.map(q=>`<button onclick="setSearch('${q.replace(/'/g,"\'")}');this.closest('.search-overlay')&&document.getElementById('sa-search-inp').dispatchEvent(new Event('input'))" 
+        style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;padding:9px 18px;border-radius:24px;font-family:inherit;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px;"
+        onmouseover="this.style.background='rgba(255,26,46,.15)';this.style.borderColor='rgba(255,26,46,.4)'"
+        onmouseout="this.style.background='rgba(255,255,255,.06)';this.style.borderColor='rgba(255,255,255,.12)'">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.9"/></svg>
+        ${q}
+      </button>`).join('')}
+    </div>
+  </div>`;
+}
+function setSearch(q) {
+  const inp = document.getElementById('sa-search-inp');
+  if(inp) { inp.value = q; inp.dispatchEvent(new Event('input')); }
+}
+function clearRecentSearches() {
+  recentSearches = []; localStorage.removeItem('lwa_searches');
+  document.getElementById('sa-grid').innerHTML = '';
+}
+// Show recent searches when opening search
+const origOpenSearch = openSearchPage;
+function openSearchPagePatched(noPush) {
+  origOpenSearch(noPush);
+  setTimeout(() => renderRecentSearches(), 50);
+}
+// Patch search input to save history
+(function() {
+  const origInput = document.getElementById('sa-search-inp');
+  if(origInput) {
+    origInput.addEventListener('keydown', function(e) {
+      if(e.key === 'Enter' && this.value.trim().length > 1) {
+        saveRecentSearch(this.value.trim());
+      }
+    });
+  }
+})();
+
+/* ════════════════════════════ FEATURE 8: CONTINUE WATCHING PROGRESS BADGE ════════════════════════════ */
+// Already integrated in updateCont - also update when player is being used
+setInterval(() => {
+  if(!curP) return;
+  const iframe = document.getElementById('player-iframe');
+  if(!iframe || !document.getElementById('player-modal').classList.contains('on')) return;
+  try {
+    iframe.contentWindow.postMessage(JSON.stringify({event:'listening',id:'screenify',types:['timeupdate','ended']}), '*');
+  } catch(e) {}
+}, 10000);
+
+/* ════════════════════════════ FEATURE 9: SMART SEARCH (Show season info) ════════════════════════════ */
+// Enhance cHTML to show season count for TV
+const _origCHTML = cHTML;
+// Already patched inline — this is handled inside cHTML itself
+
+/* ════════════════════════════ FEATURE 10: TOUCH SWIPE for hero ════════════════════════════ */
+(function() {
+  let heroTouchX = null;
+  const hero = document.getElementById('hero');
+  if(!hero) return;
+  hero.addEventListener('touchstart', e => { heroTouchX = e.touches[0].clientX; }, { passive: true });
+  hero.addEventListener('touchend', e => {
+    if(heroTouchX === null || !heroItems.length) return;
+    const dx = e.changedTouches[0].clientX - heroTouchX;
+    if(Math.abs(dx) > 60) {
+      const next = dx < 0 
+        ? (heroIdx + 1) % heroItems.length
+        : (heroIdx - 1 + heroItems.length) % heroItems.length;
+      showHero(next);
+    }
+    heroTouchX = null;
+  }, { passive: true });
+})();
+
+/* ════════════════════════════ MOBILE SCROLL OPTIMIZATION ════════════════════════════ */
+// Apply passive scroll and touch-scroll smoothness
+document.querySelectorAll('.row-track, .byw-track, .top10-track, .cat-inner, .eps-grid, .pcp-filters').forEach(el => {
+  el.style.webkitOverflowScrolling = 'touch';
+});
+
+// Defer non-critical backdrop-filter on mobile for performance
+if(/Mobi|Android/i.test(navigator.userAgent)) {
+  document.querySelectorAll('.glass-panel').forEach(el => {
+    el.style.backdropFilter = 'blur(8px)';
+    el.style.webkitBackdropFilter = 'blur(8px)';
+  });
+}
+
 </script>
 <footer id="site-footer">
   <div class="footer-inner">
@@ -3679,13 +4136,7 @@ function esc2(s){return s?s.replace(/'/g,"\\'"):'';}
     <p class="footer-legal">By using SCREENIFY +, you agree to our no-registration, free streaming service and accept that all content is provided by third-party sources.</p>
     <p class="footer-legal">You acknowledge that we are not liable for external content and that you are responsible for complying with local laws.</p>
     <p class="footer-legal" style="margin-top:14px">
-      <a href="mailto:contact@screenifyplus.online" style="color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+      <a href="/cdn-cgi/l/email-protection#096a66677d686a7d497a6a7b6c6c67606f7079657c7a2766676560676c" style="color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align:middle;margin-top:-2px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        contact@screenifyplus.online
+        <span class="__cf_email__" data-cfemail="d9bab6b7adb8baad99aabaabbcbcb7b0bfa0a9b5acaaf7b6b7b5b0b7bc">[email&#160;protected]</span>
       </a>
-     </p>
-    <a href="https://screenifyplus.online/terms" target="_blank" class="footer-terms-btn">Terms of Use</a>
-  </div>
-</footer>
-</body>
-</html>
