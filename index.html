@@ -802,7 +802,7 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .n-btn-amazigh{background:none;border:none;padding:4px 6px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;opacity:.85;}
 .n-btn-amazigh:hover{opacity:1;background:rgba(255,255,255,.1);transform:scale(1.08);}
 .n-btn-amazigh img{width:24px;height:24px;object-fit:contain;border-radius:3px;}
-@media(max-width:768px){.n-btn-amazigh{display:none;}}
+@media(max-width:768px){.n-btn-amazigh{display:none;} #night-btn{display:none;} #mood-btn{display:none;} #guide-btn{display:none;}}
 
 /* ── LANG DROPDOWN ON INFO PAGE ── */
 .ip-lang-wrap{position:relative;display:inline-flex;align-items:center;}
@@ -880,6 +880,55 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .ep-watched::after{content:'✓';position:absolute;top:8px;right:8px;background:var(--green);color:#000;font-size:.65rem;font-weight:800;padding:2px 6px;border-radius:6px;}
 .epc2{position:relative;}
 
+/* ── MOBILE HAMBURGER MENU ── */
+#m-hamburger-btn{
+  display:none;
+  background:none;border:none;color:var(--muted);padding:8px;border-radius:12px;
+  transition:all .2s;flex-shrink:0;align-items:center;justify-content:center;
+  position:relative;
+}
+#m-hamburger-btn:hover{color:#fff;background:rgba(255,255,255,.1);}
+@media(max-width:768px){#m-hamburger-btn{display:flex;}}
+
+#m-hamburger-drawer{
+  display:none;
+  position:fixed;top:0;right:0;bottom:0;width:260px;
+  background:rgba(12,12,18,0.97);
+  backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+  border-left:1px solid rgba(255,255,255,.1);
+  z-index:9500;
+  flex-direction:column;
+  padding:24px 0 32px;
+  box-shadow:-8px 0 40px rgba(0,0,0,.7);
+  transform:translateX(100%);
+  transition:transform .28s cubic-bezier(0.4,0,0.2,1);
+}
+#m-hamburger-drawer.open{display:flex;transform:translateX(0);}
+#m-hamburger-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);
+  z-index:9499;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+}
+#m-hamburger-overlay.open{display:block;}
+.mhd-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px 20px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:12px;
+}
+.mhd-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.mhd-close{background:none;border:none;color:var(--muted);padding:6px;border-radius:10px;cursor:pointer;display:flex;transition:all .2s;}
+.mhd-close:hover{color:#fff;background:rgba(255,255,255,.1);}
+.mhd-item{
+  display:flex;align-items:center;gap:14px;padding:16px 22px;
+  color:rgba(255,255,255,.85);font-size:.95rem;font-weight:700;
+  cursor:pointer;border:none;background:none;width:100%;font-family:'Outfit',sans-serif;
+  transition:all .2s;text-decoration:none;
+}
+.mhd-item:hover{background:rgba(255,255,255,.06);color:#fff;}
+.mhd-item svg,.mhd-item img{flex-shrink:0;opacity:.8;}
+.mhd-item:hover svg,.mhd-item:hover img{opacity:1;}
+.mhd-item.active-red{color:var(--red);}
+.mhd-item.active-red svg{color:var(--red);filter:drop-shadow(0 0 6px var(--glow));}
+.mhd-divider{height:1px;background:rgba(255,255,255,.07);margin:8px 0;}
+
 </style>
 </head>
 <body>
@@ -906,10 +955,10 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
     <button class="n-btn" id="night-btn" onclick="toggleNightMode()" title="Night Mode">
       <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
-    <button class="n-btn" onclick="openMoodModal()" title="Mood Picker 🎭">
+    <button class="n-btn" id="mood-btn" onclick="openMoodModal()" title="Mood Picker 🎭">
       <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
     </button>
-    <button class="n-btn" onclick="openAppInfo()" title="How to use">
+    <button class="n-btn" id="guide-btn" onclick="openAppInfo()" title="How to use">
       <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><text x="12" y="16.5" text-anchor="middle" font-size="13" font-weight="700" font-family="Georgia,serif" fill="currentColor" stroke="none">?</text></svg>
     </button>
     <button class="n-btn" onclick="openSearchPage()" title="Search Actors & Titles">
@@ -918,8 +967,43 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
     <div class="n-avatar-wrap">
       <div class="n-avatar" id="n-avatar" onclick="openProfileModal()">LW</div>
     </div>
+    <button id="m-hamburger-btn" onclick="openHamburgerDrawer()" title="Menu">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </div>
 </nav>
+
+<!-- Mobile Hamburger Drawer -->
+<div id="m-hamburger-overlay" onclick="closeHamburgerDrawer()"></div>
+<div id="m-hamburger-drawer">
+  <div class="mhd-head">
+    <span class="mhd-logo">SCREENIFY +</span>
+    <button class="mhd-close" onclick="closeHamburgerDrawer()">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <button class="mhd-item" onclick="closeHamburgerDrawer();openAppInfo()">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><text x="12" y="16.5" text-anchor="middle" font-size="13" font-weight="700" font-family="Georgia,serif" fill="currentColor" stroke="none">?</text></svg>
+    App Guide
+  </button>
+  <button class="mhd-item" onclick="closeHamburgerDrawer();openMoodModal()">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+    Mood Picker
+  </button>
+  <button class="mhd-item" id="mhd-night-btn" onclick="closeHamburgerDrawer();toggleNightMode()">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    Night Mode
+  </button>
+  <div class="mhd-divider"></div>
+  <a class="mhd-item" href="https://screenifyplus.online/tv" target="_blank" onclick="closeHamburgerDrawer()">
+    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    Live TV
+  </a>
+  <button class="mhd-item" onclick="closeHamburgerDrawer();showToast('ⵣ Amazigh Pride! 🏔️')">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Berber_flag.svg/1920px-Berber_flag.svg.png?_=20231128195408" alt="ⵣ" style="width:22px;height:22px;object-fit:contain;border-radius:3px;">
+    ⵣ Amazigh
+  </button>
+</div>
 
 <div id="page-home">
   <section id="hero">
@@ -1379,15 +1463,11 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
     <li id="mn-a" onclick="loadHub('anime')">
       <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>Anime
     </li>
-    <li id="mn-livetv" onclick="window.open('https://screenifyplus.online/tv','_blank')">
-      <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/><circle cx="12" cy="14" r="2" fill="currentColor" stroke="none" opacity=".8"/></svg>Live TV
-    </li>
+
     <li id="mn-s" onclick="goList()">
       <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>Saved
     </li>
-    <li onclick="showToast('ⵣ Amazigh Pride! 🏔️')" style="opacity:.8;">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Berber_flag.svg/1920px-Berber_flag.svg.png?_=20231128195408" alt="ⵣ" style="width:24px;height:24px;object-fit:contain;border-radius:3px;">ⵣ
-    </li>
+
   </ul>
 </nav>
 
@@ -3900,6 +3980,23 @@ function toggleNightMode() {
 }
 applyNightMode();
 
+/* ════════════════════════════ MOBILE HAMBURGER DRAWER ════════════════════════════ */
+function openHamburgerDrawer() {
+  const drawer = document.getElementById('m-hamburger-drawer');
+  const overlay = document.getElementById('m-hamburger-overlay');
+  if(!drawer) return;
+  overlay.classList.add('open');
+  drawer.classList.add('open');
+  const btn = document.getElementById('mhd-night-btn');
+  if(btn) btn.classList.toggle('active-red', nightMode);
+}
+function closeHamburgerDrawer() {
+  const drawer = document.getElementById('m-hamburger-drawer');
+  const overlay = document.getElementById('m-hamburger-overlay');
+  if(drawer) { drawer.style.transform = 'translateX(100%)'; setTimeout(()=>{ drawer.classList.remove('open'); drawer.style.transform = ''; }, 280); }
+  if(overlay) overlay.classList.remove('open');
+}
+
 /* ════════════════════════════ FEATURE 3: MOOD PICKER ════════════════════════════ */
 const MOOD_MAP = {
   action:      { p:'/discover/movie', x:'&with_genres=28,12&sort_by=vote_average.desc&vote_count.gte=200', t:'movie' },
@@ -3994,11 +4091,16 @@ document.addEventListener('keydown', function(e) {
 
 /* ════════════════════════════ FEATURE 6: WATCHLIST EXPORT/IMPORT ════════════════════════════ */
 function exportWatchlist() {
-  const data = { list: myList, cont: contW, profile, exported: new Date().toISOString() };
+  const now = new Date();
+  const ts = now.getFullYear() + '-' +
+    String(now.getMonth()+1).padStart(2,'0') + '-' +
+    String(now.getDate()).padStart(2,'0') + '_' +
+    String(now.getHours()).padStart(2,'0') + String(now.getMinutes()).padStart(2,'0');
+  const data = { list: myList, cont: contW, profile, exported: now.toISOString(), exportedReadable: now.toLocaleString() };
   const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'screenify_watchlist.json';
+  a.href = url; a.download = `screenify_watchlist_${ts}.json`;
   a.click(); URL.revokeObjectURL(url);
   showToast('✓ Watchlist exported!');
 }
