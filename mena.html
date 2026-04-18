@@ -626,12 +626,12 @@ async function openPlayer(id, fromSeriesId) {
       </div>
     `;
 
-    if (ep.watch_links && ep.watch_links.length > 0) {
-      setTimeout(() => {
-        const first = document.querySelector('.server-btn');
-        loadSrc(ep.watch_links[0].url, first);
-      }, 100);
-    }
+   if (ep.watch_links && ep.watch_links.length > 1) {
+  setTimeout(() => {
+    const first = document.querySelector('.server-btn');
+    loadSrc(ep.watch_links[1].url, first); // swapped: 1 instead of 0
+  }, 100);
+}
     updateFocusable();
   } catch(e) {
     document.getElementById('screen-content').innerHTML = '<div class="loading">خطأ في التحميل</div>';
@@ -1012,4 +1012,211 @@ function initSmoothTVControl() {
 }
 </script>
 </body>
+<footer class="footer glass-panel">
+  <div class="footer-content">
+
+    <div class="footer-brand">
+      <h2>Screenify+ MENA</h2>
+      <p>أفضل تجربة مشاهدة للمحتوى العربي والعالمي بجودة عالية وواجهة سينمائية حديثة.</p>
+
+      <div class="footer-badges">
+        <span>4K</span>
+        <span>HDR</span>
+        <span>FAST</span>
+      </div>
+    </div>
+
+    <div class="footer-links">
+      <h3>روابط مهمة</h3>
+      <ul>
+        <li><a href="/">🏠 الرئيسية</a></li>
+        <li><a href="/browse">🎬 تصفح</a></li>
+        <li><a href="https://screenifyplus.online/menaterms" target="_blank">📜 الشروط والأحكام</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h3>تواصل معنا</h3>
+
+      <a class="mail-btn" href="mailto:contact@screenifyplus.online">
+        📧 contact@screenifyplus.online
+      </a>
+
+      <button class="support-btn">الدعم المباشر</button>
+
+      <p class="hint">نحن هنا لمساعدتك في أي وقت.</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 Screenify+ MENA - جميع الحقوق محفوظة</p>
+  </div>
+</footer>
+
+<style>
+.footer{
+  margin-top:70px;
+  padding:50px 20px 25px;
+  position:relative;
+  overflow:hidden;
+
+  background: rgba(15,15,20,0.65);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-top:1px solid rgba(255,255,255,0.08);
+}
+
+/* glow background */
+.footer::before{
+  content:"";
+  position:absolute;
+  inset:-60%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,0,60,0.18), transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(0,140,255,0.14), transparent 45%);
+  animation: glowMove 10s infinite alternate ease-in-out;
+  z-index:0;
+}
+
+@keyframes glowMove{
+  from { transform: translateY(0px) scale(1); }
+  to { transform: translateY(30px) scale(1.05); }
+}
+
+.footer-content{
+  position:relative;
+  z-index:2;
+
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:25px;
+}
+
+/* brand card feel */
+.footer-brand h2{
+  font-size:24px;
+  color:#fff;
+  margin-bottom:10px;
+  letter-spacing:0.5px;
+}
+
+.footer-brand p{
+  color:#bdbdbd;
+  font-size:14px;
+  line-height:1.6;
+}
+
+/* badges */
+.footer-badges{
+  margin-top:12px;
+  display:flex;
+  gap:8px;
+}
+
+.footer-badges span{
+  font-size:11px;
+  padding:5px 10px;
+  border-radius:999px;
+  background: rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.08);
+  color:#fff;
+}
+
+/* headings */
+.footer h3{
+  color:#ff2b4d;
+  font-size:15px;
+  margin-bottom:12px;
+}
+
+/* links */
+.footer-links ul{
+  list-style:none;
+  padding:0;
+}
+
+.footer-links a{
+  display:inline-block;
+  padding:8px 10px;
+  margin-bottom:6px;
+
+  color:#ccc;
+  text-decoration:none;
+
+  border-radius:10px;
+  background: rgba(255,255,255,0.03);
+  transition:0.25s;
+}
+
+.footer-links a:hover{
+  background: rgba(255,0,60,0.15);
+  color:#fff;
+  transform: translateX(6px);
+}
+
+/* contact */
+.mail-btn{
+  display:block;
+  padding:10px 12px;
+  margin-bottom:10px;
+
+  border-radius:12px;
+  text-decoration:none;
+  color:#fff;
+
+  background: rgba(0,140,255,0.12);
+  border:1px solid rgba(0,140,255,0.2);
+
+  transition:0.3s;
+}
+
+.mail-btn:hover{
+  transform: scale(1.03);
+  background: rgba(0,140,255,0.22);
+}
+
+/* button */
+.support-btn{
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:12px;
+
+  cursor:pointer;
+  font-weight:bold;
+  color:#fff;
+
+  background: linear-gradient(135deg,#ff003c,#ff7a18);
+  transition:0.3s;
+}
+
+.support-btn:hover{
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+
+/* hint */
+.hint{
+  margin-top:10px;
+  font-size:12px;
+  color:#888;
+}
+
+/* bottom */
+.footer-bottom{
+  position:relative;
+  z-index:2;
+
+  margin-top:25px;
+  padding-top:15px;
+
+  text-align:center;
+  font-size:13px;
+  color:#777;
+
+  border-top:1px solid rgba(255,255,255,0.08);
+}
+</style>
 </html>
