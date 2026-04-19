@@ -842,9 +842,6 @@ function renderAll() {
   // Insert synthetic rows
   let sectionList = [...baseSections];
   const finalEgIdx = sectionList.findIndex(s => s.filter_value === 'EG');
-  if (finalEgIdx > -1 && turkishItems.length > 0) {
-    sectionList.splice(finalEgIdx, 0, syntheticTR);
-  }
   const finalDzIdx = sectionList.findIndex(s => s.filter_value === 'DZ');
   if (finalDzIdx > -1 && moroccanItems.length > 0) {
     sectionList.splice(finalDzIdx, 0, syntheticMA);
