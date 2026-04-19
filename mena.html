@@ -8,8 +8,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cairo:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
-<link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet"/>
-<script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
+<link href="https://vjs.zencdn.net/8.21.1/video-js.css" rel="stylesheet"/>
+<script src="https://vjs.zencdn.net/8.21.1/video.min.js"></script>
+<style>
+video-player { display:block; width:100%; aspect-ratio:16/9; background:#000; }
+video-skin { display:block; width:100%; height:100%; }
+</style>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
 <script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
 <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css"/>
@@ -36,6 +40,9 @@
   --glass-border:rgba(255,255,255,0.12);
   --glass-blur:blur(35px) saturate(200%);
   --glass-shadow:0 10px 40px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.1);
+  /* Customizer vars */
+  --accent: #ff1a2e;
+  --accent-grad: linear-gradient(135deg,#ff1a2e 0%,#ff6b35 100%);
 }
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -249,12 +256,133 @@ img{display:block}button{font-family:'Cairo',sans-serif;cursor:pointer}a{text-de
 
 /* ── PROFILE MODAL ── */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9998;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
-.profile-modal{background:rgba(14,14,20,0.98);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:32px;width:320px;max-width:90vw;text-align:center}
-.profile-avatar{width:80px;height:80px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:2rem;color:#fff}
+.profile-modal{background:rgba(14,14,20,0.98);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:32px;width:360px;max-width:90vw;text-align:center}
+.profile-avatar{width:80px;height:80px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:2rem;color:#fff;position:relative;cursor:pointer;overflow:hidden}
+.profile-avatar:hover::after{content:'تغيير';position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-family:'Cairo',sans-serif}
 .profile-name{font-size:1.1rem;font-weight:900;margin-bottom:4px}
 .profile-sub{font-size:.8rem;color:var(--muted);margin-bottom:20px}
-.profile-close{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;padding:10px 24px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;margin-top:4px;width:100%;transition:background .2s}
+.profile-name-input{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#fff;padding:10px 14px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:.9rem;margin-bottom:12px;outline:none;text-align:center}
+.profile-name-input:focus{border-color:var(--red);box-shadow:0 0 15px var(--glow2)}
+.profile-save-btn{background:var(--grad);border:none;color:#fff;padding:10px 24px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;width:100%;margin-bottom:8px;transition:all .2s}
+.profile-save-btn:hover{opacity:.85}
+.profile-close{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;padding:10px 24px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;width:100%;transition:background .2s}
 .profile-close:hover{background:rgba(255,255,255,.16)}
+
+/* ── INVITE POPUP ── */
+.invite-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px);animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.invite-box{background:rgba(14,14,20,.98);border:1px solid rgba(255,26,46,.3);border-radius:24px;padding:40px 32px;max-width:380px;width:90%;text-align:center;position:relative;box-shadow:0 20px 60px rgba(255,26,46,.15)}
+.invite-logo{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+.invite-badge{display:inline-block;background:rgba(255,26,46,.15);border:1px solid rgba(255,26,46,.3);color:var(--red);font-size:.7rem;font-weight:800;letter-spacing:2px;padding:4px 12px;border-radius:20px;margin-bottom:20px}
+.invite-icon{font-size:3rem;margin-bottom:12px;animation:bounce 1s ease infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.invite-title{font-size:1.3rem;font-weight:900;margin-bottom:8px}
+.invite-subtitle{font-size:.9rem;color:var(--muted);margin-bottom:24px;line-height:1.6}
+.invite-name{font-size:1.4rem;font-weight:900;color:var(--red);margin-bottom:20px;direction:rtl}
+.invite-enter-btn{background:var(--grad);border:none;color:#fff;padding:14px 32px;border-radius:14px;font-family:'Cairo',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;width:100%;transition:all .2s;box-shadow:0 6px 25px var(--glow2)}
+.invite-enter-btn:hover{transform:scale(1.02)}
+.invite-firework{position:absolute;top:-20px;font-size:2rem;animation:float 2s ease infinite}
+
+/* ── CUSTOMIZER PANEL ── */
+.customizer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9997;backdrop-filter:blur(4px)}
+.customizer-panel{position:fixed;top:0;left:0;height:100%;width:320px;max-width:90vw;background:rgba(10,10,15,.98);border-right:1px solid rgba(255,255,255,.1);z-index:9998;overflow-y:auto;padding:24px;transform:translateX(-100%);transition:transform .35s cubic-bezier(.34,1.26,.64,1);box-shadow:8px 0 40px rgba(0,0,0,.6)}
+.customizer-panel.open{transform:translateX(0)}
+.cust-title{font-size:1.1rem;font-weight:900;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
+.cust-close{background:none;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer;padding:4px}
+.cust-close:hover{color:#fff}
+.cust-section{margin-bottom:24px}
+.cust-section-label{font-size:.75rem;font-weight:800;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+.cust-colors{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.cust-color-btn{width:40px;height:40px;border-radius:10px;border:2px solid transparent;cursor:pointer;transition:all .2s;position:relative}
+.cust-color-btn.on{border-color:#fff;transform:scale(1.1)}
+.cust-color-btn::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:#fff;opacity:0}
+.cust-color-btn.on::after{opacity:1}
+.cust-presets{display:flex;flex-direction:column;gap:8px}
+.cust-preset-btn{padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-family:'Cairo',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;text-align:right;transition:all .2s}
+.cust-preset-btn:hover{background:rgba(255,255,255,.1)}
+.cust-preset-btn.on{border-color:var(--red);background:rgba(255,26,46,.1)}
+.cust-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.cust-toggle-label{font-size:.85rem;font-weight:600;color:var(--txt)}
+.cust-toggle{width:44px;height:24px;background:rgba(255,255,255,.15);border-radius:12px;cursor:pointer;position:relative;transition:background .2s;border:none}
+.cust-toggle.on{background:var(--red)}
+.cust-toggle::after{content:'';position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s}
+.cust-toggle.on::after{transform:translateX(-20px)}
+.cust-range-row{margin-bottom:12px}
+.cust-range-label{font-size:.8rem;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between}
+.cust-range{width:100%;accent-color:var(--red)}
+
+/* ── SERVER PANEL (above player) ── */
+.server-panel{background:var(--s1);border-bottom:1px solid rgba(255,255,255,.06);padding:0}
+.server-panel-inner{padding:16px}
+.server-panel-title{font-size:.8rem;font-weight:800;color:var(--muted);letter-spacing:.5px;margin-bottom:10px;text-transform:uppercase}
+.server-grid-top{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.srv-top-btn{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.06);color:var(--txt);padding:9px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.1);font-family:'Cairo',sans-serif;cursor:pointer;font-size:.85rem;font-weight:700;transition:all .2s;flex:1;min-width:100px;justify-content:center}
+.srv-top-btn:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25)}
+.srv-top-btn.active{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 4px 15px var(--glow2)}
+.srv-top-btn .srv-num{background:rgba(255,255,255,.2);width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900}
+.srv-top-btn.active .srv-num{background:rgba(255,255,255,.3)}
+.ep-switch-row{border-top:1px solid rgba(255,255,255,.06);padding-top:12px}
+.ep-switch-label{font-size:.8rem;font-weight:800;color:var(--muted);letter-spacing:.5px;margin-bottom:8px}
+.ep-quick-scroll{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.ep-quick-scroll::-webkit-scrollbar{display:none}
+.ep-quick-btn{flex-shrink:0;padding:7px 14px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--muted);font-family:'Cairo',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+.ep-quick-btn:hover{background:rgba(255,26,46,.1);border-color:rgba(255,26,46,.3);color:#fff}
+.ep-quick-btn.active{background:var(--red);border-color:var(--red);color:#fff}
+
+/* ── EPISODES REDESIGN (OG Style) ── */
+.ep-grid-new{display:flex;flex-direction:column;gap:6px}
+.ep-item{display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;cursor:pointer;transition:all .2s;text-align:right}
+.ep-item:hover{background:rgba(255,26,46,.1);border-color:rgba(255,26,46,.3)}
+.ep-item.active{background:rgba(255,26,46,.15);border-color:rgba(255,26,46,.5)}
+.ep-item-num{width:36px;height:36px;background:rgba(255,255,255,.08);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:900;color:var(--muted);flex-shrink:0}
+.ep-item.active .ep-item-num{background:var(--red);color:#fff}
+.ep-item-info{flex:1;min-width:0}
+.ep-item-title{font-size:.85rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ep-item-meta{font-size:.72rem;color:var(--muted);margin-top:2px}
+.ep-item-play{color:var(--muted);font-size:.8rem;transition:color .2s}
+.ep-item:hover .ep-item-play{color:var(--red)}
+
+/* ── BECAUSE YOU WATCHED (dropdown) ── */
+.byw-section{margin-bottom:20px}
+.byw-toggle{display:flex;align-items:center;justify-content:space-between;padding:14px 0 10px;border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer;user-select:none}
+.byw-toggle-title{font-size:1rem;font-weight:900;color:#fff}
+.byw-toggle-icon{color:var(--muted);transition:transform .3s;font-size:.85rem}
+.byw-toggle.open .byw-toggle-icon{transform:rotate(90deg)}
+.byw-body{display:none;padding-top:12px}
+.byw-body.open{display:block}
+
+/* ── FOOTER ── */
+.site-footer{background:rgba(5,5,7,0.95);border-top:1px solid rgba(255,255,255,.06);padding:32px 4%;margin-top:60px}
+.footer-inner{display:flex;gap:40px;flex-wrap:wrap;justify-content:space-between;align-items:flex-start}
+.footer-brand .n-logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.footer-brand .n-mena{font-size:.65rem;font-weight:800;letter-spacing:4px;color:var(--muted)}
+.footer-brand p{font-size:.8rem;color:var(--muted);margin-top:8px;max-width:200px;line-height:1.6}
+.footer-col h4{font-size:.8rem;font-weight:800;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.footer-col a,.footer-col p{display:block;font-size:.82rem;color:rgba(255,255,255,.6);margin-bottom:6px;text-decoration:none;transition:color .2s;cursor:pointer}
+.footer-col a:hover{color:var(--red)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.05);margin-top:24px;padding-top:16px;display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.footer-bottom p{font-size:.75rem;color:var(--muted)}
+.footer-social{display:flex;gap:10px}
+.footer-social a{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .2s;font-size:.85rem}
+.footer-social a:hover{background:var(--red);color:#fff}
+
+/* ── DARK/LIGHT MODE ── */
+body.light-mode{--bg:#f0f0f5;--s1:#fff;--s2:#f5f5fa;--s3:#e8e8f0;--s4:#dddde8;--txt:#0d0d15;--muted:#666680;--glass-bg:rgba(255,255,255,0.6)}
+body.light-mode #nav.solid{background:rgba(240,240,245,.8)}
+
+/* ── MARQUEE TICKER ── */
+.ticker-bar{background:rgba(255,26,46,.08);border-top:1px solid rgba(255,26,46,.15);border-bottom:1px solid rgba(255,26,46,.15);padding:8px 0;overflow:hidden;position:relative}
+.ticker-inner{display:flex;animation:ticker 40s linear infinite;white-space:nowrap}
+.ticker-inner span{padding:0 40px;font-size:.78rem;font-weight:700;color:rgba(255,255,255,.7)}
+.ticker-inner span strong{color:var(--red)}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── PULSING LOGO LOADER ── */
+.player-loader{display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:#000;position:absolute;inset:0;z-index:5}
+.player-loader-logo{font-family:'Bebas Neue',sans-serif;font-size:3rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:logoPulse 1.5s ease-in-out infinite}
+@keyframes logoPulse{0%,100%{opacity:1;transform:scale(1);filter:drop-shadow(0 0 15px rgba(255,26,46,.8))}50%{opacity:.5;transform:scale(.92);filter:drop-shadow(0 0 5px rgba(255,26,46,.2))}}
+
+/* ── MOROCCAN / TURKISH ROWS ── */
 </style>
 </head>
 <body>
@@ -278,7 +406,7 @@ img{display:block}button{font-family:'Cairo',sans-serif;cursor:pointer}a{text-de
       <div id="search-dropdown" class="search-dropdown" style="display:none"></div>
     </div>
     <button class="n-btn" title="الملف الشخصي" onclick="showProfile()"><i class="fas fa-user-circle" style="font-size:1.15rem"></i></button>
-    <button class="n-btn" title="الإعدادات"><i class="fas fa-sliders-h"></i></button>
+    <button class="n-btn" title="تخصيص الموقع" onclick="openCustomizer()"><i class="fas fa-magic"></i></button>
   </div>
 </nav>
 
@@ -302,6 +430,27 @@ img{display:block}button{font-family:'Cairo',sans-serif;cursor:pointer}a{text-de
   </div>
   <div class="hero-dots" id="hero-dots"></div>
 </section>
+
+<!-- ── TICKER BAR ── -->
+<div class="ticker-bar" id="ticker-bar">
+  <div class="ticker-inner" id="ticker-inner">
+    <span>🔴 <strong>جديد:</strong> الحسد - الحلقة 28</span>
+    <span>🔴 <strong>جديد:</strong> لن يحدث لنا شيء - الحلقة 6</span>
+    <span>🆕 <strong>أضيف حديثاً:</strong> The Boys - الموسم 5</span>
+    <span>🔴 <strong>جديد:</strong> الجبل الثلجي - الحلقة 2</span>
+    <span>⭐ <strong>الأكثر مشاهدة:</strong> علي كلاي</span>
+    <span>🔴 <strong>جديد:</strong> ليل - الحلقة 56</span>
+    <span>🎬 <strong>مضاف:</strong> Invincible - الموسم 4</span>
+    <!-- duplicate for seamless loop -->
+    <span>🔴 <strong>جديد:</strong> الحسد - الحلقة 28</span>
+    <span>🔴 <strong>جديد:</strong> لن يحدث لنا شيء - الحلقة 6</span>
+    <span>🆕 <strong>أضيف حديثاً:</strong> The Boys - الموسم 5</span>
+    <span>🔴 <strong>جديد:</strong> الجبل الثلجي - الحلقة 2</span>
+    <span>⭐ <strong>الأكثر مشاهدة:</strong> علي كلاي</span>
+    <span>🔴 <strong>جديد:</strong> ليل - الحلقة 56</span>
+    <span>🎬 <strong>مضاف:</strong> Invincible - الموسم 4</span>
+  </div>
+</div>
 
 <!-- ── CATEGORY STRIP ── -->
 <div id="cat-strip">
@@ -337,12 +486,112 @@ img{display:block}button{font-family:'Cairo',sans-serif;cursor:pointer}a{text-de
 <!-- ── PROFILE MODAL ── -->
 <div class="modal-bg" id="profile-modal" style="display:none" onclick="if(event.target===this)this.style.display='none'">
   <div class="profile-modal">
-    <div class="profile-avatar"><i class="fas fa-user"></i></div>
-    <div class="profile-name">مشترك Screenify+</div>
+    <div class="profile-avatar" onclick="changeAvatar()"><i class="fas fa-user" id="profile-avatar-icon"></i></div>
+    <div class="profile-name" id="profile-display-name">مشترك Screenify+</div>
     <div class="profile-sub">MENA Premium • نشط</div>
+    <input type="text" class="profile-name-input" id="profile-name-input" placeholder="اكتب اسمك هنا..." maxlength="30">
+    <button class="profile-save-btn" onclick="saveProfileName()">حفظ الاسم</button>
     <button class="profile-close" onclick="document.getElementById('profile-modal').style.display='none'">إغلاق</button>
   </div>
 </div>
+
+<!-- ── CUSTOMIZER PANEL ── -->
+<div class="customizer-overlay" id="cust-overlay" style="display:none" onclick="closeCustomizer()"></div>
+<div class="customizer-panel" id="customizer-panel">
+  <div class="cust-title">
+    <span>✨ تخصيص الموقع</span>
+    <button class="cust-close" onclick="closeCustomizer()"><i class="fas fa-times"></i></button>
+  </div>
+
+  <div class="cust-section">
+    <div class="cust-section-label">🎨 لون رئيسي</div>
+    <div class="cust-colors">
+      <button class="cust-color-btn on" style="background:linear-gradient(135deg,#ff1a2e,#ff6b35)" data-color="#ff1a2e" data-grad="linear-gradient(135deg,#ff1a2e 0%,#ff6b35 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#6c63ff,#a78bfa)" data-color="#6c63ff" data-grad="linear-gradient(135deg,#6c63ff 0%,#a78bfa 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#00d2ff,#3a47d5)" data-color="#00d2ff" data-grad="linear-gradient(135deg,#00d2ff 0%,#3a47d5 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#11998e,#38ef7d)" data-color="#11998e" data-grad="linear-gradient(135deg,#11998e 0%,#38ef7d 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#f7971e,#ffd200)" data-color="#f7971e" data-grad="linear-gradient(135deg,#f7971e 0%,#ffd200 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#ff416c,#ff4b2b)" data-color="#ff416c" data-grad="linear-gradient(135deg,#ff416c 0%,#ff4b2b 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#c94b4b,#4b134f)" data-color="#c94b4b" data-grad="linear-gradient(135deg,#c94b4b 0%,#4b134f 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#0f0c29,#302b63)" data-color="#302b63" data-grad="linear-gradient(135deg,#302b63 0%,#0f0c29 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#009245,#fcee21)" data-color="#009245" data-grad="linear-gradient(135deg,#009245 0%,#fcee21 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#e96c2e,#f7d000)" data-color="#e96c2e" data-grad="linear-gradient(135deg,#e96c2e 0%,#f7d000 100%)" onclick="applyColor(this)"></button>
+    </div>
+  </div>
+
+  <div class="cust-section">
+    <div class="cust-section-label">🌗 المظهر</div>
+    <div class="cust-presets">
+      <button class="cust-preset-btn on" onclick="applyTheme('dark',this)">🌑 مظلم (افتراضي)</button>
+      <button class="cust-preset-btn" onclick="applyTheme('dim',this)">🌒 داكن دافئ</button>
+      <button class="cust-preset-btn" onclick="applyTheme('light',this)">☀️ فاتح</button>
+      <button class="cust-preset-btn" onclick="applyTheme('midnight',this)">🌌 منتصف الليل</button>
+    </div>
+  </div>
+
+  <div class="cust-section">
+    <div class="cust-section-label">⚙️ خيارات</div>
+    <div class="cust-toggle-row">
+      <span class="cust-toggle-label">شريط الأخبار</span>
+      <button class="cust-toggle on" id="toggle-ticker" onclick="toggleFeature('ticker',this)"></button>
+    </div>
+    <div class="cust-toggle-row">
+      <span class="cust-toggle-label">تأثيرات الحركة</span>
+      <button class="cust-toggle on" id="toggle-anim" onclick="toggleFeature('anim',this)"></button>
+    </div>
+    <div class="cust-toggle-row">
+      <span class="cust-toggle-label">حجم البطاقات كبير</span>
+      <button class="cust-toggle" id="toggle-bigcards" onclick="toggleFeature('bigcards',this)"></button>
+    </div>
+  </div>
+
+  <div class="cust-section">
+    <div class="cust-section-label">📐 حجم الخط</div>
+    <div class="cust-range-row">
+      <div class="cust-range-label"><span>صغير</span><span>كبير</span></div>
+      <input type="range" class="cust-range" min="12" max="20" value="16" id="font-range" oninput="applyFontSize(this.value)">
+    </div>
+  </div>
+</div>
+
+<!-- ── SITE FOOTER ── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="n-logo-wrap">
+        <div class="n-logo">SCREENIFY+</div>
+        <div class="n-mena">MENA</div>
+      </div>
+      <p>أفضل مسلسلات MENA والعالم، مترجمة وأصلية في مكان واحد.</p>
+    </div>
+    <div class="footer-col">
+      <h4>تصفح</h4>
+      <a onclick="scrollTo(0,0)">الرئيسية</a>
+      <a onclick="filterCat(document.querySelector('.ctab[onclick*=EG]'),'EG')">مسلسلات مصرية</a>
+      <a onclick="filterCat(document.querySelector('.ctab[onclick*=TR]'),'TR')">مسلسلات تركية</a>
+      <a onclick="filterCat(document.querySelector('.ctab[onclick*=foreign]'),'foreign')">مسلسلات أجنبية</a>
+    </div>
+    <div class="footer-col">
+      <h4>تواصل معنا</h4>
+      <a href="mailto:contact@screenifyplus.online">📧 contact@screenifyplus.online</a>
+      <a href="https://screenifyplus.online/menaterms" target="_blank">📋 الشروط والأحكام</a>
+    </div>
+    <div class="footer-col">
+      <h4>معلومات</h4>
+      <p>© 2026 Screenify+ MENA</p>
+      <p>جميع الحقوق محفوظة</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>Screenify+ MENA — منصة المسلسلات العربية والعالمية</p>
+    <div class="footer-social">
+      <a href="#" title="تويتر/X"><i class="fab fa-x-twitter"></i></a>
+      <a href="#" title="انستغرام"><i class="fab fa-instagram"></i></a>
+      <a href="#" title="تيليغرام"><i class="fab fa-telegram"></i></a>
+      <a href="#" title="يوتيوب"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+</footer>
 
 <script>
 const API = "https://admin.dramaramadan.net";
@@ -366,6 +615,7 @@ let plyrInstance = null;
 // ── Init ──
 document.addEventListener('DOMContentLoaded', async () => {
   setupNav();
+  loadSavedCustomizations();
   await loadAllSections();
   renderAll();
   initSmoothTVControl();
@@ -409,8 +659,44 @@ function renderAll() {
     }
   }
 
+  // Build section list - inject Turkish before Egyptian, Moroccan before Algerian
+  const baseSections = [...allSections];
+  const egIdx = baseSections.findIndex(s => s.filter_value === 'EG');
+  const dzIdx = baseSections.findIndex(s => s.filter_value === 'DZ');
+  const trSection = baseSections.find(s => s.filter_value === 'TR');
+
+  // Build Turkish section from TR items
+  const turkishItems = [];
+  allSections.forEach(sec => {
+    (sec.items || []).forEach(item => {
+      if (item.country === 'TR' && !turkishItems.find(x => x.id === item.id)) turkishItems.push(item);
+    });
+  });
+
+  // Build Moroccan section
+  const moroccanItems = [];
+  allSections.forEach(sec => {
+    (sec.items || []).forEach(item => {
+      if (item.country === 'MA' && !moroccanItems.find(x => x.id === item.id)) moroccanItems.push(item);
+    });
+  });
+
+  const syntheticTR = { id:'synth-tr', section_type:'by_country', title_ar:'🇹🇷 مسلسلات تركية', filter_value:'TR', items: turkishItems.slice(0,20) };
+  const syntheticMA = { id:'synth-ma', section_type:'by_country', title_ar:'🇲🇦 مسلسلات مغربية', filter_value:'MA', items: moroccanItems.slice(0,20) };
+
+  // Insert synthetic rows
+  let sectionList = [...baseSections];
+  const finalEgIdx = sectionList.findIndex(s => s.filter_value === 'EG');
+  if (finalEgIdx > -1 && turkishItems.length > 0) {
+    sectionList.splice(finalEgIdx, 0, syntheticTR);
+  }
+  const finalDzIdx = sectionList.findIndex(s => s.filter_value === 'DZ');
+  if (finalDzIdx > -1 && moroccanItems.length > 0) {
+    sectionList.splice(finalDzIdx, 0, syntheticMA);
+  }
+
   // Render sections
-  allSections.forEach((sec, idx) => {
+  sectionList.forEach((sec, idx) => {
     if (!sec.items || sec.items.length === 0) return;
     const isEpisodes = sec.section_type === 'latest_episodes';
     renderRow(main, sec, idx, isEpisodes);
@@ -604,8 +890,47 @@ async function openPlayer(id, fromSeriesId) {
     const j = await r.json();
     const ep = j.data;
 
+    // Reverse server order: server 2 becomes server 1 and vice versa
+    const links = (ep.watch_links || []).slice().reverse();
+
+    // Fetch sibling episodes for quick switcher
+    let siblingEps = [];
+    if (ep.season_id) {
+      try {
+        const sr = await fetch(`${API}/api/episodes/index.php?season_id=${ep.season_id}`);
+        const sj = await sr.json();
+        siblingEps = sj.data || [];
+      } catch(e){}
+    }
+
+    const epSwitcher = siblingEps.length > 1 ? `
+      <div class="ep-switch-row">
+        <div class="ep-switch-label">تغيير الحلقة</div>
+        <div class="ep-quick-scroll">
+          ${siblingEps.map(e => `<button class="ep-quick-btn ${e.id === id ? 'active' : ''}" onclick="openPlayerFromSeries(${e.id}, ${fromSeriesId || 0})">الحلقة ${e.episode_number}</button>`).join('')}
+        </div>
+      </div>` : '';
+
     document.getElementById('screen-content').innerHTML = `
-      <div id="player-box"><div id="player-container" style="width:100%;height:100%"></div></div>
+      <div class="server-panel">
+        <div class="server-panel-inner">
+          <div class="server-panel-title">اختر السيرفر</div>
+          <div class="server-grid-top">
+            ${links.map((l, i) => `<button class="srv-top-btn server-btn" onclick="loadSrc('${l.url}', this)">
+              <span class="srv-num">${i+1}</span> سيرفر ${i+1}
+            </button>`).join('')}
+          </div>
+          ${epSwitcher}
+        </div>
+      </div>
+
+      <div id="player-box" style="position:relative;width:100%;aspect-ratio:16/9;background:#000">
+        <div class="player-loader" id="player-loader">
+          <div class="player-loader-logo">SCREENIFY+</div>
+        </div>
+        <div id="player-container" style="width:100%;height:100%"></div>
+      </div>
+
       <div class="player-controls-row">
         ${fromSeriesId ? `<button class="srv-btn" onclick="openSeries(${fromSeriesId})" style="background:rgba(255,255,255,.05)"><i class="fas fa-arrow-right"></i> رجوع</button>` : ''}
         <span>المشغل:</span>
@@ -615,23 +940,21 @@ async function openPlayer(id, fromSeriesId) {
         <button class="srv-btn" id="btn-fluid" onclick="switchPlayer('fluid')">Fluid</button>
         <button class="srv-btn" onclick="shareLink(${id},'episode')" style="margin-right:auto"><i class="fas fa-share-alt"></i></button>
       </div>
+
       <div style="padding:0 16px 16px">
         <div class="info-sec-title">${ep.series_title || ''} — الحلقة ${ep.episode_number || ''}</div>
-        <div class="info-sec-title" style="font-size:.9rem;padding-top:4px">اختر السيرفر:</div>
-        <div class="srv-grid">
-          ${(ep.watch_links || []).map((l, i) =>
-            `<button class="srv-btn server-btn" onclick="loadSrc('${l.url}', this)">سيرفر ${i+1}</button>`
-          ).join('')}
-        </div>
       </div>
     `;
 
-   if (ep.watch_links && ep.watch_links.length > 1) {
-  setTimeout(() => {
-    const first = document.querySelector('.server-btn');
-    loadSrc(ep.watch_links[1].url, first); // swapped: 1 instead of 0
-  }, 100);
-}
+    if (links.length > 0) {
+      setTimeout(() => {
+        const first = document.querySelector('.server-btn');
+        loadSrc(links[0].url, first);
+        // Scroll to episode quick button
+        const activeEpBtn = document.querySelector('.ep-quick-btn.active');
+        if (activeEpBtn) activeEpBtn.scrollIntoView({inline:'center',behavior:'smooth'});
+      }, 100);
+    }
     updateFocusable();
   } catch(e) {
     document.getElementById('screen-content').innerHTML = '<div class="loading">خطأ في التحميل</div>';
@@ -662,23 +985,34 @@ function loadSrc(u, btnEl, isSwitch = false) {
   }
 
   const container = document.getElementById('player-container');
+  const loader = document.getElementById('player-loader');
   destroyAllPlayers();
 
-  if (u.includes('.m3u8') || u.includes('.mp4')) {
+  const hideLoader = () => { if(loader) loader.style.display = 'none'; };
+
+  if (u.includes('.m3u8') || u.includes('.mp4') || u.includes('cinesrc') || !u.startsWith('http')) {
     container.innerHTML = '';
     if (currentPlayerType === 'videojs') {
-      container.innerHTML = `<video id="vjs-player" class="video-js vjs-default-skin vjs-16-9" controls preload="auto" width="100%" height="100%" data-setup='{"fluid":true}'><source src="${u}" type="${u.includes('.m3u8')?'application/x-mpegURL':'video/mp4'}"></video>`;
-      videojs('vjs-player');
+      container.innerHTML = `<video id="vjs-player" class="video-js vjs-default-skin vjs-16-9" controls preload="auto" style="width:100%;height:100%" data-setup='{"fluid":true}'><source src="${u}" type="${u.includes('.m3u8')?'application/x-mpegURL':'video/mp4'}"></video>`;
+      try {
+        const vp = videojs('vjs-player', { fluid: true });
+        vp.one('ready', hideLoader);
+        vp.one('error', hideLoader);
+      } catch(e){ hideLoader(); }
     } else if (currentPlayerType === 'clappr') {
+      hideLoader();
       clapprInstance = new Clappr.Player({ source: u, parentId: '#player-container', width: '100%', height: '100%', autoPlay: true });
     } else if (currentPlayerType === 'plyr') {
       container.innerHTML = `<video id="plyr-player" playsinline controls style="width:100%;height:100%"><source src="${u}" type="${u.includes('.m3u8')?'application/x-mpegURL':'video/mp4'}"></video>`;
       plyrInstance = new Plyr('#plyr-player', { autoplay: true });
+      hideLoader();
     } else if (currentPlayerType === 'fluid') {
       container.innerHTML = `<video id="fluid-el" style="width:100%;height:100%"><source src="${u}"></video>`;
       fluidInstance = fluidPlayer('fluid-el', { layoutControls: { fillToContainer: true, autoPlay: true } });
+      hideLoader();
     }
   } else {
+    hideLoader();
     container.innerHTML = `<iframe src="${u}" style="width:100%;height:100%;border:none" allowfullscreen sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-presentation"></iframe>`;
   }
 }
@@ -768,7 +1102,7 @@ async function executeSearch(query) {
   }
 }
 
-// ── Share / Link System ──
+// ── Share / Link System (enhanced) ──
 function shareLink(id, type = 'series') {
   const url = `${location.origin}${location.pathname}#${type}/${id}`;
   navigator.clipboard.writeText(url).then(() => showToast()).catch(() => {
@@ -786,6 +1120,7 @@ function showToast() {
 
 // Handle deep links on load
 function handleDeepLink() {
+  checkInviteLink();
   const hash = location.hash;
   if (!hash) return;
   const m = hash.match(/^#(series|episode)\/(\d+)/);
@@ -796,15 +1131,160 @@ function handleDeepLink() {
   }
 }
 
-// ── Profile ──
+// ── Profile System ──
+let userProfileName = localStorage.getItem('screenify_profile_name') || '';
+
 function showProfile() {
   document.getElementById('profile-modal').style.display = 'flex';
+  const input = document.getElementById('profile-name-input');
+  input.value = userProfileName;
+  document.getElementById('profile-display-name').textContent = userProfileName || 'مشترك Screenify+';
 }
+
+function saveProfileName() {
+  const val = document.getElementById('profile-name-input').value.trim();
+  if (!val) return;
+  userProfileName = val;
+  localStorage.setItem('screenify_profile_name', val);
+  document.getElementById('profile-display-name').textContent = val;
+  const toast = document.getElementById('share-toast');
+  toast.innerHTML = '<i class="fas fa-check-circle"></i> تم حفظ الاسم!';
+  toast.classList.add('show');
+  setTimeout(() => { toast.classList.remove('show'); toast.innerHTML = '<i class="fas fa-check-circle"></i> تم نسخ الرابط!'; }, 3000);
+}
+
+function changeAvatar() {
+  const icons = ['fas fa-user','fas fa-user-ninja','fas fa-user-astronaut','fas fa-user-secret','fas fa-dragon'];
+  const current = document.getElementById('profile-avatar-icon').className;
+  const idx = icons.indexOf(current);
+  document.getElementById('profile-avatar-icon').className = icons[(idx + 1) % icons.length];
+}
+
+// ── Invite Popup ──
+function checkInviteLink() {
+  const hash = location.hash;
+  const m = hash.match(/^#invite\/(.+)/);
+  if (m) {
+    const inviterName = decodeURIComponent(m[1]);
+    showInvitePopup(inviterName);
+    history.replaceState(null,'',location.pathname);
+  }
+}
+
+function showInvitePopup(name) {
+  const div = document.createElement('div');
+  div.className = 'invite-overlay';
+  div.id = 'invite-overlay';
+  div.innerHTML = `
+    <div class="invite-box">
+      <div class="invite-firework" style="right:20px;animation-delay:.3s">🎉</div>
+      <div class="invite-firework" style="left:20px;animation-delay:.7s">✨</div>
+      <div class="invite-logo">SCREENIFY+</div>
+      <div class="invite-badge">MENA PREMIUM</div>
+      <div class="invite-icon">🎬</div>
+      <div class="invite-title">تمت دعوتك!</div>
+      <div class="invite-subtitle">لقد قام صديقك بدعوتك للانضمام إلى منصة Screenify+ MENA</div>
+      <div class="invite-name">${name} يدعوك 🎉</div>
+      <button class="invite-enter-btn" onclick="document.getElementById('invite-overlay').remove()">
+        <i class="fas fa-play"></i> ابدأ المشاهدة الآن
+      </button>
+    </div>
+  `;
+  document.body.appendChild(div);
+}
+
+function shareWithInvite() {
+  const name = userProfileName || 'مشترك';
+  const url = `${location.origin}${location.pathname}#invite/${encodeURIComponent(name)}`;
+  navigator.clipboard.writeText(url).catch(()=>{});
+  const toast = document.getElementById('share-toast');
+  toast.innerHTML = '<i class="fas fa-check-circle"></i> تم نسخ رابط الدعوة!';
+  toast.classList.add('show');
+  setTimeout(() => { toast.classList.remove('show'); toast.innerHTML = '<i class="fas fa-check-circle"></i> تم نسخ الرابط!'; }, 3000);
+}
+
+// ── Customizer ──
+function openCustomizer() {
+  document.getElementById('cust-overlay').style.display = 'block';
+  document.getElementById('customizer-panel').classList.add('open');
+}
+
+function closeCustomizer() {
+  document.getElementById('cust-overlay').style.display = 'none';
+  document.getElementById('customizer-panel').classList.remove('open');
+}
+
+function applyColor(btn) {
+  document.querySelectorAll('.cust-color-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  const color = btn.dataset.color;
+  const grad = btn.dataset.grad;
+  document.documentElement.style.setProperty('--red', color);
+  document.documentElement.style.setProperty('--glow', color.replace('#','rgba(').replace(/(.{2})(.{2})(.{2})/,'$1,$2,$3') + ',.5)');
+  document.documentElement.style.setProperty('--glow2', color.replace('#','rgba(').replace(/(.{2})(.{2})(.{2})/,'$1,$2,$3') + ',.2)');
+  document.documentElement.style.setProperty('--grad', grad);
+  localStorage.setItem('screenify_color', JSON.stringify({color,grad}));
+}
+
+function applyTheme(theme, btn) {
+  document.querySelectorAll('.cust-preset-btn').forEach(b => b.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+  const themes = {
+    dark:{bg:'#050507',s1:'#0d0d10',s2:'#141418'},
+    dim:{bg:'#0a0806',s1:'#110f0a',s2:'#1a1712'},
+    light:{bg:'#f0f0f5',s1:'#fff',s2:'#f5f5fa'},
+    midnight:{bg:'#000010',s1:'#000018',s2:'#090920'}
+  };
+  const t = themes[theme] || themes.dark;
+  document.body.className = theme === 'light' ? 'light-mode' : '';
+  document.documentElement.style.setProperty('--bg', t.bg);
+  document.documentElement.style.setProperty('--s1', t.s1);
+  document.documentElement.style.setProperty('--s2', t.s2);
+  localStorage.setItem('screenify_theme', theme);
+}
+
+function toggleFeature(feature, btn) {
+  btn.classList.toggle('on');
+  const isOn = btn.classList.contains('on');
+  if (feature === 'ticker') {
+    document.getElementById('ticker-bar').style.display = isOn ? 'block' : 'none';
+  } else if (feature === 'anim') {
+    document.documentElement.style.setProperty('--card-transition', isOn ? 'all .3s' : 'none');
+    document.querySelectorAll('.card,.card-ep').forEach(c => c.style.transition = isOn ? '' : 'none');
+  } else if (feature === 'bigcards') {
+    document.documentElement.style.setProperty('--card-w', isOn ? 'clamp(140px,22vw,210px)' : 'clamp(120px,18vw,175px)');
+    document.querySelectorAll('.card').forEach(c => c.style.width = isOn ? 'clamp(140px,22vw,210px)' : '');
+  }
+  localStorage.setItem('screenify_feature_' + feature, isOn ? '1' : '0');
+}
+
+function applyFontSize(val) {
+  document.documentElement.style.fontSize = val + 'px';
+  localStorage.setItem('screenify_fontsize', val);
+}
+
+function loadSavedCustomizations() {
+  try {
+    const col = JSON.parse(localStorage.getItem('screenify_color') || 'null');
+    if (col) {
+      const btn = document.querySelector(`.cust-color-btn[data-color="${col.color}"]`);
+      if (btn) applyColor(btn);
+    }
+    const theme = localStorage.getItem('screenify_theme');
+    if (theme) {
+      const btn = document.querySelector(`.cust-preset-btn[onclick*="${theme}"]`);
+      applyTheme(theme, btn);
+    }
+    const fs = localStorage.getItem('screenify_fontsize');
+    if (fs) { document.documentElement.style.fontSize = fs + 'px'; document.getElementById('font-range').value = fs; }
+  } catch(e){}
+}
+
+// ── Share / Link System (enhanced) ──
 
 // ── Open Series page (OG Style) ──
 async function openSeries(id) {
   toggleOverlay(true);
-  // Update URL hash for sharing
   history.replaceState(null, '', `${location.pathname}#series/${id}`);
   document.getElementById('screen-content').innerHTML = '<div class="loading">جاري التحميل</div>';
 
@@ -817,6 +1297,22 @@ async function openSeries(id) {
     const ratingCount = s.rating_count > 0 ? `(${s.rating_count.toLocaleString()})` : '';
     const genres = (s.genres || []).map(g => `<span class="info-badge">${g}</span>`).join('');
     const statusLabel = s.status === 'ongoing' ? 'يُعرض الآن' : s.status === 'completed' ? 'مكتمل' : 'قادم قريباً';
+
+    // BYW - related series
+    const bywItems = allSections.flatMap(sec => sec.items || [])
+      .filter(item => item.country === s.country && item.id !== s.id).slice(0, 8);
+    const bywHtml = bywItems.length > 0 ? `
+      <div class="byw-section">
+        <div class="byw-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+          <div class="byw-toggle-title">🎬 لأنك شاهدت مسلسلات مشابهة</div>
+          <i class="fas fa-chevron-left byw-toggle-icon"></i>
+        </div>
+        <div class="byw-body">
+          <div style="display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:8px">
+            ${bywItems.map(item => `<div class="card" onclick="openSeries(${item.id})" style="flex-shrink:0;width:110px"><img src="${API+(item.poster||'')}" loading="lazy"><div class="card-info" style="font-size:.7rem">${item.title_ar||''}</div></div>`).join('')}
+          </div>
+        </div>
+      </div>` : '';
 
     document.getElementById('screen-content').innerHTML = `
       <div class="info-page">
@@ -847,6 +1343,7 @@ async function openSeries(id) {
               <div class="info-actions">
                 <button class="btn-watch" id="info-play-btn"><i class="fas fa-play"></i> مشاهدة</button>
                 <button class="btn-share" onclick="shareLink(${id})"><i class="fas fa-share-alt"></i> مشاركة</button>
+                <button class="btn-share" onclick="shareWithInvite()" style="background:rgba(255,26,46,.12);border-color:rgba(255,26,46,.3);color:var(--red)"><i class="fas fa-user-plus"></i> دعوة</button>
               </div>
             </div>
           </div>
@@ -856,19 +1353,21 @@ async function openSeries(id) {
           ${(s.seasons && s.seasons.length > 0) ? `
             <div class="info-section-title">الموسم / الحلقات</div>
             <div class="season-tabs" id="season-tabs">
-              ${s.seasons.map((season, si) => `
-                <button class="season-tab ${si===0?'on':''}" onclick="loadSeason(${season.id}, ${id}, this)">
-                  موسم ${season.season_number || (si+1)}
-                </button>`).join('')}
+             ${s.seasons
+  .sort((a, b) => (a.season_number || 0) - (b.season_number || 0)) // 🔥 force correct order
+  .map((season, si) => `
+    <button class="season-tab ${si===0?'on':''}" onclick="loadSeason(${season.id}, ${id}, this)">
+      موسم ${season.season_number || (si+1)}
+    </button>`).join('')}
             </div>
-            <div id="ep-list" class="ep-grid"><div class="ep-btn loading">جاري التحميل...</div></div>
+            <div id="ep-list" class="ep-grid-new"><div class="loading" style="padding:20px;font-size:.9rem">جاري التحميل...</div></div>
           ` : `
             <div class="info-section-title">الحلقات</div>
-            <div id="ep-list" class="ep-grid"></div>
+            <div id="ep-list" class="ep-grid-new"></div>
           `}
 
           ${s.trailer_url ? `
-            <div class="info-section-title">المقدمة</div>
+            <div class="info-section-title" style="margin-top:20px">المقطع الدعائي</div>
             <div class="trailer-list">
               <div class="trailer-thumb" onclick="window.open('${s.trailer_url}','_blank')">
                 <img src="https://img.youtube.com/vi/${getYTId(s.trailer_url)}/mqdefault.jpg" onerror="this.src='${API+(s.poster||'')}'">
@@ -876,20 +1375,20 @@ async function openSeries(id) {
               </div>
             </div>
           ` : ''}
+
+          ${bywHtml}
         </div>
       </div>
     `;
 
-    // Load first season episodes
     if (s.seasons && s.seasons.length > 0) {
-      loadSeason(s.seasons[0].id, id, null);
+    const sortedSeasons = s.seasons.sort((a,b)=>(a.season_number||0)-(b.season_number||0));
+loadSeason(sortedSeasons[0].id, id, null);
     } else {
-      // If no seasons array but has content, try fetching via series id
       const epList = document.getElementById('ep-list');
       if (epList) epList.innerHTML = '<div class="sd-empty" style="padding:20px;color:var(--muted)">لا توجد حلقات متاحة</div>';
     }
 
-    // Set play button action (will use first episode)
     const firstEpBtn = document.getElementById('info-play-btn');
     if (firstEpBtn) {
       firstEpBtn._seriesId = id;
@@ -929,11 +1428,15 @@ async function loadSeason(seasonId, seriesId, btnEl) {
       return;
     }
 
-    epList.innerHTML = episodes.map(e =>
-      `<button class="ep-btn" onclick="openPlayerFromSeries(${e.id}, ${seriesId})">
-        <div style="font-size:.75rem;color:var(--red);margin-bottom:2px">الحلقة ${e.episode_number}</div>
-        ${e.title ? `<div style="font-size:.78rem;color:var(--muted);font-weight:500">${e.title}</div>` : ''}
-      </button>`
+    epList.innerHTML = episodes.map((e,i) =>
+      `<div class="ep-item" onclick="openPlayerFromSeries(${e.id}, ${seriesId})">
+        <div class="ep-item-num">${e.episode_number}</div>
+        <div class="ep-item-info">
+          <div class="ep-item-title">${e.title || 'الحلقة ' + e.episode_number}</div>
+          ${e.duration ? `<div class="ep-item-meta">${Math.floor(e.duration/60)} دقيقة</div>` : ''}
+        </div>
+        <i class="fas fa-play ep-item-play"></i>
+      </div>`
     ).join('');
 
     // Wire up the play button to first episode
@@ -1012,211 +1515,4 @@ function initSmoothTVControl() {
 }
 </script>
 </body>
-<footer class="footer glass-panel">
-  <div class="footer-content">
-
-    <div class="footer-brand">
-      <h2>Screenify+ MENA</h2>
-      <p>أفضل تجربة مشاهدة للمحتوى العربي والعالمي بجودة عالية وواجهة سينمائية حديثة.</p>
-
-      <div class="footer-badges">
-        <span>4K</span>
-        <span>HDR</span>
-        <span>FAST</span>
-      </div>
-    </div>
-
-    <div class="footer-links">
-      <h3>روابط مهمة</h3>
-      <ul>
-        <li><a href="/">🏠 الرئيسية</a></li>
-        <li><a href="/browse">🎬 تصفح</a></li>
-        <li><a href="https://screenifyplus.online/menaterms" target="_blank">📜 الشروط والأحكام</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-contact">
-      <h3>تواصل معنا</h3>
-
-      <a class="mail-btn" href="mailto:contact@screenifyplus.online">
-        📧 contact@screenifyplus.online
-      </a>
-
-      <button class="support-btn">الدعم المباشر</button>
-
-      <p class="hint">نحن هنا لمساعدتك في أي وقت.</p>
-    </div>
-
-  </div>
-
-  <div class="footer-bottom">
-    <p>© 2026 Screenify+ MENA - جميع الحقوق محفوظة</p>
-  </div>
-</footer>
-
-<style>
-.footer{
-  margin-top:70px;
-  padding:50px 20px 25px;
-  position:relative;
-  overflow:hidden;
-
-  background: rgba(15,15,20,0.65);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-
-  border-top:1px solid rgba(255,255,255,0.08);
-}
-
-/* glow background */
-.footer::before{
-  content:"";
-  position:absolute;
-  inset:-60%;
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255,0,60,0.18), transparent 40%),
-    radial-gradient(circle at 70% 60%, rgba(0,140,255,0.14), transparent 45%);
-  animation: glowMove 10s infinite alternate ease-in-out;
-  z-index:0;
-}
-
-@keyframes glowMove{
-  from { transform: translateY(0px) scale(1); }
-  to { transform: translateY(30px) scale(1.05); }
-}
-
-.footer-content{
-  position:relative;
-  z-index:2;
-
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:25px;
-}
-
-/* brand card feel */
-.footer-brand h2{
-  font-size:24px;
-  color:#fff;
-  margin-bottom:10px;
-  letter-spacing:0.5px;
-}
-
-.footer-brand p{
-  color:#bdbdbd;
-  font-size:14px;
-  line-height:1.6;
-}
-
-/* badges */
-.footer-badges{
-  margin-top:12px;
-  display:flex;
-  gap:8px;
-}
-
-.footer-badges span{
-  font-size:11px;
-  padding:5px 10px;
-  border-radius:999px;
-  background: rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.08);
-  color:#fff;
-}
-
-/* headings */
-.footer h3{
-  color:#ff2b4d;
-  font-size:15px;
-  margin-bottom:12px;
-}
-
-/* links */
-.footer-links ul{
-  list-style:none;
-  padding:0;
-}
-
-.footer-links a{
-  display:inline-block;
-  padding:8px 10px;
-  margin-bottom:6px;
-
-  color:#ccc;
-  text-decoration:none;
-
-  border-radius:10px;
-  background: rgba(255,255,255,0.03);
-  transition:0.25s;
-}
-
-.footer-links a:hover{
-  background: rgba(255,0,60,0.15);
-  color:#fff;
-  transform: translateX(6px);
-}
-
-/* contact */
-.mail-btn{
-  display:block;
-  padding:10px 12px;
-  margin-bottom:10px;
-
-  border-radius:12px;
-  text-decoration:none;
-  color:#fff;
-
-  background: rgba(0,140,255,0.12);
-  border:1px solid rgba(0,140,255,0.2);
-
-  transition:0.3s;
-}
-
-.mail-btn:hover{
-  transform: scale(1.03);
-  background: rgba(0,140,255,0.22);
-}
-
-/* button */
-.support-btn{
-  width:100%;
-  padding:10px;
-  border:none;
-  border-radius:12px;
-
-  cursor:pointer;
-  font-weight:bold;
-  color:#fff;
-
-  background: linear-gradient(135deg,#ff003c,#ff7a18);
-  transition:0.3s;
-}
-
-.support-btn:hover{
-  transform: scale(1.05);
-  filter: brightness(1.1);
-}
-
-/* hint */
-.hint{
-  margin-top:10px;
-  font-size:12px;
-  color:#888;
-}
-
-/* bottom */
-.footer-bottom{
-  position:relative;
-  z-index:2;
-
-  margin-top:25px;
-  padding-top:15px;
-
-  text-align:center;
-  font-size:13px;
-  color:#777;
-
-  border-top:1px solid rgba(255,255,255,0.08);
-}
-</style>
 </html>
