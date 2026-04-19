@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>الشروط والأحكام · screenify+ MENA</title>
+  <link rel="icon" type="image/png" sizes="192x192" href="https://h.top4top.io/p_37379uc361.png">
+  <!-- خطوط عربية + أصلية -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cairo:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root{
+      --red:#ff1a2e;
+      --glow:rgba(255,26,46,.5);
+      --glow2:rgba(255,26,46,.2);
+      --bg:#050507;
+      --s1:#0d0d10;
+      --s2:#141418;
+      --s3:#1c1c22;
+      --s4:#242430;
+      --txt:#fff;
+      --muted:#8888a0;
+      --green:#2dff8e;
+      --gold:#ffd700;
+      --r:16px;
+      --nav:72px;
+      --grad:linear-gradient(135deg,#ff1a2e 0%,#ff6b35 100%);
+      --glass-bg:rgba(20,20,28,0.45);
+      --glass-border:rgba(255,255,255,0.12);
+      --glass-blur:blur(35px) saturate(200%);
+      --glass-shadow:0 10px 40px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.1);
+      --accent: #ff1a2e;
+      --accent-grad: linear-gradient(135deg,#ff1a2e 0%,#ff6b35 100%);
+    }
+
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+    body{background:var(--bg);color:var(--txt);font-family:'Cairo',sans-serif;overflow-x:hidden;min-height:100vh;direction:rtl}
+    img{display:block}button{font-family:'Cairo',sans-serif;cursor:pointer}a{text-decoration:none;color:inherit}
+    ::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,26,46,0.5);border-radius:2px}
+
+    .glass-panel{
+      background:var(--glass-bg);
+      backdrop-filter:var(--glass-blur);
+      -webkit-backdrop-filter:var(--glass-blur);
+      border:1px solid var(--glass-border);
+      box-shadow:var(--glass-shadow);
+    }
+
+    /* ── NAV ── */
+    #nav{position:fixed;top:0;right:0;left:0;z-index:900;height:var(--nav);display:flex;align-items:center;justify-content:space-between;padding:0 4%;transition:all .4s;background:rgba(10,10,15,0.65);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border-bottom:1px solid var(--glass-border);box-shadow:0 4px 30px rgba(0,0,0,0.3);}
+    .n-logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:3px;cursor:pointer;flex-shrink:0;filter:drop-shadow(0 0 20px rgba(255,26,46,.4))}
+    .n-mena{font-size:.75rem;font-weight:800;letter-spacing:4px;color:var(--muted);margin-top:-4px;text-align:center}
+    .n-logo-wrap{display:flex;flex-direction:column;align-items:center;gap:0}
+    .n-links{display:flex;gap:24px;list-style:none;margin-right:32px}
+    .n-links a{color:var(--muted);font-size:.9rem;font-weight:700;letter-spacing:.3px;padding:6px 0;position:relative;transition:color .2s;cursor:pointer}
+    .n-links a::after{content:'';position:absolute;bottom:-2px;right:0;width:0;height:2px;background:var(--grad);border-radius:2px;transition:width .3s}
+    .n-links a:hover,.n-links a.on{color:#fff}.n-links a:hover::after,.n-links a.on::after{width:100%}
+    .n-left{display:flex;align-items:center}.n-right{display:flex;align-items:center;gap:10px}
+    .n-btn{background:none;border:none;color:var(--muted);padding:8px;border-radius:12px;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+    .n-btn:hover{color:#fff;background:rgba(255,255,255,.1)}
+
+    /* ── MAIN CONTENT ── */
+    .terms-wrapper {
+      padding-top: calc(var(--nav) + 30px);
+      padding-bottom: 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-left: 5%;
+      padding-right: 5%;
+    }
+
+    .terms-card {
+      background: rgba(13, 13, 16, 0.7);
+      backdrop-filter: blur(2px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 28px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s;
+    }
+
+    .terms-title {
+      font-family: 'Bebas Neue', 'Cairo', sans-serif;
+      font-size: 3rem;
+      letter-spacing: 2px;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+      line-height: 1.1;
+    }
+    .terms-sub {
+      color: var(--red);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      border-right: 3px solid var(--red);
+      padding-right: 12px;
+    }
+    .terms-updated {
+      color: var(--muted);
+      font-size: 0.75rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 1rem;
+    }
+    .terms-section {
+      margin-bottom: 2rem;
+    }
+    .terms-section h2 {
+      font-family: 'Bebas Neue', 'Cairo', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+      color: #fff;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .terms-section h2::before {
+      content: '';
+      width: 8px;
+      height: 28px;
+      background: var(--red);
+      border-radius: 8px;
+      display: inline-block;
+      margin-left: 8px;
+    }
+    .terms-section p, .terms-section li {
+      color: rgba(255, 255, 255, 0.82);
+      line-height: 1.8;
+      font-size: 0.95rem;
+      margin-bottom: 0.8rem;
+    }
+    .terms-section ul, .terms-section ol {
+      margin-right: 1.8rem;
+      margin-bottom: 1rem;
+      padding-right: 0.5rem;
+    }
+    .highlight-box {
+      background: rgba(255, 26, 46, 0.08);
+      border-right: 4px solid var(--red);
+      padding: 1.2rem 1.5rem;
+      border-radius: 16px;
+      margin: 1.5rem 0;
+      backdrop-filter: blur(4px);
+    }
+    .highlight-box strong {
+      color: var(--red);
+      font-weight: 800;
+    }
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      margin-top: 1.8rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      font-family: 'Cairo', sans-serif;
+    }
+    .btn-back:hover {
+      background: #e8e8e8;
+      transform: scale(1.02);
+      box-shadow: 0 0 18px var(--glow);
+    }
+    .btn-back svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2.5;
+      transform: scaleX(-1);
+    }
+    .feature-badge {
+      background: linear-gradient(145deg, #1a1a22, #0c0c10);
+      border-radius: 24px;
+      padding: 1.2rem 1.6rem;
+      margin: 1.6rem 0;
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+    .feature-badge h3 {
+      font-family: 'Bebas Neue', 'Cairo', sans-serif;
+      font-size: 1.6rem;
+      color: var(--gold);
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+    .guide-card {
+      background: rgba(255, 26, 46, 0.05);
+      border-radius: 24px;
+      padding: 1.2rem 1.6rem;
+      margin: 1.6rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.2s;
+    }
+    .guide-card:hover {
+      background: rgba(255, 26, 46, 0.1);
+      border-color: var(--red);
+    }
+    .guide-text {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .guide-text span:first-child {
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      color: var(--gold);
+    }
+    .guide-text span:last-child {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .guide-link {
+      background: var(--red);
+      padding: 8px 22px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: transform 0.2s, background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: white;
+      font-family: 'Cairo', sans-serif;
+    }
+    .guide-link:hover {
+      background: #ff3b4e;
+      transform: scale(1.02);
+    }
+    .guide-link svg {
+      transform: scaleX(-1);
+    }
+    .contact-email {
+      background: rgba(255,255,255,0.03);
+      border-radius: 60px;
+      padding: 6px 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Cairo', monospace;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.2s;
+    }
+    .contact-email:hover {
+      background: rgba(255,26,46,0.2);
+      border-color: var(--red);
+    }
+    .footer-note {
+      margin-top: 3rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.75rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 1.8rem;
+    }
+
+    /* ── FOOTER ── */
+    .site-footer{background:rgba(5,5,7,0.95);border-top:1px solid rgba(255,255,255,.06);padding:32px 4%;margin-top:60px}
+    .footer-inner{display:flex;gap:40px;flex-wrap:wrap;justify-content:space-between;align-items:flex-start}
+    .footer-brand .n-logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .footer-brand .n-mena{font-size:.65rem;font-weight:800;letter-spacing:4px;color:var(--muted)}
+    .footer-brand p{font-size:.8rem;color:var(--muted);margin-top:8px;max-width:200px;line-height:1.6}
+    .footer-col h4{font-size:.8rem;font-weight:800;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+    .footer-col a,.footer-col p{display:block;font-size:.82rem;color:rgba(255,255,255,.6);margin-bottom:6px;text-decoration:none;transition:color .2s;cursor:pointer}
+    .footer-col a:hover{color:var(--red)}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.05);margin-top:24px;padding-top:16px;display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+    .footer-bottom p{font-size:.75rem;color:var(--muted)}
+    .footer-social{display:flex;gap:10px}
+    .footer-social a{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .2s;font-size:.85rem}
+    .footer-social a:hover{background:var(--red);color:#fff}
+
+    @media (max-width: 680px) {
+      .terms-card { padding: 1.6rem; }
+      .terms-title { font-size: 2.2rem; }
+      .n-links { display: none; }
+      .btn-back { width: 100%; justify-content: center; }
+      .guide-card { flex-direction: column; align-items: flex-start; }
+    }
+    @keyframes fadeSlide {
+      0% { opacity: 0; transform: translateY(12px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .terms-card { animation: fadeSlide 0.5s ease-out; }
+
+    /* PROFILE MODAL & CUSTOMIZER (keep minimal) */
+    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9998;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+    .profile-modal{background:rgba(14,14,20,0.98);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:32px;width:360px;max-width:90vw;text-align:center}
+    .profile-avatar{width:80px;height:80px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:2rem;color:#fff;position:relative;cursor:pointer;overflow:hidden}
+    .profile-avatar:hover::after{content:'تغيير';position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-family:'Cairo',sans-serif}
+    .profile-name{font-size:1.1rem;font-weight:900;margin-bottom:4px}
+    .profile-sub{font-size:.8rem;color:var(--muted);margin-bottom:20px}
+    .profile-name-input{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#fff;padding:10px 14px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:.9rem;margin-bottom:12px;outline:none;text-align:center}
+    .profile-name-input:focus{border-color:var(--red);box-shadow:0 0 15px var(--glow2)}
+    .profile-save-btn{background:var(--grad);border:none;color:#fff;padding:10px 24px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;width:100%;margin-bottom:8px;transition:all .2s}
+    .profile-save-btn:hover{opacity:.85}
+    .profile-close{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;padding:10px 24px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;width:100%;transition:background .2s}
+    .profile-close:hover{background:rgba(255,255,255,.16)}
+
+    .customizer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9997;backdrop-filter:blur(4px)}
+    .customizer-panel{position:fixed;top:0;left:0;height:100%;width:320px;max-width:90vw;background:rgba(10,10,15,.98);border-right:1px solid rgba(255,255,255,.1);z-index:9998;overflow-y:auto;padding:24px;transform:translateX(-100%);transition:transform .35s cubic-bezier(.34,1.26,.64,1);box-shadow:8px 0 40px rgba(0,0,0,.6)}
+    .customizer-panel.open{transform:translateX(0)}
+    .cust-title{font-size:1.1rem;font-weight:900;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
+    .cust-close{background:none;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer;padding:4px}
+    .cust-close:hover{color:#fff}
+    .cust-section{margin-bottom:24px}
+    .cust-section-label{font-size:.75rem;font-weight:800;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px}
+    .cust-colors{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+    .cust-color-btn{width:40px;height:40px;border-radius:10px;border:2px solid transparent;cursor:pointer;transition:all .2s;position:relative}
+    .cust-color-btn.on{border-color:#fff;transform:scale(1.1)}
+    .cust-color-btn::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:#fff;opacity:0}
+    .cust-color-btn.on::after{opacity:1}
+    .cust-presets{display:flex;flex-direction:column;gap:8px}
+    .cust-preset-btn{padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-family:'Cairo',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;text-align:right;transition:all .2s}
+    .cust-preset-btn:hover{background:rgba(255,255,255,.1)}
+    .cust-preset-btn.on{border-color:var(--red);background:rgba(255,26,46,.1)}
+    .cust-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+    .cust-toggle-label{font-size:.85rem;font-weight:600;color:var(--txt)}
+    .cust-toggle{width:44px;height:24px;background:rgba(255,255,255,.15);border-radius:12px;cursor:pointer;position:relative;transition:background .2s;border:none}
+    .cust-toggle.on{background:var(--red)}
+    .cust-toggle::after{content:'';position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s}
+    .cust-toggle.on::after{transform:translateX(-20px)}
+    .cust-range-row{margin-bottom:12px}
+    .cust-range-label{font-size:.8rem;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between}
+    .cust-range{width:100%;accent-color:var(--red)}
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <div class="n-left">
+    <div class="n-logo-wrap" onclick="window.location.href='https://screenifyplus.online/mena'">
+      <div class="n-logo">SCREENIFY+</div>
+      <div class="n-mena">MENA</div>
+    </div>
+    <ul class="n-links">
+      <li><a href="https://screenifyplus.online/mena">الرئيسية</a></li>
+      <li><a href="https://screenifyplus.online/mena">المسلسلات</a></li>
+      <li><a class="on">الشروط</a></li>
+    </ul>
+  </div>
+  <div class="n-right">
+    <button class="n-btn" title="الملف الشخصي" onclick="showProfile()"><i class="fas fa-user-circle" style="font-size:1.15rem"></i></button>
+    <button class="n-btn" title="تخصيص الموقع" onclick="openCustomizer()"><i class="fas fa-magic"></i></button>
+  </div>
+</nav>
+
+<!-- ── MAIN CONTENT ── -->
+<main class="terms-wrapper">
+  <div class="terms-card">
+    <h1 class="terms-title">شروط الخدمة</h1>
+    <div class="terms-sub">الاتفاقية والمسؤولية · إرشادات المشاهدة</div>
+    <div class="terms-updated">📅 آخر تحديث: مارس 2026 · سارية على جميع مستخدمي screenify+ MENA</div>
+
+    <!-- دليل الاستخدام -->
+    <div class="guide-card">
+      <div class="guide-text">
+        <span>📖 جديد على screenify+ MENA؟</span>
+        <span>اكتشف كيفية مشاهدة الأفلام والمسلسلات والأنمي بدون تسجيل — دليل تفصيلي خطوة بخطوة.</span>
+      </div>
+      <a href="https://screenifyplus.online/mena/how" class="guide-link" target="_blank" rel="noopener noreferrer">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        دليل المستخدم ←
+      </a>
+    </div>
+
+    <div class="terms-section">
+      <h2>١. قبول الشروط</h2>
+      <p>باستخدامك لموقع screenify+ MENA ("الموقع")، فإنك تقر بأنك قد قرأت وفهمت ووافقت على الالتزام بشروط الخدمة هذه. إذا كنت لا توافق على أي جزء من هذه الشروط، فيجب عليك الامتناع عن استخدام منصتنا. <strong>استمرارك في الاستخدام يُعتبر قبولاً صريحاً.</strong></p>
+      <p>screenify+ MENA هي وجهة بث مجانية متميزة حيث يمكنك مشاهدة الأفلام والمسلسلات والأنمي عبر الإنترنت دون الحاجة إلى تسجيل. لا نطلب أي اشتراك أو دفع أو بيانات شخصية. مع قاعدة بيانات ضخمة يتم تحديثها باستمرار، وسرعة فائقة في التشغيل، وواجهة سهلة الاستخدام، نحن واثقون من أن screenify+ هو أفضل موقع لمشاهدة الأفلام المجانية في المنطقة — تجربة لا تُفوَّت.</p>
+    </div>
+
+    <div class="terms-section">
+      <h2>٢. ما يميز screenify+ MENA</h2>
+      <p>صُمم screenify+ MENA لتقديم حرية مشاهدة لا مثيل لها. بدون حواجز تسجيل، بدون رسوم خفية، فقط ترفيه خالص. تجمع منصتنا مصادر خارجية عالية الجودة وتقدمها في واجهة أنيقة وسهلة التصفح. سواء كنت من عشاق الأفلام العالمية، أو المسلسلات المشوقة، أو الأنمي، أو السينما العربية والعالمية، فإن screenify+ يجمع كل ذلك في مكان واحد.</p>
+      
+      <div class="feature-badge">
+        <h3>🎬 أفضل تجربة مشاهدة مجانية – بدون تسجيل نهائياً</h3>
+        <p style="color: rgba(255,255,210,0.9); margin-bottom: 6px;"><strong>⭐ قاعدة بيانات ضخمة · بدون حساب · تشغيل فوري ⭐</strong></p>
+        <p>تفتخر screenify+ MENA بكونها الوجهة الأولى للأفلام والمسلسلات المجانية. مع آلاف العناوين، وتصنيفات ذكية، وتصميم جذاب، نقدم تجربة مشاهدة لا تُضاهى. لا بريد إلكتروني ولا كلمة مرور — فقط انقر وشاهد. يمكنك استكشاف المحتوى الرائج، وحفظ مفضلاتك في "قائمتي"، ومتابعة المشاهدة من حيث توقفت، كل ذلك دون إنشاء حساب. هذا هو وعد screenify+.</p>
+      </div>
+      <p>تستخدم منصتنا مضيفي فيديو خارجيين موثوقين وبيانات وصفية من The Movie Database (TMDB) لضمان حصولك على أحدث المعلومات. نحن لا نستضيف أي ملفات بأنفسنا؛ بل نعمل كبوابة متطورة للترفيه المجاني عالي الجودة.</p>
+    </div>
+
+    <div class="terms-section">
+      <h2>٣. لا حاجة للتسجيل · مسؤولية المستخدم</h2>
+      <p>لا يتطلب screenify+ MENA <strong>التسجيل أو الدفع أو جمع البيانات الشخصية</strong> للاستمتاع بالوصول الكامل إلى المكتبة. خصوصيتك لها الأولوية القصوى. ومع ذلك، أنت المسؤول الوحيد عن الامتثال للقوانين المحلية المتعلقة بحقوق النشر والبث. قد تقيد بعض السلطات القضائية الوصول إلى محتوى تابع لجهات خارجية؛ وتقع على عاتقك مسؤولية التأكد من الامتثال.</p>
+      <p>باستخدامك screenify+ MENA فإنك تؤكد أنك تبلغ السن القانوني في منطقتك للوصول إلى وسائط البث أو أنك تملك موافقة الوالدين.</p>
+    </div>
+
+    <div class="highlight-box">
+      <strong>📢 باستخدامك لهذا الموقع، فإنك توافق على:</strong> أن screenify+ MENA يعمل كمنصة اكتشاف وفهرسة. نحن لا نضمن الوصول غير المنقطع، ولا نؤيد أي انتهاك لحقوق النشر. يُقدم الموقع "كما هو" دون أي ضمانات من أي نوع. ومع ذلك، فإننا نسعى جاهدين للحفاظ على أفضل بيئة بث مجانية.
+    </div>
+
+    <div class="terms-section">
+      <h2>٤. الملكية الفكرية ومحتوى الطرف الثالث</h2>
+      <p>جميع العلامات التجارية والشعارات ومحتوى الوسائط مملوكة لأصحابها المعنيين. يستخدم screenify+ MENA واجهة TMDB API للبيانات الوصفية، ولكنه لا يدّعي ملكية أي ملصقات أو أوصاف للأفلام/المسلسلات. إذا كنت صاحب حقوق نشر وتعتقد أن أي محتوى مرتبط ينتهك حقوقك، فيرجى الاتصال بموفر الاستضافة الخارجي مباشرة. سنتعاون مع طلبات الإزالة الصالحة المتعلقة بفهارسنا.</p>
+    </div>
+
+    <div class="terms-section">
+      <h2>٥. إخلاء المسؤولية عن الضمانات وتحديد المسؤولية</h2>
+      <p>يُقدم screenify+ MENA لأغراض ترفيهية. نحن لا نقدم أي تعهد أو ضمان من أي نوع، صريحًا كان أم ضمنيًا، فيما يتعلق باكتمال أو دقة أو موثوقية أو ملاءمة أو توفر روابط البث التابعة لجهات خارجية. لن تكون screenify+ MENA أو مشغلوها أو الشركات التابعة لها تحت أي ظرف من الظروف مسؤولة عن أي أضرار مباشرة أو غير مباشرة أو عرضية أو تبعية تنشأ عن استخدامك للموقع أو عن محتوى الطرف الثالث.</p>
+      <ul>
+        <li>نحن لا نستضيف أي ملفات فيديو — جميع عمليات البث تأتي من مصادر خارجية.</li>
+        <li>لا نضمن بقاء الروابط الخارجية نشطة أو خالية من التعليمات البرمجية الضارة.</li>
+        <li>نشجع المستخدمين على استخدام برامج مكافحة الفيروسات وأدوات حظر الإعلانات كإجراء احترازي.</li>
+      </ul>
+    </div>
+
+    <div class="terms-section">
+      <h2>٦. تعديل الشروط وإنهاء الخدمة</h2>
+      <p>تحتفظ screenify+ MENA بالحق في تعديل هذه الشروط في أي وقت. سيتم نشر النسخة المحدثة مع تاريخ مراجعة جديد. استمرار استخدام الموقع بعد التغييرات يعتبر قبولاً بها. كما يجوز لنا تعليق أو إنهاء وصول المستخدمين الذين ينتهكون هذه الشروط.</p>
+    </div>
+
+    <div class="terms-section">
+      <h2>٧. لماذا screenify+ MENA هو أفضل موقع للأفلام المجانية</h2>
+      <p>نحن نؤمن بأن المشاهدة يجب أن تكون سهلة. لهذا تقدم screenify+ MENA:</p>
+      <ul>
+        <li><strong>بدون تسجيل أبداً</strong> — شاهد فوراً دون إنشاء حساب.</li>
+        <li><strong>مكتبة ضخمة</strong> — أفلام، مسلسلات، أنمي، ومحتوى أصلي من جميع أنحاء العالم.</li>
+        <li><strong>ميزات ذكية</strong> — متابعة المشاهدة، قائمة مشاهدة شخصية، وبحث متقدم.</li>
+        <li><strong>واجهة مستخدم جميلة</strong> — مستوحاة من خدمات البث المدفوعة، ولكن مجانية بالكامل.</li>
+        <li><strong>تحديثات منتظمة</strong> — محتوى جديد يومياً، أقسام رائجة تُجدد أسبوعياً.</li>
+      </ul>
+      <p>سواء كنت تبحث عن أحدث الأفلام الرائجة أو جوهرة مستقلة مخفية، فإن screenify+ MENA توفرها لك. نحن على يقين من أنك بمجرد تجربة منصتنا، سترى لماذا نحن الوجهة المفضلة للمشاهدة المجانية عبر الإنترنت. بدون اشتراكات، بدون حواجز — فقط ترفيه.</p>
+    </div>
+
+    <div class="terms-section">
+      <h2>٨. التواصل والإقرار</h2>
+      <p>إذا كانت لديك أي أسئلة بخصوص هذه الشروط، أو كنت بحاجة إلى دعم، فيرجى التواصل معنا مباشرة:</p>
+      <p style="margin: 1rem 0;">
+        <a href="mailto:contact@screenifyplus.online" class="contact-email">
+          ✉️ contact@screenifyplus.online
+        </a>
+      </p>
+      <p>للحصول على شرح كامل لكيفية استخدام جميع الميزات (قائمة المشاهدة، متابعة المشاهدة، البحث، والمزيد)، تفضل بزيارة <strong>دليل المستخدم</strong> الرسمي على <a href="https://screenifyplus.online/mena/how" style="color: var(--red); text-decoration: underline;" target="_blank">https://screenifyplus.online/mena/how</a>.</p>
+      <p>باستخدامك لـ screenify+ MENA، فإنك توافق صراحةً على جميع الشروط أعلاه، بما في ذلك الإقرار بأن مضيفي الفيديو الخارجيين يعملون بشكل مستقل، وأن screenify+ توفر أفضل تجربة بث مجانية بدون تسجيل مع قاعدة بيانات ضخمة وميزات متطورة.</p>
+      <p><strong style="color: var(--red);">هام:</strong> أنت توافق على عدم تحميل screenify+ MENA المسؤولية عن محتوى أو توفر المصادر الخارجية. مهمتنا هي تقديم أفضل مركز بث مجاني — ونحن نفي بذلك بالضبط.</p>
+    </div>
+
+    <div style="text-align: center; margin: 2rem 0 1rem;">
+      <button class="btn-back" onclick="window.location.href='https://screenifyplus.online/mena'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        العودة إلى screenify+ MENA
+      </button>
+    </div>
+
+    <div class="footer-note">
+      © 2026 screenify+ MENA — منصة البث المجانية المطلقة. بدون تسجيل، قاعدة بيانات ضخمة، تجربة لا تُضاهى. جميع العلامات التجارية والمحتوى الخاص بالغير مملوكة لأصحابها المعنيين. نحن لا نستضيف أي مواد محمية بحقوق النشر.
+      <br>🍿 استمتع بأفضل الأفلام المجانية بدون تسجيل — فقط على screenify+ MENA.
+      <br>📧 تواصل: <a href="mailto:contact@screenifyplus.online" style="color: #aaa; text-decoration: underline;">contact@screenifyplus.online</a> | 📖 <a href="https://screenifyplus.online/mena/how" style="color: #aaa; text-decoration: underline;" target="_blank">دليل المستخدم</a>
+    </div>
+  </div>
+</main>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="n-logo-wrap">
+        <div class="n-logo">SCREENIFY+</div>
+        <div class="n-mena">MENA</div>
+      </div>
+      <p>أفضل مسلسلات MENA والعالم، مترجمة وأصلية في مكان واحد.</p>
+    </div>
+    <div class="footer-col">
+      <h4>تصفح</h4>
+      <a href="https://screenifyplus.online/mena">الرئيسية</a>
+      <a href="https://screenifyplus.online/mena">مسلسلات مصرية</a>
+      <a href="https://screenifyplus.online/mena">مسلسلات تركية</a>
+      <a href="https://screenifyplus.online/mena">مسلسلات أجنبية</a>
+    </div>
+    <div class="footer-col">
+      <h4>تواصل معنا</h4>
+      <a href="mailto:contact@screenifyplus.online">📧 contact@screenifyplus.online</a>
+      <a href="https://screenifyplus.online/mena/terms">📋 الشروط والأحكام</a>
+    </div>
+    <div class="footer-col">
+      <h4>معلومات</h4>
+      <p>© 2026 Screenify+ MENA</p>
+      <p>جميع الحقوق محفوظة</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>Screenify+ MENA — منصة المسلسلات العربية والعالمية</p>
+    <div class="footer-social">
+      <a href="#" title="تويتر/X"><i class="fab fa-x-twitter"></i></a>
+      <a href="#" title="انستغرام"><i class="fab fa-instagram"></i></a>
+      <a href="#" title="تيليغرام"><i class="fab fa-telegram"></i></a>
+      <a href="#" title="يوتيوب"><i class="fab fa-youtube"></i></a>
+    </div>
+  </div>
+</footer>
+
+<!-- ── PROFILE MODAL ── -->
+<div class="modal-bg" id="profile-modal" style="display:none" onclick="if(event.target===this)this.style.display='none'">
+  <div class="profile-modal">
+    <div class="profile-avatar" onclick="changeAvatar()"><i class="fas fa-user" id="profile-avatar-icon"></i></div>
+    <div class="profile-name" id="profile-display-name">مشترك Screenify+</div>
+    <div class="profile-sub">MENA Premium • نشط</div>
+    <input type="text" class="profile-name-input" id="profile-name-input" placeholder="اكتب اسمك هنا..." maxlength="30">
+    <button class="profile-save-btn" onclick="saveProfileName()">حفظ الاسم</button>
+    <button class="profile-close" onclick="document.getElementById('profile-modal').style.display='none'">إغلاق</button>
+  </div>
+</div>
+
+<!-- ── CUSTOMIZER PANEL ── -->
+<div class="customizer-overlay" id="cust-overlay" style="display:none" onclick="closeCustomizer()"></div>
+<div class="customizer-panel" id="customizer-panel">
+  <div class="cust-title">
+    <span>✨ تخصيص الموقع</span>
+    <button class="cust-close" onclick="closeCustomizer()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="cust-section">
+    <div class="cust-section-label">🎨 لون رئيسي</div>
+    <div class="cust-colors">
+      <button class="cust-color-btn on" style="background:linear-gradient(135deg,#ff1a2e,#ff6b35)" data-color="#ff1a2e" data-grad="linear-gradient(135deg,#ff1a2e 0%,#ff6b35 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#6c63ff,#a78bfa)" data-color="#6c63ff" data-grad="linear-gradient(135deg,#6c63ff 0%,#a78bfa 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#00d2ff,#3a47d5)" data-color="#00d2ff" data-grad="linear-gradient(135deg,#00d2ff 0%,#3a47d5 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#11998e,#38ef7d)" data-color="#11998e" data-grad="linear-gradient(135deg,#11998e 0%,#38ef7d 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#f7971e,#ffd200)" data-color="#f7971e" data-grad="linear-gradient(135deg,#f7971e 0%,#ffd200 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#ff416c,#ff4b2b)" data-color="#ff416c" data-grad="linear-gradient(135deg,#ff416c 0%,#ff4b2b 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#c94b4b,#4b134f)" data-color="#c94b4b" data-grad="linear-gradient(135deg,#c94b4b 0%,#4b134f 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#0f0c29,#302b63)" data-color="#302b63" data-grad="linear-gradient(135deg,#302b63 0%,#0f0c29 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#009245,#fcee21)" data-color="#009245" data-grad="linear-gradient(135deg,#009245 0%,#fcee21 100%)" onclick="applyColor(this)"></button>
+      <button class="cust-color-btn" style="background:linear-gradient(135deg,#e96c2e,#f7d000)" data-color="#e96c2e" data-grad="linear-gradient(135deg,#e96c2e 0%,#f7d000 100%)" onclick="applyColor(this)"></button>
+    </div>
+  </div>
+  <div class="cust-section">
+    <div class="cust-section-label">🌗 المظهر</div>
+    <div class="cust-presets">
+      <button class="cust-preset-btn on" onclick="applyTheme('dark',this)">🌑 مظلم (افتراضي)</button>
+      <button class="cust-preset-btn" onclick="applyTheme('dim',this)">🌒 داكن دافئ</button>
+      <button class="cust-preset-btn" onclick="applyTheme('light',this)">☀️ فاتح</button>
+      <button class="cust-preset-btn" onclick="applyTheme('midnight',this)">🌌 منتصف الليل</button>
+    </div>
+  </div>
+  <div class="cust-section">
+    <div class="cust-section-label">⚙️ خيارات</div>
+    <div class="cust-toggle-row">
+      <span class="cust-toggle-label">تأثيرات الحركة</span>
+      <button class="cust-toggle on" id="toggle-anim" onclick="toggleFeature('anim',this)"></button>
+    </div>
+    <div class="cust-toggle-row">
+      <span class="cust-toggle-label">حجم البطاقات كبير</span>
+      <button class="cust-toggle" id="toggle-bigcards" onclick="toggleFeature('bigcards',this)"></button>
+    </div>
+  </div>
+  <div class="cust-section">
+    <div class="cust-section-label">📐 حجم الخط</div>
+    <div class="cust-range-row">
+      <div class="cust-range-label"><span>صغير</span><span>كبير</span></div>
+      <input type="range" class="cust-range" min="12" max="20" value="16" id="font-range" oninput="applyFontSize(this.value)">
+    </div>
+  </div>
+</div>
+
+<script>
+  // Profile & customizer (basic functions)
+  let userProfileName = localStorage.getItem('screenify_profile_name') || '';
+  function showProfile() {
+    document.getElementById('profile-modal').style.display = 'flex';
+    document.getElementById('profile-name-input').value = userProfileName;
+    document.getElementById('profile-display-name').textContent = userProfileName || 'مشترك Screenify+';
+  }
+  function saveProfileName() {
+    const val = document.getElementById('profile-name-input').value.trim();
+    if (!val) return;
+    userProfileName = val;
+    localStorage.setItem('screenify_profile_name', val);
+    document.getElementById('profile-display-name').textContent = val;
+    alert('تم حفظ الاسم');
+  }
+  function changeAvatar() {
+    const icons = ['fas fa-user','fas fa-user-ninja','fas fa-user-astronaut','fas fa-user-secret','fas fa-dragon'];
+    const current = document.getElementById('profile-avatar-icon').className;
+    const idx = icons.indexOf(current);
+    document.getElementById('profile-avatar-icon').className = icons[(idx + 1) % icons.length];
+  }
+  function openCustomizer() {
+    document.getElementById('cust-overlay').style.display = 'block';
+    document.getElementById('customizer-panel').classList.add('open');
+  }
+  function closeCustomizer() {
+    document.getElementById('cust-overlay').style.display = 'none';
+    document.getElementById('customizer-panel').classList.remove('open');
+  }
+  function applyColor(btn) {
+    document.querySelectorAll('.cust-color-btn').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    const color = btn.dataset.color;
+    const grad = btn.dataset.grad;
+    document.documentElement.style.setProperty('--red', color);
+    document.documentElement.style.setProperty('--grad', grad);
+    localStorage.setItem('screenify_color', JSON.stringify({color,grad}));
+  }
+  function applyTheme(theme, btn) {
+    document.querySelectorAll('.cust-preset-btn').forEach(b => b.classList.remove('on'));
+    if(btn) btn.classList.add('on');
+    const themes = {
+      dark:{bg:'#050507',s1:'#0d0d10',s2:'#141418'},
+      dim:{bg:'#0a0806',s1:'#110f0a',s2:'#1a1712'},
+      light:{bg:'#f0f0f5',s1:'#fff',s2:'#f5f5fa'},
+      midnight:{bg:'#000010',s1:'#000018',s2:'#090920'}
+    };
+    const t = themes[theme] || themes.dark;
+    document.body.className = theme === 'light' ? 'light-mode' : '';
+    document.documentElement.style.setProperty('--bg', t.bg);
+    document.documentElement.style.setProperty('--s1', t.s1);
+    document.documentElement.style.setProperty('--s2', t.s2);
+    localStorage.setItem('screenify_theme', theme);
+  }
+  function toggleFeature(feature, btn) {
+    btn.classList.toggle('on');
+    const isOn = btn.classList.contains('on');
+    if (feature === 'anim') {
+      document.documentElement.style.setProperty('--card-transition', isOn ? 'all .3s' : 'none');
+    } else if (feature === 'bigcards') {
+      document.documentElement.style.setProperty('--card-w', isOn ? 'clamp(140px,22vw,210px)' : 'clamp(120px,18vw,175px)');
+    }
+    localStorage.setItem('screenify_feature_' + feature, isOn ? '1' : '0');
+  }
+  function applyFontSize(val) {
+    document.documentElement.style.fontSize = val + 'px';
+    localStorage.setItem('screenify_fontsize', val);
+  }
+  // load saved customizations
+  (function loadCustomizations() {
+    try {
+      const col = JSON.parse(localStorage.getItem('screenify_color') || 'null');
+      if (col) {
+        const btn = document.querySelector(`.cust-color-btn[data-color="${col.color}"]`);
+        if (btn) applyColor(btn);
+      }
+      const theme = localStorage.getItem('screenify_theme');
+      if (theme) {
+        const btn = document.querySelector(`.cust-preset-btn[onclick*="${theme}"]`);
+        applyTheme(theme, btn);
+      }
+      const fs = localStorage.getItem('screenify_fontsize');
+      if (fs) { document.documentElement.style.fontSize = fs + 'px'; document.getElementById('font-range').value = fs; }
+    } catch(e) {}
+  })();
+</script>
+</body>
+</html>
