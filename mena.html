@@ -1295,7 +1295,7 @@ async function openSeries(id) {
 
     const ratingStars = s.rating > 0 ? `★ ${parseFloat(s.rating).toFixed(1)}` : '★ جديد';
     const ratingCount = s.rating_count > 0 ? `(${s.rating_count.toLocaleString()})` : '';
-    const genres = (s.genres || []).map(g => `<span class="info-badge">${g}</span>`).join('');
+    const genres = (s.genres || []).map(g => `<span class="info-badge">${g.name}</span>`).join('');
     const statusLabel = s.status === 'ongoing' ? 'يُعرض الآن' : s.status === 'completed' ? 'مكتمل' : 'قادم قريباً';
 
     // BYW - related series
