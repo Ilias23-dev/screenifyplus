@@ -9,8 +9,31 @@
 <meta property="og:title" content="SCREENIFY +">
 <meta property="og:description" content="Discover and stream movies and TV shows with Screenify+. Explore trending content, top picks, and a cinematic browsing experience.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://screenifyplus.online/logo2">
-<link rel="icon" type="image/png" sizes="192x192" href="https://h.top4top.io/p_37379uc361.png">
+
+<!-- ── FAVICONS & ICONS ── -->
+<link rel="icon" type="image/png" sizes="64x64" href="https://screenifyplus.online/favicon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://screenifyplus.online/logo.png">
+<link rel="apple-touch-icon" sizes="512x512" href="https://screenifyplus.online/logo.png">
+<meta name="theme-color" content="#050507">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SCREENIFY+">
+<meta property="og:image" content="https://screenifyplus.online/logo.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Screenify+",
+  "url": "https://screenifyplus.online",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://screenifyplus.online/logo.png",
+    "width": 512,
+    "height": 512
+  }
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800;900&family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -61,7 +84,9 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
   border-bottom: 1px solid var(--glass-border);
   box-shadow: 0 4px 30px rgba(0,0,0,0.3);
 }
-.n-logo{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:3px;cursor:pointer;flex-shrink:0;filter:drop-shadow(0 0 20px rgba(255,26,46,.4))}
+.n-logo{display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0;text-decoration:none;}
+.n-logo-img{width:32px;height:32px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(255,26,46,.5));flex-shrink:0;}
+.n-logo-text{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:3px;filter:drop-shadow(0 0 20px rgba(255,26,46,.4));line-height:1;}
 .n-links{display:flex;gap:32px;list-style:none;margin-left:40px}
 .n-links a{color:var(--muted);font-size:.9rem;font-weight:600;letter-spacing:.5px;padding:6px 0;position:relative;transition:color .2s;cursor:pointer}
 .n-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:var(--grad);border-radius:2px;transition:width .3s}
@@ -620,6 +645,16 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 .ip-sidebar{display:none;}
 .ip-2col{display:block;}
 .ip-srow{display:none;} /* used only inside panel now */
+/* Make ip-srow visible inside mobile details block */
+#ip-details-mobile .ip-srow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:.88rem;}
+#ip-details-mobile .ip-srow:last-child{border-bottom:none;}
+#ip-details-mobile .ip-srow span:first-child{color:var(--muted);}
+#ip-details-mobile .ip-srow span:last-child{font-weight:700;text-align:right;color:#fff;}
+/* On mobile: hide the floating panel in hero, show the body details block */
+@media(max-width:800px){
+  .ip-details-panel{display:none !important;}
+  #ip-mobile-details{display:block !important;}
+}
 
 /* Season dropdown */
 .season-dropdown-wrap{position:relative;margin-bottom:20px;display:inline-block;min-width:200px;}
@@ -790,7 +825,9 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 #site-footer{background:rgba(10,10,15,0.8);border-top:1px solid var(--glass-border);padding:60px 6% 160px;margin-top:0}
 @media(min-width:769px){#site-footer{padding-bottom:80px}}
 .footer-inner{max-width:800px; margin:0 auto; text-align:center;}
-.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:3px;margin-bottom:20px}
+.footer-logo{display:inline-flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px;cursor:pointer;}
+.footer-logo-img{width:38px;height:38px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(255,26,46,.5));flex-shrink:0;}
+.footer-logo-text{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:3px;line-height:1;}
 .footer-legal{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:14px}
 .footer-terms-btn{display:inline-block;margin-top:24px;background:rgba(255,26,46,0.1);border:1px solid var(--red);color:var(--red);padding:14px 34px;border-radius:14px;font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:800;letter-spacing:.5px;cursor:pointer;transition:all .2s;text-decoration:none}
 .footer-terms-btn:hover{background:var(--red);color:#fff;box-shadow:0 0 25px var(--glow)}
@@ -941,7 +978,10 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
 
 <nav id="nav">
   <div class="n-left">
-    <div class="n-logo" onclick="loadHub('home')">SCREENIFY +</div>
+    <div class="n-logo" onclick="loadHub('home')">
+      <img class="n-logo-img" src="https://screenifyplus.online/logo.png" alt="Screenify+" onerror="this.style.display='none'">
+      <span class="n-logo-text">SCREENIFY +</span>
+    </div>
     <ul class="n-links">
       <li><a class="on" id="nl-home" onclick="loadHub('home')">Home</a></li>
       <li><a id="nl-tv"  onclick="loadHub('tv')">TV Shows</a></li>
@@ -1209,9 +1249,14 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
     <div class="ip-2col">
       <div class="ip-main">
         
-        <div id="ip-server-alert" style="background: rgba(255,26,46,0.1); border: 1px solid rgba(255,26,46,0.4); color: #fff; padding: 14px 40px 14px 18px; border-radius: 14px; margin-bottom: 28px; position: relative; font-size: 0.9rem; display: none; line-height: 1.5;">
+        <div id="ip-server-alert" style="background: rgba(255,26,46,0.1); border: 1px solid rgba(255,26,46,0.4); color: #fff; padding: 14px 40px 14px 18px; border-radius: 14px; margin-bottom: 16px; position: relative; font-size: 0.9rem; display: none; line-height: 1.5;">
            <span style="font-size: 1.2rem; vertical-align: middle; margin-right: 6px;">💡</span> <strong>Video not playing?</strong> You can change the streaming server anytime from your <a onclick="openProfileModal()" style="text-decoration:underline; cursor:pointer; color:var(--red); font-weight:700;">Profile Settings</a>.
            <button onclick="this.parentElement.style.display='none'" style="position:absolute; right:14px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--muted); font-size:1.2rem; cursor:pointer; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--muted)'">✕</button>
+        </div>
+
+        <div id="ip-adblocker-notice" style="background: rgba(255,215,0,0.07); border: 1px solid rgba(255,215,0,0.3); color: #fff; padding: 14px 40px 14px 18px; border-radius: 14px; margin-bottom: 28px; position: relative; font-size: 0.9rem; line-height: 1.6;">
+           <span style="font-size: 1.2rem; vertical-align: middle; margin-right: 6px;">🛡️</span> <strong style="color:#ffd700;">We recommend using an ad blocker</strong> for a better, ad-free experience. Ads come directly from the streaming servers and we have no control over them.
+           <button onclick="document.getElementById('ip-adblocker-notice').style.display='none'" style="position:absolute; right:14px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--muted); font-size:1.2rem; cursor:pointer; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--muted)'">✕</button>
         </div>
 
         <p id="ip-overview"></p>
@@ -1299,7 +1344,7 @@ img{display:block}button{font-family:'Outfit',sans-serif;cursor:pointer}a{text-d
           <div id="p-loader-title"></div>
         </div>
       </div>
-      <iframe id="player-iframe" allowfullscreen allow="autoplay; fullscreen; picture-in-picture; encrypted-media; clipboard-write" sandbox="allow-scripts allow-same-origin allow-forms allow-presentation allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation" onload="hidePlayerLoader(); installAdBlocker()"></iframe>
+      <iframe id="player-iframe" allowfullscreen allow="autoplay; fullscreen; picture-in-picture; encrypted-media; clipboard-write" onload="hidePlayerLoader(); installAdBlocker()"></iframe>
     </div>
   </div>
 </div>
@@ -3197,6 +3242,8 @@ async function openInfoPage(id, type, noPush = false){
   } else {
     document.getElementById('ip-server-alert').style.display = 'none';
   }
+  // Always show the ad blocker notice every time info page opens
+  document.getElementById('ip-adblocker-notice').style.display = 'block';
   
   try{
     const [det,cred,sim,imgs, vids]=await Promise.all([
@@ -4240,11 +4287,148 @@ if(/Mobi|Android/i.test(navigator.userAgent)) {
 </script>
 <footer id="site-footer">
   <div class="footer-inner">
-    <div class="footer-logo">SCREENIFY +</div>
+    <div class="footer-logo" onclick="loadHub('home')">
+      <img class="footer-logo-img" src="https://screenifyplus.online/logo.png" alt="Screenify+" onerror="this.style.display='none'">
+      <span class="footer-logo-text">SCREENIFY +</span>
+    </div>
     <p class="footer-legal">By using SCREENIFY +, you agree to our no-registration, free streaming service and accept that all content is provided by third-party sources.</p>
     <p class="footer-legal">You acknowledge that we are not liable for external content and that you are responsible for complying with local laws.</p>
-    <p class="footer-legal" style="margin-top:14px">
-      <a href="/cdn-cgi/l/email-protection#096a66677d686a7d497a6a7b6c6c67606f7079657c7a2766676560676c" style="color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align:middle;margin-top:-2px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        <span class="__cf_email__" data-cfemail="d9bab6b7adb8baad99aabaabbcbcb7b0bfa0a9b5acaaf7b6b7b5b0b7bc">[email&#160;protected]</span>
+    <p class="footer-legal" style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;">
+      <a href="mailto:contact@screenifyplus.online" style="color:var(--red);font-weight:700;text-decoration:none;transition:opacity .2s;display:inline-flex;align-items:center;gap:6px;" onmouseover="this.style.opacity='.75'" onmouseout="this.style.opacity='1'">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        contact@screenifyplus.online
       </a>
+      <a href="https://screenifyplus.online/terms" target="_blank" style="color:var(--muted);font-weight:700;text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border:1px solid rgba(255,255,255,.15);border-radius:24px;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,.4)'" onmouseout="this.style.color='var(--muted)';this.style.borderColor='rgba(255,255,255,.15)'">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Terms of Service
+      </a>
+    </p>
+    <p class="footer-legal" style="margin-top:20px;font-size:.78rem;opacity:.5;">© 2026 Screenify+. All content is provided by third-party streaming sources.</p>
+  </div>
+</footer>
+
+<!-- ══════════════ TERMS POPUP ══════════════ -->
+<style>
+#terms-gate{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:flex;align-items:center;justify-content:center;padding:20px;}
+#terms-box{background:linear-gradient(160deg,#0f0f16 0%,#1a1a24 100%);border:1px solid rgba(255,26,46,.3);border-radius:28px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 30px 80px rgba(0,0,0,.9),0 0 60px rgba(255,26,46,.08);animation:mIn .4s cubic-bezier(0.34,1.56,0.64,1);}
+#terms-box::-webkit-scrollbar{width:4px;}#terms-box::-webkit-scrollbar-thumb{background:rgba(255,26,46,.4);border-radius:2px;}
+.tg-head{padding:36px 36px 0;text-align:center;}
+.tg-logo-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px;}
+.tg-logo-img{width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 0 14px rgba(255,26,46,.6));}
+.tg-logo-text{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:3px;line-height:1;}
+.tg-subtitle{font-size:.85rem;color:var(--muted);margin-bottom:24px;font-weight:600;letter-spacing:.5px;}
+.tg-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,26,46,.4),transparent);margin:0 36px 28px;}
+.tg-body{padding:0 36px;}
+.tg-terms-block{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;margin-bottom:20px;font-size:.88rem;line-height:1.8;color:rgba(255,255,255,.8);}
+.tg-terms-block ul{padding-left:18px;margin:0;}
+.tg-terms-block li{margin-bottom:8px;}
+.tg-terms-block li:last-child{margin-bottom:0;}
+.tg-all-terms{display:flex;align-items:center;justify-content:center;gap:7px;color:var(--red);font-size:.85rem;font-weight:800;text-decoration:none;letter-spacing:.5px;margin-bottom:28px;transition:opacity .2s;}
+.tg-all-terms:hover{opacity:.75;}
+.tg-btns{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 36px 36px;}
+.tg-accept{background:var(--grad);border:none;color:#fff;padding:16px;border-radius:16px;font-family:'Outfit',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:all .2s;box-shadow:0 6px 25px rgba(255,26,46,.3);}
+.tg-accept:hover{transform:scale(1.03);box-shadow:0 8px 30px rgba(255,26,46,.5);}
+.tg-decline{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);padding:16px;border-radius:16px;font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:all .2s;}
+.tg-decline:hover{background:rgba(255,255,255,.12);color:#fff;}
+
+/* Blocked screen */
+#terms-blocked{position:fixed;inset:0;z-index:99998;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;}
+.tb-logo-row{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:24px;}
+.tb-logo-img{width:64px;height:64px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(255,26,46,.7));}
+.tb-logo-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,10vw,6rem);background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:4px;line-height:1;}
+.tb-icon{font-size:4rem;margin-bottom:16px;}
+.tb-msg{font-size:1.1rem;color:var(--muted);max-width:420px;line-height:1.7;margin-bottom:32px;}
+.tb-retry{background:rgba(255,26,46,.12);border:1px solid rgba(255,26,46,.4);color:var(--red);padding:14px 32px;border-radius:14px;font-family:'Outfit',sans-serif;font-weight:800;font-size:.95rem;cursor:pointer;transition:all .2s;}
+.tb-retry:hover{background:var(--red);color:#fff;}
+</style>
+
+<div id="terms-gate">
+  <div id="terms-box">
+    <div class="tg-head">
+      <div class="tg-logo-row">
+        <img class="tg-logo-img" src="https://screenifyplus.online/logo.png" alt="Screenify+" onerror="this.style.display='none'">
+        <span class="tg-logo-text">SCREENIFY +</span>
+      </div>
+      <div class="tg-subtitle">Before you continue, please read and accept our terms</div>
+    </div>
+    <div class="tg-divider"></div>
+    <div class="tg-body">
+      <div class="tg-terms-block">
+        <ul>
+          <li>All content is streamed from <strong>third-party sources</strong>. We do not host any media files.</li>
+          <li>Screenify+ is a <strong>free, no-registration</strong> service for personal use only.</li>
+          <li>We are <strong>not liable</strong> for the content, quality, or availability of third-party streams.</li>
+          <li>You are responsible for ensuring your use complies with <strong>your local laws</strong>.</li>
+          <li>We recommend using an <strong>ad blocker</strong> — ads are served by external streaming servers.</li>
+          <li>By accepting, you confirm you are <strong>18+ or have parental consent</strong>.</li>
+        </ul>
+      </div>
+      <a href="https://screenifyplus.online/terms" target="_blank" class="tg-all-terms">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Read Full Terms of Service
+      </a>
+    </div>
+    <div class="tg-btns">
+      <button class="tg-accept" onclick="termsAccept()">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.8" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Accept
+      </button>
+      <button class="tg-decline" onclick="termsDecline()">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.8" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        Decline
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="terms-blocked">
+  <div class="tb-logo-row">
+    <img class="tb-logo-img" src="https://screenifyplus.online/logo.png" alt="Screenify+" onerror="this.style.display='none'">
+    <span class="tb-logo-text">SCREENIFY +</span>
+  </div>
+  <div class="tb-icon">🚫</div>
+  <p class="tb-msg">You must accept our Terms of Service to use Screenify+. Without accepting, access to the platform is restricted.</p>
+  <button class="tb-retry" onclick="termsShowGate()">Review Terms Again</button>
+</div>
+
+<script>
+(function(){
+  const KEY = 'sp_terms_v1';
+  const gate  = document.getElementById('terms-gate');
+  const blocked = document.getElementById('terms-blocked');
+  const mainContent = document.getElementById('page-home');
+
+  function termsHideAll(){
+    gate.style.display = 'none';
+    blocked.style.display = 'none';
+  }
+
+  window.termsAccept = function(){
+    localStorage.setItem(KEY, '1');
+    termsHideAll();
+    document.body.style.overflow = '';
+  };
+
+  window.termsDecline = function(){
+    gate.style.display = 'none';
+    blocked.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.termsShowGate = function(){
+    blocked.style.display = 'none';
+    gate.style.display = 'flex';
+  };
+
+  // On load: if already accepted, hide gate; else show it
+  if(localStorage.getItem(KEY) === '1'){
+    termsHideAll();
+  } else {
+    gate.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+})();
+</script>
+
+</body>
+</html>
