@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>SCREENIFY +</title>
+    <meta name="description" content="Screenify+ is a modern streaming platform to discover, browse, and watch movies and TV shows with a sleek cinematic experience. Explore trending titles, top picks, and personalized content all in one place.">
+    <meta property="og:title" content="SCREENIFY +">
+    <meta property="og:description" content="Discover and stream movies and TV shows with Screenify+. Explore trending content, top picks, and a cinematic browsing experience.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://screenifyplus.online/logo.png">
+
+    <link rel="icon" type="image/png" sizes="64x64" href="https://screenifyplus.online/favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://screenifyplus.online/logo.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="https://screenifyplus.online/logo.png">
+    <meta name="theme-color" content="#050507">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SCREENIFY+">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Screenify+",
+      "url": "https://screenifyplus.online",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://screenifyplus.online/logo.png",
+        "width": 512,
+        "height": 512
+      }
+    }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+
+        :root {
+            --bg: #050507;
+            --surface: #0c0c0e;
+            --border: #1a1a1c;
+            --accent: #ff0000;
+            --accent-glow: rgba(255, 0, 0, 0.2);
+            --text-main: #ffffff;
+            --text-dim: #949499;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* Entry Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .animate-fade { opacity: 0; animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+        /* Header */
+        header {
+            padding: 3rem 0;
+            text-align: center;
+            animation: scaleIn 1s ease-out;
+        }
+
+        .main-logo {
+            width: 80px;
+            filter: drop-shadow(0 0 15px var(--accent-glow));
+            transition: transform 0.3s ease;
+        }
+
+        .main-logo:hover { transform: rotate(5deg) scale(1.1); }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            background: linear-gradient(180deg, #fff 0%, #666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+
+        .mission-box {
+            background: linear-gradient(90deg, transparent, var(--surface), transparent);
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .mission-box p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .mission-box b { color: var(--accent); }
+
+        /* Grid System */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 6rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 24px;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at top left, rgba(255,0,0,0.1), transparent 70%);
+            opacity: 0; transition: 0.4s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px var(--accent-glow);
+        }
+
+        .card:hover::before { opacity: 1; }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-text {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .ad-warning {
+            font-size: 0.7rem;
+            color: #555;
+            background: #111;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        /* Floating Button */
+        .floating-action {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 100;
+            transition: 0.3s;
+            text-decoration: none;
+            animation: fadeInUp 1s 1.2s both;
+        }
+
+        .floating-action:hover {
+            transform: translateX(-50%) scale(1.05);
+            background: #ff1a1a;
+            box-shadow: 0 15px 40px rgba(255, 0, 0, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0 8rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover { color: var(--accent); }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2.8rem; }
+            .services-grid { grid-template-columns: 1fr; }
+            .floating-action { width: 90%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <img src="https://screenifyplus.online/logo.png" alt="Screenify Logo" class="main-logo">
+        </header>
+
+        <section class="hero animate-fade">
+            <h1>Screenify <span>+</span></h1>
+            <div class="mission-box animate-fade delay-1">
+                <p><b>Screenify+ Mission:</b> Our ultimate goal is to offer all essential internet services absolutely free and entirely without ads. The web belongs to everyone.</p>
+            </div>
+        </section>
+
+        <div class="services-grid">
+            <a href="https://screenifyplus.online" class="card animate-fade delay-2">
+                <h3>Screenify+ Hub</h3>
+                <p>A modern streaming platform to discover, browse, and watch movies and TV shows with a sleek cinematic experience. Explore trending titles, top picks, and personalized content all in one place.</p>
+                <div class="card-footer">
+                    <span class="btn-text">Discover Content</span>
+                    <span class="ad-warning">Ads Possible</span>
+                </div>
+            </a>
+
+            <a href="https://screenifyplus.online/mena" class="card animate-fade delay-2">
+                <h3>Screenify+ MENA</h3>
+                <p>Dedicated exclusively to series with full Arabic subtitles. High-quality streams tailored for our regional audience with a focus on ease of access.</p>
+                <div class="card-footer">
+                    <span class="btn-text">Watch Series</span>
+                </div>
+            </a>
+
+            <a href="https://screenifyplus.online/translator" class="card animate-fade delay-3">
+                <h3>Translator</h3>
+                <p>Professional grade translation services integrated directly into our ecosystem. Fast, accurate, and built for everyone.</p>
+                <div class="card-footer">
+                    <span class="btn-text">Open Tool</span>
+                </div>
+            </a>
+        </div>
+
+        <section class="animate-fade delay-3" style="text-align: center; margin-bottom: 8rem;">
+            <p style="color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; font-size: 0.75rem;">More Services Coming Soon</p>
+        </section>
+
+        <footer>
+            <div class="footer-links">
+                <a href="mailto:contact@screenifyplus.online">Email Support</a>
+                <a href="https://t.me/screenifyplus">Official Telegram</a>
+            </div>
+            <p>&copy; 2026 SCREENIFY+. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <a href="https://t.me/screenifyplus" class="floating-action">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.98 1.25-5.58 3.68-.52.36-.99.53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.29-.48.79-.74 3.08-1.34 5.14-2.22 6.16-2.65 2.94-1.22 3.55-1.43 3.95-1.44.09 0 .28.02.4.11.1.08.13.19.14.28.02.04.03.11.02.21z"/></svg>
+        SUGGEST A SERVICE
+    </a>
+
+</body>
+</html>
