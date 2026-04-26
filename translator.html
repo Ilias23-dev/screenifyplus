@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCREENIFY +</title>
+    
+    <meta name="description" content="Screenify+ Translator is a modern platform to seamlessly translate text across the globe. Experience lightning-fast, context-aware translations in a sleek, ad-free interface.">
+    <meta property="og:title" content="SCREENIFY +">
+    <meta property="og:description" content="Discover instant global communication with Screenify+ Translator. Translate between dozens of languages accurately and for free.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://screenifyplus.online/logo.png">
+
+    <link rel="icon" type="image/png" sizes="64x64" href="https://screenifyplus.online/favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://screenifyplus.online/logo.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="https://screenifyplus.online/logo.png">
+    <meta name="theme-color" content="#e11d48">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SCREENIFY+">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Screenify+ Translator",
+      "url": "https://screenifyplus.online",
+      "applicationCategory": "UtilitiesApplication",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://screenifyplus.online/logo.png",
+        "width": 512,
+        "height": 512
+      }
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #09090b;
+            --card-bg: #111113;
+            --border: #27272a;
+            --accent: #e11d48; /* Premium Red */
+            --accent-hover: #be123c;
+            --accent-glow: rgba(225, 29, 72, 0.4);
+            --text-main: #ededed;
+            --text-dim: #a1a1aa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* Override default browser blue */
+        ::selection {
+            background-color: var(--accent);
+            color: #fff;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- Upgraded Animations --- */
+        @keyframes fadeSlideUp {
+            0% { opacity: 0; transform: translateY(50px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes pulse-text {
+            0% { opacity: 0.8; text-shadow: 0 0 0px rgba(225, 29, 72, 0); }
+            50% { opacity: 1; text-shadow: 0 0 15px var(--accent-glow); }
+            100% { opacity: 0.8; text-shadow: 0 0 0px rgba(225, 29, 72, 0); }
+        }
+
+        .animate {
+            opacity: 0;
+            animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .animate-pop {
+            opacity: 0;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* --- Navbar --- */
+        nav {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: rgba(9, 9, 11, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo img {
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* --- Translator UI --- */
+        .app-container {
+            width: 95%;
+            max-width: 1100px;
+            margin: 0 auto 50px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .app-container:hover {
+            box-shadow: 0 30px 70px rgba(225, 29, 72, 0.08);
+            border-color: #3f3f46;
+        }
+
+        .translator-layout {
+            display: flex;
+            min-height: 400px;
+        }
+
+        .panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            position: relative;
+        }
+
+        .panel.source {
+            border-right: 1px solid var(--border);
+        }
+
+        @media (max-width: 850px) {
+            .translator-layout { flex-direction: column; }
+            .panel.source { border-right: none; border-bottom: 1px solid var(--border); }
+        }
+
+        .selector-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        select {
+            background: #18181b;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 500;
+            outline: none;
+            cursor: pointer;
+            transition: 0.2s;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e11d48' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 15px;
+            padding-right: 45px;
+        }
+
+        select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent-glow);
+        }
+
+        textarea {
+            width: 100%;
+            flex: 1;
+            background: transparent;
+            color: var(--text-main);
+            border: none;
+            font-size: 22px;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+            min-height: 200px;
+        }
+
+        textarea::placeholder { color: #3f3f46; }
+
+        #outputText { color: var(--accent); font-weight: 500; }
+
+        /* --- Panel Controls --- */
+        .panel-controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #27272a;
+        }
+
+        .icon-btn {
+            background: transparent;
+            color: var(--text-dim);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon-btn:hover {
+            color: var(--text-main);
+            border-color: var(--accent);
+            background: rgba(225, 29, 72, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .icon-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+        }
+
+        .action-bar {
+            padding: 20px 30px;
+            background: #0d0d0f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .lang-count-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(225, 29, 72, 0.1);
+            border: 1px solid rgba(225, 29, 72, 0.3);
+            padding: 10px 20px;
+            border-radius: 50px;
+            animation: pulse-text 3s infinite ease-in-out;
+        }
+
+        .lang-count-container svg {
+            stroke: var(--accent);
+        }
+
+        .lang-count { 
+            font-size: 14px; 
+            color: var(--text-main); 
+            font-weight: 600;
+        }
+        
+        .lang-count span {
+            color: var(--accent);
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        button.translate-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 14px 35px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button.translate-btn:hover { 
+            transform: scale(1.05); 
+            background: var(--accent-hover); 
+            box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            .action-bar { flex-direction: column; gap: 20px; }
+            button.translate-btn { width: 100%; justify-content: center; }
+        }
+
+        /* --- Intro Sections --- */
+        .features-section {
+            padding: 50px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .feature-card:hover { 
+            border-color: var(--accent); 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.05);
+        }
+
+        .feature-card h3 { margin-bottom: 15px; color: var(--accent); display: flex; align-items: center; gap: 10px;}
+        .feature-card p { color: var(--text-dim); line-height: 1.6; }
+
+        /* --- Promo Section --- */
+        .promo-section {
+            background: #0d0d0f;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 80px 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .promo-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .promo-section p {
+            color: var(--text-dim);
+            max-width: 650px;
+            margin: 0 auto 30px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .promo-btn {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            padding: 14px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .promo-btn:hover {
+            background: var(--accent);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3);
+        }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 14px;
+            background: var(--bg-dark);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--accent-hover);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="animate" style="animation-delay: 0.1s;">
+        <div class="logo">
+            <img src="https://screenifyplus.online/logo.png" alt="Screenify+">
+            <span class="logo-text">Translator</span>
+        </div>
+        <div class="nav-links">
+            <button class="icon-btn" onclick="window.scrollTo(0, 1000)">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                About
+            </button>
+        </div>
+    </nav>
+
+    <section class="hero animate" style="animation-delay: 0.2s;">
+        <h1>Connect the World.</h1>
+        <p>Experience the next generation of translation with Screenify+ Translator. Professional, lightning-fast, and inclusive of the entire globe.</p>
+    </section>
+
+    <div class="app-container animate" style="animation-delay: 0.4s;">
+        <div class="translator-layout">
+            
+            <div class="panel source">
+                <div class="selector-row">
+                    <select id="sourceLang"></select>
+                </div>
+                <textarea id="inputText" placeholder="Type or paste your text here..."></textarea>
+                <div class="panel-controls">
+                    <button class="icon-btn" id="pasteSourceBtn" onclick="pasteText('inputText')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                        Paste
+                    </button>
+                    <button class="icon-btn" id="copySourceBtn" onclick="copyText('inputText', 'copySourceBtn')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        Copy Source
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel target">
+                <div class="selector-row">
+                    <select id="targetLang"></select>
+                </div>
+                <textarea id="outputText" readonly placeholder="Translation will appear here..."></textarea>
+                <div class="panel-controls">
+                    <button class="icon-btn" id="copyTargetBtn" onclick="copyText('outputText', 'copyTargetBtn')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        Copy Translation
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="action-bar">
+            <div class="lang-count-container" id="langCountDisplay">
+                </div>
+            <button class="translate-btn" id="translateBtn" onclick="translateText()">
+                Translate Now
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+        </div>
+    </div>
+
+    <section class="features-section">
+        <h2 class="animate" style="animation-delay: 0.5s; text-align:center; font-size: 2.5rem; margin-bottom: 20px;">Why Screenify+ Translator?</h2>
+        <div class="section-grid">
+            <div class="feature-card animate-pop" style="animation-delay: 0.6s;">
+                <h3>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    Global Inclusivity
+                </h3>
+                <p>We pride ourselves on supporting major and native languages, including <strong>Tamazight (Tifinagh)</strong>, Kurdish, Arabic, and dozens of others, ensuring nobody is left out.</p>
+            </div>
+            <div class="feature-card animate-pop" style="animation-delay: 0.7s;">
+                <h3>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    Minimalist Performance
+                </h3>
+                <p>No bloat. Our 2D flat interface is designed for speed and focus. Get your translations in milliseconds with our direct API integration.</p>
+            </div>
+            <div class="feature-card animate-pop" style="animation-delay: 0.8s;">
+                <h3>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    Context Aware
+                </h3>
+                <p>Our engine detects the source language automatically and preserves multi-sentence structure, making it perfect for long-form documents or quick chats.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="promo-section animate" style="animation-delay: 0.9s;">
+        <h2>Screenify+ Mission</h2>
+        <p>Our ultimate goal is to offer all essential internet services absolutely <strong>free</strong> and entirely <strong>without ads</strong>. The web belongs to everyone.</p>
+        <a href="https://screenifyplus.online/all" class="promo-btn">See what we offer</a>
+    </section>
+
+    <footer class="animate" style="animation-delay: 1s;">
+        <p>&copy; 2026 Screenify+. All rights reserved.</p>
+        <p style="margin-top: 10px;">Reach out: <a href="mailto:contact@screenifyplus.online">contact@screenifyplus.online</a></p>
+    </footer>
+
+    <script>
+        const languages = {
+            "af": "Afrikaans", "sq": "Albanian", "am": "Amharic", "ar": "Arabic", "hy": "Armenian", "as": "Assamese", "ay": "Aymara", "az": "Azerbaijani", 
+            "bm": "Bambara", "eu": "Basque", "be": "Belarusian", "bn": "Bengali", "bho": "Bhojpuri", "bs": "Bosnian", "bg": "Bulgarian", "ca": "Catalan", 
+            "ceb": "Cebuano", "ny": "Chichewa", "zh-CN": "Chinese (Simplified)", "zh-TW": "Chinese (Traditional)", "co": "Corsican", "hr": "Croatian", 
+            "cs": "Czech", "da": "Danish", "dv": "Divehi", "doi": "Dogri", "nl": "Dutch", "en": "English", "eo": "Esperanto", "et": "Estonian", 
+            "ee": "Ewe", "tl": "Filipino", "fi": "Finnish", "fr": "French", "fy": "Frisian", "gl": "Galician", "lg": "Ganda", "ka": "Georgian", 
+            "de": "German", "el": "Greek", "gn": "Guarani", "gu": "Gujarati", "ht": "Haitian Creole", "ha": "Hausa", "haw": "Hawaiian", "iw": "Hebrew", 
+            "hi": "Hindi", "hmn": "Hmong", "hu": "Hungarian", "is": "Icelandic", "ig": "Igbo", "ilo": "Iloko", "id": "Indonesian", "ga": "Irish", 
+            "it": "Italian", "ja": "Japanese", "jw": "Javanese", "kn": "Kannada", "kk": "Kazakh", "km": "Khmer", "rw": "Kinyarwanda", "gom": "Konkani", 
+            "ko": "Korean", "kri": "Krio", "ku": "Kurdish (Kurmanji)", "ckb": "Kurdish (Sorani)", "ky": "Kyrgyz", "lo": "Lao", "la": "Latin", 
+            "lv": "Latvian", "ln": "Lingala", "lt": "Lithuanian", "lb": "Luxembourgish", "mk": "Macedonian", "mai": "Maithili", "mg": "Malagasy", 
+            "ms": "Malay", "ml": "Malayalam", "mt": "Maltese", "mi": "Maori", "mr": "Marathi", "mni-Mtei": "Meiteilon (Manipuri)", "lus": "Mizo", 
+            "mn": "Mongolian", "my": "Myanmar (Burmese)", "ne": "Nepali", "nso": "Northern Sotho", "no": "Norwegian", "or": "Odia (Oriya)", "om": "Oromo", 
+            "ps": "Pashto", "fa": "Persian", "pl": "Polish", "pt": "Portuguese", "pa": "Punjabi", "qu": "Quechua", "ro": "Romanian", "ru": "Russian", 
+            "sm": "Samoan", "sa": "Sanskrit", "gd": "Scots Gaelic", "sr": "Serbian", "st": "Sesotho", "sn": "Shona", "sd": "Sindhi", "si": "Sinhala", 
+            "sk": "Slovak", "sl": "Slovenian", "so": "Somali", "es": "Spanish", "su": "Sundanese", "sw": "Swahili", "sv": "Swedish", "tg": "Tajik", 
+            "ber": "Tamazight", "ta": "Tamil", "tt": "Tatar", "te": "Telugu", "th": "Thai", "ti": "Tigrinya", "ts": "Tsonga", "tr": "Turkish", 
+            "tk": "Turkmen", "ak": "Twi", "uk": "Ukrainian", "ur": "Urdu", "ug": "Uyghur", "uz": "Uzbek", "vi": "Vietnamese", "cy": "Welsh", 
+            "xh": "Xhosa", "yi": "Yiddish", "yo": "Yoruba", "zu": "Zulu"
+        };
+
+        function populateSelects() {
+            const sourceSelect = document.getElementById('sourceLang');
+            const targetSelect = document.getElementById('targetLang');
+            let sourceHTML = `<option value="auto">Detect Language</option>`;
+            let targetHTML = ``;
+
+            const sortedLangs = Object.entries(languages).sort((a, b) => a[1].localeCompare(b[1]));
+
+            for (const [code, name] of sortedLangs) {
+                sourceHTML += `<option value="${code}">${name}</option>`;
+                targetHTML += `<option value="${code}">${name}</option>`;
+            }
+
+            sourceSelect.innerHTML = sourceHTML;
+            targetSelect.innerHTML = targetHTML;
+            
+            // Set default languages here
+            sourceSelect.value = 'auto';
+            targetSelect.value = 'ber'; // Changed to Tamazight
+
+            // Calculate exact language count dynamically and render
+            const langCount = Object.keys(languages).length;
+            document.getElementById('langCountDisplay').innerHTML = `
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <div class="lang-count">Empowering <span>${langCount}</span> Worldwide Languages</div>
+            `;
+        }
+
+        async function translateText() {
+            const inputText = document.getElementById('inputText').value.trim();
+            const sourceLang = document.getElementById('sourceLang').value;
+            const targetLang = document.getElementById('targetLang').value;
+            const outputArea = document.getElementById('outputText');
+            const btn = document.getElementById('translateBtn');
+
+            if (!inputText) return;
+
+            const originalBtnContent = btn.innerHTML;
+            btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> Translating...`;
+            btn.style.opacity = "0.8";
+
+            const encodedText = encodeURIComponent(inputText);
+            const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodedText}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                let translated = "";
+                if (data && data[0]) {
+                    data[0].forEach(s => { if (s[0]) translated += s[0]; });
+                }
+                outputArea.value = translated;
+                
+                const rtlLangs = ['ar', 'iw', 'fa', 'ur', 'ps', 'sd', 'ckb'];
+                outputArea.style.direction = rtlLangs.includes(targetLang) ? "rtl" : "ltr";
+
+            } catch (e) {
+                outputArea.value = "Error: Check connection.";
+            } finally {
+                btn.innerHTML = originalBtnContent;
+                btn.style.opacity = "1";
+            }
+        }
+
+        async function copyText(elementId, btnId) {
+            const text = document.getElementById(elementId).value;
+            if (!text) return;
+            try {
+                await navigator.clipboard.writeText(text);
+                const btn = document.getElementById(btnId);
+                const originalHTML = btn.innerHTML;
+                
+                // SVG checkmark for success
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Copied!`;
+                btn.style.color = "var(--accent)";
+                btn.style.borderColor = "var(--accent)";
+                
+                setTimeout(() => { 
+                    btn.innerHTML = originalHTML; 
+                    btn.style.color = "";
+                    btn.style.borderColor = "";
+                }, 2000);
+            } catch (err) {
+                alert('Failed to copy text.');
+            }
+        }
+
+        // New Paste function added here
+        async function pasteText(elementId) {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById(elementId).value = text;
+            } catch (err) {
+                alert('Failed to read clipboard. Please ensure your browser allows clipboard permissions.');
+            }
+        }
+
+        window.onload = populateSelects;
+    </script>
+</body>
+</html>
