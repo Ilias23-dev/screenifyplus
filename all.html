@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>SCREENIFY +</title>
-    <meta name="description" content="Screenify+ is a modern streaming platform to discover, browse, and watch movies and TV shows with a sleek cinematic experience. Explore trending titles, top picks, and personalized content all in one place.">
+    <meta name="description" content="Screenify+ is a modern streaming platform to discover, browse, and watch movies and TV shows with a sleek cinematic experience.">
     <meta property="og:title" content="SCREENIFY +">
-    <meta property="og:description" content="Discover and stream movies and TV shows with Screenify+. Explore trending content, top picks, and a cinematic browsing experience.">
+    <meta property="og:description" content="Discover and stream movies and TV shows with Screenify+">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://screenifyplus.online/logo.png">
 
@@ -26,108 +26,615 @@
       "@type": "Organization",
       "name": "Screenify+",
       "url": "https://screenifyplus.online",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://screenifyplus.online/logo.png",
-        "width": 512,
-        "height": 512
-      }
+      "logo": { "@type": "ImageObject", "url": "https://screenifyplus.online/logo.png", "width": 512, "height": 512 }
     }
     </script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
         :root {
             --bg: #050507;
-            --surface: #0c0c0e;
-            --border: #1a1a1c;
-            --accent: #ff0000;
-            --accent-glow: rgba(255, 0, 0, 0.2);
-            --text-main: #ffffff;
-            --text-dim: #949499;
+            --surface: #0a0a0c;
+            --surface-hover: #0e0e12;
+            --border: #1a1a1e;
+            --border-hover: #2a2a30;
+            --accent: #e00000;
+            --accent-light: #ff2020;
+            --accent-glow: rgba(224, 0, 0, 0.15);
+            --accent-glow-strong: rgba(224, 0, 0, 0.3);
+            --text-main: #f0f0f2;
+            --text-bright: #ffffff;
+            --text-dim: #6e6e78;
+            --text-muted: #3a3a42;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) var(--bg);
+        }
+
+        html::-webkit-scrollbar { width: 6px; }
+        html::-webkit-scrollbar-track { background: var(--bg); }
+        html::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
 
         body {
             background-color: var(--bg);
             color: var(--text-main);
             font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
-            line-height: 1.5;
+            line-height: 1.6;
+            cursor: none;
         }
 
-        /* Entry Animations */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
-            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        @media (pointer: coarse) {
+            body { cursor: auto; }
+            .cursor-dot, .cursor-ring { display: none !important; }
         }
 
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+        /* ─── LOADER ─── */
+        .loader-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 24px;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
         }
 
-        .animate-fade { opacity: 0; animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
+        .loader-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+        .loader-logo {
+            width: 72px;
+            animation: loaderPulse 1.2s ease-in-out infinite;
+        }
 
-        /* Header */
+        @keyframes loaderPulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px var(--accent-glow)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 25px var(--accent-glow-strong)); }
+        }
+
+        .loader-bar-track {
+            width: 160px;
+            height: 2px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .loader-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        /* ─── CUSTOM CURSOR ─── */
+        .cursor-dot {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background 0.2s;
+            mix-blend-mode: screen;
+        }
+
+        .cursor-ring {
+            position: fixed;
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(224, 0, 0, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .cursor-dot.hovering {
+            width: 12px;
+            height: 12px;
+            background: var(--accent-light);
+        }
+
+        .cursor-ring.hovering {
+            width: 50px;
+            height: 50px;
+            border-color: rgba(224, 0, 0, 0.6);
+            background: rgba(224, 0, 0, 0.05);
+        }
+
+        /* ─── CANVAS BACKGROUND ─── */
+        #bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* ─── ATMOSPHERIC ORBS ─── */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+            will-change: transform;
+        }
+
+        .orb-1 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(224,0,0,0.08), transparent 70%);
+            top: -10%; left: -10%;
+            animation: orbFloat1 20s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(224,0,0,0.05), transparent 70%);
+            bottom: 10%; right: -5%;
+            animation: orbFloat2 25s ease-in-out infinite;
+        }
+
+        .orb-3 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(100,0,0,0.06), transparent 70%);
+            top: 50%; left: 40%;
+            animation: orbFloat3 18s ease-in-out infinite;
+        }
+
+        @keyframes orbFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(80px, 50px) scale(1.1); }
+            66% { transform: translate(-30px, 80px) scale(0.95); }
+        }
+
+        @keyframes orbFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(-60px, -40px) scale(1.05); }
+            66% { transform: translate(40px, -70px) scale(0.9); }
+        }
+
+        @keyframes orbFloat3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(60px, -50px) scale(1.15); }
+        }
+
+        /* ─── FILM GRAIN OVERLAY ─── */
+        .grain-overlay {
+            position: fixed;
+            inset: -50%;
+            width: 200%;
+            height: 200%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            animation: grainShift 0.5s steps(10) infinite;
+        }
+
+        @keyframes grainShift {
+            0% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -10%); }
+            20% { transform: translate(-15%, 5%); }
+            30% { transform: translate(7%, -25%); }
+            40% { transform: translate(-5%, 25%); }
+            50% { transform: translate(-15%, 10%); }
+            60% { transform: translate(15%, 0%); }
+            70% { transform: translate(0%, 15%); }
+            80% { transform: translate(3%, 35%); }
+            90% { transform: translate(-10%, 10%); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* ─── SCANLINE EFFECT ─── */
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.03) 2px,
+                rgba(0,0,0,0.03) 4px
+            );
+        }
+
+        /* ─── MAIN CONTENT ─── */
+        .page-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ─── SCROLL REVEAL ─── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            filter: blur(8px);
+            transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ─── HEADER / NAV ─── */
         header {
-            padding: 3rem 0;
-            text-align: center;
-            animation: scaleIn 1s ease-out;
+            padding: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-bright);
         }
 
         .main-logo {
-            width: 80px;
-            filter: drop-shadow(0 0 15px var(--accent-glow));
-            transition: transform 0.3s ease;
+            width: 44px;
+            height: 44px;
+            filter: drop-shadow(0 0 12px var(--accent-glow));
+            transition: all 0.4s ease;
         }
 
-        .main-logo:hover { transform: rotate(5deg) scale(1.1); }
+        .logo-link:hover .main-logo {
+            transform: rotate(8deg) scale(1.1);
+            filter: drop-shadow(0 0 20px var(--accent-glow-strong));
+        }
 
-        /* Hero */
+        .logo-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text span { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .nav-link:hover {
+            color: var(--text-bright);
+            border-color: var(--border);
+            background: var(--surface);
+        }
+
+        .nav-link.accent-btn {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .nav-link.accent-btn:hover {
+            background: var(--accent-light);
+            border-color: var(--accent-light);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        @media (max-width: 640px) {
+            .nav-links { display: none; }
+            header { justify-content: center; }
+        }
+
+        /* ─── HERO ─── */
         .hero {
             text-align: center;
-            margin-bottom: 5rem;
+            padding: 6rem 0 5rem;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(224, 0, 0, 0.08);
+            border: 1px solid rgba(224, 0, 0, 0.15);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-badge .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulseDot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(224,0,0,0.4); }
+            50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(224,0,0,0); }
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-size: clamp(3rem, 10vw, 6rem);
             font-weight: 800;
-            letter-spacing: -0.04em;
-            background: linear-gradient(180deg, #fff 0%, #666 100%);
+            letter-spacing: -0.05em;
+            line-height: 0.95;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .hero h1 .line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero h1 .line-inner {
+            display: block;
+            transform: translateY(110%);
+            animation: heroTextReveal 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .hero h1 .line:nth-child(2) .line-inner { animation-delay: 0.15s; }
+
+        @keyframes heroTextReveal {
+            to { transform: translateY(0); }
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(180deg, #ffffff 20%, #555555 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 1.5rem;
+            background-clip: text;
+        }
+
+        .hero h1 .accent-text {
+            background: linear-gradient(135deg, var(--accent-light) 0%, #ff4444 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            max-width: 560px;
+            margin: 0 auto 3rem;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .mission-box {
-            background: linear-gradient(90deg, transparent, var(--surface), transparent);
-            padding: 2rem;
+            background: linear-gradient(135deg, var(--surface) 0%, rgba(224,0,0,0.03) 100%);
+            border: 1px solid var(--border);
+            padding: 2rem 2.5rem;
             border-radius: 20px;
-            max-width: 800px;
-            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mission-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(224,0,0,0.3), transparent);
         }
 
         .mission-box p {
             color: var(--text-dim);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
 
-        .mission-box b { color: var(--accent); }
+        .mission-box strong {
+            color: var(--accent-light);
+            font-weight: 600;
+        }
 
-        /* Grid System */
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--accent);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-decoration: none;
+            border: 1px solid var(--accent);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .btn-primary:hover::before { transform: translateX(100%); }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            border-color: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(224, 0, 0, 0.3), 0 0 60px rgba(224, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            color: var(--text-main);
+            padding: 14px 32px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--border-hover);
+            background: var(--surface);
+            transform: translateY(-2px);
+        }
+
+        /* ─── STATS BAR ─── */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 6rem;
+            border: 1px solid var(--border);
+        }
+
+        .stat-item {
+            background: var(--surface);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+        .stat-item:hover { background: var(--surface-hover); }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--text-bright);
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-number .counter-suffix {
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 500;
+        }
+
+        @media (max-width: 640px) {
+            .stats-bar { grid-template-columns: 1fr; border-radius: 16px; }
+            .hero-actions { flex-direction: column; width: 100%; }
+            .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+        }
+
+        /* ─── SECTION HEADING ─── */
+        .section-heading {
+            margin-bottom: 3rem;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 20px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--text-bright);
+        }
+
+        /* ─── SERVICE CARDS ─── */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
             margin-bottom: 6rem;
         }
@@ -135,41 +642,87 @@
         .card {
             background: var(--surface);
             border: 1px solid var(--border);
-            padding: 2.5rem;
-            border-radius: 24px;
+            padding: 0;
+            border-radius: 20px;
             text-decoration: none;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             flex-direction: column;
             position: relative;
             overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at top left, rgba(255,0,0,0.1), transparent 70%);
-            opacity: 0; transition: 0.4s;
+        .card-inner {
+            padding: 2rem 2rem 2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            position: relative;
+            z-index: 1;
         }
+
+        .card-glow {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 0;
+        }
+
+        .card:hover .card-glow { opacity: 1; }
 
         .card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px var(--accent-glow);
+            transform: translateY(-8px);
+            border-color: rgba(224, 0, 0, 0.3);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 40px var(--accent-glow);
         }
 
-        .card:hover::before { opacity: 1; }
+        .card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            transition: all 0.4s ease;
+        }
+
+        .card:hover .card-icon {
+            border-color: rgba(224, 0, 0, 0.3);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .card-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-icon svg { transform: scale(1.1); }
 
         .card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #fff;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--text-bright);
+            letter-spacing: -0.02em;
         }
 
         .card p {
             color: var(--text-dim);
-            font-size: 0.95rem;
+            font-size: 0.88rem;
+            line-height: 1.65;
             margin-bottom: 2rem;
             flex-grow: 1;
         }
@@ -178,140 +731,729 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
         }
 
-        .btn-text {
-            color: var(--accent);
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .ad-warning {
-            font-size: 0.7rem;
-            color: #555;
-            background: #111;
-            padding: 4px 10px;
-            border-radius: 20px;
-        }
-
-        /* Floating Button */
-        .floating-action {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 700;
-            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.3);
+        .btn-arrow {
             display: flex;
             align-items: center;
-            gap: 12px;
-            z-index: 100;
-            transition: 0.3s;
-            text-decoration: none;
-            animation: fadeInUp 1s 1.2s both;
-        }
-
-        .floating-action:hover {
-            transform: translateX(-50%) scale(1.05);
-            background: #ff1a1a;
-            box-shadow: 0 15px 40px rgba(255, 0, 0, 0.5);
-        }
-
-        /* Footer */
-        footer {
-            padding: 4rem 0 8rem;
-            border-top: 1px solid var(--border);
-            text-align: center;
+            gap: 8px;
             color: var(--text-dim);
+            font-weight: 600;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+        }
+
+        .btn-arrow svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .btn-arrow { color: var(--accent-light); }
+        .card:hover .btn-arrow svg { transform: translateX(4px); }
+
+        .ad-badge {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            background: var(--bg);
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-weight: 500;
+            letter-spacing: 0.05em;
+        }
+
+        /* Card top accent line */
+        .card-accent-line {
+            height: 2px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-accent-line::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            transition: width 0.5s ease;
+        }
+
+        .card:hover .card-accent-line::after { width: 100%; }
+
+        @media (max-width: 900px) {
+            .services-grid { grid-template-columns: 1fr; max-width: 500px; margin-left: auto; margin-right: auto; }
+        }
+
+        /* ─── COMING SOON SECTION ─── */
+        .coming-soon {
+            text-align: center;
+            padding: 4rem 0 6rem;
+            position: relative;
+        }
+
+        .coming-soon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+        }
+
+        .equalizer {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 3px;
+            height: 24px;
+            margin-bottom: 1.5rem;
+        }
+
+        .eq-bar {
+            width: 3px;
+            border-radius: 2px;
+            background: var(--accent);
+            animation: eqBounce var(--dur) ease-in-out infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes eqBounce {
+            0%, 100% { height: var(--min-h); }
+            50% { height: var(--max-h); }
+        }
+
+        .coming-text {
+            color: var(--text-muted);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            padding: 4rem 0 10rem;
+            border-top: 1px solid var(--border);
+            position: relative;
+        }
+
+        .footer-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-brand img {
+            width: 32px;
+            filter: drop-shadow(0 0 8px var(--accent-glow));
+            opacity: 0.7;
+        }
+
+        .footer-brand span {
+            font-weight: 700;
             font-size: 0.9rem;
+            color: var(--text-dim);
         }
 
         .footer-links {
-            margin-bottom: 1.5rem;
             display: flex;
-            justify-content: center;
             gap: 2rem;
         }
 
         .footer-links a {
-            color: #fff;
+            color: var(--text-dim);
             text-decoration: none;
-            transition: 0.3s;
+            font-size: 0.82rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .footer-links a:hover { color: var(--accent); }
-
-        @media (max-width: 600px) {
-            .hero h1 { font-size: 2.8rem; }
-            .services-grid { grid-template-columns: 1fr; }
-            .floating-action { width: 90%; justify-content: center; }
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
         }
+
+        .footer-links a:hover { color: var(--text-bright); }
+        .footer-links a:hover::after { width: 100%; }
+
+        .footer-bottom {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            letter-spacing: 0.03em;
+        }
+
+        @media (max-width: 640px) {
+            .footer-top { flex-direction: column; gap: 2rem; text-align: center; }
+            .footer-links { flex-direction: column; gap: 1rem; align-items: center; }
+        }
+
+        /* ─── FLOATING ACTION ─── */
+        .floating-action {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--accent);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            box-shadow: 0 8px 30px rgba(224, 0, 0, 0.3), 0 0 80px rgba(224, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 100;
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+        }
+
+        .floating-action.visible {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .floating-action:hover {
+            transform: translateX(-50%) translateY(-4px);
+            background: var(--accent-light);
+            box-shadow: 0 12px 40px rgba(224, 0, 0, 0.5), 0 0 100px rgba(224, 0, 0, 0.15);
+        }
+
+        .floating-action svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* ─── TOAST ─── */
+        .toast {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 14px 24px;
+            border-radius: 14px;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            z-index: 9999;
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.show { transform: translateX(0); }
+
+        .toast .toast-icon {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* ─── MOUSE PARALLAX HELPER ─── */
+        .parallax-layer { transition: transform 0.15s ease-out; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <img src="https://screenifyplus.online/logo.png" alt="Screenify Logo" class="main-logo">
-        </header>
-
-        <section class="hero animate-fade">
-            <h1>Screenify <span>+</span></h1>
-            <div class="mission-box animate-fade delay-1">
-                <p><b>Screenify+ Mission:</b> Our ultimate goal is to offer all essential internet services absolutely free and entirely without ads. The web belongs to everyone.</p>
-            </div>
-        </section>
-
-        <div class="services-grid">
-            <a href="https://screenifyplus.online" class="card animate-fade delay-2">
-                <h3>Screenify+ Hub</h3>
-                <p>A modern streaming platform to discover, browse, and watch movies and TV shows with a sleek cinematic experience. Explore trending titles, top picks, and personalized content all in one place.</p>
-                <div class="card-footer">
-                    <span class="btn-text">Discover Content</span>
-                    <span class="ad-warning">Ads Possible</span>
-                </div>
-            </a>
-
-            <a href="https://screenifyplus.online/mena" class="card animate-fade delay-2">
-                <h3>Screenify+ MENA</h3>
-                <p>Dedicated exclusively to series with full Arabic subtitles. High-quality streams tailored for our regional audience with a focus on ease of access.</p>
-                <div class="card-footer">
-                    <span class="btn-text">Watch Series</span>
-                </div>
-            </a>
-
-            <a href="https://screenifyplus.online/translator" class="card animate-fade delay-3">
-                <h3>Translator</h3>
-                <p>Professional grade translation services integrated directly into our ecosystem. Fast, accurate, and built for everyone.</p>
-                <div class="card-footer">
-                    <span class="btn-text">Open Tool</span>
-                </div>
-            </a>
+    <!-- LOADER -->
+    <div class="loader-overlay" id="loader">
+        <img src="https://screenifyplus.online/logo.png" alt="Loading" class="loader-logo">
+        <div class="loader-bar-track">
+            <div class="loader-bar-fill" id="loader-fill"></div>
         </div>
-
-        <section class="animate-fade delay-3" style="text-align: center; margin-bottom: 8rem;">
-            <p style="color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; font-size: 0.75rem;">More Services Coming Soon</p>
-        </section>
-
-        <footer>
-            <div class="footer-links">
-                <a href="mailto:contact@screenifyplus.online">Email Support</a>
-                <a href="https://t.me/screenifyplus">Official Telegram</a>
-            </div>
-            <p>&copy; 2026 SCREENIFY+. All rights reserved.</p>
-        </footer>
     </div>
 
-    <a href="https://t.me/screenifyplus" class="floating-action">
-        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.98 1.25-5.58 3.68-.52.36-.99.53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.29-.48.79-.74 3.08-1.34 5.14-2.22 6.16-2.65 2.94-1.22 3.55-1.43 3.95-1.44.09 0 .28.02.4.11.1.08.13.19.14.28.02.04.03.11.02.21z"/></svg>
-        SUGGEST A SERVICE
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+
+    <!-- BACKGROUND EFFECTS -->
+    <canvas id="bg-canvas"></canvas>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="grain-overlay"></div>
+    <div class="scanlines"></div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">
+        <div class="toast-icon"></div>
+        <span id="toast-text">Welcome to Screenify+</span>
+    </div>
+
+    <!-- PAGE CONTENT -->
+    <div class="page-content">
+        <div class="container">
+
+            <!-- HEADER -->
+            <header>
+                <a href="https://screenifyplus.online" class="logo-link">
+                    <img src="https://screenifyplus.online/logo.png" alt="Screenify Logo" class="main-logo">
+                    <div class="logo-text">Screenify <span>+</span></div>
+                </a>
+                <nav class="nav-links">
+                    <a href="https://screenifyplus.online" class="nav-link">Hub</a>
+                    <a href="https://screenifyplus.online/mena" class="nav-link">MENA</a>
+                    <a href="https://screenifyplus.online/translator" class="nav-link">Translator</a>
+                    <a href="https://t.me/screenifyplus" class="nav-link accent-btn">Telegram</a>
+                </nav>
+            </header>
+
+            <!-- HERO -->
+            <section class="hero">
+                <div class="hero-badge reveal">
+                    <div class="pulse-dot"></div>
+                    Free & Open Access
+                </div>
+
+                <h1 class="parallax-layer">
+                    <span class="line"><span class="line-inner gradient-text">Screenify</span></span>
+                    <span class="line"><span class="line-inner accent-text">Plus</span></span>
+                </h1>
+
+                <div class="hero-sub">
+                    <div class="mission-box">
+                        <p><strong>Our Mission:</strong> To offer all essential internet services absolutely free and entirely without ads. The web belongs to everyone — no paywalls, no trackers, no barriers.</p>
+                    </div>
+                </div>
+
+                <div class="hero-actions">
+                    <a href="https://screenifyplus.online" class="btn-primary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        Start Streaming
+                    </a>
+                    <a href="https://t.me/screenifyplus" class="btn-secondary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        Join Community
+                    </a>
+                </div>
+            </section>
+
+            <!-- STATS -->
+            <div class="stats-bar reveal">
+                <div class="stat-item">
+                    <div class="stat-number"><span class="counter" data-target="3">0</span><span class="counter-suffix">+</span></div>
+                    <div class="stat-label">Live Services</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number"><span class="counter" data-target="100">0</span><span class="counter-suffix">%</span></div>
+                    <div class="stat-label">Completely Free</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number"><span class="counter" data-target="0">0</span><span class="counter-suffix"> Ads</span></div>
+                    <div class="stat-label">Target Goal</div>
+                </div>
+            </div>
+
+            <!-- SERVICES -->
+            <section>
+                <div class="section-heading reveal">
+                    <div class="section-label">Platform</div>
+                    <h2 class="section-title">Our Services</h2>
+                </div>
+
+                <div class="services-grid">
+                    <!-- Card 1: Hub -->
+                    <a href="https://screenifyplus.online" class="card reveal reveal-delay-1" data-tilt>
+                        <div class="card-accent-line"></div>
+                        <div class="card-glow" style="background: radial-gradient(circle at top left, rgba(224,0,0,0.06), transparent 60%);"></div>
+                        <div class="card-inner">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                            </div>
+                            <h3>Screenify+ Hub</h3>
+                            <p>A modern streaming platform to discover, browse, and watch movies and TV shows with a sleek cinematic experience. Explore trending titles, top picks, and personalized content.</p>
+                            <div class="card-footer">
+                                <span class="btn-arrow">
+                                    Discover
+                                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                </span>
+                                <span class="ad-badge">Ads Possible</span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Card 2: MENA -->
+                    <a href="https://screenifyplus.online/mena" class="card reveal reveal-delay-2" data-tilt>
+                        <div class="card-accent-line"></div>
+                        <div class="card-glow" style="background: radial-gradient(circle at top right, rgba(224,0,0,0.06), transparent 60%);"></div>
+                        <div class="card-inner">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            </div>
+                            <h3>Screenify+ MENA</h3>
+                            <p>Dedicated exclusively to series with full Arabic subtitles. High-quality streams tailored for our regional audience with a focus on ease of access and cultural relevance.</p>
+                            <div class="card-footer">
+                                <span class="btn-arrow">
+                                    Watch Now
+                                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Card 3: Translator -->
+                    <a href="https://screenifyplus.online/translator" class="card reveal reveal-delay-3" data-tilt>
+                        <div class="card-accent-line"></div>
+                        <div class="card-glow" style="background: radial-gradient(circle at bottom left, rgba(224,0,0,0.06), transparent 60%);"></div>
+                        <div class="card-inner">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24"><path d="M4 7h6v10H4z"/><path d="M14 7h6v10h-6z"/><line x1="10" y1="10" x2="14" y2="10"/><line x1="10" y1="14" x2="14" y2="14"/><polyline points="6 9 8 12 6 15"/><path d="M18 9l-2 3 2 3"/></svg>
+                            </div>
+                            <h3>Translator</h3>
+                            <p>Professional-grade translation services integrated directly into our ecosystem. Fast, accurate, and built for everyone — supporting multiple languages with clean interface.</p>
+                            <div class="card-footer">
+                                <span class="btn-arrow">
+                                    Open Tool
+                                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- COMING SOON -->
+            <section class="coming-soon reveal">
+                <div class="equalizer">
+                    <div class="eq-bar" style="--dur: 0.8s; --min-h: 4px; --max-h: 20px;"></div>
+                    <div class="eq-bar" style="--dur: 0.6s; --min-h: 6px; --max-h: 14px;"></div>
+                    <div class="eq-bar" style="--dur: 1s; --min-h: 3px; --max-h: 24px;"></div>
+                    <div class="eq-bar" style="--dur: 0.7s; --min-h: 5px; --max-h: 18px;"></div>
+                    <div class="eq-bar" style="--dur: 0.9s; --min-h: 4px; --max-h: 22px;"></div>
+                    <div class="eq-bar" style="--dur: 0.5s; --min-h: 6px; --max-h: 12px;"></div>
+                    <div class="eq-bar" style="--dur: 1.1s; --min-h: 3px; --max-h: 20px;"></div>
+                    <div class="eq-bar" style="--dur: 0.65s; --min-h: 5px; --max-h: 16px;"></div>
+                    <div class="eq-bar" style="--dur: 0.85s; --min-h: 4px; --max-h: 24px;"></div>
+                </div>
+                <p class="coming-text">More Services Coming Soon</p>
+            </section>
+
+            <!-- FOOTER -->
+            <footer>
+                <div class="footer-top reveal">
+                    <div class="footer-brand">
+                        <img src="https://screenifyplus.online/logo.png" alt="Screenify">
+                        <span>Screenify+</span>
+                    </div>
+                    <div class="footer-links">
+                        <a href="mailto:contact@screenifyplus.online">Email Support</a>
+                        <a href="https://t.me/screenifyplus">Official Telegram</a>
+                        <a href="https://screenifyplus.online">Hub</a>
+                    </div>
+                </div>
+                <div class="footer-bottom reveal">
+                    <p>&copy; 2026 SCREENIFY+. All rights reserved. The web belongs to everyone.</p>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+
+    <!-- FLOATING ACTION -->
+    <a href="https://t.me/screenifyplus" class="floating-action" id="floating-btn">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.07.07 0 00-.07-.19c-.08-.05-.19-.02-.27 0-.12.03-1.98 1.25-5.58 3.68-.52.36-.99.53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.29-.48.79-.74 3.08-1.34 5.14-2.22 6.16-2.65 2.94-1.22 3.55-1.43 3.95-1.44.09 0 .28.02.4.11.1.08.13.19.14.28.02.04.03.11.02.21z"/></svg>
+        Suggest a Service
     </a>
+
+    <script>
+    // ─── LOADER ───
+    (function() {
+        const fill = document.getElementById('loader-fill');
+        const loader = document.getElementById('loader');
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 25 + 10;
+            if (progress >= 100) {
+                progress = 100;
+                fill.style.width = '100%';
+                clearInterval(interval);
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                    setTimeout(() => showToast('Welcome to Screenify+'), 400);
+                }, 400);
+            } else {
+                fill.style.width = progress + '%';
+            }
+        }, 200);
+    })();
+
+    // ─── TOAST ───
+    function showToast(text) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toast-text').textContent = text;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    // ─── CUSTOM CURSOR ───
+    (function() {
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        let mx = 0, my = 0;
+        let rx = 0, ry = 0;
+
+        document.addEventListener('mousemove', e => {
+            mx = e.clientX;
+            my = e.clientY;
+            dot.style.left = mx + 'px';
+            dot.style.top = my + 'px';
+        });
+
+        function animateRing() {
+            rx += (mx - rx) * 0.12;
+            ry += (my - ry) * 0.12;
+            ring.style.left = rx + 'px';
+            ring.style.top = ry + 'px';
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        document.querySelectorAll('a, button, .card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                dot.classList.add('hovering');
+                ring.classList.add('hovering');
+            });
+            el.addEventListener('mouseleave', () => {
+                dot.classList.remove('hovering');
+                ring.classList.remove('hovering');
+            });
+        });
+    })();
+
+    // ─── PARTICLE CANVAS ───
+    (function() {
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let w, h, particles = [], mouse = { x: -1000, y: -1000 };
+
+        function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        document.addEventListener('mousemove', e => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        const PARTICLE_COUNT = Math.min(60, Math.floor(window.innerWidth / 25));
+
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            particles.push({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                size: Math.random() * 1.5 + 0.5,
+                alpha: Math.random() * 0.4 + 0.1
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+
+            particles.forEach((p, i) => {
+                // Mouse repulsion
+                const dx = p.x - mouse.x;
+                const dy = p.y - mouse.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 150) {
+                    const force = (150 - dist) / 150 * 0.02;
+                    p.vx += (dx / dist) * force;
+                    p.vy += (dy / dist) * force;
+                }
+
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vx *= 0.99;
+                p.vy *= 0.99;
+
+                if (p.x < 0) p.x = w;
+                if (p.x > w) p.x = 0;
+                if (p.y < 0) p.y = h;
+                if (p.y > h) p.y = 0;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(224, 0, 0, ${p.alpha})`;
+                ctx.fill();
+
+                // Lines between nearby particles
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const ddx = p.x - p2.x;
+                    const ddy = p.y - p2.y;
+                    const dd = Math.sqrt(ddx * ddx + ddy * ddy);
+                    if (dd < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(224, 0, 0, ${0.06 * (1 - dd / 120)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            });
+
+            requestAnimationFrame(draw);
+        }
+        draw();
+    })();
+
+    // ─── SCROLL REVEAL ───
+    (function() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    })();
+
+    // ─── COUNTER ANIMATION ───
+    (function() {
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.dataset.target);
+                    const duration = 1500;
+                    const start = performance.now();
+
+                    function update(now) {
+                        const elapsed = now - start;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const eased = 1 - Math.pow(1 - progress, 4);
+                        el.textContent = Math.round(eased * target);
+                        if (progress < 1) requestAnimationFrame(update);
+                    }
+                    requestAnimationFrame(update);
+                    counterObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(c => counterObserver.observe(c));
+    })();
+
+    // ─── 3D TILT ON CARDS ───
+    (function() {
+        const cards = document.querySelectorAll('[data-tilt]');
+
+        cards.forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -6;
+                const rotateY = ((x - centerX) / centerX) * 6;
+
+                card.style.transform = `translateY(-8px) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+                // Move glow
+                const glow = card.querySelector('.card-glow');
+                if (glow) {
+                    glow.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(224,0,0,0.08), transparent 50%)`;
+                }
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+                const glow = card.querySelector('.card-glow');
+                if (glow) glow.style.background = '';
+            });
+        });
+    })();
+
+    // ─── MOUSE PARALLAX ON HERO ───
+    (function() {
+        const hero = document.querySelector('.parallax-layer');
+        if (!hero) return;
+
+        document.addEventListener('mousemove', e => {
+            const cx = (e.clientX / window.innerWidth - 0.5) * 2;
+            const cy = (e.clientY / window.innerHeight - 0.5) * 2;
+            hero.style.transform = `translate(${cx * 8}px, ${cy * 5}px)`;
+        });
+    })();
+
+    // ─── FLOATING BUTTON VISIBILITY ───
+    (function() {
+        const btn = document.getElementById('floating-btn');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    btn.classList.remove('visible');
+                } else {
+                    btn.classList.add('visible');
+                }
+            });
+        }, { threshold: 0 });
+
+        // Show when hero scrolls out of view
+        const heroSection = document.querySelector('.hero');
+        if (heroSection) observer.observe(heroSection);
+
+        // Initially hidden until scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                btn.classList.add('visible');
+            }
+        }, { passive: true });
+    })();
+
+    // ─── RE-OBSERVE DYNAMICALLY ADDED HOVER ELEMENTS FOR CURSOR ───
+    // (Cards are in DOM from start so the initial loop covers them)
+    </script>
 
 </body>
 </html>
