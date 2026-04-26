@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<!-- saved from url=(0032)https://screenifyplus.online/all -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>SCREENIFY +</title>
@@ -12,8 +12,8 @@
     <meta property="og:image" content="https://screenifyplus.online/logo.png">
 
     <link rel="icon" type="image/png" sizes="64x64" href="https://screenifyplus.online/favicon.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="https://screenifyplus.online/logo.png">
-    <link rel="apple-touch-icon" sizes="512x512" href="https://screenifyplus.online/logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./SCREENIFY + all_files/logo.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="./SCREENIFY + all_files/logo.png">
     <meta name="theme-color" content="#050507">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -69,12 +69,10 @@
             line-height: 1.6;
         }
 
-        /* Only show custom cursor on non-touch devices */
         @media (pointer: fine) {
             body { cursor: none; }
         }
 
-        /* ─── LOADER ─── */
         .loader-overlay {
             position: fixed;
             inset: 0;
@@ -120,7 +118,6 @@
             transition: width 0.2s ease;
         }
 
-        /* ─── CUSTOM CURSOR (desktop only) ─── */
         .cursor-dot, .cursor-ring { display: none; }
 
         @media (pointer: fine) {
@@ -155,7 +152,6 @@
             .cursor-ring.hovering { width: 50px; height: 50px; border-color: rgba(224, 0, 0, 0.6); }
         }
 
-        /* ─── ATMOSPHERIC ORBS (desktop only — blur kills mobile) ─── */
         .orb { display: none; }
 
         @media (pointer: fine) {
@@ -166,7 +162,6 @@
                 pointer-events: none;
                 z-index: 0;
                 will-change: transform;
-                /* Use a simple radial gradient div instead of filter:blur for GPU friendliness */
             }
 
             .orb-1 {
@@ -206,7 +201,6 @@
             }
         }
 
-        /* ─── FILM GRAIN (desktop only) ─── */
         .grain-overlay { display: none; }
 
         @media (pointer: fine) {
@@ -231,7 +225,6 @@
             }
         }
 
-        /* ─── SCANLINES (desktop only) ─── */
         .scanlines { display: none; }
 
         @media (pointer: fine) {
@@ -245,7 +238,6 @@
             }
         }
 
-        /* ─── MAIN CONTENT ─── */
         .page-content {
             position: relative;
             z-index: 2;
@@ -257,7 +249,6 @@
             padding: 0 1.5rem;
         }
 
-        /* ─── SCROLL REVEAL ─── */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -273,13 +264,11 @@
         .reveal-delay-2 { transition-delay: 0.2s; }
         .reveal-delay-3 { transition-delay: 0.3s; }
 
-        /* No blur on mobile — it causes jank */
         @media (pointer: fine) {
             .reveal { filter: blur(6px); transition: opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1), filter 0.9s cubic-bezier(0.22,1,0.36,1); }
             .reveal.visible { filter: blur(0); }
         }
 
-        /* ─── HEADER ─── */
         header {
             padding: 1.5rem 0;
             display: flex;
@@ -354,7 +343,6 @@
             header { justify-content: center; }
         }
 
-        /* ─── HERO ─── */
         .hero {
             text-align: center;
             padding: 3rem 0 3rem;
@@ -536,7 +524,6 @@
             transform: translateY(-2px);
         }
 
-        /* ─── STATS BAR ─── */
         .stats-bar {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -580,7 +567,6 @@
             .mission-box p { font-size: 0.85rem; }
         }
 
-        /* ─── SECTION HEADING ─── */
         .section-heading { margin-bottom: 2rem; }
 
         .section-label {
@@ -609,7 +595,6 @@
             color: var(--text-bright);
         }
 
-        /* ─── SERVICE CARDS ─── */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -627,7 +612,6 @@
             position: relative;
             overflow: hidden;
             transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-            /* No transform-style: preserve-3d on mobile — causes layer promotion issues */
         }
 
         @media (pointer: fine) {
@@ -772,7 +756,6 @@
             .services-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
         }
 
-        /* ─── COMING SOON ─── */
         .coming-soon {
             text-align: center;
             padding: 3rem 0 4rem;
@@ -820,7 +803,6 @@
             font-weight: 500;
         }
 
-        /* ─── FOOTER ─── */
         footer {
             padding: 3rem 0 8rem;
             border-top: 1px solid var(--border);
@@ -890,7 +872,6 @@
             .footer-links { flex-direction: column; gap: 0.75rem; align-items: center; }
         }
 
-        /* ─── FLOATING ACTION ─── */
         .floating-action {
             position: fixed;
             bottom: 24px;
@@ -940,7 +921,6 @@
             }
         }
 
-        /* ─── TOAST ─── */
         .toast {
             position: fixed;
             top: 16px;
@@ -972,7 +952,6 @@
             flex-shrink: 0;
         }
 
-        /* ─── Mobile: reduce all motion ─── */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
@@ -985,18 +964,18 @@
 <body>
 
     <!-- LOADER -->
-    <div class="loader-overlay" id="loader">
-        <img src="https://screenifyplus.online/logo.png" alt="Loading" class="loader-logo">
+    <div class="loader-overlay hidden" id="loader">
+        <img src="./SCREENIFY + all_files/logo.png" alt="Loading" class="loader-logo">
         <div class="loader-bar-track">
-            <div class="loader-bar-fill" id="loader-fill"></div>
+            <div class="loader-bar-fill" id="loader-fill" style="width: 100%;"></div>
         </div>
     </div>
 
-    <!-- CUSTOM CURSOR (desktop only via CSS) -->
+    <!-- CUSTOM CURSOR -->
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-ring" id="cursor-ring"></div>
 
-    <!-- BACKGROUND EFFECTS (desktop only via CSS) -->
+    <!-- BACKGROUND EFFECTS -->
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
@@ -1014,12 +993,12 @@
         <div class="container">
 
             <header>
-                <a href="https://screenifyplus.online" class="logo-link">
-                    <img src="https://screenifyplus.online/logo.png" alt="Screenify Logo" class="main-logo">
+                <a href="https://screenifyplus.online/" class="logo-link">
+                    <img src="./SCREENIFY + all_files/logo.png" alt="Screenify Logo" class="main-logo">
                     <div class="logo-text">Screenify <span>+</span></div>
                 </a>
                 <nav class="nav-links">
-                    <a href="https://screenifyplus.online" class="nav-link">Hub</a>
+                    <a href="https://screenifyplus.online/" class="nav-link">Hub</a>
                     <a href="https://screenifyplus.online/mena" class="nav-link">MENA</a>
                     <a href="https://screenifyplus.online/translator" class="nav-link">Translator</a>
                     <a href="https://t.me/screenifyplus" class="nav-link accent-btn">Telegram</a>
@@ -1027,12 +1006,12 @@
             </header>
 
             <section class="hero">
-                <div class="hero-badge reveal">
+                <div class="hero-badge reveal visible">
                     <div class="pulse-dot"></div>
-                    Free & Open Access
+                    Free &amp; Open Access
                 </div>
 
-                <h1 id="hero-title">
+                <h1 id="hero-title" style="transform: translate(1px, -0.531969px);">
                     <span class="line"><span class="line-inner gradient-text">Screenify</span></span>
                     <span class="line"><span class="line-inner accent-text">Plus</span></span>
                 </h1>
@@ -1044,24 +1023,24 @@
                 </div>
 
                 <div class="hero-actions">
-                    <a href="https://screenifyplus.online" class="btn-primary">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    <a href="https://screenifyplus.online/" class="btn-primary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                         Start Streaming
                     </a>
                     <a href="https://t.me/screenifyplus" class="btn-secondary">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                         Join Community
                     </a>
                 </div>
             </section>
 
-            <div class="stats-bar reveal">
+            <div class="stats-bar reveal visible">
                 <div class="stat-item">
-                    <div class="stat-number"><span class="counter" data-target="3">0</span><span class="counter-suffix">+</span></div>
+                    <div class="stat-number"><span class="counter" data-target="4">4</span><span class="counter-suffix">+</span></div>
                     <div class="stat-label">Live Services</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number"><span class="counter" data-target="100">0</span><span class="counter-suffix">%</span></div>
+                    <div class="stat-number"><span class="counter" data-target="100">100</span><span class="counter-suffix">%</span></div>
                     <div class="stat-label">Completely Free</div>
                 </div>
                 <div class="stat-item">
@@ -1077,19 +1056,19 @@
                 </div>
 
                 <div class="services-grid">
-                    <a href="https://screenifyplus.online" class="card reveal reveal-delay-1">
+                    <a href="https://screenifyplus.online/" class="card reveal reveal-delay-1">
                         <div class="card-accent-line"></div>
                         <div class="card-glow" style="background: radial-gradient(circle at top left, rgba(224,0,0,0.06), transparent 60%);"></div>
                         <div class="card-inner">
                             <div class="card-icon">
-                                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                             </div>
                             <h3>Screenify+ Hub</h3>
                             <p>A modern streaming platform to discover, browse, and watch movies and TV shows with a sleek cinematic experience. Explore trending titles and personalized content.</p>
                             <div class="card-footer">
                                 <span class="btn-arrow">
                                     Discover
-                                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                                 </span>
                                 <span class="ad-badge">Ads Possible</span>
                             </div>
@@ -1101,14 +1080,14 @@
                         <div class="card-glow" style="background: radial-gradient(circle at top right, rgba(224,0,0,0.06), transparent 60%);"></div>
                         <div class="card-inner">
                             <div class="card-icon">
-                                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                             </div>
                             <h3>Screenify+ MENA</h3>
                             <p>Dedicated exclusively to series with full Arabic subtitles. High-quality streams tailored for our regional audience with ease of access and cultural relevance.</p>
                             <div class="card-footer">
                                 <span class="btn-arrow">
                                     Watch Now
-                                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                                 </span>
                             </div>
                         </div>
@@ -1119,14 +1098,32 @@
                         <div class="card-glow" style="background: radial-gradient(circle at bottom left, rgba(224,0,0,0.06), transparent 60%);"></div>
                         <div class="card-inner">
                             <div class="card-icon">
-                                <svg viewBox="0 0 24 24"><path d="M4 7h6v10H4z"/><path d="M14 7h6v10h-6z"/><line x1="10" y1="10" x2="14" y2="10"/><line x1="10" y1="14" x2="14" y2="14"/><polyline points="6 9 8 12 6 15"/><path d="M18 9l-2 3 2 3"/></svg>
+                                <svg viewBox="0 0 24 24"><path d="M4 7h6v10H4z"></path><path d="M14 7h6v10h-6z"></path><line x1="10" y1="10" x2="14" y2="10"></line><line x1="10" y1="14" x2="14" y2="14"></line><polyline points="6 9 8 12 6 15"></polyline><path d="M18 9l-2 3 2 3"></path></svg>
                             </div>
                             <h3>Translator</h3>
                             <p>Professional-grade translation services integrated directly into our ecosystem. Fast, accurate, and built for everyone — supporting multiple languages.</p>
                             <div class="card-footer">
                                 <span class="btn-arrow">
                                     Open Tool
-                                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="https://screenifyplus.online/news" class="card reveal reveal-delay-1">
+                        <div class="card-accent-line"></div>
+                        <div class="card-glow" style="background: radial-gradient(circle at bottom right, rgba(224,0,0,0.06), transparent 60%);"></div>
+                        <div class="card-inner">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path><path d="M18 14h-8"></path><path d="M15 18h-5"></path><path d="M10 6h8v4h-8z"></path></svg>
+                            </div>
+                            <h3>Screenify+ News</h3>
+                            <p>Stay updated with the latest in entertainment, platform updates, and trending stories. Your go-to source for everything happening across the Screenify+ ecosystem.</p>
+                            <div class="card-footer">
+                                <span class="btn-arrow">
+                                    Read News
+                                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                                 </span>
                             </div>
                         </div>
@@ -1152,17 +1149,17 @@
             <footer>
                 <div class="footer-top reveal">
                     <div class="footer-brand">
-                        <img src="https://screenifyplus.online/logo.png" alt="Screenify">
+                        <img src="./SCREENIFY + all_files/logo.png" alt="Screenify">
                         <span>Screenify+</span>
                     </div>
                     <div class="footer-links">
                         <a href="mailto:contact@screenifyplus.online">Email Support</a>
                         <a href="https://t.me/screenifyplus" target="_blank" rel="noopener">Official Telegram</a>
-                        <a href="https://screenifyplus.online">Hub</a>
+                        <a href="https://screenifyplus.online/">Hub</a>
                     </div>
                 </div>
                 <div class="footer-bottom reveal">
-                    <p>&copy; 2026 SCREENIFY+. All rights reserved.</p>
+                    <p>© 2026 SCREENIFY+. All rights reserved.</p>
                 </div>
             </footer>
 
@@ -1170,15 +1167,13 @@
     </div>
 
     <a href="https://t.me/screenifyplus" target="_blank" rel="noopener" class="floating-action" id="floating-btn">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.07.07 0 00-.07-.19c-.08-.05-.19-.02-.27 0-.12.03-1.98 1.25-5.58 3.68-.52.36-.99.53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.29-.48.79-.74 3.08-1.34 5.14-2.22 6.16-2.65 2.94-1.22 3.55-1.43 3.95-1.44.09 0 .28.02.4.11.1.08.13.19.14.28.02.04.03.11.02.21z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.07.07 0 00-.07-.19c-.08-.05-.19-.02-.27 0-.12.03-1.98 1.25-5.58 3.68-.52.36-.99.53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.29-.48.79-.74 3.08-1.34 5.14-2.22 6.16-2.65 2.94-1.22 3.55-1.43 3.95-1.44.09 0 .28.02.4.11.1.08.13.19.14.28.02.04.03.11.02.21z"></path></svg>
         Suggest a Service
     </a>
 
     <script>
-    // ─── Detect touch device early ───
     const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-    // ─── LOADER ───
     (function() {
         const fill = document.getElementById('loader-fill');
         const loader = document.getElementById('loader');
@@ -1200,7 +1195,6 @@
         setTimeout(step, 100);
     })();
 
-    // ─── TOAST ───
     function showToast(text) {
         const toast = document.getElementById('toast');
         document.getElementById('toast-text').textContent = text;
@@ -1208,7 +1202,6 @@
         setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
-    // ─── CUSTOM CURSOR (desktop only) ───
     if (!isTouch) {
         (function() {
             const dot = document.getElementById('cursor-dot');
@@ -1238,7 +1231,6 @@
         })();
     }
 
-    // ─── PARTICLE CANVAS (desktop only) ───
     if (!isTouch) {
         (function() {
             const canvas = document.createElement('canvas');
@@ -1321,7 +1313,6 @@
         })();
     }
 
-    // ─── SCROLL REVEAL ───
     (function() {
         const observer = new IntersectionObserver(entries => {
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
@@ -1329,7 +1320,6 @@
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     })();
 
-    // ─── COUNTER ANIMATION ───
     (function() {
         const obs = new IntersectionObserver(entries => {
             entries.forEach(e => {
@@ -1348,7 +1338,6 @@
         document.querySelectorAll('.counter').forEach(c => obs.observe(c));
     })();
 
-    // ─── 3D TILT (desktop only) ───
     if (!isTouch) {
         (function() {
             document.querySelectorAll('.card').forEach(card => {
@@ -1371,7 +1360,6 @@
         })();
     }
 
-    // ─── MOUSE PARALLAX (desktop only) ───
     if (!isTouch) {
         (function() {
             const hero = document.getElementById('hero-title');
@@ -1384,7 +1372,6 @@
         })();
     }
 
-    // ─── FLOATING BUTTON ───
     (function() {
         const btn = document.getElementById('floating-btn');
         let shown = false;
@@ -1400,5 +1387,4 @@
     })();
     </script>
 
-</body>
-</html>
+</body></html>
