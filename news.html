@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Screenify+ — News That Matters</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #111111;
+    --bg-card: #161616;
+    --bg-card-hover: #1c1c1c;
+    --bg-elevated: #1e1e1e;
+    --border: #2a2a2a;
+    --border-light: #333333;
+    --text-primary: #f0f0f0;
+    --text-secondary: #999999;
+    --text-muted: #666666;
+    --accent: #dc2626;
+    --accent-dark: #991b1b;
+    --accent-glow: rgba(220, 38, 38, 0.15);
+    --accent-glow-strong: rgba(220, 38, 38, 0.3);
+    --uplifting: #22c55e;
+    --calm: #3b82f6;
+    --frustrating: #f97316;
+    --scary: #a855f7;
+    --negative: #ef4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4, h5 { font-family: 'Space Grotesk', sans-serif; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-primary); }
+  ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+  .bg-glow {
+    position: fixed; top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+    animation: glowPulse 8s ease-in-out infinite;
+  }
+  .bg-glow-2 {
+    position: fixed; bottom: -300px; left: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(220,38,38,0.06) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+    animation: glowPulse 12s ease-in-out infinite reverse;
+  }
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+  .noise-overlay {
+    position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  }
+  .logo-img { height: 36px; filter: brightness(1.1); transition: filter 0.3s; }
+  .logo-img:hover { filter: brightness(1.3); }
+
+  .story-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px; transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    cursor: pointer; position: relative; overflow: hidden;
+  }
+  .story-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .story-card:hover {
+    background: var(--bg-card-hover); border-color: var(--border-light);
+    transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .story-card:hover::before { opacity: 1; }
+
+  .featured-card {
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(220,38,38,0.05) 100%);
+    border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+    transition: all 0.4s; cursor: pointer; position: relative;
+  }
+  .featured-card:hover {
+    border-color: rgba(220,38,38,0.3); box-shadow: 0 12px 48px rgba(220,38,38,0.1);
+    transform: translateY(-3px);
+  }
+  .featured-card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), #ff4444, var(--accent));
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 10px; border-radius: 100px;
+    font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .badge-uplifting { background: rgba(34,197,94,0.12); color: var(--uplifting); }
+  .badge-calm { background: rgba(59,130,246,0.12); color: var(--calm); }
+  .badge-frustrating { background: rgba(249,115,22,0.12); color: var(--frustrating); }
+  .badge-scary { background: rgba(168,85,247,0.12); color: var(--scary); }
+  .badge-negative { background: rgba(239,68,68,0.12); color: var(--negative); }
+
+  .relevance-bar { height: 4px; border-radius: 2px; background: var(--border); overflow: hidden; }
+  .relevance-fill { height: 100%; border-radius: 2px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+
+  .filter-tab {
+    padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 500;
+    color: var(--text-secondary); background: transparent;
+    border: 1px solid transparent; cursor: pointer; transition: all 0.25s; white-space: nowrap;
+  }
+  .filter-tab:hover { color: var(--text-primary); background: var(--bg-elevated); }
+  .filter-tab.active {
+    color: #fff; background: var(--accent); border-color: var(--accent);
+    box-shadow: 0 0 16px var(--accent-glow-strong);
+  }
+
+  .issue-chip {
+    padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 500;
+    color: var(--text-secondary); background: var(--bg-card);
+    border: 1px solid var(--border); cursor: pointer; transition: all 0.25s; white-space: nowrap;
+  }
+  .issue-chip:hover { color: var(--text-primary); border-color: var(--border-light); }
+  .issue-chip.active { color: #fff; background: rgba(220,38,38,0.15); border-color: rgba(220,38,38,0.4); }
+
+  .search-box {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 10px; transition: all 0.3s;
+  }
+  .search-box:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+  .search-box input {
+    background: transparent; border: none; outline: none;
+    color: var(--text-primary); font-size: 14px; width: 100%;
+    font-family: 'Inter', sans-serif;
+  }
+  .search-box input::placeholder { color: var(--text-muted); }
+
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(8px); z-index: 1000;
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal-content {
+    background: var(--bg-secondary); border: 1px solid var(--border);
+    border-radius: 16px; max-width: 720px; width: 100%; max-height: 85vh; overflow-y: auto;
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  }
+  .modal-overlay.open .modal-content { transform: translateY(0) scale(1); }
+
+  .skeleton {
+    background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-elevated) 50%, var(--bg-card) 75%);
+    background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px;
+  }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--bg-elevated); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 20px; z-index: 2000;
+    transform: translateY(100px); opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4,0,0.2,1); max-width: 360px;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  .particle {
+    position: fixed; width: 2px; height: 2px;
+    background: var(--accent); border-radius: 50%;
+    pointer-events: none; z-index: 0; opacity: 0;
+    animation: floatParticle linear infinite;
+  }
+  @keyframes floatParticle {
+    0% { opacity: 0; transform: translateY(100vh) scale(0); }
+    10% { opacity: 0.6; } 90% { opacity: 0.6; }
+    100% { opacity: 0; transform: translateY(-10vh) scale(1); }
+  }
+
+  .ticker-wrap {
+    overflow: hidden; background: rgba(220,38,38,0.06);
+    border-bottom: 1px solid rgba(220,38,38,0.15);
+  }
+  .ticker { display: flex; gap: 48px; animation: tickerScroll 60s linear infinite; width: max-content; }
+  @keyframes tickerScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .ticker-item {
+    white-space: nowrap; font-size: 12px; color: var(--text-secondary);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ticker-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+  .page-btn {
+    width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+    border-radius: 8px; font-size: 13px; font-weight: 500;
+    color: var(--text-secondary); background: var(--bg-card);
+    border: 1px solid var(--border); cursor: pointer; transition: all 0.2s;
+  }
+  .page-btn:hover { color: var(--text-primary); border-color: var(--border-light); }
+  .page-btn.active { color: #fff; background: var(--accent); border-color: var(--accent); }
+  .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .fade-in { animation: fadeInUp 0.5s ease forwards; opacity: 0; }
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  .stat-number {
+    font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700;
+    background: linear-gradient(135deg, var(--accent), #ff6b6b);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  /* Language dropdown */
+  .lang-dropdown {
+    position: relative; display: inline-block;
+  }
+  .lang-btn {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 500;
+    color: var(--text-secondary); background: var(--bg-card);
+    border: 1px solid var(--border); cursor: pointer; transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .lang-btn:hover { color: var(--text-primary); border-color: var(--border-light); }
+  .lang-menu {
+    position: absolute; top: calc(100% + 6px); right: 0;
+    background: var(--bg-secondary); border: 1px solid var(--border);
+    border-radius: 10px; padding: 6px; min-width: 150px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    opacity: 0; pointer-events: none; transform: translateY(-6px);
+    transition: all 0.2s cubic-bezier(0.4,0,0.2,1); z-index: 200;
+  }
+  .lang-menu.open { opacity: 1; pointer-events: all; transform: translateY(0); }
+  .lang-option {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 12px; border-radius: 6px; cursor: pointer;
+    font-size: 13px; color: var(--text-secondary);
+    transition: all 0.15s; border: none; background: none; width: 100%;
+    font-family: 'Inter', sans-serif; text-align: left;
+  }
+  .lang-option:hover { background: var(--bg-elevated); color: var(--text-primary); }
+  .lang-option.active { color: var(--accent); }
+  .lang-option .check { width: 16px; text-align: center; }
+
+  [dir="rtl"] .lang-menu { right: auto; left: 0; }
+  [dir="rtl"] .search-box input { text-align: right; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  @media (max-width: 768px) {
+    .story-card { padding: 16px; }
+    .stat-number { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow"></div>
+<div class="bg-glow-2"></div>
+<div class="noise-overlay"></div>
+<div id="particles"></div>
+
+<!-- Header -->
+<header style="position:sticky;top:0;z-index:100;background:rgba(10,10,10,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);">
+  <div style="max-width:1280px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <img src="https://screenifyplus.online/logo.png" alt="Screenify+ Logo" class="logo-img" onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex';">
+      <div id="logoFallback" style="display:none;align-items:center;gap:8px;">
+        <div style="width:36px;height:36px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk';font-weight:700;font-size:16px;color:#fff;">S+</div>
+      </div>
+      <div>
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:18px;line-height:1.1;" data-i18n="brand">Screenify<span style="color:var(--accent);">+</span></div>
+        <div style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;" data-i18n="tagline">News That Matters</div>
+      </div>
+    </div>
+
+    <div class="search-box" style="flex:1;max-width:420px;display:flex;align-items:center;padding:8px 14px;gap:10px;">
+      <i class="fas fa-search" style="color:var(--text-muted);font-size:13px;"></i>
+      <input type="text" id="searchInput" data-i18n-placeholder="searchPlaceholder" placeholder="Search news by meaning..." aria-label="Search news">
+      <kbd style="font-size:10px;color:var(--text-muted);background:var(--bg-elevated);padding:2px 6px;border-radius:4px;border:1px solid var(--border);white-space:nowrap;">/</kbd>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:10px;">
+      <!-- Language Dropdown -->
+      <div class="lang-dropdown" id="langDropdown">
+        <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-globe" style="font-size:13px;"></i>
+          <span id="langLabel">EN</span>
+          <i class="fas fa-chevron-down" style="font-size:9px;opacity:0.6;"></i>
+        </button>
+        <div class="lang-menu" id="langMenu" role="menu">
+          <button class="lang-option active" data-lang="en" role="menuitem">
+            <span class="check"><i class="fas fa-check" style="font-size:10px;"></i></span>
+            <span>English</span>
+          </button>
+          <button class="lang-option" data-lang="fr" role="menuitem">
+            <span class="check"></span>
+            <span>Fran&ccedil;ais</span>
+          </button>
+          <button class="lang-option" data-lang="ar" role="menuitem">
+            <span class="check"></span>
+            <span>العربية</span>
+          </button>
+        </div>
+      </div>
+
+      <button id="refreshBtn" aria-label="Refresh" style="width:36px;height:36px;border-radius:8px;background:var(--bg-card);border:1px solid var(--border);color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;" title="Refresh">
+        <i class="fas fa-rotate" style="font-size:13px;"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Ticker -->
+<div class="ticker-wrap" id="tickerWrap" style="display:none;">
+  <div style="max-width:1280px;margin:0 auto;padding:8px 0;">
+    <div class="ticker" id="ticker"></div>
+  </div>
+</div>
+
+<!-- Main -->
+<main style="position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:24px;">
+
+  <!-- Stats bar -->
+  <div id="statsBar" style="display:none;margin-bottom:24px;padding:16px 20px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;" class="fade-in">
+    <div style="text-align:center;">
+      <div class="stat-number" id="statTotal">0</div>
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;" data-i18n="statTotal">Total Stories</div>
+    </div>
+    <div style="text-align:center;">
+      <div class="stat-number" id="statIssues">0</div>
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;" data-i18n="statIssues">Issues</div>
+    </div>
+    <div style="text-align:center;">
+      <div class="stat-number" id="statUplifting">0</div>
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;" data-i18n="statUplifting">Uplifting</div>
+    </div>
+    <div style="text-align:center;">
+      <div class="stat-number" id="statAvgRelevance">0</div>
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;" data-i18n="statAvgRelevance">Avg Relevance</div>
+    </div>
+  </div>
+
+  <!-- Featured -->
+  <section id="featuredSection" style="display:none;margin-bottom:32px;" class="fade-in"></section>
+
+  <!-- Filters -->
+  <section style="margin-bottom:24px;">
+    <div style="display:flex;align-items:center;gap:6px;overflow-x:auto;padding-bottom:8px;" id="emotionTabs" role="tablist">
+      <button class="filter-tab active" data-emotion="all" role="tab" aria-selected="true" data-i18n="filterAll">All Stories</button>
+      <button class="filter-tab" data-emotion="uplifting" role="tab" aria-selected="false"><i class="fas fa-arrow-trend-up" style="font-size:11px;margin-right:2px;color:var(--uplifting);"></i> <span data-i18n="filterUplifting">Uplifting</span></button>
+      <button class="filter-tab" data-emotion="calm" role="tab" aria-selected="false"><i class="fas fa-leaf" style="font-size:11px;margin-right:2px;color:var(--calm);"></i> <span data-i18n="filterCalm">Calm</span></button>
+      <button class="filter-tab" data-emotion="frustrating" role="tab" aria-selected="false"><i class="fas fa-fire" style="font-size:11px;margin-right:2px;color:var(--frustrating);"></i> <span data-i18n="filterFrustrating">Frustrating</span></button>
+      <button class="filter-tab" data-emotion="scary" role="tab" aria-selected="false"><i class="fas fa-ghost" style="font-size:11px;margin-right:2px;color:var(--scary);"></i> <span data-i18n="filterScary">Scary</span></button>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;overflow-x:auto;padding-top:8px;" id="issueChips">
+      <button class="issue-chip active" data-issue="all" data-i18n="allIssues">All Issues</button>
+    </div>
+  </section>
+
+  <!-- Content grid -->
+  <div style="display:grid;grid-template-columns:1fr 300px;gap:24px;" id="mainGrid">
+    <section>
+      <div id="storiesList" style="display:flex;flex-direction:column;gap:16px;"></div>
+      <div id="loadingSkeleton" style="display:flex;flex-direction:column;gap:16px;"></div>
+      <div id="emptyState" style="display:none;text-align:center;padding:80px 20px;">
+        <i class="fas fa-newspaper" style="font-size:48px;color:var(--border-light);margin-bottom:16px;display:block;"></i>
+        <div style="font-size:18px;font-weight:600;color:var(--text-secondary);margin-bottom:8px;" data-i18n="noStories">No stories found</div>
+        <div style="font-size:14px;color:var(--text-muted);" data-i18n="noStoriesHint">Try adjusting your filters or search query</div>
+      </div>
+      <div id="pagination" style="display:none;margin-top:24px;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;"></div>
+    </section>
+
+    <aside id="sidebar" style="display:flex;flex-direction:column;gap:20px;">
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px;">
+        <h3 style="font-size:14px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-circle-info" style="color:var(--accent);font-size:12px;"></i>
+          <span data-i18n="aboutTitle">About Screenify+</span>
+        </h3>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.6;" data-i18n="aboutText">AI-curated news evaluated for relevance to humanity. We filter noise, rank what matters, and tag the emotional tone so you can choose your news diet.</p>
+      </div>
+      <div id="sourcesPanel" style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px;display:none;">
+        <h3 style="font-size:14px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-bookmark" style="color:var(--accent);font-size:12px;"></i>
+          <span data-i18n="sourcesTitle">Sources</span>
+        </h3>
+        <div id="sourcesList" style="display:flex;flex-direction:column;gap:6px;"></div>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px;">
+        <h3 style="font-size:14px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-gauge-high" style="color:var(--accent);font-size:12px;"></i>
+          <span data-i18n="relevanceTitle">Relevance Score</span>
+        </h3>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;text-align:right;font-size:12px;font-weight:600;color:var(--negative);">1-3</div>
+            <div class="relevance-bar" style="flex:1;"><div class="relevance-fill" style="width:30%;background:var(--negative);"></div></div>
+            <div style="font-size:11px;color:var(--text-muted);" data-i18n="relLow">Low</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;text-align:right;font-size:12px;font-weight:600;color:var(--frustrating);">4-6</div>
+            <div class="relevance-bar" style="flex:1;"><div class="relevance-fill" style="width:60%;background:var(--frustrating);"></div></div>
+            <div style="font-size:11px;color:var(--text-muted);" data-i18n="relMedium">Medium</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;text-align:right;font-size:12px;font-weight:600;color:var(--calm);">7-8</div>
+            <div class="relevance-bar" style="flex:1;"><div class="relevance-fill" style="width:80%;background:var(--calm);"></div></div>
+            <div style="font-size:11px;color:var(--text-muted);" data-i18n="relHigh">High</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:32px;text-align:right;font-size:12px;font-weight:600;color:var(--uplifting);">9-10</div>
+            <div class="relevance-bar" style="flex:1;"><div class="relevance-fill" style="width:100%;background:var(--uplifting);"></div></div>
+            <div style="font-size:11px;color:var(--text-muted);" data-i18n="relCritical">Critical</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer style="position:relative;z-index:2;border-top:1px solid var(--border);margin-top:60px;">
+  <div style="max-width:1280px;margin:0 auto;padding:32px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <img src="https://screenifyplus.online/logo.png" alt="Screenify+" style="height:24px;filter:brightness(0.8);" onerror="this.style.display='none';">
+      <span style="font-size:13px;color:var(--text-muted);" data-i18n="footerCopy">Screenify+ &copy; 2025. AI-curated news.</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+      <a href="mailto:contact@screenifyplus.online" style="font-size:12px;color:var(--text-muted);text-decoration:none;transition:color 0.2s;display:flex;align-items:center;gap:5px;" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-muted)'">
+        <i class="fas fa-envelope" style="font-size:11px;color:var(--accent);"></i>
+        contact@screenifyplus.online
+      </a>
+      <a href="https://actuallyrelevant.news" target="_blank" rel="noopener" style="font-size:12px;color:var(--text-muted);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-muted)'" data-i18n="footerPowered">Powered by Actually Relevant</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Story Modal -->
+<div class="modal-overlay" id="storyModal" role="dialog" aria-modal="true" aria-label="Story details">
+  <div class="modal-content" id="modalContent"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <i class="fas fa-circle-check" style="color:var(--uplifting);"></i>
+    <span id="toastMsg" style="font-size:13px;color:var(--text-secondary);"></span>
+  </div>
+</div>
+
+<script>
+const API = 'https://actually-relevant-api.onrender.com';
+
+// ─── i18n Translations ───
+const i18n = {
+  en: {
+    tagline: 'News That Matters',
+    searchPlaceholder: 'Search news by meaning...',
+    statTotal: 'Total Stories',
+    statIssues: 'Issues',
+    statUplifting: 'Uplifting',
+    statAvgRelevance: 'Avg Relevance',
+    filterAll: 'All Stories',
+    filterUplifting: 'Uplifting',
+    filterCalm: 'Calm',
+    filterFrustrating: 'Frustrating',
+    filterScary: 'Scary',
+    allIssues: 'All Issues',
+    noStories: 'No stories found',
+    noStoriesHint: 'Try adjusting your filters or search query',
+    aboutTitle: 'About Screenify+',
+    aboutText: 'AI-curated news evaluated for relevance to humanity. We filter noise, rank what matters, and tag the emotional tone so you can choose your news diet.',
+    sourcesTitle: 'Sources',
+    relevanceTitle: 'Relevance Score',
+    relLow: 'Low',
+    relMedium: 'Medium',
+    relHigh: 'High',
+    relCritical: 'Critical',
+    footerCopy: 'Screenify+ \u00a9 2025. AI-curated news.',
+    footerPowered: 'Powered by Actually Relevant',
+    featuredBadge: 'Featured',
+    whyMatters: 'Why This Matters',
+    relFactors: 'Relevance Factors',
+    counterFactors: 'Counter-factors',
+    keyTakeaway: 'Key Takeaway',
+    readOriginal: 'Read Original',
+    copyLink: 'Copy Link',
+    summary: 'Summary',
+    stories: 'stories',
+    loadFailed: 'Failed to load news',
+    loadFailedHint: 'The API might be waking up. Please try again in a moment.',
+    retry: 'Retry',
+    noDetail: 'Could not load story details',
+    linkCopied: 'Link copied to clipboard',
+    linkCopyFail: 'Could not copy link',
+    refreshed: 'News feed refreshed',
+    notAvailable: 'Story link not available',
+    uplifting: 'Uplifting',
+    calm: 'Calm',
+    frustrating: 'Frustrating',
+    scary: 'Scary'
+  },
+  fr: {
+    tagline: "L'actualit\u00e9 qui compte",
+    searchPlaceholder: 'Rechercher des actualit\u00e9s par sens...',
+    statTotal: 'Total Articles',
+    statIssues: 'Th\u00e9matiques',
+    statUplifting: 'Inspirants',
+    statAvgRelevance: 'Pertin. Moy.',
+    filterAll: 'Tous les articles',
+    filterUplifting: 'Inspirant',
+    filterCalm: 'Calme',
+    filterFrustrating: 'Frustrant',
+    filterScary: 'Effrayant',
+    allIssues: 'Toutes les th\u00e9matiques',
+    noStories: 'Aucun article trouv\u00e9',
+    noStoriesHint: 'Essayez d\'ajuster vos filtres ou votre recherche',
+    aboutTitle: '\u00c0 propos de Screenify+',
+    aboutText: "Actualit\u00e9s s\u00e9lectionn\u00e9es par IA et \u00e9valu\u00e9es pour leur pertinence pour l'humanit\u00e9. Nous filtrons le bruit, classons ce qui compte et \u00e9tiquetons le ton \u00e9motionnel pour que vous puissiez choisir votre di\u00e8te informationnelle.",
+    sourcesTitle: 'Sources',
+    relevanceTitle: 'Score de Pertinence',
+    relLow: 'Faible',
+    relMedium: 'Moyen',
+    relHigh: '\u00c9lev\u00e9',
+    relCritical: 'Critique',
+    footerCopy: 'Screenify+ \u00a9 2025. Actualit\u00e9s s\u00e9lectionn\u00e9es par IA.',
+    footerPowered: 'Propuls\u00e9 par Actually Relevant',
+    featuredBadge: '\u00c0 la une',
+    whyMatters: 'Pourquoi c\'est important',
+    relFactors: 'Facteurs de pertinence',
+    counterFactors: 'Contre-facteurs',
+    keyTakeaway: 'Point cl\u00e9',
+    readOriginal: 'Lire l\'original',
+    copyLink: 'Copier le lien',
+    summary: 'R\u00e9sum\u00e9',
+    stories: 'articles',
+    loadFailed: 'Impossible de charger les actualit\u00e9s',
+    loadFailedHint: "L'API est peut-\u00eatre en cours de d\u00e9marrage. R\u00e9essayez dans un instant.",
+    retry: 'R\u00e9essayer',
+    noDetail: 'Impossible de charger les d\u00e9tails de l\'article',
+    linkCopied: 'Lien copi\u00e9 dans le presse-papiers',
+    linkCopyFail: 'Impossible de copier le lien',
+    refreshed: 'Flux d\'actualit\u00e9s actualis\u00e9',
+    notAvailable: 'Lien de l\'article non disponible',
+    uplifting: 'Inspirant',
+    calm: 'Calme',
+    frustrating: 'Frustrant',
+    scary: 'Effrayant'
+  },
+  ar: {
+    tagline: '\u0623\u062e\u0628\u0627\u0631 \u062a\u0647\u0645',
+    searchPlaceholder: '\u0627\u0644\u0628\u062d\u062b \u0628\u0627\u0644\u0645\u0639\u0646\u0649...',
+    statTotal: '\u0625\u062c\u0645\u0627\u0644\u064a \u0627\u0644\u0642\u0635\u0635',
+    statIssues: '\u0627\u0644\u0642\u0636\u0627\u064a\u0627',
+    statUplifting: '\u0645\u0644\u0647\u0645\u0629',
+    statAvgRelevance: '\u0645\u062a\u0648\u0633\u0637 \u0627\u0644\u0635\u0644\u0629',
+    filterAll: '\u062c\u0645\u064a\u0639 \u0627\u0644\u0642\u0635\u0635',
+    filterUplifting: '\u0645\u0644\u0647\u0645\u0629',
+    filterCalm: '\u0647\u0627\u062f\u0626\u0629',
+    filterFrustrating: '\u0645\u062d\u0628\u0637\u0629',
+    filterScary: '\u0645\u0631\u0639\u0628\u0629',
+    allIssues: '\u062c\u0645\u064a\u0639 \u0627\u0644\u0642\u0636\u0627\u064a\u0627',
+    noStories: '\u0644\u0645 \u062a\u064f\u0639\u062b\u0631 \u0642\u0635\u0635',
+    noStoriesHint: '\u062c\u0631\u0651\u0628 \u062a\u0639\u062f\u064a\u0644 \u0627\u0644\u0641\u0644\u0627\u062a\u0631 \u0623\u0648 \u0639\u0628\u0627\u0631\u0629 \u0627\u0644\u0628\u062d\u062b',
+    aboutTitle: '\u0639\u0646 Screenify+',
+    aboutText: '\u0623\u062e\u0628\u0627\u0631 \u0645\u062e\u062a\u0627\u0631\u0629 \u0628\u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a \u0648\u0645\u0642\u064a\u0651\u0645\u0629 \u0628\u0646\u0627\u0621\u064b \u0639\u0644\u0649 \u0635\u0644\u062a\u0647\u0627 \u0628\u0627\u0644\u0628\u0634\u0631\u064a\u0629. \u0646\u0631\u0634\u062d \u0627\u0644\u0636\u062c\u064a\u062c\u060c \u0646\u0631\u062a\u0628 \u0645\u0627 \u064a\u0647\u0645\u060c \u0648\u0646\u0639\u0644\u0651\u0645 \u0627\u0644\u0646\u0628\u0636\u0629 \u0627\u0644\u0639\u0627\u0637\u0641\u064a\u0629 \u0644\u062a\u062e\u062a\u0627\u0631 \u0646\u0638\u0627\u0645\u0643 \u0627\u0644\u0625\u062e\u0628\u0627\u0631\u064a.',
+    sourcesTitle: '\u0627\u0644\u0645\u0635\u0627\u062f\u0631',
+    relevanceTitle: '\u062f\u0631\u062c\u0629 \u0627\u0644\u0635\u0644\u0629',
+    relLow: '\u0645\u0646\u062e\u0641\u0636\u0629',
+    relMedium: '\u0645\u062a\u0648\u0633\u0637\u0629',
+    relHigh: '\u0639\u0627\u0644\u064a\u0629',
+    relCritical: '\u062d\u0631\u062c\u0629',
+    footerCopy: 'Screenify+ \u00a9 2025. \u0623\u062e\u0628\u0627\u0631 \u0645\u062e\u062a\u0627\u0631\u0629 \u0628\u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a.',
+    footerPowered: '\u0645\u062f\u0639\u0648\u0645 \u0628\u0648\u0627\u0633\u0637\u0629 Actually Relevant',
+    featuredBadge: '\u0645\u0645\u064a\u0651\u0632',
+    whyMatters: '\u0644\u0645\u0627\u0630\u0627 \u0647\u0630\u0627 \u0645\u0647\u0645',
+    relFactors: '\u0639\u0648\u0627\u0645\u0644 \u0627\u0644\u0635\u0644\u0629',
+    counterFactors: '\u0639\u0648\u0627\u0645\u0644 \u0645\u0636\u0627\u062f\u0629',
+    keyTakeaway: '\u0627\u0644\u062e\u0644\u0627\u0635\u0629',
+    readOriginal: '\u0627\u0642\u0631\u0623 \u0627\u0644\u0623\u0635\u0644',
+    copyLink: '\u0646\u0633\u062e \u0627\u0644\u0631\u0627\u0628\u0637',
+    summary: '\u0645\u0644\u062e\u0635',
+    stories: '\u0642\u0635\u0629',
+    loadFailed: '\u0641\u0634\u0644 \u062a\u062d\u0645\u064a\u0644 \u0627\u0644\u0623\u062e\u0628\u0627\u0631',
+    loadFailedHint: '\u0642\u062f \u062a\u0643\u0648\u0646 \u0627\u0644\u0648\u0627\u062c\u0647\u0629 \u0641\u064a \u0645\u0631\u062d\u0644\u0629 \u0627\u0644\u062a\u0634\u063a\u064a\u0644. \u062d\u0627\u0648\u0644 \u0645\u0631\u0629 \u0623\u062e\u0631\u0649.',
+    retry: '\u0625\u0639\u0627\u062f\u0629 \u0627\u0644\u0645\u062d\u0627\u0648\u0644\u0629',
+    noDetail: '\u062a\u0639\u0630\u0631 \u062a\u062d\u0645\u064a\u0644 \u062a\u0641\u0627\u0635\u064a\u0644 \u0627\u0644\u0642\u0635\u0629',
+    linkCopied: '\u062a\u0645 \u0646\u0633\u062e \u0627\u0644\u0631\u0627\u0628\u0637',
+    linkCopyFail: '\u062a\u0639\u0630\u0631 \u0646\u0633\u062e \u0627\u0644\u0631\u0627\u0628\u0637',
+    refreshed: '\u062a\u0645 \u062a\u062d\u062f\u064a\u062b \u0627\u0644\u0623\u062e\u0628\u0627\u0631',
+    notAvailable: '\u0631\u0627\u0628\u0637 \u0627\u0644\u0642\u0635\u0629 \u063a\u064a\u0631 \u0645\u062a\u0627\u062d',
+    uplifting: '\u0645\u0644\u0647\u0645\u0629',
+    calm: '\u0647\u0627\u062f\u0626\u0629',
+    frustrating: '\u0645\u062d\u0628\u0637\u0629',
+    scary: '\u0645\u0631\u0639\u0628\u0629'
+  }
+};
+
+let currentLang = 'en';
+
+function t(key) {
+  return (i18n[currentLang] && i18n[currentLang][key]) || i18n.en[key] || key;
+}
+
+function applyLanguage(lang) {
+  currentLang = lang;
+  const html = document.documentElement;
+  html.lang = lang;
+  html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+  // Update all data-i18n text
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (key === 'brand') return; // skip brand
+    const val = t(key);
+    if (val) el.textContent = val;
+  });
+
+  // Update placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    el.placeholder = t(key);
+  });
+
+  // Update lang button label
+  const labels = { en: 'EN', fr: 'FR', ar: 'AR' };
+  document.getElementById('langLabel').textContent = labels[lang];
+
+  // Update lang menu active state
+  document.querySelectorAll('.lang-option').forEach(opt => {
+    const isActive = opt.dataset.lang === lang;
+    opt.classList.toggle('active', isActive);
+    opt.querySelector('.check').innerHTML = isActive ? '<i class="fas fa-check" style="font-size:10px;"></i>' : '';
+  });
+
+  // Re-render dynamic content
+  if (state.allStories.length > 0) {
+    buildFeatured(state.allStories);
+    applyFilters();
+  }
+}
+
+// ─── Language Dropdown Logic ───
+const langBtn = document.getElementById('langBtn');
+const langMenu = document.getElementById('langMenu');
+
+langBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const isOpen = langMenu.classList.contains('open');
+  langMenu.classList.toggle('open', !isOpen);
+  langBtn.setAttribute('aria-expanded', !isOpen);
+});
+
+document.querySelectorAll('.lang-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    applyLanguage(opt.dataset.lang);
+    langMenu.classList.remove('open');
+    langBtn.setAttribute('aria-expanded', 'false');
+  });
+});
+
+document.addEventListener('click', () => {
+  langMenu.classList.remove('open');
+  langBtn.setAttribute('aria-expanded', 'false');
+});
+
+// ─── State ───
+let state = {
+  homepage: null,
+  allStories: [],
+  filteredStories: [],
+  issues: [],
+  currentEmotion: 'all',
+  currentIssue: 'all',
+  searchQuery: '',
+  currentPage: 1,
+  pageSize: 12,
+  loading: true
+};
+
+// ─── Particles ───
+(function createParticles() {
+  const c = document.getElementById('particles');
+  for (let i = 0; i < 15; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (15 + Math.random() * 25) + 's';
+    p.style.animationDelay = Math.random() * 20 + 's';
+    const sz = (1 + Math.random() * 2) + 'px';
+    p.style.width = sz; p.style.height = sz;
+    c.appendChild(p);
+  }
+})();
+
+// ─── Toast ───
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ─── Skeleton ───
+function showSkeleton() {
+  const el = document.getElementById('loadingSkeleton');
+  let h = '';
+  for (let i = 0; i < 5; i++) {
+    h += `<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:24px;">
+      <div style="display:flex;gap:10px;margin-bottom:14px;"><div class="skeleton" style="width:70px;height:22px;"></div><div class="skeleton" style="width:50px;height:22px;"></div></div>
+      <div class="skeleton" style="width:85%;height:18px;margin-bottom:10px;"></div>
+      <div class="skeleton" style="width:100%;height:14px;margin-bottom:6px;"></div>
+      <div class="skeleton" style="width:60%;height:14px;"></div></div>`;
+  }
+  el.innerHTML = h;
+  el.style.display = 'flex';
+}
+function hideSkeleton() { document.getElementById('loadingSkeleton').style.display = 'none'; }
+
+// ─── Helpers ───
+function relevanceColor(r) {
+  if (r == null) return 'var(--text-muted)';
+  if (r <= 3) return 'var(--negative)';
+  if (r <= 6) return 'var(--frustrating)';
+  if (r <= 8) return 'var(--calm)';
+  return 'var(--uplifting)';
+}
+
+function emotionBadge(tag) {
+  if (!tag) return '';
+  const icons = { uplifting: 'fa-arrow-trend-up', calm: 'fa-leaf', frustrating: 'fa-fire', scary: 'fa-ghost' };
+  const key = tag === 'negative' ? 'frustrating' : tag;
+  const label = t(tag) || tag;
+  const cls = tag === 'negative' ? 'badge-negative' : `badge-${tag}`;
+  return `<span class="badge ${cls}"><i class="fas ${icons[tag] || 'fa-circle'}" style="font-size:9px;"></i> ${label}</span>`;
+}
+
+function formatDate(d) {
+  if (!d) return '';
+  const dt = new Date(d);
+  const now = new Date();
+  const diff = now - dt;
+  if (diff < 3600000) return Math.floor(diff / 60000) + 'm ago';
+  if (diff < 86400000) return Math.floor(diff / 3600000) + 'h ago';
+  if (diff < 604800000) return Math.floor(diff / 86400000) + 'd ago';
+  return dt.toLocaleDateString(currentLang === 'ar' ? 'ar-EG' : currentLang === 'fr' ? 'fr-FR' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+// ─── Story Card ───
+function storyCard(story, idx) {
+  const title = story.title || story.sourceTitle;
+  const summary = story.summary || '';
+  const rel = story.relevance;
+  const relPct = rel != null ? rel * 10 : 0;
+  const source = story.feed?.displayTitle || story.feed?.title || '';
+  const issue = story.issue?.name || '';
+
+  return `<article class="story-card fade-in" style="animation-delay:${idx * 0.05}s" onclick="openStory('${story.slug}')" tabindex="0" role="button" aria-label="${title}">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+      ${story.emotionTag ? emotionBadge(story.emotionTag) : ''}
+      ${issue ? `<span style="font-size:11px;color:var(--text-muted);background:var(--bg-elevated);padding:3px 10px;border-radius:100px;">${issue}</span>` : ''}
+    </div>
+    <h3 style="font-size:16px;font-weight:600;line-height:1.4;margin-bottom:8px;color:var(--text-primary);">${title}</h3>
+    ${summary ? `<p style="font-size:13px;color:var(--text-secondary);line-height:1.55;margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${summary}</p>` : ''}
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+      ${rel != null ? `<div style="display:flex;align-items:center;gap:8px;flex:1;min-width:120px;">
+        <span style="font-size:11px;font-weight:600;color:${relevanceColor(rel)}">${rel}/10</span>
+        <div class="relevance-bar" style="flex:1;max-width:100px;"><div class="relevance-fill" style="width:${relPct}%;background:${relevanceColor(rel)};"></div></div>
+      </div>` : ''}
+      ${source ? `<span style="font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:4px;"><i class="fas fa-newspaper" style="font-size:9px;"></i>${source}</span>` : ''}
+      ${story.datePublished ? `<span style="font-size:11px;color:var(--text-muted);">${formatDate(story.datePublished)}</span>` : ''}
+    </div>
+  </article>`;
+}
+
+// ─── Featured ───
+function buildFeatured(stories) {
+  const top = stories.find(s => s.relevance >= 8 && s.emotionTag === 'uplifting') ||
+              stories.find(s => s.relevance >= 8) || stories[0];
+  if (!top) { document.getElementById('featuredSection').style.display = 'none'; return; }
+
+  const section = document.getElementById('featuredSection');
+  section.style.display = 'block';
+  const title = top.title || top.sourceTitle;
+  const summary = top.summary || '';
+  const issue = top.issue?.name || '';
+  const source = top.feed?.displayTitle || top.feed?.title || '';
+
+  section.innerHTML = `<div class="featured-card" onclick="openStory('${top.slug}')" tabindex="0" role="button" aria-label="Featured: ${title}">
+    <div style="padding:32px 28px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+        <span style="font-size:10px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;background:rgba(220,38,38,0.1);padding:4px 12px;border-radius:100px;"><i class="fas fa-star" style="font-size:8px;"></i> ${t('featuredBadge')}</span>
+        ${top.emotionTag ? emotionBadge(top.emotionTag) : ''}
+      </div>
+      <h2 style="font-size:24px;font-weight:700;line-height:1.3;margin-bottom:12px;max-width:700px;">${title}</h2>
+      ${summary ? `<p style="font-size:15px;color:var(--text-secondary);line-height:1.6;margin-bottom:16px;max-width:650px;">${summary}</p>` : ''}
+      ${top.quote ? `<blockquote style="border-left:3px solid var(--accent);padding:12px 16px;margin-bottom:16px;background:rgba(220,38,38,0.04);border-radius:0 8px 8px 0;">
+        <p style="font-size:14px;color:var(--text-secondary);font-style:italic;line-height:1.5;">"${top.quote}"</p>
+        ${top.quoteAttribution ? `<cite style="font-size:12px;color:var(--text-muted);display:block;margin-top:6px;">\u2014 ${top.quoteAttribution}</cite>` : ''}
+      </blockquote>` : ''}
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        ${issue ? `<span style="font-size:12px;color:var(--text-muted);"><i class="fas fa-tag" style="font-size:10px;margin-right:4px;color:var(--accent);"></i>${issue}</span>` : ''}
+        ${source ? `<span style="font-size:12px;color:var(--text-muted);"><i class="fas fa-newspaper" style="font-size:10px;margin-right:4px;"></i>${source}</span>` : ''}
+        ${top.datePublished ? `<span style="font-size:12px;color:var(--text-muted);"><i class="fas fa-clock" style="font-size:10px;margin-right:4px;"></i>${formatDate(top.datePublished)}</span>` : ''}
+        ${top.relevance != null ? `<span style="font-size:12px;font-weight:600;color:${relevanceColor(top.relevance)};"><i class="fas fa-gauge" style="font-size:10px;margin-right:4px;"></i>${top.relevance}/10</span>` : ''}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ─── Issue Chips ───
+function buildIssueChips(issues) {
+  const c = document.getElementById('issueChips');
+  let h = `<button class="issue-chip ${state.currentIssue === 'all' ? 'active' : ''}" data-issue="all">${t('allIssues')}</button>`;
+  issues.forEach(issue => {
+    h += `<button class="issue-chip ${state.currentIssue === issue.slug ? 'active' : ''}" data-issue="${issue.slug}">${issue.name}</button>`;
+    if (issue.children) {
+      issue.children.forEach(child => {
+        h += `<button class="issue-chip ${state.currentIssue === child.slug ? 'active' : ''}" data-issue="${child.slug}" style="margin-left:4px;opacity:0.75;">${child.name}</button>`;
+      });
+    }
+  });
+  c.innerHTML = h;
+
+  c.querySelectorAll('.issue-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      c.querySelectorAll('.issue-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.currentIssue = btn.dataset.issue;
+      state.currentPage = 1;
+      applyFilters();
+    });
+  });
+}
+
+// ─── Ticker ───
+function buildTicker(stories) {
+  const wrap = document.getElementById('tickerWrap');
+  const ticker = document.getElementById('ticker');
+  const items = stories.slice(0, 20).map(s => {
+    const title = s.title || s.sourceTitle;
+    return `<div class="ticker-item"><div class="ticker-dot"></div>${title}</div>`;
+  }).join('');
+  ticker.innerHTML = items + items;
+  wrap.style.display = 'block';
+}
+
+// ─── Sources ───
+function buildSources(stories) {
+  const panel = document.getElementById('sourcesPanel');
+  const list = document.getElementById('sourcesList');
+  const map = {};
+  stories.forEach(s => {
+    const name = s.feed?.displayTitle || s.feed?.title;
+    if (name && !map[name]) map[name] = 0;
+    if (name) map[name]++;
+  });
+  const sorted = Object.entries(map).sort((a, b) => b[1] - a[1]).slice(0, 10);
+  if (!sorted.length) return;
+  panel.style.display = 'block';
+  list.innerHTML = sorted.map(([n, c]) =>
+    `<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);">
+      <span style="font-size:12px;color:var(--text-secondary);">${n}</span>
+      <span style="font-size:11px;color:var(--text-muted);background:var(--bg-elevated);padding:2px 8px;border-radius:100px;">${c}</span>
+    </div>`
+  ).join('');
+}
+
+// ─── Stats ───
+function updateStats(stories, issues) {
+  const bar = document.getElementById('statsBar');
+  bar.style.display = 'grid';
+  const up = stories.filter(s => s.emotionTag === 'uplifting').length;
+  const withRel = stories.filter(s => s.relevance != null);
+  const avg = withRel.length ? withRel.reduce((a, s) => a + s.relevance, 0) / withRel.length : 0;
+  animateNumber('statTotal', stories.length);
+  animateNumber('statIssues', issues.length);
+  animateNumber('statUplifting', up);
+  animateNumber('statAvgRelevance', Math.round(avg * 10) / 10, true);
+}
+
+function animateNumber(id, target, isFloat = false) {
+  const el = document.getElementById(id);
+  let cur = 0;
+  const step = Math.max(target / 30, 0.01);
+  const iv = setInterval(() => {
+    cur += step;
+    if (cur >= target) { cur = target; clearInterval(iv); }
+    el.textContent = isFloat ? cur.toFixed(1) : Math.floor(cur);
+  }, 30);
+}
+
+// ─── Filter & Render ───
+function applyFilters() {
+  let stories = [...state.allStories];
+  if (state.currentEmotion !== 'all') {
+    stories = stories.filter(s => s.emotionTag === state.currentEmotion);
+  }
+  if (state.currentIssue !== 'all') {
+    stories = stories.filter(s => s.issue && s.issue.slug === state.currentIssue);
+  }
+  if (state.searchQuery.trim()) {
+    const q = state.searchQuery.toLowerCase();
+    stories = stories.filter(s =>
+      (s.title || '').toLowerCase().includes(q) ||
+      (s.sourceTitle || '').toLowerCase().includes(q) ||
+      (s.summary || '').toLowerCase().includes(q) ||
+      (s.issue?.name || '').toLowerCase().includes(q)
+    );
+  }
+  state.filteredStories = stories;
+  state.currentPage = 1;
+  renderStories();
+}
+
+function renderStories() {
+  const container = document.getElementById('storiesList');
+  const empty = document.getElementById('emptyState');
+  const pag = document.getElementById('pagination');
+  const total = state.filteredStories.length;
+  const totalPages = Math.ceil(total / state.pageSize);
+  const start = (state.currentPage - 1) * state.pageSize;
+  const page = state.filteredStories.slice(start, start + state.pageSize);
+
+  if (!page.length) {
+    container.innerHTML = '';
+    empty.style.display = 'block';
+    pag.style.display = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+  container.innerHTML = page.map((s, i) => storyCard(s, i)).join('');
+
+  if (totalPages > 1) {
+    pag.style.display = 'flex';
+    let h = `<button class="page-btn" onclick="goPage(${state.currentPage - 1})" ${state.currentPage <= 1 ? 'disabled' : ''}><i class="fas fa-chevron-left" style="font-size:11px;"></i></button>`;
+    const range = [];
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === totalPages || (i >= state.currentPage - 1 && i <= state.currentPage + 1)) range.push(i);
+      else if (range[range.length - 1] !== '...') range.push('...');
+    }
+    range.forEach(p => {
+      if (p === '...') h += `<span style="color:var(--text-muted);font-size:12px;padding:0 4px;">...</span>`;
+      else h += `<button class="page-btn ${p === state.currentPage ? 'active' : ''}" onclick="goPage(${p})">${p}</button>`;
+    });
+    h += `<button class="page-btn" onclick="goPage(${state.currentPage + 1})" ${state.currentPage >= totalPages ? 'disabled' : ''}><i class="fas fa-chevron-right" style="font-size:11px;"></i></button>`;
+    h += `<span style="font-size:12px;color:var(--text-muted);margin-left:8px;">${total} ${t('stories')}</span>`;
+    pag.innerHTML = h;
+  } else {
+    pag.style.display = 'none';
+  }
+}
+
+function goPage(p) {
+  const tp = Math.ceil(state.filteredStories.length / state.pageSize);
+  if (p < 1 || p > tp) return;
+  state.currentPage = p;
+  renderStories();
+  window.scrollTo({ top: 300, behavior: 'smooth' });
+}
+
+// ─── Story Modal ───
+async function openStory(slug) {
+  if (!slug) { showToast(t('notAvailable')); return; }
+  const modal = document.getElementById('storyModal');
+  const content = document.getElementById('modalContent');
+  content.innerHTML = `<div style="padding:40px;text-align:center;"><div class="skeleton" style="width:60%;height:24px;margin:0 auto 16px;"></div><div class="skeleton" style="width:80%;height:14px;margin:0 auto 8px;"></div><div class="skeleton" style="width:40%;height:14px;margin:0 auto;"></div></div>`;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  try {
+    const res = await fetch(`${API}/api/stories/${encodeURIComponent(slug)}`);
+    if (!res.ok) throw new Error('Not found');
+    const story = await res.json();
+    renderModal(story);
+  } catch (e) {
+    content.innerHTML = `<div style="padding:40px;text-align:center;">
+      <i class="fas fa-circle-exclamation" style="font-size:40px;color:var(--accent);margin-bottom:12px;"></i>
+      <p style="color:var(--text-secondary);font-size:14px;">${t('noDetail')}</p></div>`;
+  }
+}
+
+function renderModal(s) {
+  const content = document.getElementById('modalContent');
+  const title = s.title || s.sourceTitle;
+  const summary = s.summary || '';
+  const issue = s.issue?.name || '';
+  const source = s.feed?.displayTitle || s.feed?.title || '';
+
+  content.innerHTML = `
+    <div style="position:relative;">
+      <button onclick="closeModal()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:8px;background:var(--bg-elevated);border:1px solid var(--border);color:var(--text-secondary);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:all 0.2s;" aria-label="Close" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-secondary)'">
+        <i class="fas fa-xmark" style="font-size:14px;"></i>
+      </button>
+      <div style="padding:32px 28px 0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+          ${s.emotionTag ? emotionBadge(s.emotionTag) : ''}
+          ${issue ? `<span style="font-size:11px;color:var(--text-muted);background:var(--bg-elevated);padding:3px 10px;border-radius:100px;">${issue}</span>` : ''}
+          ${s.relevance != null ? `<span style="font-size:12px;font-weight:600;color:${relevanceColor(s.relevance)};margin-left:auto;"><i class="fas fa-gauge" style="font-size:10px;margin-right:4px;"></i>${s.relevance}/10</span>` : ''}
+        </div>
+        <h2 style="font-size:22px;font-weight:700;line-height:1.3;margin-bottom:8px;">${title}</h2>
+        ${s.titleLabel ? `<div style="font-size:13px;color:var(--accent);font-weight:500;margin-bottom:16px;">${s.titleLabel}</div>` : ''}
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);flex-wrap:wrap;">
+          ${source ? `<span style="font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:4px;"><i class="fas fa-newspaper" style="font-size:10px;"></i>${source}</span>` : ''}
+          ${s.datePublished ? `<span style="font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:4px;"><i class="fas fa-clock" style="font-size:10px;"></i>${formatDate(s.datePublished)}</span>` : ''}
+        </div>
+      </div>
+      <div style="padding:0 28px 28px;">
+        ${summary ? `<div style="margin-bottom:20px;">
+          <h4 style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px;">${t('summary')}</h4>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;">${summary}</p></div>` : ''}
+        ${s.quote ? `<div style="margin-bottom:20px;border-left:3px solid var(--accent);padding:14px 18px;background:rgba(220,38,38,0.04);border-radius:0 10px 10px 0;">
+          <p style="font-size:14px;color:var(--text-secondary);font-style:italic;line-height:1.6;">"${s.quote}"</p>
+          ${s.quoteAttribution ? `<cite style="font-size:12px;color:var(--text-muted);display:block;margin-top:8px;">\u2014 ${s.quoteAttribution}</cite>` : ''}</div>` : ''}
+        ${s.relevanceSummary ? `<div style="margin-bottom:20px;">
+          <h4 style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px;">${t('whyMatters')}</h4>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;">${s.relevanceSummary}</p></div>` : ''}
+        ${s.relevanceReasons ? `<div style="margin-bottom:20px;">
+          <h4 style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px;">${t('relFactors')}</h4>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;">${s.relevanceReasons}</p></div>` : ''}
+        ${s.antifactors ? `<div style="margin-bottom:20px;">
+          <h4 style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:8px;">${t('counterFactors')}</h4>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;">${s.antifactors}</p></div>` : ''}
+        ${s.marketingBlurb ? `<div style="margin-bottom:24px;padding:14px 16px;background:var(--bg-elevated);border-radius:10px;border:1px solid var(--border);">
+          <h4 style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:6px;">${t('keyTakeaway')}</h4>
+          <p style="font-size:14px;color:var(--text-primary);line-height:1.6;">${s.marketingBlurb}</p></div>` : ''}
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="${s.sourceUrl}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--accent);color:#fff;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.background='#ef4444';this.style.boxShadow='0 4px 16px rgba(220,38,38,0.3)'" onmouseout="this.style.background='var(--accent)';this.style.boxShadow='none'">
+            <i class="fas fa-external-link-alt" style="font-size:11px;"></i> ${t('readOriginal')}</a>
+          <button onclick="copyLink('${s.sourceUrl}')" style="display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--bg-elevated);color:var(--text-secondary);border:1px solid var(--border);border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--border-light)';this.style.color='var(--text-primary)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-secondary)'">
+            <i class="fas fa-link" style="font-size:11px;"></i> ${t('copyLink')}</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function closeModal() {
+  document.getElementById('storyModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function copyLink(url) {
+  navigator.clipboard.writeText(url)
+    .then(() => showToast(t('linkCopied')))
+    .catch(() => showToast(t('linkCopyFail')));
+}
+
+document.getElementById('storyModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+    e.preventDefault();
+    document.getElementById('searchInput').focus();
+  }
+});
+
+// ─── Emotion Tabs ───
+document.getElementById('emotionTabs').addEventListener('click', e => {
+  const tab = e.target.closest('.filter-tab');
+  if (!tab) return;
+  document.querySelectorAll('.filter-tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+  tab.classList.add('active');
+  tab.setAttribute('aria-selected', 'true');
+  state.currentEmotion = tab.dataset.emotion;
+  state.currentPage = 1;
+  applyFilters();
+});
+
+// ─── Search ───
+let searchTimeout;
+document.getElementById('searchInput').addEventListener('input', e => {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    state.searchQuery = e.target.value;
+    state.currentPage = 1;
+    applyFilters();
+  }, 300);
+});
+
+// ─── Refresh ───
+document.getElementById('refreshBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('refreshBtn');
+  btn.querySelector('i').style.animation = 'spin 0.8s linear infinite';
+  btn.style.color = 'var(--accent)';
+  await loadData();
+  btn.querySelector('i').style.animation = '';
+  btn.style.color = '';
+  showToast(t('refreshed'));
+});
+
+const spinStyle = document.createElement('style');
+spinStyle.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+document.head.appendChild(spinStyle);
+
+// ─── Responsive ───
+function handleResize() {
+  const grid = document.getElementById('mainGrid');
+  if (window.innerWidth < 900) {
+    grid.style.gridTemplateColumns = '1fr';
+    document.getElementById('sidebar').style.display = 'none';
+  } else {
+    grid.style.gridTemplateColumns = '1fr 300px';
+    document.getElementById('sidebar').style.display = 'flex';
+  }
+}
+window.addEventListener('resize', handleResize);
+handleResize();
+
+// ─── Load Data ───
+async function loadData() {
+  state.loading = true;
+  showSkeleton();
+  document.getElementById('storiesList').innerHTML = '';
+
+  try {
+    const [homeRes, storiesRes, issuesRes] = await Promise.all([
+      fetch(`${API}/api/homepage`),
+      fetch(`${API}/api/stories?pageSize=100`),
+      fetch(`${API}/api/issues`)
+    ]);
+
+    const [homeData, storiesData, issuesData] = await Promise.all([
+      homeRes.json(), storiesRes.json(), issuesRes.json()
+    ]);
+
+    state.homepage = homeData;
+    state.issues = issuesData;
+
+    const homeStories = [];
+    if (homeData.storiesByIssue) {
+      Object.values(homeData.storiesByIssue).forEach(bucket => {
+        ['uplifting', 'calm', 'negative'].forEach(tag => {
+          if (bucket[tag]) homeStories.push(...bucket[tag]);
+        });
+      });
+    }
+
+    const storyMap = new Map();
+    [...homeStories, ...(storiesData.data || [])].forEach(s => { if (s && s.id) storyMap.set(s.id, s); });
+    state.allStories = Array.from(storyMap.values());
+
+    state.allStories.sort((a, b) => {
+      if ((b.relevance || 0) !== (a.relevance || 0)) return (b.relevance || 0) - (a.relevance || 0);
+      return new Date(b.datePublished || b.dateCrawled) - new Date(a.datePublished || a.dateCrawled);
+    });
+
+    hideSkeleton();
+    state.loading = false;
+
+    buildFeatured(state.allStories);
+    buildIssueChips(issuesData);
+    buildTicker(state.allStories);
+    buildSources(state.allStories);
+    updateStats(state.allStories, issuesData);
+    applyFilters();
+
+  } catch (err) {
+    hideSkeleton();
+    state.loading = false;
+    document.getElementById('storiesList').innerHTML = `
+      <div style="text-align:center;padding:80px 20px;">
+        <i class="fas fa-triangle-exclamation" style="font-size:48px;color:var(--accent);margin-bottom:16px;display:block;"></i>
+        <div style="font-size:18px;font-weight:600;color:var(--text-secondary);margin-bottom:8px;">${t('loadFailed')}</div>
+        <div style="font-size:14px;color:var(--text-muted);margin-bottom:20px;">${t('loadFailedHint')}</div>
+        <button onclick="loadData()" style="padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='#ef4444'" onmouseout="this.style.background='var(--accent)'">
+          <i class="fas fa-rotate-right" style="margin-right:6px;"></i>${t('retry')}</button>
+      </div>`;
+  }
+}
+
+loadData();
+</script>
+</body>
+</html>
