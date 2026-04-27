@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SCREENIFY+ — Logo Explorer</title>
+<meta name="description" content="Find any brand, stock ticker, or crypto logo instantly. Screenify+ Logo Explorer — free, no ads, no paywalls.">
+<meta property="og:title" content="SCREENIFY+ Logo Explorer">
+<meta property="og:description" content="Find any brand, stock ticker, or crypto logo instantly. Free, no ads.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://screenifyplus.online/logo.png">
+<link rel="icon" type="image/png" href="https://screenifyplus.online/favicon.png"/>
+<link rel="apple-touch-icon" href="https://screenifyplus.online/logo.png"/>
+<meta name="theme-color" content="#e11d48"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --red: #e11d48;
+  --red-dark: #9f1239;
+  --red-glow: rgba(225,29,72,0.15);
+  --bg: #080810;
+  --bg2: #0f0f1a;
+  --bg3: #16162a;
+  --border: rgba(255,255,255,0.07);
+  --border-hover: rgba(225,29,72,0.4);
+  --text: #f0f0f5;
+  --muted: rgba(240,240,245,0.45);
+  --card-bg: rgba(255,255,255,0.03);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5;}
+body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:500px;background:radial-gradient(ellipse,rgba(225,29,72,0.12) 0%,transparent 70%);pointer-events:none;z-index:0;}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:64px;background:rgba(8,8,16,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo-mark{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-img{width:34px;height:34px;border-radius:8px;object-fit:contain;display:block;}
+.logo-text{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.3px;color:var(--text);}
+.logo-text span{color:var(--red);}
+.header-badge{font-size:11px;font-weight:500;color:var(--red);border:1px solid rgba(225,29,72,0.4);border-radius:99px;padding:3px 10px;letter-spacing:.05em;}
+
+/* HERO */
+.hero{position:relative;z-index:1;text-align:center;padding:5rem 2rem 3rem;max-width:780px;margin:0 auto;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:var(--red);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.5rem;border:1px solid rgba(225,29,72,0.25);background:rgba(225,29,72,0.07);padding:5px 14px;border-radius:99px;}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.7);}}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:1.2rem;}
+.hero h1 em{font-style:normal;color:var(--red);}
+.hero p{font-size:1rem;color:var(--muted);line-height:1.7;max-width:500px;margin:0 auto 2.5rem;}
+
+/* SEARCH TYPE TABS */
+.search-tabs{display:flex;gap:6px;justify-content:center;margin-bottom:1rem;position:relative;z-index:1;}
+.stab{padding:6px 16px;border-radius:99px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--card-bg);color:var(--muted);transition:all .15s;letter-spacing:.04em;font-family:'Syne',sans-serif;}
+.stab:hover{border-color:var(--border-hover);color:var(--text);}
+.stab.active{background:var(--red);border-color:var(--red);color:#fff;}
+
+/* SEARCH BOX */
+.search-wrap{position:relative;z-index:10;max-width:640px;margin:0 auto 0.6rem;}
+.search-inner{display:flex;align-items:center;background:var(--bg3);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .2s,box-shadow .2s;}
+.search-inner:focus-within{border-color:rgba(225,29,72,0.5);box-shadow:0 0 0 3px rgba(225,29,72,0.1);}
+.search-icon{padding:0 1rem 0 1.2rem;color:var(--muted);display:flex;align-items:center;flex-shrink:0;}
+#searchInput{flex:1;background:transparent;border:none;outline:none;padding:1rem 0;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);}
+#searchInput::placeholder{color:var(--muted);}
+.search-btn{margin:6px;padding:10px 22px;background:var(--red);color:#fff;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s,transform .1s;white-space:nowrap;}
+.search-btn:hover{background:#be1239;}
+.search-btn:active{transform:scale(.97);}
+.search-hint{font-size:12px;color:var(--muted);text-align:center;margin-bottom:.5rem;}
+
+/* SUGGESTIONS */
+#suggestions{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--bg3);border:1px solid var(--border);border-radius:12px;overflow:hidden;z-index:200;display:none;box-shadow:0 16px 40px rgba(0,0,0,0.5);}
+.suggestion-item{display:flex;align-items:center;gap:12px;padding:10px 16px;cursor:pointer;transition:background .1s;}
+.suggestion-item:hover{background:rgba(225,29,72,0.08);}
+.sug-logo{width:28px;height:28px;border-radius:6px;object-fit:contain;background:rgba(255,255,255,0.05);flex-shrink:0;}
+.sug-info{flex:1;min-width:0;}
+.sug-name{font-size:14px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sug-domain{font-size:11px;color:var(--muted);}
+
+/* HISTORY */
+.history-wrap{max-width:640px;margin:0 auto 1.5rem;padding:0 0;position:relative;z-index:5;}
+.history-label{font-size:11px;color:var(--muted);font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;}
+.history-pills{display:flex;flex-wrap:wrap;gap:6px;}
+.h-pill{display:flex;align-items:center;gap:5px;padding:4px 10px;border:1px solid var(--border);border-radius:99px;font-size:12px;color:var(--muted);cursor:pointer;transition:all .15s;background:var(--card-bg);}
+.h-pill:hover{border-color:var(--border-hover);color:var(--text);}
+.h-pill-remove{opacity:.4;font-size:10px;margin-left:3px;}
+.h-pill-remove:hover{opacity:1;color:var(--red);}
+.history-clear{font-size:11px;color:var(--muted);cursor:pointer;padding:2px 8px;border:1px solid var(--border);border-radius:99px;transition:all .15s;margin-left:auto;}
+.history-clear:hover{border-color:var(--red);color:var(--red);}
+
+/* QUICK TAGS */
+.quick-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:3rem;position:relative;z-index:1;}
+.tag{display:flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid var(--border);border-radius:99px;font-size:13px;color:var(--muted);cursor:pointer;transition:all .15s;background:var(--card-bg);}
+.tag img{width:14px;height:14px;border-radius:3px;object-fit:contain;}
+.tag:hover{border-color:var(--border-hover);color:var(--text);background:rgba(225,29,72,0.07);}
+
+/* CONTROLS */
+.controls-panel{position:relative;z-index:1;max-width:900px;margin:0 auto 3rem;padding:0 2rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}
+.control-group{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:1rem;}
+.control-group label{display:block;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.control-group select,.control-group input[type=range]{width:100%;}
+select{background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--text);padding:7px 10px;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;cursor:pointer;transition:border-color .15s;}
+select:focus{border-color:rgba(225,29,72,0.5);}
+input[type=range]{accent-color:var(--red);cursor:pointer;height:4px;margin-top:6px;}
+.range-val{font-size:13px;color:var(--text);font-weight:500;margin-top:4px;}
+.toggle-row{display:flex;align-items:center;gap:10px;margin-top:4px;}
+.toggle{position:relative;width:38px;height:21px;}
+.toggle input{display:none;}
+.toggle-track{position:absolute;inset:0;background:var(--bg2);border:1px solid var(--border);border-radius:99px;cursor:pointer;transition:background .2s;}
+.toggle input:checked+.toggle-track{background:var(--red);border-color:var(--red);}
+.toggle-track::after{content:'';position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:#fff;transition:transform .2s;}
+.toggle input:checked+.toggle-track::after{transform:translateX(17px);}
+.toggle-label{font-size:13px;color:var(--text);}
+
+/* RESULTS */
+.results-section{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 2rem 6rem;}
+.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+.results-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:600;color:var(--muted);}
+.results-count{font-size:12px;color:var(--muted);background:var(--card-bg);border:1px solid var(--border);padding:4px 12px;border-radius:99px;}
+#resultsGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;}
+
+.logo-card{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:2rem 1.5rem 1.5rem;display:flex;flex-direction:column;align-items:center;gap:1rem;cursor:pointer;transition:border-color .2s,transform .15s,box-shadow .2s;animation:fadeUp .35s ease both;position:relative;overflow:hidden;}
+.logo-card::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(225,29,72,0.04),transparent 60%);opacity:0;transition:opacity .2s;}
+.logo-card:hover{border-color:rgba(225,29,72,0.3);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.4);}
+.logo-card:hover::before{opacity:1;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.card-logo-wrap{width:80px;height:80px;border-radius:16px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;}
+.card-logo-wrap img{width:64px;height:64px;object-fit:contain;display:block;}
+.card-body{text-align:center;width:100%;}
+.card-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;}
+.card-domain{font-size:11px;color:var(--muted);}
+.card-tag{font-size:10px;padding:2px 7px;border-radius:99px;background:rgba(225,29,72,0.12);color:var(--red);border:1px solid rgba(225,29,72,0.25);margin-top:4px;display:inline-block;}
+.card-actions{display:flex;gap:6px;width:100%;}
+.card-btn{flex:1;padding:7px 0;border-radius:8px;font-size:11px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .15s;font-family:'DM Sans',sans-serif;}
+.card-btn:hover{border-color:var(--red);color:var(--red);}
+.card-btn.primary{background:var(--red);border-color:var(--red);color:#fff;}
+.card-btn.primary:hover{background:#be1239;color:#fff;}
+
+/* STATES */
+.state-box{text-align:center;padding:5rem 2rem;grid-column:1/-1;}
+.state-icon-svg{display:flex;justify-content:center;margin-bottom:1rem;}
+.state-icon{font-size:3rem;margin-bottom:1rem;opacity:.4;}
+.state-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:600;color:var(--text);margin-bottom:.5rem;}
+.state-sub{font-size:14px;color:var(--muted);}
+.spinner{width:36px;height:36px;border:2px solid var(--border);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);backdrop-filter:blur(14px);z-index:1000;align-items:center;justify-content:center;padding:2rem;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--bg3);border:1px solid var(--border);border-radius:20px;max-width:500px;width:100%;overflow:hidden;animation:modalIn .25s ease;}
+@keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(12px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);}
+.modal-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:600;}
+.modal-close{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1;transition:all .15s;}
+.modal-close:hover{border-color:var(--red);color:var(--red);}
+.modal-body{padding:1.5rem;}
+.modal-preview{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;padding:2rem;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;min-height:140px;}
+.modal-preview img{max-width:120px;max-height:120px;object-fit:contain;}
+.modal-info{margin-bottom:1.5rem;}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.info-row:last-child{border-bottom:none;}
+.info-key{color:var(--muted);}
+.info-val{color:var(--text);font-weight:500;font-family:monospace;font-size:12px;word-break:break-all;max-width:240px;text-align:right;}
+.modal-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.modal-btn{flex:1;min-width:100px;padding:10px;border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text);transition:all .15s;}
+.modal-btn:hover{border-color:var(--border-hover);}
+.modal-btn.primary{background:var(--red);border-color:var(--red);color:#fff;}
+.modal-btn.primary:hover{background:#be1239;}
+
+/* FOOTER */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.5rem 2.5rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;}
+.footer-col{display:flex;flex-direction:column;gap:8px;}
+.footer-mission{font-size:13px;color:var(--muted);line-height:1.7;}
+.footer-mission strong{color:var(--text);}
+.footer-links{display:flex;flex-direction:column;gap:6px;}
+.footer-link{font-size:13px;color:var(--muted);text-decoration:none;transition:color .15s;}
+.footer-link:hover{color:var(--red);}
+.footer-cta{display:flex;flex-direction:column;gap:10px;align-items:flex-end;}
+.footer-cta-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--red);color:#fff;text-decoration:none;border-radius:10px;font-family:'Syne',sans-serif;font-size:13px;font-weight:600;transition:background .15s;}
+.footer-cta-btn:hover{background:#be1239;}
+.footer-bottom{grid-column:1/-1;border-top:1px solid var(--border);padding-top:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;}
+.footer-copy{font-size:12px;color:var(--muted);}
+.api-status{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);}
+.api-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
+
+@media(max-width:720px){
+  footer{grid-template-columns:1fr;gap:1.5rem;}
+  .footer-cta{align-items:flex-start;}
+  header{padding:0 1.2rem;}
+  .hero{padding:3.5rem 1.2rem 2rem;}
+  .controls-panel{padding:0 1.2rem;}
+  .results-section{padding:0 1.2rem 4rem;}
+  footer{padding:2rem 1.2rem;}
+  .search-tabs{flex-wrap:wrap;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a class="logo-mark" href="https://screenifyplus.online">
+    <img class="logo-img" src="https://screenifyplus.online/logo.png" alt="Screenify+ logo" onerror="this.style.display='none'"/>
+    <span class="logo-text">SCREENIFY<span>+</span></span>
+  </a>
+  <span class="header-badge">Logo Explorer</span>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Brand · Ticker · Crypto · Domain</div>
+  <h1>Find any logo<br/><em>instantly</em></h1>
+  <p>Search millions of brand logos by company name, domain, stock ticker, or crypto symbol. Download in any format, free forever.</p>
+</section>
+
+<!-- SEARCH TYPE TABS -->
+<div class="search-tabs" style="position:relative;z-index:5;">
+  <div class="stab active" data-mode="name" onclick="setMode('name')">Brand Name</div>
+  <div class="stab" data-mode="domain" onclick="setMode('domain')">Domain</div>
+  <div class="stab" data-mode="ticker" onclick="setMode('ticker')">Ticker</div>
+  <div class="stab" data-mode="crypto" onclick="setMode('crypto')">Crypto</div>
+</div>
+
+<!-- SEARCH -->
+<div style="position:relative;z-index:10;max-width:640px;margin:.8rem auto 0;padding:0 1.5rem;">
+  <div class="search-wrap">
+    <div class="search-inner">
+      <span class="search-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </span>
+      <input id="searchInput" type="text" placeholder="Search by brand name…" autocomplete="off"/>
+      <button class="search-btn" onclick="doSearch()">Search</button>
+    </div>
+    <div id="suggestions"></div>
+  </div>
+  <p class="search-hint" id="searchHint">Try: Netflix, Apple, Spotify, Google</p>
+</div>
+
+<!-- HISTORY -->
+<div style="position:relative;z-index:5;max-width:640px;margin:.8rem auto 0;padding:0 1.5rem;" id="historySection" style="display:none;">
+  <div class="history-wrap" id="historyWrap"></div>
+</div>
+
+<!-- QUICK TAGS -->
+<div class="quick-tags" style="position:relative;z-index:1;max-width:720px;margin:1.5rem auto 3rem;padding:0 1.5rem;" id="quickTags">
+  <div class="tag" onclick="quickSearch('netflix.com','Netflix','domain')"><img src="https://img.logo.dev/netflix.com?token=pk_YlhmvXzuQZ6xMgF1j_4JsA&size=20&format=png" alt=""/>Netflix</div>
+  <div class="tag" onclick="quickSearch('spotify.com','Spotify','domain')"><img src="https://img.logo.dev/spotify.com?token=pk_YlhmvXzuQZ6xMgF1j_4JsA&size=20&format=png" alt=""/>Spotify</div>
+  <div class="tag" onclick="quickSearch('apple.com','Apple','domain')"><img src="https://img.logo.dev/apple.com?token=pk_YlhmvXzuQZ6xMgF1j_4JsA&size=20&format=png" alt=""/>Apple</div>
+  <div class="tag" onclick="quickSearch('google.com','Google','domain')"><img src="https://img.logo.dev/google.com?token=pk_YlhmvXzuQZ6xMgF1j_4JsA&size=20&format=png" alt=""/>Google</div>
+  <div class="tag" onclick="quickSearch('AAPL','Apple','ticker')">AAPL</div>
+  <div class="tag" onclick="quickSearch('TSLA','Tesla','ticker')">TSLA</div>
+  <div class="tag" onclick="quickSearch('BTC','Bitcoin','crypto')">BTC</div>
+  <div class="tag" onclick="quickSearch('ETH','Ethereum','crypto')">ETH</div>
+  <div class="tag" onclick="quickSearch('shopify.com','Shopify','domain')"><img src="https://img.logo.dev/shopify.com?token=pk_YlhmvXzuQZ6xMgF1j_4JsA&size=20&format=png" alt=""/>Shopify</div>
+  <div class="tag" onclick="quickSearch('microsoft.com','Microsoft','domain')"><img src="https://img.logo.dev/microsoft.com?token=pk_YlhmvXzuQZ6xMgF1j_4JsA&size=20&format=png" alt=""/>Microsoft</div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls-panel">
+  <div class="control-group">
+    <label>Logo Size</label>
+    <input type="range" id="sizeRange" min="32" max="256" value="128" step="16" oninput="document.getElementById('sizeVal').textContent=this.value+'px'"/>
+    <div class="range-val" id="sizeVal">128px</div>
+  </div>
+  <div class="control-group">
+    <label>Format</label>
+    <select id="fmtSelect">
+      <option value="png">PNG (with transparency)</option>
+      <option value="jpg" selected>JPG (smaller size)</option>
+      <option value="webp">WebP (modern)</option>
+    </select>
+  </div>
+  <div class="control-group">
+    <label>Theme</label>
+    <select id="themeSelect">
+      <option value="auto" selected>Auto</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </div>
+  <div class="control-group">
+    <label>Options</label>
+    <div class="toggle-row">
+      <label class="toggle"><input type="checkbox" id="retinaToggle"/><div class="toggle-track"></div></label>
+      <span class="toggle-label">Retina (2×)</span>
+    </div>
+    <div class="toggle-row" style="margin-top:8px;">
+      <label class="toggle"><input type="checkbox" id="greyscaleToggle"/><div class="toggle-track"></div></label>
+      <span class="toggle-label">Greyscale</span>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="results-section">
+  <div class="results-header">
+    <span class="results-title" id="resultsTitle">Search to get started</span>
+    <span class="results-count" id="resultsCount">—</span>
+  </div>
+  <div id="resultsGrid">
+    <div class="state-box">
+      <div class="state-icon-svg"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".3"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35" stroke-linecap="round"/></svg></div>
+      <div class="state-title">Search for any brand</div>
+      <div class="state-sub">Use the tabs above to search by name, domain, ticker, or crypto symbol</div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modalTitle">Logo Details</span>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-preview">
+        <img id="modalImg" src="" alt=""/>
+      </div>
+      <div class="modal-info" id="modalInfo"></div>
+      <div class="modal-actions">
+        <button class="modal-btn" onclick="copyUrl()">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="display:inline;vertical-align:middle;margin-right:5px"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.4"/></svg>Copy URL</button>
+        <button class="modal-btn" onclick="copyTag()">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="display:inline;vertical-align:middle;margin-right:5px"><path d="M5 4L2 8l3 4M11 4l3 4-3 4M9 3l-2 10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Copy tag</button>
+        <button class="modal-btn primary" onclick="downloadLogo()">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="display:inline;vertical-align:middle;margin-right:5px"><path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Download</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-col">
+    <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">Our Mission</div>
+    <div class="footer-mission">To offer all essential internet services <strong>absolutely free</strong> and entirely without ads. The web belongs to everyone — no paywalls, no trackers, no barriers.</div>
+  </div>
+  <div class="footer-col">
+    <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">Contact & Community</div>
+    <div class="footer-links">
+      <a class="footer-link" href="mailto:contact@screenifyplus.online">contact@screenifyplus.online</a>
+      <a class="footer-link" href="https://t.me/screenifyplus" target="_blank">t.me/screenifyplus</a>
+      <a class="footer-link" href="https://screenifyplus.online/all" target="_blank">All our services</a>
+    </div>
+  </div>
+  <div class="footer-col">
+    <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;">Start Streaming</div>
+    <div class="footer-cta">
+      <a class="footer-cta-btn" href="https://screenifyplus.online">
+        <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><rect x="2" y="4" width="14" height="10" rx="2" stroke="#fff" stroke-width="1.5"/><path d="M7 7l5 2-5 2V7z" fill="#fff"/></svg>
+        Start Streaming
+      </a>
+      <div style="font-size:12px;color:var(--muted);">Free forever · No account needed</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2025 Screenify+ · Free for everyone</span>
+    <div class="api-status"><span class="api-dot"></span>Logo API connected</div>
+  </div>
+</footer>
+
+<script>
+const API_KEY = 'pk_YlhmvXzuQZ6xMgF1j_4JsA';
+const BASE_IMG = 'https://img.logo.dev';
+const BASE_SEARCH = 'https://api.logo.dev/search';
+
+let currentResults = [];
+let activeLogoUrl = '';
+let activeDomain = '';
+let activeMode = 'name';
+let searchHistory = JSON.parse(localStorage.getItem('splus_logo_history') || '[]');
+
+// ── MODE ──
+const hints = {
+  name: 'Try: Netflix, Apple, Spotify, Amazon',
+  domain: 'Try: netflix.com, apple.com, spotify.com',
+  ticker: 'Try: AAPL, TSLA, GOOGL, MSFT',
+  crypto: 'Try: BTC, ETH, SOL, BNB, XRP'
+};
+const placeholders = {
+  name: 'Search by brand name…',
+  domain: 'Enter domain like apple.com…',
+  ticker: 'Enter stock ticker like AAPL…',
+  crypto: 'Enter crypto symbol like BTC…'
+};
+
+function setMode(mode) {
+  activeMode = mode;
+  document.querySelectorAll('.stab').forEach(t => t.classList.toggle('active', t.dataset.mode === mode));
+  document.getElementById('searchInput').placeholder = placeholders[mode];
+  document.getElementById('searchHint').textContent = hints[mode];
+  hideSuggestions();
+}
+
+// ── LOGO URL ──
+function logoUrl(identifier, overrides={}) {
+  const size = overrides.size || document.getElementById('sizeRange').value;
+  const fmt = overrides.fmt || document.getElementById('fmtSelect').value;
+  const theme = overrides.theme || document.getElementById('themeSelect').value;
+  const retina = overrides.retina !== undefined ? overrides.retina : document.getElementById('retinaToggle').checked;
+  const grey = overrides.grey !== undefined ? overrides.grey : document.getElementById('greyscaleToggle').checked;
+  const mode = overrides.mode || 'domain';
+
+  let url;
+  if (mode === 'ticker') {
+    url = `${BASE_IMG}/ticker/${identifier.toLowerCase()}?token=${API_KEY}&size=${size}&format=${fmt}&theme=${theme}`;
+  } else if (mode === 'crypto') {
+    url = `${BASE_IMG}/ticker/${identifier.toLowerCase()}?token=${API_KEY}&size=${size}&format=${fmt}&theme=${theme}`;
+  } else {
+    url = `${BASE_IMG}/${identifier}?token=${API_KEY}&size=${size}&format=${fmt}&theme=${theme}`;
+  }
+  if (retina) url += '&retina=true';
+  if (grey) url += '&greyscale=true';
+  return url;
+}
+
+// ── HISTORY ──
+function saveHistory(query, mode) {
+  const entry = { query, mode, ts: Date.now() };
+  searchHistory = searchHistory.filter(h => !(h.query === query && h.mode === mode));
+  searchHistory.unshift(entry);
+  if (searchHistory.length > 12) searchHistory.pop();
+  localStorage.setItem('splus_logo_history', JSON.stringify(searchHistory));
+  renderHistory();
+}
+
+function renderHistory() {
+  const wrap = document.getElementById('historyWrap');
+  const section = document.getElementById('historySection');
+  if (!searchHistory.length) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+  const modeLabel = { name:'N', domain:'D', ticker:'T', crypto:'C' };
+  const modeSvg = {
+    name: `<svg width="10" height="10" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="3" stroke="currentColor" stroke-width="1.4"/><path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>`,
+    domain: `<svg width="10" height="10" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M8 2c0 0-3 2-3 6s3 6 3 6M8 2c0 0 3 2 3 6s-3 6-3 6M2 8h12" stroke="currentColor" stroke-width="1.4"/></svg>`,
+    ticker: `<svg width="10" height="10" viewBox="0 0 16 16" fill="none"><polyline points="1,11 5,6 9,9 15,3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    crypto: `<svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M10 6.5c0-1.1-.9-2-2-2H6v4h2c1.1 0 2-.9 2-2zM10 10.5c0-1.1-.9-2-2-2H6v4h2c1.1 0 2-.9 2-2z" stroke="currentColor" stroke-width="1.2"/><path d="M8 2.5v1M8 13.5v1M7 2.5v1M7 13.5v1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>`
+  };
+  wrap.innerHTML = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+      <span class="history-label">Recent Searches</span>
+      <span class="history-clear" onclick="clearHistory()">Clear all</span>
+    </div>
+    <div class="history-pills">${searchHistory.map((h,i) =>
+      `<div class="h-pill" onclick="restoreHistory(${i})">
+        <span style="display:flex;align-items:center;opacity:.6">${modeSvg[h.mode]||modeSvg.domain}</span>
+        <span>${h.query}</span>
+        <span class="h-pill-remove" onclick="event.stopPropagation();removeHistory(${i})">✕</span>
+      </div>`
+    ).join('')}</div>`;
+}
+
+function restoreHistory(i) {
+  const h = searchHistory[i];
+  setMode(h.mode);
+  document.getElementById('searchInput').value = h.query;
+  performSearch(h.query, h.mode);
+}
+
+function removeHistory(i) {
+  searchHistory.splice(i,1);
+  localStorage.setItem('splus_logo_history', JSON.stringify(searchHistory));
+  renderHistory();
+}
+
+function clearHistory() {
+  searchHistory = [];
+  localStorage.setItem('splus_logo_history', '[]');
+  renderHistory();
+}
+
+// ── SUGGESTIONS (name mode only) ──
+let suggestTimer;
+document.getElementById('searchInput').addEventListener('input', function() {
+  clearTimeout(suggestTimer);
+  const q = this.value.trim();
+  if (q.length < 2 || activeMode !== 'name') { hideSuggestions(); return; }
+  suggestTimer = setTimeout(() => fetchSuggestions(q), 280);
+});
+
+document.getElementById('searchInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { hideSuggestions(); doSearch(); }
+  if (e.key === 'Escape') hideSuggestions();
+});
+
+async function fetchSuggestions(q) {
+  try {
+    const res = await fetch(`${BASE_SEARCH}?q=${encodeURIComponent(q)}`, {
+      headers: { Authorization: `Bearer ${API_KEY}` }
+    });
+    const data = await res.json();
+    if (!data.length) { hideSuggestions(); return; }
+    showSuggestions(data.slice(0, 6));
+  } catch(e) { hideSuggestions(); }
+}
+
+function showSuggestions(items) {
+  const box = document.getElementById('suggestions');
+  box.innerHTML = '';
+  items.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'suggestion-item';
+    el.innerHTML = `
+      <img class="sug-logo" src="${BASE_IMG}/${item.domain}?token=${API_KEY}&size=56&format=png" alt="" onerror="this.style.display='none'"/>
+      <div class="sug-info">
+        <div class="sug-name">${item.name}</div>
+        <div class="sug-domain">${item.domain}</div>
+      </div>`;
+    el.onclick = () => {
+      hideSuggestions();
+      document.getElementById('searchInput').value = item.name;
+      loadSingleDomain(item.domain, item.name, 'domain');
+    };
+    box.appendChild(el);
+  });
+  box.style.display = 'block';
+}
+
+function hideSuggestions() {
+  document.getElementById('suggestions').style.display = 'none';
+}
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.search-wrap')) hideSuggestions();
+});
+
+// ── MAIN SEARCH ──
+function doSearch() {
+  const q = document.getElementById('searchInput').value.trim();
+  if (!q) return;
+  performSearch(q, activeMode);
+}
+
+async function performSearch(q, mode) {
+  hideSuggestions();
+  saveHistory(q, mode);
+
+  if (mode === 'domain') {
+    loadSingleDomain(q, q, 'domain');
+    return;
+  }
+  if (mode === 'ticker') {
+    loadSingleDomain(q.toUpperCase(), q.toUpperCase(), 'ticker');
+    return;
+  }
+  if (mode === 'crypto') {
+    loadSingleDomain(q.toUpperCase(), q.toUpperCase(), 'crypto');
+    return;
+  }
+
+  // name mode — search API
+  showLoading();
+  try {
+    const res = await fetch(`${BASE_SEARCH}?q=${encodeURIComponent(q)}`, {
+      headers: { Authorization: `Bearer ${API_KEY}` }
+    });
+    const data = await res.json();
+    if (!data.length) { showEmpty(q); return; }
+    currentResults = data.map(d => ({ ...d, mode: 'domain' }));
+    renderResults(currentResults, `Results for "${q}"`);
+  } catch(e) { showError(); }
+}
+
+function quickSearch(identifier, name, mode) {
+  setMode(mode);
+  document.getElementById('searchInput').value = identifier;
+  if (mode === 'domain') loadSingleDomain(identifier, name, 'domain');
+  else if (mode === 'ticker') loadSingleDomain(identifier, name, 'ticker');
+  else if (mode === 'crypto') loadSingleDomain(identifier, name, 'crypto');
+  else performSearch(identifier, mode);
+}
+
+function loadSingleDomain(identifier, name, mode) {
+  currentResults = [{ domain: identifier, name, mode }];
+  renderResults(currentResults, name);
+}
+
+// ── RENDER ──
+const SVG_COPY = `<svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="display:inline;vertical-align:middle;margin-right:4px"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M11 5V3.5A1.5 1.5 0 009.5 2h-6A1.5 1.5 0 002 3.5v6A1.5 1.5 0 003.5 11H5" stroke="currentColor" stroke-width="1.4"/></svg>`;
+const SVG_EYE  = `<svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="display:inline;vertical-align:middle;margin-right:4px"><ellipse cx="8" cy="8" rx="6" ry="4" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2" fill="currentColor"/></svg>`;
+const SVG_DL   = `<svg width="13" height="13" viewBox="0 0 16 16" fill="none" style="display:inline;vertical-align:middle;margin-right:4px"><path d="M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>`;
+
+function renderResults(items, title) {
+  document.getElementById('resultsTitle').textContent = title;
+  document.getElementById('resultsCount').textContent = `${items.length} result${items.length !== 1 ? 's' : ''}`;
+  const grid = document.getElementById('resultsGrid');
+  grid.innerHTML = '';
+  items.forEach((item, i) => {
+    const mode = item.mode || 'domain';
+    const url = logoUrl(item.domain, { mode });
+    const card = document.createElement('div');
+    card.className = 'logo-card';
+    card.style.animationDelay = `${i * 40}ms`;
+    card.dataset.index = i;
+
+    const modeLabel = mode === 'ticker' ? 'Ticker' : mode === 'crypto' ? 'Crypto' : '';
+
+    const wrap = document.createElement('div');
+    wrap.className = 'card-logo-wrap';
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = item.name;
+    img.onerror = () => { wrap.innerHTML = '<span style="font-size:28px;opacity:.3">?</span>'; };
+    wrap.appendChild(img);
+
+    const body = document.createElement('div');
+    body.className = 'card-body';
+    body.innerHTML = `<div class="card-name">${item.name}</div><div class="card-domain">${item.domain}</div>${modeLabel ? `<div class="card-tag">${modeLabel}</div>` : ''}`;
+
+    const actions = document.createElement('div');
+    actions.className = 'card-actions';
+
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'card-btn';
+    copyBtn.innerHTML = `${SVG_COPY}Copy URL`;
+    copyBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const u = logoUrl(item.domain, { mode });
+      navigator.clipboard.writeText(u).then(() => {
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => { copyBtn.innerHTML = `${SVG_COPY}Copy URL`; }, 1500);
+      }).catch(() => {});
+    });
+
+    const viewBtn = document.createElement('button');
+    viewBtn.className = 'card-btn primary';
+    viewBtn.innerHTML = `${SVG_EYE}View`;
+    viewBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openModal(item.domain, item.name, mode);
+    });
+
+    actions.appendChild(copyBtn);
+    actions.appendChild(viewBtn);
+    card.appendChild(wrap);
+    card.appendChild(body);
+    card.appendChild(actions);
+    grid.appendChild(card);
+  });
+}
+
+function showLoading() {
+  document.getElementById('resultsTitle').textContent = 'Searching…';
+  document.getElementById('resultsCount').textContent = '—';
+  document.getElementById('resultsGrid').innerHTML = `<div class="state-box"><div class="spinner"></div><div class="state-sub">Fetching logos…</div></div>`;
+}
+function showEmpty(q) {
+  document.getElementById('resultsTitle').textContent = `No results for "${q}"`;
+  document.getElementById('resultsCount').textContent = '0 results';
+  document.getElementById('resultsGrid').innerHTML = `<div class="state-box"><div class="state-icon-svg"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".3"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M8 11h6M11 8v6" stroke-width="1.2"/></svg></div><div class="state-title">No logos found</div><div class="state-sub">Try a different name or switch search mode</div></div>`;
+}
+function showError() {
+  document.getElementById('resultsGrid').innerHTML = `<div class="state-box"><div class="state-icon-svg"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".3"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01" stroke-linecap="round"/></svg></div><div class="state-title">Something went wrong</div><div class="state-sub">Check your connection and try again</div></div>`;
+}
+
+// ── MODAL ──
+let activeItemMode = 'domain';
+function openModal(identifier, name, mode) {
+  activeItemMode = mode || 'domain';
+  const url = logoUrl(identifier, { mode: activeItemMode });
+  activeLogoUrl = url;
+  activeDomain = identifier;
+
+  document.getElementById('modalTitle').textContent = name;
+  const img = document.getElementById('modalImg');
+  img.src = url;
+  img.onerror = () => { img.style.display = 'none'; };
+  img.onload = () => { img.style.display = 'block'; };
+
+  const size = document.getElementById('sizeRange').value;
+  const fmt = document.getElementById('fmtSelect').value;
+  const theme = document.getElementById('themeSelect').value;
+  const retina = document.getElementById('retinaToggle').checked;
+  const modeLabel = { domain:'Domain', ticker:'Stock Ticker', crypto:'Crypto Symbol', name:'Brand Name' };
+
+  document.getElementById('modalInfo').innerHTML = `
+    <div class="info-row"><span class="info-key">Identifier</span><span class="info-val">${identifier}</span></div>
+    <div class="info-row"><span class="info-key">Type</span><span class="info-val">${modeLabel[activeItemMode]||'Domain'}</span></div>
+    <div class="info-row"><span class="info-key">Format</span><span class="info-val">${fmt.toUpperCase()}</span></div>
+    <div class="info-row"><span class="info-key">Size</span><span class="info-val">${size}px${retina?' (2× retina)':''}</span></div>
+    <div class="info-row"><span class="info-key">Theme</span><span class="info-val">${theme}</span></div>`;
+
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModalDirect(); });
+
+function copyLogoUrl(identifier, mode) {
+  const url = logoUrl(identifier, { mode });
+  navigator.clipboard.writeText(url).catch(() => {});
+}
+function copyUrl() {
+  const btn = document.querySelector('.modal-btn:nth-child(1)');
+  navigator.clipboard.writeText(activeLogoUrl).then(() => {
+    const orig = btn.innerHTML;
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.innerHTML = orig; }, 1500);
+  }).catch(() => {});
+}
+function copyTag() {
+  const btn = document.querySelector('.modal-btn:nth-child(2)');
+  const tag = `<img src="${activeLogoUrl}" alt="${activeDomain} logo"/>`;
+  navigator.clipboard.writeText(tag).then(() => {
+    const orig = btn.innerHTML;
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.innerHTML = orig; }, 1500);
+  }).catch(() => {});
+}
+async function downloadLogo() {
+  try {
+    const resp = await fetch(activeLogoUrl);
+    const blob = await resp.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const fmt = document.getElementById('fmtSelect').value;
+    a.href = blobUrl;
+    a.download = `${activeDomain}-logo.${fmt}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 3000);
+  } catch(e) {
+    // fallback
+    const a = document.createElement('a');
+    a.href = activeLogoUrl;
+    a.target = '_blank';
+    a.download = `${activeDomain}-logo`;
+    a.click();
+  }
+}
+
+// ── RE-RENDER ON CONTROL CHANGE ──
+['sizeRange','fmtSelect','themeSelect','retinaToggle','greyscaleToggle'].forEach(id => {
+  document.getElementById(id).addEventListener('change', () => {
+    if (currentResults.length > 0) renderResults(currentResults, document.getElementById('resultsTitle').textContent);
+  });
+});
+
+// ── INIT ──
+renderHistory();
+</script>
+</body>
+</html>
