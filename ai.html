@@ -219,6 +219,8 @@
         @media (max-width: 850px) {
             .translator-layout { flex-direction: column; }
             .panel.source { border-right: none; border-bottom: 1px solid var(--border); }
+            .selector-row { flex-direction: column; gap: 10px; } /* Stack selectors nicely on small screens */
+            .panel { padding: 20px; } /* Slightly tighter padding on mobile */
         }
 
         .selector-row {
@@ -337,6 +339,11 @@
             padding-top: 15px;
             border-top: 1px dashed #27272a;
         }
+        
+        .panel-controls.space-between {
+            justify-content: space-between;
+            align-items: center;
+        }
 
         .icon-btn {
             background: transparent;
@@ -358,6 +365,11 @@
             color: var(--text-main);
             border-color: var(--accent);
             background: rgba(225, 29, 72, 0.05);
+        }
+        
+        .surprise-btn {
+            color: var(--accent);
+            border-color: rgba(225, 29, 72, 0.3);
         }
 
         .icon-btn svg { width: 16px; height: 16px; stroke: currentColor; }
@@ -384,6 +396,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            width: auto;
         }
 
         button.translate-btn:hover:not(:disabled) { 
@@ -609,7 +622,7 @@
             box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3);
         }
 
-        /* Footer Links */
+        /* Footer Links - UI Updates for Android/Mobile */
         footer {
             padding: 40px 20px;
             text-align: center;
@@ -623,6 +636,7 @@
         .footer-links {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap; /* Helps prevent bad overlapping on smaller screens */
             gap: 20px;
             margin-top: 15px;
         }
@@ -644,6 +658,23 @@
         .footer-links svg {
             width: 18px;
             height: 18px;
+        }
+        
+        /* Mobile Specific Updates */
+        @media (max-width: 600px) {
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+            .action-bar {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+            button.translate-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -671,6 +702,11 @@
                 </div>
 
                 <div class="selector-row">
+                    <select id="model">
+                        <option value="NanoBanana">NanoBanana</option>
+                        <option value="NanoBanana2" selected>NanoBanana 2</option>
+                        <option value="NanoBananaPro">NanoBanana Pro</option>
+                    </select>
                     <select id="ratio">
                         <option value="16:9">Widescreen (16:9)</option>
                         <option value="1:1">Square (1:1)</option>
@@ -696,7 +732,11 @@
                     Supports prompts in many languages, including Arabic
                 </div>
                 
-                <div class="panel-controls">
+                <div class="panel-controls space-between">
+                    <button class="icon-btn surprise-btn" onclick="randomizePrompt()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
+                        Surprise Me
+                    </button>
                     <button class="icon-btn" onclick="document.getElementById('inputText').value = ''; document.getElementById('imageLinks').value = '';">
                         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                         Clear
@@ -807,6 +847,17 @@
     <script>
         let currentMode = 'create';
         
+        // Random Prompts Array
+        const surprisePrompts = [
+            "A cyberpunk city at night with neon lights reflecting in puddles, highly detailed, 8k resolution",
+            "A cute fluffy cat wearing a tiny astronaut suit exploring Mars, photorealistic",
+            "A serene landscape with a glowing blue waterfall hidden in a mystical forest, fantasy concept art",
+            "A highly detailed portrait of a steampunk inventor with brass goggles and glowing eyes, volumetric lighting",
+            "A minimalist isometric 3D room with a cozy gaming setup, warm lighting, pastel colors",
+            "An epic spaceship battle above a gas giant planet, cinematic lighting, sci-fi masterpiece",
+            "A beautiful ancient temple floating in the sky surrounded by clouds and waterfalls, studio ghibli style"
+        ];
+        
         // Ensure we ONLY load real history from local storage, defaulting strictly to an empty array.
         let imageHistory = [];
         try {
@@ -826,6 +877,19 @@
             document.getElementById('btnCreate').classList.toggle('active', mode === 'create');
             document.getElementById('btnEdit').classList.toggle('active', mode === 'edit');
             document.getElementById('editUrlGroup').style.display = mode === 'edit' ? 'block' : 'none';
+        }
+
+        function randomizePrompt() {
+            const randomIndex = Math.floor(Math.random() * surprisePrompts.length);
+            const inputField = document.getElementById('inputText');
+            inputField.value = surprisePrompts[randomIndex];
+            
+            // Add a little highlight effect to show it worked
+            inputField.style.transition = "0.2s";
+            inputField.style.boxShadow = "0 0 0 2px rgba(225, 29, 72, 0.4)";
+            setTimeout(() => {
+                inputField.style.boxShadow = "none";
+            }, 300);
         }
 
         function renderHistory() {
@@ -896,6 +960,7 @@
             const inputText = document.getElementById('inputText').value.trim();
             const ratio = document.getElementById('ratio').value;
             const res = document.getElementById('resolution').value;
+            const model = document.getElementById('model').value;
             const btn = document.getElementById('generateBtn');
             const placeholder = document.getElementById('placeholderIcon');
             const resultImg = document.getElementById('resultImg');
@@ -925,11 +990,12 @@
             // Show Smooth Spinner and Custom Text
             spinner.style.display = 'block';
             loadingText.style.display = 'block';
-            loadingText.innerHTML = "It takes some time but it's definitely working...";
+            loadingText.innerHTML = "It takes some time, but it's definietly working";
 
             // Prepare Data for API
             const formData = new FormData();
             formData.append('text', inputText);
+            formData.append('model', model);
             formData.append('ratio', ratio);
             formData.append('res', res);
 
@@ -945,6 +1011,7 @@
             }
 
             try {
+                // Reverted back to the original Cloudflare worker URL
                 const response = await fetch('https://ai.iliassahnoun23.workers.dev/', {
                     method: 'POST',
                     body: formData
