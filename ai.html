@@ -6,6 +6,36 @@
     <title>SCREENIFY + | Image AI</title>
     
     <meta name="description" content="Screenify+ Image AI is a modern platform to seamlessly generate images. Experience lightning-fast, high-quality generation in a sleek, ad-free interface.">
+    <meta property="og:title" content="SCREENIFY + | Image AI">
+    <meta property="og:description" content="Discover instant image generation with Screenify+. Generate stunning visuals accurately and for free.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://screenifyplus.online/logo.png">
+
+    <link rel="icon" type="image/png" sizes="64x64" href="https://screenifyplus.online/favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://screenifyplus.online/logo.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="https://screenifyplus.online/logo.png">
+    <meta name="theme-color" content="#e11d48">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SCREENIFY+">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Screenify+ Image AI",
+      "url": "https://screenifyplus.online",
+      "applicationCategory": "MultimediaApplication",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://screenifyplus.online/logo.png",
+        "width": 512,
+        "height": 512
+      }
+    }
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -58,10 +88,20 @@
             0% { opacity: 0; transform: scale(0.9); }
             100% { opacity: 1; transform: scale(1); }
         }
+        
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
 
         .animate {
             opacity: 0;
             animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .animate-pop {
+            opacity: 0;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
         /* Navbar */
@@ -492,6 +532,82 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(225, 29, 72, 0.3);
         }
+        
+        /* --- Intro Sections --- */
+        .features-section {
+            padding: 50px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .feature-card:hover { 
+            border-color: var(--accent); 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.05);
+        }
+
+        .feature-card h3 { margin-bottom: 15px; color: var(--accent); display: flex; align-items: center; gap: 10px;}
+        .feature-card p { color: var(--text-dim); line-height: 1.6; }
+
+        /* --- Promo Section --- */
+        .promo-section {
+            background: #0d0d0f;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 80px 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .promo-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .promo-section p {
+            color: var(--text-dim);
+            max-width: 650px;
+            margin: 0 auto 30px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .promo-btn {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            padding: 14px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .promo-btn:hover {
+            background: var(--accent);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3);
+        }
 
         /* Footer Links */
         footer {
@@ -500,7 +616,7 @@
             color: var(--text-dim);
             font-size: 14px;
             background: var(--bg-dark);
-            margin-top: 50px;
+            margin-top: 0px;
             border-top: 1px solid var(--border);
         }
 
@@ -640,6 +756,39 @@
             </div>
         </div>
     </div>
+    
+    <section class="features-section">
+        <h2 class="animate" style="animation-delay: 0.5s; text-align:center; font-size: 2.5rem; margin-bottom: 20px;">Why Screenify+ AI?</h2>
+        <div class="section-grid">
+            <div class="feature-card animate-pop" style="animation-delay: 0.6s;">
+                <h3>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    Boundless Creativity
+                </h3>
+                <p>We pride ourselves on an uncapped imagination engine, supporting complex prompts, distinct artistic styles, and photorealistic generation.</p>
+            </div>
+            <div class="feature-card animate-pop" style="animation-delay: 0.7s;">
+                <h3>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    Minimalist Performance
+                </h3>
+                <p>No bloat. Our interface is designed for speed and focus. Get your images processed directly through our secure worker endpoints.</p>
+            </div>
+            <div class="feature-card animate-pop" style="animation-delay: 0.8s;">
+                <h3>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    High Resolution
+                </h3>
+                <p>Export natively in 4K. Our engine upscales and enhances details automatically, making it perfect for production-ready assets.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="promo-section animate" style="animation-delay: 0.9s;">
+        <h2>Screenify+ Mission</h2>
+        <p>Our ultimate goal is to offer all essential internet services absolutely <strong>free</strong> and entirely <strong>without ads</strong>. The web belongs to everyone.</p>
+        <a href="https://screenifyplus.online/all" class="promo-btn">See what we offer</a>
+    </section>
 
     <footer>
         <p>&copy; 2026 Screenify+. All rights reserved.</p>
