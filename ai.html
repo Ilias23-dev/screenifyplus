@@ -219,8 +219,100 @@
         @media (max-width: 850px) {
             .translator-layout { flex-direction: column; }
             .panel.source { border-right: none; border-bottom: 1px solid var(--border); }
-            .selector-row { flex-direction: column; gap: 10px; } /* Stack selectors nicely on small screens */
-            .panel { padding: 20px; } /* Slightly tighter padding on mobile */
+            .selector-row { flex-direction: column; gap: 10px; }
+            .panel { padding: 20px; }
+        }
+
+        /* ── Comprehensive Mobile Overhaul ── */
+        @media (max-width: 600px) {
+            /* Nav */
+            nav { padding: 12px 4%; }
+            .logo img { height: 28px; }
+            .logo-text { font-size: 1.1rem; }
+
+            /* Hero */
+            .hero { padding: 36px 16px 24px; }
+            .hero h1 { font-size: 1.7rem; margin-bottom: 10px; }
+            .hero p { font-size: 0.85rem; margin-bottom: 24px; line-height: 1.5; }
+
+            /* App container */
+            .app-container { width: 100%; border-radius: 16px; margin-bottom: 28px; }
+
+            /* Panels */
+            .panel { padding: 14px; }
+            .panel.source { border-bottom: 1px solid var(--border); }
+
+            /* Tabs */
+            .tabs { padding: 6px; gap: 6px; border-radius: 12px; margin-bottom: 14px; }
+            .tab-btn { padding: 9px 6px; font-size: 12px; border-radius: 8px; }
+
+            /* Selectors */
+            .selector-row { flex-direction: column; gap: 8px; margin-bottom: 12px; }
+            select, .input-url { padding: 10px 14px; font-size: 14px; border-radius: 10px; }
+            select { padding-right: 36px; }
+
+            /* Textarea */
+            textarea { font-size: 15px; min-height: 100px; }
+
+            /* Helper text */
+            .helper-text { font-size: 12px; margin-top: 10px; }
+
+            /* Panel controls */
+            .panel-controls { margin-top: 10px; padding-top: 10px; gap: 8px; }
+            .icon-btn { padding: 7px 12px; font-size: 12px; }
+            .icon-btn svg { width: 14px; height: 14px; }
+
+            /* Action bar */
+            .action-bar {
+                flex-direction: column;
+                padding: 12px 14px;
+                gap: 10px;
+            }
+            button.translate-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 13px 20px;
+                font-size: 15px;
+            }
+
+            /* Output */
+            .output-container { min-height: 180px; }
+            .generated-img { max-height: 280px; }
+
+            /* History */
+            .history-section { padding: 14px; }
+            .history-item { width: 64px; height: 64px; }
+
+            /* Features section */
+            .features-section { padding: 28px 4%; }
+            .section-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+                margin-top: 20px;
+            }
+            .feature-card { padding: 20px; border-radius: 14px; }
+            .feature-card h3 { font-size: 0.95rem; }
+            .feature-card p { font-size: 0.85rem; }
+
+            /* Promo section */
+            .promo-section { padding: 44px 16px; margin-top: 24px; }
+            .promo-section h2 { font-size: 1.5rem; }
+            .promo-section p { font-size: 0.95rem; }
+            .promo-btn { padding: 12px 28px; font-size: 15px; }
+
+            /* Footer */
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+            footer { padding: 28px 16px; font-size: 13px; }
+
+            /* Modal */
+            .modal-content { padding: 22px 18px; border-radius: 16px; }
+            .modal-content h3 { font-size: 1.2rem; }
+            .modal-content p { font-size: 0.88rem; margin-bottom: 18px; }
+            .modal-btn { padding: 10px 18px; font-size: 0.9rem; }
         }
 
         .selector-row {
@@ -660,22 +752,7 @@
             height: 18px;
         }
         
-        /* Mobile Specific Updates */
-        @media (max-width: 600px) {
-            .footer-links {
-                flex-direction: column;
-                align-items: center;
-                gap: 12px;
-            }
-            .action-bar {
-                flex-direction: column;
-                padding: 15px 20px;
-            }
-            button.translate-btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
+
     </style>
 </head>
 <body>
@@ -699,9 +776,10 @@
                 <div class="tabs">
                     <button class="tab-btn active" id="btnCreate" onclick="switchMode('create')">Create Image</button>
                     <button class="tab-btn" id="btnEdit" onclick="switchMode('edit')">Edit Image</button>
+                    <button class="tab-btn" id="btnBlend" onclick="switchMode('blend')">Blend Images</button>
                 </div>
 
-                <div class="selector-row">
+                <div class="selector-row" id="selectorRow">
                     <select id="model">
                         <option value="NanoBanana">NanoBanana</option>
                         <option value="NanoBanana2" selected>NanoBanana 2</option>
@@ -723,6 +801,15 @@
 
                 <div id="editUrlGroup">
                     <input type="text" id="imageLinks" class="input-url" placeholder="Paste Image URL here (Comma separated for multiple)">
+                </div>
+
+                <div id="blendUrlGroup" style="display:none; margin-bottom: 15px;">
+                    <div style="display:flex; align-items:flex-start; gap:10px; background:rgba(225,29,72,0.08); border:1px solid rgba(225,29,72,0.35); border-radius:10px; padding:12px 14px; margin-bottom:14px; color:#f87171; font-size:13px; line-height:1.5;">
+                        <svg style="flex-shrink:0; margin-top:1px;" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        <span><strong style="color:#fca5a5;">Beta Feature</strong> — Blend Images is currently in beta and may not work as expected. Results can vary.</span>
+                    </div>
+                    <input type="text" id="blendImg1" class="input-url" placeholder="Paste first Image URL here..." style="margin-bottom: 10px;">
+                    <input type="text" id="blendImg2" class="input-url" placeholder="Paste second Image URL here...">
                 </div>
 
                 <textarea id="inputText" placeholder="Describe the image you want to generate in detail..."></textarea>
@@ -846,25 +933,122 @@
 
     <script>
         let currentMode = 'create';
-        
-        // Random Prompts Array
+
+        // ─── Surprise Me Prompts ────────────────────────────────────────────────────
         const surprisePrompts = [
-            "A cyberpunk city at night with neon lights reflecting in puddles, highly detailed, 8k resolution",
-            "A cute fluffy cat wearing a tiny astronaut suit exploring Mars, photorealistic",
-            "A serene landscape with a glowing blue waterfall hidden in a mystical forest, fantasy concept art",
-            "A highly detailed portrait of a steampunk inventor with brass goggles and glowing eyes, volumetric lighting",
-            "A minimalist isometric 3D room with a cozy gaming setup, warm lighting, pastel colors",
-            "An epic spaceship battle above a gas giant planet, cinematic lighting, sci-fi masterpiece",
-            "A beautiful ancient temple floating in the sky surrounded by clouds and waterfalls, studio ghibli style"
+            // Sci-Fi & Space
+            "A cyberpunk city at night with neon lights reflecting in rain puddles, flying cars overhead, highly detailed, 8k resolution",
+            "An epic spaceship battle above a ringed gas giant, cinematic lighting, lens flare, sci-fi masterpiece",
+            "A lone astronaut standing on a distant moon, watching a double sunset over alien mountains, photorealistic",
+            "A massive Dyson sphere under construction around a blue star, swarms of robotic drones, hard sci-fi concept art",
+            "A neon-lit underground hacker den on a space station, holographic screens everywhere, cyberpunk aesthetic",
+            "An alien ocean world with bioluminescent sea creatures visible beneath glassy teal water, two moons in the sky",
+            "A retrofuturistic rocket launch from a 1960s NASA facility, stylized poster art, bold colors",
+            "A derelict space station being reclaimed by zero-gravity jungle vines, soft morning sunlight through cracked hull",
+            "A city on Mars enclosed in a giant glass dome, red desert storms visible outside, golden hour lighting",
+            "A time portal opening in the middle of a modern city street, ancient Rome visible through the rift",
+
+            // Fantasy & Magic
+            "A serene landscape with a glowing blue waterfall hidden in a mystical forest, fireflies, fantasy concept art",
+            "A beautiful ancient temple floating in the sky surrounded by clouds and waterfalls, studio ghibli style",
+            "A dragon made of living fire and ember, soaring over a medieval fortress at dusk, epic fantasy art",
+            "A mage casting a spell that turns into thousands of glowing butterflies, dramatic magical realism",
+            "An underwater kingdom of merfolk with coral palaces and glowing jellyfish lanterns, vibrant fantasy art",
+            "A dark enchanted forest where the trees have glowing amber eyes, mysterious fog, atmospheric lighting",
+            "A phoenix rising from ashes in the middle of a thunderstorm, dramatic sky, hyperrealistic feathers",
+            "A witch's cozy cottage in an autumn forest, warm candlelight inside, smoke from chimney, magical details",
+            "A giant tree city with wooden bridges between ancient oaks, elvish architecture, golden sunset",
+            "A wizard's tower at the edge of a cliff, lightning crashing around it, spell books flying through the air",
+            "A fairy ring of glowing mushrooms in a misty moonlit glade, small ethereal creatures dancing inside",
+            "An ice palace carved into the face of an arctic glacier, northern lights reflected in the frozen walls",
+            "A knight in obsidian armor on a white horse crossing a rainbow bridge over storm clouds",
+            "A celestial library floating in space, infinite bookshelves extending into the cosmos, warm amber glow",
+
+            // Portraits & Characters
+            "A highly detailed portrait of a steampunk inventor with brass goggles and glowing mechanical eyes, volumetric lighting",
+            "A samurai warrior meditating under a cherry blossom tree, petals falling, soft golden light, oil painting style",
+            "A regal queen of the night sky, her gown made of galaxy nebulae and stars, dramatic portrait",
+            "A Viking warrior chief on a ship's prow in a storm, dramatic low angle, film photography grain",
+            "A futuristic gladiator in an arena filled with holographic spectators, neon lighting, close-up portrait",
+            "An elderly herbalist surrounded by hundreds of glowing potion bottles, warm candlelit workshop",
+            "A detective in a 1940s rain-soaked city, trench coat, neon reflections, noir film style",
+            "A young sorceress discovering her powers for the first time, crackling electricity around her hands",
+            "A pirate captain standing at the helm of a ghost ship, sea serpent visible beneath the waves",
+            "A cybernetic geisha with chrome face details and glowing circuit tattoos, ultra high detail, 8k",
+
+            // Nature & Landscapes
+            "A volcano erupting at midnight, lava rivers flowing into the ocean, dramatic sky full of stars",
+            "An ancient redwood forest in the Pacific Northwest, beams of sunlight through the canopy, morning mist",
+            "A tropical island seen from above through crystal clear water, colorful coral reef visible below",
+            "The Amazon rainforest canopy at sunrise, mist rising, macaws flying through golden light",
+            "A frozen tundra landscape with a massive aurora borealis in vivid greens and purples, ultra wide angle",
+            "A field of lavender in Provence at sunset, hot air balloons in the distance, painterly style",
+            "An underwater scene in the Great Barrier Reef, sea turtles and clownfish, sunbeams piercing the surface",
+            "A black sand beach in Iceland with massive waves crashing, stormy moody sky, long exposure style",
+            "Cherry blossom trees lining a canal in Kyoto at dusk, paper lanterns lit, their reflection shimmering",
+            "A lone lighthouse on a rocky cliff during a ferocious Atlantic storm, waves crashing overhead",
+            "Autumn forest path covered in fallen leaves, golden hour, mist between birch trees, cinematic photo",
+            "A massive salt flat in Bolivia perfectly reflecting the starry sky, making the ground and sky indistinguishable",
+
+            // Architecture & Interiors
+            "A minimalist isometric 3D room with a cozy gaming setup, warm lighting, pastel colors, lofi aesthetic",
+            "A grand Art Deco ballroom with golden chandeliers, mirrored floors, and a jazz orchestra on stage",
+            "A cozy Japanese tea house in a zen garden, bamboo walls, paper screens glowing from within, raining outside",
+            "The ruins of a Roman amphitheater overgrown with ivy and wildflowers, golden afternoon sun",
+            "A brutalist modernist house cantilevered over a dramatic coastal cliff, photorealistic architecture",
+            "An ancient Egyptian temple interior with hieroglyphs illuminated by torch light, dust particles in the air",
+            "A moss-covered gothic cathedral in a forgotten forest, stained glass windows still glowing, overgrown",
+            "A neon-soaked Tokyo alley at 2am, ramen shop steam, bicycles, puddle reflections, cinematic",
+            "A luxury treehouse hotel overlooking a rainforest canopy, glass walls, infinity pool, sunrise",
+            "A sprawling Moroccan riad courtyard with a central fountain, mosaic tiles, and bougainvillea overhead",
+            "A brutalist Soviet-era monument in the middle of a foggy pine forest, eerie and surreal",
+
+            // Animals & Creatures
+            "A cute fluffy cat wearing a tiny astronaut suit exploring Mars, photorealistic, adorable",
+            "A majestic wolf made of constellation stars running through a cosmic nebula, digital art",
+            "A giant octopus wrapped around a Victorian submarine deep in the ocean, bioluminescent glow",
+            "A hummingbird frozen in mid-flight, macro photography, iridescent feathers in extraordinary detail",
+            "A pride of lions silhouetted against an enormous African sunset, cinematic wildlife photography",
+            "A deep sea anglerfish in pitch black water, only the bioluminescent lure illuminating bizarre nearby creatures",
+            "A family of polar bears on an ice floe under the northern lights, wildlife photography, soft blues",
+            "A Bengal tiger walking through a shallow river in monsoon rain, jungle behind it, close-up portrait",
+            "A swan gliding on a misty lake at dawn, reflections perfectly mirrored, ethereal and serene",
+            "A neon butterfly with wings made of circuit boards, resting on a glowing flower, macro lens",
+
+            // Abstract & Artistic
+            "An abstract explosion of liquid gold and violet ink in zero gravity, macro photography, ultra detail",
+            "A surrealist Salvador Dali-inspired dreamscape with melting clocks over a Moroccan desert",
+            "Thousands of tiny origami cranes forming the shape of a giant phoenix, aerial view, colorful",
+            "A human silhouette filled with a miniature galaxy of swirling stars and nebulae, double exposure",
+            "A geometric low-poly landscape of mountains at sunset, faceted like a jewel, digital art",
+            "An art deco stained-glass window depicting the solar system, rich jewel tones, detailed linework",
+            "A watercolor painting of a rainy Paris street scene, impressionist style, warm café glow through windows",
+            "Abstract fluid art resembling oil on water, iridescent rainbow colors, ultra macro detail",
+            "A mandala made entirely of tropical flowers and butterflies, symmetrical, vibrant, overhead view",
+            "A minimalist line art illustration of a Japanese mountain village in winter, single unbroken line style",
+
+            // Food & Objects
+            "A hyper-realistic macro photograph of a sliced pomegranate, ruby-red seeds glistening, dark background",
+            "An elaborate fantasy feast spread on a medieval banquet table, candles, goblets, roasted meats",
+            "A levitating cup of coffee with steam forming tiny galaxies and nebulae above it, product photography",
+            "An impossibly perfect croissant with flaky layers visible in extreme macro detail, bakery photography",
+            "A collection of vintage glass perfume bottles catching light on a marble surface, luxurious still life",
+
+            // Moods & Seasons
+            "A cozy log cabin in a snowstorm at night, warm light in the windows, smoke from the chimney, peaceful",
+            "A thunderstorm over the Grand Canyon with multiple lightning bolts striking the canyon walls, dramatic",
+            "A summer evening on a wooden pier over a glassy lake, fireflies beginning to appear, golden nostalgic light",
+            "First frost on a spider web in an autumn garden, extreme macro photography, every ice crystal detailed",
+            "A dense foggy morning in San Francisco with just the tops of the Golden Gate Bridge towers visible"
         ];
-        
-        // Ensure we ONLY load real history from local storage, defaulting strictly to an empty array.
+
+        // ─── History ─────────────────────────────────────────────────────────────────
         let imageHistory = [];
         try {
             const saved = localStorage.getItem('screenify_history');
             if (saved) {
                 imageHistory = JSON.parse(saved);
-                if (!Array.isArray(imageHistory)) imageHistory = []; // Safety check
+                if (!Array.isArray(imageHistory)) imageHistory = [];
             }
         } catch (e) {
             imageHistory = [];
@@ -872,41 +1056,36 @@
 
         window.onload = renderHistory;
 
+        // ─── Mode Switching ───────────────────────────────────────────────────────────
         function switchMode(mode) {
             currentMode = mode;
             document.getElementById('btnCreate').classList.toggle('active', mode === 'create');
             document.getElementById('btnEdit').classList.toggle('active', mode === 'edit');
+            document.getElementById('btnBlend').classList.toggle('active', mode === 'blend');
+            // NanoBanana model/ratio/resolution only relevant for Create
+            document.getElementById('selectorRow').style.display = mode === 'create' ? 'flex' : 'none';
             document.getElementById('editUrlGroup').style.display = mode === 'edit' ? 'block' : 'none';
+            document.getElementById('blendUrlGroup').style.display = mode === 'blend' ? 'block' : 'none';
         }
 
         function randomizePrompt() {
             const randomIndex = Math.floor(Math.random() * surprisePrompts.length);
             const inputField = document.getElementById('inputText');
             inputField.value = surprisePrompts[randomIndex];
-            
-            // Add a little highlight effect to show it worked
             inputField.style.transition = "0.2s";
             inputField.style.boxShadow = "0 0 0 2px rgba(225, 29, 72, 0.4)";
-            setTimeout(() => {
-                inputField.style.boxShadow = "none";
-            }, 300);
+            setTimeout(() => { inputField.style.boxShadow = "none"; }, 300);
         }
 
+        // ─── History Helpers ──────────────────────────────────────────────────────────
         function renderHistory() {
             const grid = document.getElementById('historyGrid');
             const section = document.getElementById('historySection');
-            
-            if (imageHistory.length === 0) {
-                section.style.display = 'none';
-                return;
-            }
-
+            if (imageHistory.length === 0) { section.style.display = 'none'; return; }
             section.style.display = 'block';
             grid.innerHTML = '';
-            
             imageHistory.forEach(url => {
-                // Ensure the URL is valid before creating an image element
-                if(url && typeof url === 'string') {
+                if (url && typeof url === 'string') {
                     const img = document.createElement('img');
                     img.src = url;
                     img.className = 'history-item';
@@ -919,31 +1098,23 @@
         function saveToHistory(url) {
             if (!imageHistory.includes(url)) {
                 imageHistory.unshift(url);
-                if (imageHistory.length > 15) imageHistory.pop(); 
+                if (imageHistory.length > 15) imageHistory.pop();
                 localStorage.setItem('screenify_history', JSON.stringify(imageHistory));
                 renderHistory();
             }
         }
 
-        /* Modal UI Functions */
-        function openClearModal() {
-            document.getElementById('clearModal').classList.add('active');
-        }
-
-        function closeClearModal() {
-            document.getElementById('clearModal').classList.remove('active');
-        }
+        // ─── Modal UI ─────────────────────────────────────────────────────────────────
+        function openClearModal() { document.getElementById('clearModal').classList.add('active'); }
+        function closeClearModal() { document.getElementById('clearModal').classList.remove('active'); }
 
         function executeClearHistory() {
             imageHistory = [];
             localStorage.removeItem('screenify_history');
             renderHistory();
-            
-            // Clear current view if an image is shown
             document.getElementById('resultImg').style.display = 'none';
             document.getElementById('placeholderIcon').style.display = 'block';
             document.getElementById('downloadBtn').style.display = 'none';
-            
             closeClearModal();
         }
 
@@ -956,95 +1127,162 @@
             window.scrollTo({ top: document.querySelector('.panel.target').offsetTop - 100, behavior: 'smooth' });
         }
 
-        async function generateImage() {
-            const inputText = document.getElementById('inputText').value.trim();
-            const ratio = document.getElementById('ratio').value;
-            const res = document.getElementById('resolution').value;
-            const model = document.getElementById('model').value;
-            const btn = document.getElementById('generateBtn');
-            const placeholder = document.getElementById('placeholderIcon');
-            const resultImg = document.getElementById('resultImg');
-            const spinner = document.getElementById('loadingSpinner');
-            const loadingText = document.getElementById('loadingText');
-            const downloadBtn = document.getElementById('downloadBtn');
-
-            if (!inputText) {
-                alert("Please describe the image you want to generate.");
-                return;
-            }
-
-            if (currentMode === 'edit' && !document.getElementById('imageLinks').value.trim()) {
-                alert("Please provide an Image URL to edit.");
-                return;
-            }
-
-            // UI Loading State Update
-            const originalBtnContent = btn.innerHTML;
-            btn.innerHTML = `Generating...`;
+        // ─── UI Loading Helpers ───────────────────────────────────────────────────────
+        function setLoadingState(btn) {
+            const original = btn.innerHTML;
+            btn.innerHTML = 'Generating...';
             btn.disabled = true;
-            
-            placeholder.style.display = 'none';
-            resultImg.style.display = 'none';
-            downloadBtn.style.display = 'none';
-            
-            // Show Smooth Spinner and Custom Text
-            spinner.style.display = 'block';
-            loadingText.style.display = 'block';
-            loadingText.innerHTML = "It takes some time, but it's definietly working";
+            document.getElementById('placeholderIcon').style.display = 'none';
+            document.getElementById('resultImg').style.display = 'none';
+            document.getElementById('downloadBtn').style.display = 'none';
+            document.getElementById('loadingSpinner').style.display = 'block';
+            document.getElementById('loadingText').style.display = 'block';
+            document.getElementById('loadingText').innerHTML = "It takes some time, but it's definietly working";
+            return original;
+        }
 
-            // Prepare Data for API
+        function setSuccessState(imageUrl, btn, originalBtnContent) {
+            document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('loadingText').style.display = 'none';
+            document.getElementById('resultImg').src = imageUrl;
+            document.getElementById('resultImg').style.display = 'block';
+            document.getElementById('downloadBtn').href = imageUrl;
+            document.getElementById('downloadBtn').style.display = 'flex';
+            btn.innerHTML = originalBtnContent;
+            btn.disabled = false;
+            saveToHistory(imageUrl);
+        }
+
+        function setErrorState(message, btn, originalBtnContent) {
+            document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('loadingText').innerHTML = "Error: " + message;
+            setTimeout(() => {
+                document.getElementById('loadingText').style.display = 'none';
+                document.getElementById('placeholderIcon').style.display = 'block';
+            }, 3000);
+            btn.innerHTML = originalBtnContent;
+            btn.disabled = false;
+        }
+
+      // ─── KILWA Worker: Edit Image (Screenify+ AI model) ───────────────────────────
+async function editImage(imageUrl, prompt) {
+    const response = await fetch("https://ia.iliassahnoun23.workers.dev/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            mode: "edit",
+            img: imageUrl,
+            text: prompt
+        })
+    });
+
+    const data = await response.json();
+
+    if (data.image_url) return data.image_url;
+    throw new Error(data.error || data.message || "Edit failed.");
+}
+
+
+// ─── KILWA Worker: Blend Images (Screenify+ AI model) ────────────────────────
+async function blendImages(imageUrl1, imageUrl2, prompt) {
+    const response = await fetch("https://ia.iliassahnoun23.workers.dev/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            mode: "blend",
+            img1: imageUrl1,
+            img2: imageUrl2,
+            text: prompt
+        })
+    });
+
+    const data = await response.json();
+
+    if (data.image_url) return data.image_url;
+    throw new Error(data.error || data.message || "Blend failed.");
+}
+
+
+// ─── Main Generate Dispatcher ─────────────────────────────────────────────────
+async function generateImage() {
+    const inputText = document.getElementById('inputText').value.trim();
+    const ratio = document.getElementById('ratio').value;
+    const res = document.getElementById('resolution').value;
+    const model = document.getElementById('model').value;
+    const btn = document.getElementById('generateBtn');
+
+    if (!inputText) {
+        alert("Please describe the image you want to generate.");
+        return;
+    }
+
+    // ── BLEND MODE ────────────────────────────────────────────────────────────
+    if (currentMode === 'blend') {
+        const img1 = document.getElementById('blendImg1').value.trim();
+        const img2 = document.getElementById('blendImg2').value.trim();
+
+        if (!img1 || !img2) {
+            alert("Please provide both Image URLs to blend.");
+            return;
+        }
+
+        const original = setLoadingState(btn);
+
+        try {
+            const resultUrl = await blendImages(img1, img2, inputText);
+            setSuccessState(resultUrl, btn, original);
+        } catch (e) {
+            setErrorState(e.message, btn, original);
+        }
+
+        return;
+    }
+
+    // ── EDIT MODE (Screenify+ AI model via Worker) ────────────────────────────
+    if (currentMode === 'edit') {
+        const imageUrl = document.getElementById('imageLinks').value.trim();
+
+        if (!imageUrl) {
+            alert("Please provide an Image URL to edit.");
+            return;
+        }
+
+        const original = setLoadingState(btn);
+
+        try {
+            const resultUrl = await editImage(imageUrl, inputText);
+            setSuccessState(resultUrl, btn, original);
+        } catch (e) {
+            setErrorState(e.message, btn, original);
+        }
+
+        return;
+    }
+            // ── CREATE MODE (original worker — untouched) ─────────────────────────────
+            const original = setLoadingState(btn);
             const formData = new FormData();
             formData.append('text', inputText);
             formData.append('model', model);
             formData.append('ratio', ratio);
             formData.append('res', res);
 
-            // Add links if in Edit Mode
-            if (currentMode === 'edit') {
-                const linksRaw = document.getElementById('imageLinks').value;
-                if (linksRaw.includes(',')) {
-                    const linksArray = linksRaw.split(',').map(link => link.trim());
-                    formData.append('links', JSON.stringify(linksArray));
-                } else {
-                    formData.append('links', linksRaw.trim());
-                }
-            }
-
             try {
-                // Reverted back to the original Cloudflare worker URL
                 const response = await fetch('https://ai.iliassahnoun23.workers.dev/', {
                     method: 'POST',
                     body: formData
                 });
-
                 const data = await response.json();
-
                 if (data.success && data.url) {
-                    spinner.style.display = 'none';
-                    loadingText.style.display = 'none';
-                    
-                    resultImg.src = data.url;
-                    resultImg.style.display = 'block';
-                    
-                    downloadBtn.href = data.url;
-                    downloadBtn.style.display = 'flex';
-
-                    // Save to history automatically
-                    saveToHistory(data.url);
+                    setSuccessState(data.url, btn, original);
                 } else {
                     throw new Error(data.message || "Failed to generate image.");
                 }
-
             } catch (e) {
-                spinner.style.display = 'none';
-                loadingText.innerHTML = "Error: " + e.message;
-                setTimeout(() => {
-                    loadingText.style.display = 'none';
-                    placeholder.style.display = 'block';
-                }, 3000);
-            } finally {
-                btn.innerHTML = originalBtnContent;
-                btn.disabled = false;
+                setErrorState(e.message, btn, original);
             }
         }
     </script>
