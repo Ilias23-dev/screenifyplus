@@ -42,7 +42,7 @@
             --bg-dark: #09090b;
             --card-bg: #111113;
             --border: #27272a;
-            --accent: #e11d48; /* Premium Red */
+            --accent: #e11d48;
             --accent-hover: #be123c;
             --accent-glow: rgba(225, 29, 72, 0.4);
             --text-main: #ededed;
@@ -57,18 +57,12 @@
             scroll-behavior: smooth;
         }
 
-        ::selection {
-            background-color: var(--accent);
-            color: #fff;
-        }
-
         body {
             background-color: var(--bg-dark);
             color: var(--text-main);
             overflow-x: hidden;
         }
 
-        /* Animations */
         @keyframes fadeSlideUp {
             0% { opacity: 0; transform: translateY(50px) scale(0.95); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
@@ -79,18 +73,8 @@
             100% { transform: rotate(360deg); }
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
         @keyframes modalPop {
             0% { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.8); }
             100% { opacity: 1; transform: scale(1); }
         }
 
@@ -98,13 +82,7 @@
             opacity: 0;
             animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        
-        .animate-pop {
-            opacity: 0;
-            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
 
-        /* Navbar */
         nav {
             padding: 20px 5%;
             display: flex;
@@ -125,11 +103,6 @@
             cursor: pointer;
         }
 
-        .logo img {
-            border-radius: 8px;
-            object-fit: contain;
-        }
-
         .logo-text {
             font-size: 1.4rem;
             font-weight: 700;
@@ -137,7 +110,6 @@
             letter-spacing: -0.5px;
         }
 
-        /* Hero */
         .hero {
             text-align: center;
             padding: 80px 20px 40px;
@@ -151,13 +123,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .hero p {
-            color: var(--text-dim);
-            max-width: 600px;
-            margin: 0 auto 40px;
-        }
-
-        /* App Container */
         .app-container {
             width: 95%;
             max-width: 1100px;
@@ -171,7 +136,6 @@
             flex-direction: column;
         }
 
-        /* Tabs */
         .tabs {
             display: flex;
             gap: 10px;
@@ -199,560 +163,49 @@
             color: var(--accent);
         }
 
-        .translator-layout {
-            display: flex;
-            min-height: 400px;
-        }
-
-        .panel {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 30px;
-            position: relative;
-        }
-
-        .panel.source {
-            border-right: 1px solid var(--border);
-        }
+        .translator-layout { display: flex; min-height: 400px; }
+        .panel { flex: 1; display: flex; flex-direction: column; padding: 30px; position: relative; }
+        .panel.source { border-right: 1px solid var(--border); }
 
         @media (max-width: 850px) {
             .translator-layout { flex-direction: column; }
             .panel.source { border-right: none; border-bottom: 1px solid var(--border); }
-            .selector-row { flex-direction: column; gap: 10px; }
-            .panel { padding: 20px; }
         }
 
-        /* ── Comprehensive Mobile Overhaul ── */
-        @media (max-width: 600px) {
-            /* Nav */
-            nav { padding: 12px 4%; }
-            .logo img { height: 28px; }
-            .logo-text { font-size: 1.1rem; }
-
-            /* Hero */
-            .hero { padding: 36px 16px 24px; }
-            .hero h1 { font-size: 1.7rem; margin-bottom: 10px; }
-            .hero p { font-size: 0.85rem; margin-bottom: 24px; line-height: 1.5; }
-
-            /* App container */
-            .app-container { width: 100%; border-radius: 16px; margin-bottom: 28px; }
-
-            /* Panels */
-            .panel { padding: 14px; }
-            .panel.source { border-bottom: 1px solid var(--border); }
-
-            /* Tabs */
-            .tabs { padding: 6px; gap: 6px; border-radius: 12px; margin-bottom: 14px; }
-            .tab-btn { padding: 9px 6px; font-size: 12px; border-radius: 8px; }
-
-            /* Selectors */
-            .selector-row { flex-direction: column; gap: 8px; margin-bottom: 12px; }
-            select, .input-url { padding: 10px 14px; font-size: 14px; border-radius: 10px; }
-            select { padding-right: 36px; }
-
-            /* Textarea */
-            textarea { font-size: 15px; min-height: 100px; }
-
-            /* Helper text */
-            .helper-text { font-size: 12px; margin-top: 10px; }
-
-            /* Panel controls */
-            .panel-controls { margin-top: 10px; padding-top: 10px; gap: 8px; }
-            .icon-btn { padding: 7px 12px; font-size: 12px; }
-            .icon-btn svg { width: 14px; height: 14px; }
-
-            /* Action bar */
-            .action-bar {
-                flex-direction: column;
-                padding: 12px 14px;
-                gap: 10px;
-            }
-            button.translate-btn {
-                width: 100%;
-                justify-content: center;
-                padding: 13px 20px;
-                font-size: 15px;
-            }
-
-            /* Output */
-            .output-container { min-height: 180px; }
-            .generated-img { max-height: 280px; }
-
-            /* History */
-            .history-section { padding: 14px; }
-            .history-item { width: 64px; height: 64px; }
-
-            /* Features section */
-            .features-section { padding: 28px 4%; }
-            .section-grid {
-                grid-template-columns: 1fr;
-                gap: 14px;
-                margin-top: 20px;
-            }
-            .feature-card { padding: 20px; border-radius: 14px; }
-            .feature-card h3 { font-size: 0.95rem; }
-            .feature-card p { font-size: 0.85rem; }
-
-            /* Promo section */
-            .promo-section { padding: 44px 16px; margin-top: 24px; }
-            .promo-section h2 { font-size: 1.5rem; }
-            .promo-section p { font-size: 0.95rem; }
-            .promo-btn { padding: 12px 28px; font-size: 15px; }
-
-            /* Footer */
-            .footer-links {
-                flex-direction: column;
-                align-items: center;
-                gap: 12px;
-            }
-            footer { padding: 28px 16px; font-size: 13px; }
-
-            /* Modal */
-            .modal-content { padding: 22px 18px; border-radius: 16px; }
-            .modal-content h3 { font-size: 1.2rem; }
-            .modal-content p { font-size: 0.88rem; margin-bottom: 18px; }
-            .modal-btn { padding: 10px 18px; font-size: 0.9rem; }
-        }
-
-        .selector-row {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
+        .selector-row { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
         select, .input-url {
-            background: #18181b;
-            color: var(--text-main);
-            border: 1px solid var(--border);
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-weight: 500;
-            outline: none;
-            transition: 0.2s;
-            flex: 1;
-            width: 100%;
-        }
-
-        select {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e11d48' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            background-size: 15px;
-            padding-right: 45px;
-        }
-
-        select:focus, .input-url:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 2px var(--accent-glow);
-        }
-
-        #editUrlGroup {
-            display: none;
-            margin-bottom: 15px;
+            background: #18181b; color: var(--text-main); border: 1px solid var(--border);
+            padding: 12px 20px; border-radius: 12px; font-weight: 500; outline: none; width: 100%;
         }
 
         textarea {
-            width: 100%;
-            flex: 1;
-            background: transparent;
-            color: var(--text-main);
-            border: none;
-            font-size: 20px;
-            line-height: 1.6;
-            resize: none;
-            outline: none;
-            min-height: 150px;
+            width: 100%; flex: 1; background: transparent; color: var(--text-main);
+            border: none; font-size: 20px; line-height: 1.6; resize: none; outline: none; min-height: 150px;
         }
 
-        textarea::placeholder { color: #3f3f46; }
-
-        .helper-text {
-            font-size: 13px;
-            color: var(--text-dim);
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* Output Area Specifics */
         .output-container {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            text-align: center;
-            min-height: 250px;
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            flex-direction: column; text-align: center; min-height: 250px;
         }
 
-        .generated-img {
-            max-width: 100%;
-            max-height: 400px;
-            border-radius: 12px;
-            display: none;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid var(--border);
-        }
+        .generated-img { max-width: 100%; max-height: 400px; border-radius: 12px; display: none; border: 1px solid var(--border); }
+        .spinner { width: 40px; height: 40px; border: 4px solid rgba(225, 29, 72, 0.2); border-left-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; display: none; }
 
-        /* Smooth Spinner */
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(225, 29, 72, 0.2);
-            border-left-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            display: none;
-            margin-bottom: 15px;
-        }
+        .action-bar { padding: 20px 30px; background: #0d0d0f; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); }
+        button.translate-btn { background: var(--accent); color: #fff; border: none; padding: 14px 35px; font-weight: 600; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
 
-        .loading-text {
-            color: var(--accent);
-            font-size: 1.1rem;
-            font-weight: 500;
-            display: none;
-        }
+        .history-section { padding: 20px 30px; background: #111113; border-top: 1px solid var(--border); }
+        .history-grid { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; }
+        .history-item { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent; }
+        .history-item:hover { border-color: var(--accent); }
 
-        .placeholder-icon {
-            color: var(--border);
-            margin-bottom: 15px;
-        }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content { background: var(--card-bg); padding: 30px; border-radius: 20px; text-align: center; max-width: 400px; }
 
-        .panel-controls {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px dashed #27272a;
-        }
-        
-        .panel-controls.space-between {
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .icon-btn {
-            background: transparent;
-            color: var(--text-dim);
-            border: 1px solid var(--border);
-            padding: 8px 16px;
-            font-size: 13px;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .icon-btn:hover {
-            color: var(--text-main);
-            border-color: var(--accent);
-            background: rgba(225, 29, 72, 0.05);
-        }
-        
-        .surprise-btn {
-            color: var(--accent);
-            border-color: rgba(225, 29, 72, 0.3);
-        }
-
-        .icon-btn svg { width: 16px; height: 16px; stroke: currentColor; }
-
-        .action-bar {
-            padding: 20px 30px;
-            background: #0d0d0f;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid var(--border);
-        }
-
-        button.translate-btn {
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            padding: 14px 35px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            width: auto;
-        }
-
-        button.translate-btn:hover:not(:disabled) { 
-            transform: scale(1.05); 
-            background: var(--accent-hover); 
-            box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3);
-        }
-
-        button.translate-btn:disabled {
-            background: #3f3f46;
-            cursor: not-allowed;
-            color: #a1a1aa;
-        }
-
-        /* History Section */
-        .history-section {
-            padding: 20px 30px;
-            background: #111113;
-            border-top: 1px solid var(--border);
-        }
-
-        .history-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .history-header h3 {
-            font-size: 1rem;
-            color: var(--text-dim);
-            font-weight: 600;
-        }
-
-        .history-grid {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-        }
-
-        .history-grid::-webkit-scrollbar { height: 6px; }
-        .history-grid::-webkit-scrollbar-track { background: transparent; }
-        .history-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-
-        .history-item {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: 0.2s;
-            flex-shrink: 0;
-        }
-
-        .history-item:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        /* Custom Modal UI */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-overlay.active .modal-content {
-            animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        .modal-content {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 30px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-        }
-
-        .modal-content h3 {
-            color: var(--text-main);
-            margin-bottom: 10px;
-            font-size: 1.5rem;
-        }
-
-        .modal-content p {
-            color: var(--text-dim);
-            margin-bottom: 25px;
-            line-height: 1.5;
-            font-size: 0.95rem;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        .modal-btn {
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            border: none;
-            font-size: 1rem;
-        }
-
-        .modal-btn.cancel {
-            background: transparent;
-            color: var(--text-main);
-            border: 1px solid var(--border);
-        }
-
-        .modal-btn.cancel:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .modal-btn.confirm {
-            background: var(--accent);
-            color: #fff;
-        }
-
-        .modal-btn.confirm:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(225, 29, 72, 0.3);
-        }
-        
-        /* --- Intro Sections --- */
-        .features-section {
-            padding: 50px 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .feature-card {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            transition: 0.3s;
-        }
-
-        .feature-card:hover { 
-            border-color: var(--accent); 
-            transform: translateY(-5px); 
-            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.05);
-        }
-
-        .feature-card h3 { margin-bottom: 15px; color: var(--accent); display: flex; align-items: center; gap: 10px;}
-        .feature-card p { color: var(--text-dim); line-height: 1.6; }
-
-        /* --- Promo Section --- */
-        .promo-section {
-            background: #0d0d0f;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            padding: 80px 20px;
-            text-align: center;
-            margin-top: 50px;
-        }
-
-        .promo-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: #fff;
-        }
-
-        .promo-section p {
-            color: var(--text-dim);
-            max-width: 650px;
-            margin: 0 auto 30px;
-            font-size: 1.2rem;
-            line-height: 1.6;
-        }
-
-        .promo-btn {
-            background: transparent;
-            color: var(--accent);
-            border: 2px solid var(--accent);
-            padding: 14px 40px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .promo-btn:hover {
-            background: var(--accent);
-            color: #fff;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3);
-        }
-
-        /* Footer Links - UI Updates for Android/Mobile */
-        footer {
-            padding: 40px 20px;
-            text-align: center;
-            color: var(--text-dim);
-            font-size: 14px;
-            background: var(--bg-dark);
-            margin-top: 0px;
-            border-top: 1px solid var(--border);
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap; /* Helps prevent bad overlapping on smaller screens */
-            gap: 20px;
-            margin-top: 15px;
-        }
-
-        .footer-links a {
-            color: var(--text-dim);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.2s;
-            font-weight: 600;
-        }
-
-        .footer-links a:hover {
-            color: var(--accent);
-        }
-        
-        .footer-links svg {
-            width: 18px;
-            height: 18px;
-        }
-        
-
+        .footer-links { display: flex; justify-content: center; gap: 20px; margin-top: 15px; }
+        .footer-links a { color: var(--text-dim); text-decoration: none; font-weight: 600; }
+        footer { padding: 40px 20px; text-align: center; color: var(--text-dim); border-top: 1px solid var(--border); }
     </style>
 </head>
 <body>
@@ -766,12 +219,11 @@
 
     <section class="hero animate">
         <h1>Imagine the World.</h1>
-        <p>Experience the next generation of visual creation with Screenify+ AI. Professional, lightning-fast, and boundless.</p>
+        <p>Experience the next generation of visual creation with Screenify+ AI.</p>
     </section>
 
     <div class="app-container animate">
         <div class="translator-layout">
-            
             <div class="panel source">
                 <div class="tabs">
                     <button class="tab-btn active" id="btnCreate" onclick="switchMode('create')">Create Image</button>
@@ -784,506 +236,168 @@
                         <option value="NanoBanana">NanoBanana</option>
                         <option value="NanoBanana2" selected>NanoBanana 2</option>
                         <option value="NanoBananaPro">NanoBanana Pro</option>
+                        <option value="gpt2">Screenify GPT Image 2 (Fast & High Quality) </option>
                     </select>
                     <select id="ratio">
                         <option value="16:9">Widescreen (16:9)</option>
                         <option value="1:1">Square (1:1)</option>
                         <option value="9:16">Portrait (9:16)</option>
-                        <option value="4:3">Classic (4:3)</option>
-                        <option value="3:4">Vertical (3:4)</option>
-                    </select>
-                    <select id="resolution">
-                        <option value="4K">4K Ultra HD</option>
-                        <option value="2K">2K Quad HD</option>
-                        <option value="1K">1K Full HD</option>
                     </select>
                 </div>
 
-                <div id="editUrlGroup">
-                    <input type="text" id="imageLinks" class="input-url" placeholder="Paste Image URL here (Comma separated for multiple)">
+                <div id="editUrlGroup" style="display:none; margin-bottom: 15px;">
+                    <input type="text" id="imageLinks" class="input-url" placeholder="Paste Image URL here">
                 </div>
 
                 <div id="blendUrlGroup" style="display:none; margin-bottom: 15px;">
-                    <div style="display:flex; align-items:flex-start; gap:10px; background:rgba(225,29,72,0.08); border:1px solid rgba(225,29,72,0.35); border-radius:10px; padding:12px 14px; margin-bottom:14px; color:#f87171; font-size:13px; line-height:1.5;">
-                        <svg style="flex-shrink:0; margin-top:1px;" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                        <span><strong style="color:#fca5a5;">Beta Feature</strong> — Blend Images is currently in beta and may not work as expected. Results can vary.</span>
-                    </div>
-                    <input type="text" id="blendImg1" class="input-url" placeholder="Paste first Image URL here..." style="margin-bottom: 10px;">
-                    <input type="text" id="blendImg2" class="input-url" placeholder="Paste second Image URL here...">
+                    <input type="text" id="blendImg1" class="input-url" placeholder="First Image URL" style="margin-bottom: 10px;">
+                    <input type="text" id="blendImg2" class="input-url" placeholder="Second Image URL">
                 </div>
 
-                <textarea id="inputText" placeholder="Describe the image you want to generate in detail..."></textarea>
+                <textarea id="inputText" placeholder="Describe your image..."></textarea>
                 
-                <div class="helper-text">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                    Supports prompts in many languages, including Arabic
-                </div>
-                
-                <div class="panel-controls space-between">
-                    <button class="icon-btn surprise-btn" onclick="randomizePrompt()">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>
-                        Surprise Me
-                    </button>
-                    <button class="icon-btn" onclick="document.getElementById('inputText').value = ''; document.getElementById('imageLinks').value = '';">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        Clear
-                    </button>
+                <div class="panel-controls" style="display:flex; justify-content:space-between; margin-top:10px;">
+                    <button onclick="randomizePrompt()" style="background:none; border:1px solid var(--border); color:var(--accent); padding:8px 12px; border-radius:8px; cursor:pointer;">Surprise Me</button>
+                    <button onclick="document.getElementById('inputText').value = ''" style="background:none; border:1px solid var(--border); color:var(--text-dim); padding:8px 12px; border-radius:8px; cursor:pointer;">Clear</button>
                 </div>
             </div>
 
             <div class="panel target">
                 <div class="output-container" id="outputContainer">
-                    <svg class="placeholder-icon" id="placeholderIcon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                    
                     <div class="spinner" id="loadingSpinner"></div>
-                    <div id="loadingText" class="loading-text">Processing...</div>
-                    
-                    <img id="resultImg" class="generated-img" src="" alt="AI Generated Output">
+                    <div id="loadingText" style="display:none; color:var(--accent); margin-top:10px;">Processing...</div>
+                    <img id="resultImg" class="generated-img" src="">
                 </div>
-                
-                <div class="panel-controls">
-                    <a href="#" id="downloadBtn" class="icon-btn" download style="display: none;">
-                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                        Download Image
-                    </a>
+                <div style="margin-top:15px; text-align:right;">
+                    <a href="#" id="downloadBtn" style="display:none; color:var(--text-main); text-decoration:none; font-weight:600; border:1px solid var(--border); padding:8px 15px; border-radius:8px;">Download</a>
                 </div>
             </div>
-
         </div>
 
         <div class="action-bar">
-            <div></div> <!-- Spacer -->
-            <button class="translate-btn" id="generateBtn" onclick="generateImage()">
-                Generate Image
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-            </button>
+            <span></span>
+            <button class="translate-btn" id="generateBtn" onclick="generateImage()">Generate Image</button>
         </div>
 
-        <!-- History Section -->
-        <div class="history-section" id="historySection" style="display: none;">
-            <div class="history-header">
-                <h3>Recent Generations</h3>
-                <button class="icon-btn" onclick="openClearModal()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                    Clear History
-                </button>
-            </div>
+        <div class="history-section" id="historySection" style="display:none;">
+            <h3>Recent Generations</h3>
             <div class="history-grid" id="historyGrid"></div>
         </div>
     </div>
 
-    <!-- Custom Modal for Clearing History -->
+    <footer>
+        <p>&copy; 2026 Screenify+. All rights reserved.</p>
+    </footer>
+
     <div class="modal-overlay" id="clearModal">
         <div class="modal-content">
             <h3>Clear History?</h3>
-            <p>Are you sure you want to clean your generated image history? This action cannot be undone.</p>
-            <div class="modal-actions">
-                <button class="modal-btn cancel" onclick="closeClearModal()">Cancel</button>
-                <button class="modal-btn confirm" onclick="executeClearHistory()">Yes, clean it</button>
+            <div style="margin-top:20px; display:flex; gap:10px; justify-content:center;">
+                <button onclick="closeClearModal()">Cancel</button>
+                <button onclick="executeClearHistory()" style="background:var(--accent); color:white; border:none; padding:10px 20px; border-radius:8px;">Clear</button>
             </div>
         </div>
     </div>
-    
-    <section class="features-section">
-        <h2 class="animate" style="animation-delay: 0.5s; text-align:center; font-size: 2.5rem; margin-bottom: 20px;">Why Screenify+ AI?</h2>
-        <div class="section-grid">
-            <div class="feature-card animate-pop" style="animation-delay: 0.6s;">
-                <h3>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                    Boundless Creativity
-                </h3>
-                <p>We pride ourselves on an uncapped imagination engine, supporting complex prompts, distinct artistic styles, and photorealistic generation.</p>
-            </div>
-            <div class="feature-card animate-pop" style="animation-delay: 0.7s;">
-                <h3>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                    Minimalist Performance
-                </h3>
-                <p>No bloat. Our interface is designed for speed and focus. Get your images processed directly through our secure worker endpoints.</p>
-            </div>
-            <div class="feature-card animate-pop" style="animation-delay: 0.8s;">
-                <h3>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                    High Resolution
-                </h3>
-                <p>Export natively in 4K. Our engine upscales and enhances details automatically, making it perfect for production-ready assets.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="promo-section animate" style="animation-delay: 0.9s;">
-        <h2>Screenify+ Mission</h2>
-        <p>Our ultimate goal is to offer all essential internet services absolutely <strong>free</strong> and entirely <strong>without ads</strong>. The web belongs to everyone.</p>
-        <a href="https://screenifyplus.online/all" class="promo-btn">See what we offer</a>
-    </section>
-
-    <footer>
-        <p>&copy; 2026 Screenify+. All rights reserved.</p>
-        <div class="footer-links">
-            <a href="mailto:contact@screenifyplus.online">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                contact@screenifyplus.online
-            </a>
-            <a href="https://t.me/screenifyplus" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                t.me/screenifyplus
-            </a>
-        </div>
-    </footer>
 
     <script>
         let currentMode = 'create';
-
-        // ─── Surprise Me Prompts ────────────────────────────────────────────────────
-        const surprisePrompts = [
-            // Sci-Fi & Space
-            "A cyberpunk city at night with neon lights reflecting in rain puddles, flying cars overhead, highly detailed, 8k resolution",
-            "An epic spaceship battle above a ringed gas giant, cinematic lighting, lens flare, sci-fi masterpiece",
-            "A lone astronaut standing on a distant moon, watching a double sunset over alien mountains, photorealistic",
-            "A massive Dyson sphere under construction around a blue star, swarms of robotic drones, hard sci-fi concept art",
-            "A neon-lit underground hacker den on a space station, holographic screens everywhere, cyberpunk aesthetic",
-            "An alien ocean world with bioluminescent sea creatures visible beneath glassy teal water, two moons in the sky",
-            "A retrofuturistic rocket launch from a 1960s NASA facility, stylized poster art, bold colors",
-            "A derelict space station being reclaimed by zero-gravity jungle vines, soft morning sunlight through cracked hull",
-            "A city on Mars enclosed in a giant glass dome, red desert storms visible outside, golden hour lighting",
-            "A time portal opening in the middle of a modern city street, ancient Rome visible through the rift",
-
-            // Fantasy & Magic
-            "A serene landscape with a glowing blue waterfall hidden in a mystical forest, fireflies, fantasy concept art",
-            "A beautiful ancient temple floating in the sky surrounded by clouds and waterfalls, studio ghibli style",
-            "A dragon made of living fire and ember, soaring over a medieval fortress at dusk, epic fantasy art",
-            "A mage casting a spell that turns into thousands of glowing butterflies, dramatic magical realism",
-            "An underwater kingdom of merfolk with coral palaces and glowing jellyfish lanterns, vibrant fantasy art",
-            "A dark enchanted forest where the trees have glowing amber eyes, mysterious fog, atmospheric lighting",
-            "A phoenix rising from ashes in the middle of a thunderstorm, dramatic sky, hyperrealistic feathers",
-            "A witch's cozy cottage in an autumn forest, warm candlelight inside, smoke from chimney, magical details",
-            "A giant tree city with wooden bridges between ancient oaks, elvish architecture, golden sunset",
-            "A wizard's tower at the edge of a cliff, lightning crashing around it, spell books flying through the air",
-            "A fairy ring of glowing mushrooms in a misty moonlit glade, small ethereal creatures dancing inside",
-            "An ice palace carved into the face of an arctic glacier, northern lights reflected in the frozen walls",
-            "A knight in obsidian armor on a white horse crossing a rainbow bridge over storm clouds",
-            "A celestial library floating in space, infinite bookshelves extending into the cosmos, warm amber glow",
-
-            // Portraits & Characters
-            "A highly detailed portrait of a steampunk inventor with brass goggles and glowing mechanical eyes, volumetric lighting",
-            "A samurai warrior meditating under a cherry blossom tree, petals falling, soft golden light, oil painting style",
-            "A regal queen of the night sky, her gown made of galaxy nebulae and stars, dramatic portrait",
-            "A Viking warrior chief on a ship's prow in a storm, dramatic low angle, film photography grain",
-            "A futuristic gladiator in an arena filled with holographic spectators, neon lighting, close-up portrait",
-            "An elderly herbalist surrounded by hundreds of glowing potion bottles, warm candlelit workshop",
-            "A detective in a 1940s rain-soaked city, trench coat, neon reflections, noir film style",
-            "A young sorceress discovering her powers for the first time, crackling electricity around her hands",
-            "A pirate captain standing at the helm of a ghost ship, sea serpent visible beneath the waves",
-            "A cybernetic geisha with chrome face details and glowing circuit tattoos, ultra high detail, 8k",
-
-            // Nature & Landscapes
-            "A volcano erupting at midnight, lava rivers flowing into the ocean, dramatic sky full of stars",
-            "An ancient redwood forest in the Pacific Northwest, beams of sunlight through the canopy, morning mist",
-            "A tropical island seen from above through crystal clear water, colorful coral reef visible below",
-            "The Amazon rainforest canopy at sunrise, mist rising, macaws flying through golden light",
-            "A frozen tundra landscape with a massive aurora borealis in vivid greens and purples, ultra wide angle",
-            "A field of lavender in Provence at sunset, hot air balloons in the distance, painterly style",
-            "An underwater scene in the Great Barrier Reef, sea turtles and clownfish, sunbeams piercing the surface",
-            "A black sand beach in Iceland with massive waves crashing, stormy moody sky, long exposure style",
-            "Cherry blossom trees lining a canal in Kyoto at dusk, paper lanterns lit, their reflection shimmering",
-            "A lone lighthouse on a rocky cliff during a ferocious Atlantic storm, waves crashing overhead",
-            "Autumn forest path covered in fallen leaves, golden hour, mist between birch trees, cinematic photo",
-            "A massive salt flat in Bolivia perfectly reflecting the starry sky, making the ground and sky indistinguishable",
-
-            // Architecture & Interiors
-            "A minimalist isometric 3D room with a cozy gaming setup, warm lighting, pastel colors, lofi aesthetic",
-            "A grand Art Deco ballroom with golden chandeliers, mirrored floors, and a jazz orchestra on stage",
-            "A cozy Japanese tea house in a zen garden, bamboo walls, paper screens glowing from within, raining outside",
-            "The ruins of a Roman amphitheater overgrown with ivy and wildflowers, golden afternoon sun",
-            "A brutalist modernist house cantilevered over a dramatic coastal cliff, photorealistic architecture",
-            "An ancient Egyptian temple interior with hieroglyphs illuminated by torch light, dust particles in the air",
-            "A moss-covered gothic cathedral in a forgotten forest, stained glass windows still glowing, overgrown",
-            "A neon-soaked Tokyo alley at 2am, ramen shop steam, bicycles, puddle reflections, cinematic",
-            "A luxury treehouse hotel overlooking a rainforest canopy, glass walls, infinity pool, sunrise",
-            "A sprawling Moroccan riad courtyard with a central fountain, mosaic tiles, and bougainvillea overhead",
-            "A brutalist Soviet-era monument in the middle of a foggy pine forest, eerie and surreal",
-
-            // Animals & Creatures
-            "A cute fluffy cat wearing a tiny astronaut suit exploring Mars, photorealistic, adorable",
-            "A majestic wolf made of constellation stars running through a cosmic nebula, digital art",
-            "A giant octopus wrapped around a Victorian submarine deep in the ocean, bioluminescent glow",
-            "A hummingbird frozen in mid-flight, macro photography, iridescent feathers in extraordinary detail",
-            "A pride of lions silhouetted against an enormous African sunset, cinematic wildlife photography",
-            "A deep sea anglerfish in pitch black water, only the bioluminescent lure illuminating bizarre nearby creatures",
-            "A family of polar bears on an ice floe under the northern lights, wildlife photography, soft blues",
-            "A Bengal tiger walking through a shallow river in monsoon rain, jungle behind it, close-up portrait",
-            "A swan gliding on a misty lake at dawn, reflections perfectly mirrored, ethereal and serene",
-            "A neon butterfly with wings made of circuit boards, resting on a glowing flower, macro lens",
-
-            // Abstract & Artistic
-            "An abstract explosion of liquid gold and violet ink in zero gravity, macro photography, ultra detail",
-            "A surrealist Salvador Dali-inspired dreamscape with melting clocks over a Moroccan desert",
-            "Thousands of tiny origami cranes forming the shape of a giant phoenix, aerial view, colorful",
-            "A human silhouette filled with a miniature galaxy of swirling stars and nebulae, double exposure",
-            "A geometric low-poly landscape of mountains at sunset, faceted like a jewel, digital art",
-            "An art deco stained-glass window depicting the solar system, rich jewel tones, detailed linework",
-            "A watercolor painting of a rainy Paris street scene, impressionist style, warm café glow through windows",
-            "Abstract fluid art resembling oil on water, iridescent rainbow colors, ultra macro detail",
-            "A mandala made entirely of tropical flowers and butterflies, symmetrical, vibrant, overhead view",
-            "A minimalist line art illustration of a Japanese mountain village in winter, single unbroken line style",
-
-            // Food & Objects
-            "A hyper-realistic macro photograph of a sliced pomegranate, ruby-red seeds glistening, dark background",
-            "An elaborate fantasy feast spread on a medieval banquet table, candles, goblets, roasted meats",
-            "A levitating cup of coffee with steam forming tiny galaxies and nebulae above it, product photography",
-            "An impossibly perfect croissant with flaky layers visible in extreme macro detail, bakery photography",
-            "A collection of vintage glass perfume bottles catching light on a marble surface, luxurious still life",
-
-            // Moods & Seasons
-            "A cozy log cabin in a snowstorm at night, warm light in the windows, smoke from the chimney, peaceful",
-            "A thunderstorm over the Grand Canyon with multiple lightning bolts striking the canyon walls, dramatic",
-            "A summer evening on a wooden pier over a glassy lake, fireflies beginning to appear, golden nostalgic light",
-            "First frost on a spider web in an autumn garden, extreme macro photography, every ice crystal detailed",
-            "A dense foggy morning in San Francisco with just the tops of the Golden Gate Bridge towers visible"
-        ];
-
-        // ─── History ─────────────────────────────────────────────────────────────────
-        let imageHistory = [];
-        try {
-            const saved = localStorage.getItem('screenify_history');
-            if (saved) {
-                imageHistory = JSON.parse(saved);
-                if (!Array.isArray(imageHistory)) imageHistory = [];
-            }
-        } catch (e) {
-            imageHistory = [];
-        }
+        let imageHistory = JSON.parse(localStorage.getItem('screenify_history') || '[]');
 
         window.onload = renderHistory;
 
-        // ─── Mode Switching ───────────────────────────────────────────────────────────
         function switchMode(mode) {
             currentMode = mode;
             document.getElementById('btnCreate').classList.toggle('active', mode === 'create');
             document.getElementById('btnEdit').classList.toggle('active', mode === 'edit');
             document.getElementById('btnBlend').classList.toggle('active', mode === 'blend');
-            // NanoBanana model/ratio/resolution only relevant for Create
             document.getElementById('selectorRow').style.display = mode === 'create' ? 'flex' : 'none';
             document.getElementById('editUrlGroup').style.display = mode === 'edit' ? 'block' : 'none';
             document.getElementById('blendUrlGroup').style.display = mode === 'blend' ? 'block' : 'none';
         }
 
         function randomizePrompt() {
-            const randomIndex = Math.floor(Math.random() * surprisePrompts.length);
-            const inputField = document.getElementById('inputText');
-            inputField.value = surprisePrompts[randomIndex];
-            inputField.style.transition = "0.2s";
-            inputField.style.boxShadow = "0 0 0 2px rgba(225, 29, 72, 0.4)";
-            setTimeout(() => { inputField.style.boxShadow = "none"; }, 300);
+            const prompts = ["A cyberpunk city in the rain", "A majestic space nebula", "Minimalist Moroccan interior", "Future tech gadgets"];
+            document.getElementById('inputText').value = prompts[Math.floor(Math.random() * prompts.length)];
         }
 
-        // ─── History Helpers ──────────────────────────────────────────────────────────
         function renderHistory() {
             const grid = document.getElementById('historyGrid');
-            const section = document.getElementById('historySection');
-            if (imageHistory.length === 0) { section.style.display = 'none'; return; }
-            section.style.display = 'block';
+            if (imageHistory.length === 0) return;
+            document.getElementById('historySection').style.display = 'block';
             grid.innerHTML = '';
             imageHistory.forEach(url => {
-                if (url && typeof url === 'string') {
-                    const img = document.createElement('img');
-                    img.src = url;
-                    img.className = 'history-item';
-                    img.onclick = () => loadFromHistory(url);
-                    grid.appendChild(img);
-                }
+                const img = document.createElement('img');
+                img.src = url; img.className = 'history-item';
+                img.onclick = () => { document.getElementById('resultImg').src = url; document.getElementById('resultImg').style.display = 'block'; };
+                grid.appendChild(img);
             });
         }
 
-        function saveToHistory(url) {
-            if (!imageHistory.includes(url)) {
-                imageHistory.unshift(url);
-                if (imageHistory.length > 15) imageHistory.pop();
-                localStorage.setItem('screenify_history', JSON.stringify(imageHistory));
-                renderHistory();
-            }
-        }
+        async function generateImage() {
+            const text = document.getElementById('inputText').value;
+            const model = document.getElementById('model').value;
+            const btn = document.getElementById('generateBtn');
+            
+            if (!text) return alert("Enter a prompt");
 
-        // ─── Modal UI ─────────────────────────────────────────────────────────────────
-        function openClearModal() { document.getElementById('clearModal').classList.add('active'); }
-        function closeClearModal() { document.getElementById('clearModal').classList.remove('active'); }
-
-        function executeClearHistory() {
-            imageHistory = [];
-            localStorage.removeItem('screenify_history');
-            renderHistory();
-            document.getElementById('resultImg').style.display = 'none';
-            document.getElementById('placeholderIcon').style.display = 'block';
-            document.getElementById('downloadBtn').style.display = 'none';
-            closeClearModal();
-        }
-
-        function loadFromHistory(url) {
-            document.getElementById('placeholderIcon').style.display = 'none';
-            document.getElementById('resultImg').src = url;
-            document.getElementById('resultImg').style.display = 'block';
-            document.getElementById('downloadBtn').href = url;
-            document.getElementById('downloadBtn').style.display = 'flex';
-            window.scrollTo({ top: document.querySelector('.panel.target').offsetTop - 100, behavior: 'smooth' });
-        }
-
-        // ─── UI Loading Helpers ───────────────────────────────────────────────────────
-        function setLoadingState(btn) {
-            const original = btn.innerHTML;
-            btn.innerHTML = 'Generating...';
             btn.disabled = true;
-            document.getElementById('placeholderIcon').style.display = 'none';
-            document.getElementById('resultImg').style.display = 'none';
-            document.getElementById('downloadBtn').style.display = 'none';
             document.getElementById('loadingSpinner').style.display = 'block';
             document.getElementById('loadingText').style.display = 'block';
-            document.getElementById('loadingText').innerHTML = "It takes some time, but it's definietly working";
-            return original;
-        }
-
-        function setSuccessState(imageUrl, btn, originalBtnContent) {
-            document.getElementById('loadingSpinner').style.display = 'none';
-            document.getElementById('loadingText').style.display = 'none';
-            document.getElementById('resultImg').src = imageUrl;
-            document.getElementById('resultImg').style.display = 'block';
-            document.getElementById('downloadBtn').href = imageUrl;
-            document.getElementById('downloadBtn').style.display = 'flex';
-            btn.innerHTML = originalBtnContent;
-            btn.disabled = false;
-            saveToHistory(imageUrl);
-        }
-
-        function setErrorState(message, btn, originalBtnContent) {
-            document.getElementById('loadingSpinner').style.display = 'none';
-            document.getElementById('loadingText').innerHTML = "Error: " + message;
-            setTimeout(() => {
-                document.getElementById('loadingText').style.display = 'none';
-                document.getElementById('placeholderIcon').style.display = 'block';
-            }, 3000);
-            btn.innerHTML = originalBtnContent;
-            btn.disabled = false;
-        }
-
-      // ─── KILWA Worker: Edit Image (Screenify+ AI model) ───────────────────────────
-async function editImage(imageUrl, prompt) {
-    const response = await fetch("https://ia.iliassahnoun23.workers.dev/", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            mode: "edit",
-            img: imageUrl,
-            text: prompt
-        })
-    });
-
-    const data = await response.json();
-
-    if (data.image_url) return data.image_url;
-    throw new Error(data.error || data.message || "Edit failed.");
-}
-
-
-// ─── KILWA Worker: Blend Images (Screenify+ AI model) ────────────────────────
-async function blendImages(imageUrl1, imageUrl2, prompt) {
-    const response = await fetch("https://ia.iliassahnoun23.workers.dev/", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            mode: "blend",
-            img1: imageUrl1,
-            img2: imageUrl2,
-            text: prompt
-        })
-    });
-
-    const data = await response.json();
-
-    if (data.image_url) return data.image_url;
-    throw new Error(data.error || data.message || "Blend failed.");
-}
-
-
-// ─── Main Generate Dispatcher ─────────────────────────────────────────────────
-async function generateImage() {
-    const inputText = document.getElementById('inputText').value.trim();
-    const ratio = document.getElementById('ratio').value;
-    const res = document.getElementById('resolution').value;
-    const model = document.getElementById('model').value;
-    const btn = document.getElementById('generateBtn');
-
-    if (!inputText) {
-        alert("Please describe the image you want to generate.");
-        return;
-    }
-
-    // ── BLEND MODE ────────────────────────────────────────────────────────────
-    if (currentMode === 'blend') {
-        const img1 = document.getElementById('blendImg1').value.trim();
-        const img2 = document.getElementById('blendImg2').value.trim();
-
-        if (!img1 || !img2) {
-            alert("Please provide both Image URLs to blend.");
-            return;
-        }
-
-        const original = setLoadingState(btn);
-
-        try {
-            const resultUrl = await blendImages(img1, img2, inputText);
-            setSuccessState(resultUrl, btn, original);
-        } catch (e) {
-            setErrorState(e.message, btn, original);
-        }
-
-        return;
-    }
-
-    // ── EDIT MODE (Screenify+ AI model via Worker) ────────────────────────────
-    if (currentMode === 'edit') {
-        const imageUrl = document.getElementById('imageLinks').value.trim();
-
-        if (!imageUrl) {
-            alert("Please provide an Image URL to edit.");
-            return;
-        }
-
-        const original = setLoadingState(btn);
-
-        try {
-            const resultUrl = await editImage(imageUrl, inputText);
-            setSuccessState(resultUrl, btn, original);
-        } catch (e) {
-            setErrorState(e.message, btn, original);
-        }
-
-        return;
-    }
-            // ── CREATE MODE (original worker — untouched) ─────────────────────────────
-            const original = setLoadingState(btn);
-            const formData = new FormData();
-            formData.append('text', inputText);
-            formData.append('model', model);
-            formData.append('ratio', ratio);
-            formData.append('res', res);
 
             try {
-                const response = await fetch('https://ai.iliassahnoun23.workers.dev/', {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await response.json();
-                if (data.success && data.url) {
-                    setSuccessState(data.url, btn, original);
+                let url = "";
+                if (currentMode === 'create' && model === 'gpt2') {
+                    // NEW GPT IMAGE 2 PATH
+                    const res = await fetch("https://ai2.iliassahnoun23.workers.dev/", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify({ text: text })
+                    });
+                    const data = await res.json();
+                    url = data.image_url;
+                } else if (currentMode === 'edit') {
+                    const img = document.getElementById('imageLinks').value;
+                    const res = await fetch("https://ia.iliassahnoun23.workers.dev/", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify({ mode: "edit", img: img, text: text })
+                    });
+                    const data = await res.json();
+                    url = data.image_url;
+                } else if (currentMode === 'blend') {
+                    const img1 = document.getElementById('blendImg1').value;
+                    const img2 = document.getElementById('blendImg2').value;
+                    const res = await fetch("https://ia.iliassahnoun23.workers.dev/", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify({ mode: "blend", img1: img1, img2: img2, text: text })
+                    });
+                    const data = await res.json();
+                    url = data.image_url;
                 } else {
-                    throw new Error(data.message || "Failed to generate image.");
+                    // Standard Create Path
+                    const formData = new FormData();
+                    formData.append('text', text);
+                    formData.append('model', model);
+                    const res = await fetch('https://ai.iliassahnoun23.workers.dev/', { method: 'POST', body: formData });
+                    const data = await res.json();
+                    url = data.url;
                 }
-            } catch (e) {
-                setErrorState(e.message, btn, original);
-            }
+
+                if (url) {
+                    document.getElementById('resultImg').src = url;
+                    document.getElementById('resultImg').style.display = 'block';
+                    document.getElementById('downloadBtn').href = url;
+                    document.getElementById('downloadBtn').style.display = 'inline-block';
+                    imageHistory.unshift(url);
+                    localStorage.setItem('screenify_history', JSON.stringify(imageHistory.slice(0, 10)));
+                    renderHistory();
+                }
+            } catch (e) { alert("Error: " + e.message); }
+            
+            btn.disabled = false;
+            document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('loadingText').style.display = 'none';
         }
     </script>
 </body>
