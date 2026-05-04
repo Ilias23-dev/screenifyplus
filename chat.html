@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Screenify+ AI</title>
+<meta name="description" content="Screenify+ AI is a fast, modern platform for seamless AI interaction.">
+<meta property="og:title" content="SCREENIFY+ | AI">
+<meta property="og:image" content="https://screenifyplus.online/logo.png">
+<link rel="icon" type="image/png" href="https://screenifyplus.online/favicon.png">
+<meta name="theme-color" content="#e11d48">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SCREENIFY+">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- KaTeX (math rendering) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+
+<!-- Marked (markdown) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+
+<!-- highlight.js (code syntax) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+
+:root{
+  --red:#e50914;
+  --red2:#ff2530;
+  --rg:rgba(229,9,20,0.16);
+  --rb:rgba(229,9,20,0.25);
+  --bg:#080809;
+  --sb:#0c0c0e;
+  --s1:#111114;
+  --s2:#161619;
+  --s3:#1c1c21;
+  --b1:rgba(255,255,255,0.052);
+  --b2:rgba(255,255,255,0.088);
+  --tx:#e8e8e8;
+  --td:#6b6b75;
+  --tdd:#2e2e35;
+  --fi:'Inter',sans-serif;
+  --fd:'Syne',sans-serif;
+  --sw:268px;
+}
+
+body{font-family:var(--fi);background:var(--bg);color:var(--tx);display:flex;height:100vh;overflow:hidden}
+
+/* ── SIDEBAR ── */
+.sb{width:var(--sw);background:var(--sb);border-right:1px solid var(--b1);display:flex;flex-direction:column;flex-shrink:0;z-index:20}
+.sb-top{padding:16px 13px 13px;border-bottom:1px solid var(--b1)}
+.brand{display:flex;align-items:center;gap:9px;margin-bottom:13px}
+.brand-logo{width:31px;height:31px;border-radius:8px;object-fit:cover;border:1.5px solid var(--rb);box-shadow:0 0 14px var(--rg);flex-shrink:0}
+.brand-name{font-family:var(--fd);font-weight:800;font-size:1rem;letter-spacing:-0.02em}
+.brand-name b{color:var(--red);font-weight:800}
+.ncb{width:100%;background:var(--red);border:none;color:#fff;border-radius:9px;padding:8px 13px;font-family:var(--fi);font-size:.81rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px;transition:background .18s,transform .12s}
+.ncb:hover{background:var(--red2)}
+.ncb:active{transform:scale(.97)}
+.sb-lbl{padding:11px 13px 5px;font-size:.63rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--tdd)}
+.cl{flex:1;overflow-y:auto;padding:3px 5px 10px;scrollbar-width:thin;scrollbar-color:#1e1e24 transparent}
+.cl::-webkit-scrollbar{width:3px}
+.cl::-webkit-scrollbar-thumb{background:#1e1e24;border-radius:4px}
+.cl-empty{text-align:center;padding:26px 13px;color:var(--tdd);font-size:.73rem;line-height:1.75}
+.ci{display:flex;align-items:center;gap:8px;padding:8px 7px;border-radius:9px;cursor:pointer;transition:background .14s;border:1px solid transparent;margin-bottom:2px}
+.ci:hover{background:var(--s2)}
+.ci.active{background:rgba(229,9,20,.075);border-color:rgba(229,9,20,.13)}
+.ci-ico{width:27px;height:27px;border-radius:7px;background:var(--s3);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.ci.active .ci-ico{background:rgba(229,9,20,.13)}
+.ci-inf{flex:1;min-width:0}
+.ci-ttl{font-size:.77rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ci.active .ci-ttl{color:#fff}
+.ci-prv{font-size:.67rem;color:var(--td);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.ci-del{width:21px;height:21px;background:none;border:none;color:var(--tdd);cursor:pointer;border-radius:5px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .14s,color .14s,background .14s;flex-shrink:0}
+.ci:hover .ci-del{opacity:1}
+.ci-del:hover{color:#ff6060;background:rgba(255,80,80,.1)}
+.sb-foot{padding:10px 13px;border-top:1px solid var(--b1);font-size:.65rem;color:var(--tdd);display:flex;align-items:center;gap:6px}
+.dot-g{width:6px;height:6px;background:#22c55e;border-radius:50%;animation:pg 2.5s infinite;flex-shrink:0}
+@keyframes pg{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.4)}50%{box-shadow:0 0 0 5px rgba(34,197,94,0)}}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;min-width:0;background:var(--bg);position:relative}
+.main::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(229,9,20,.016) 1px,transparent 1px),linear-gradient(90deg,rgba(229,9,20,.016) 1px,transparent 1px);background-size:46px 46px}
+.topbar{display:flex;align-items:center;gap:12px;padding:12px 22px;border-bottom:1px solid var(--b1);background:rgba(8,8,9,.9);backdrop-filter:blur(16px);z-index:5;flex-shrink:0}
+.topbar-title{font-family:var(--fd);font-weight:700;font-size:.92rem;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mbadge{display:flex;align-items:center;gap:5px;background:rgba(229,9,20,.08);border:1px solid var(--rb);border-radius:100px;padding:3px 10px;font-size:.66rem;color:#ff8888;font-weight:500;flex-shrink:0}
+.pdot{width:5px;height:5px;background:var(--red);border-radius:50%;animation:pr 2s infinite}
+@keyframes pr{0%,100%{box-shadow:0 0 0 0 var(--rg)}50%{box-shadow:0 0 0 5px rgba(229,9,20,0)}}
+.mob-btn{display:none;width:31px;height:31px;background:none;border:1px solid var(--b2);border-radius:8px;color:var(--td);cursor:pointer;align-items:center;justify-content:center;flex-shrink:0}
+
+/* ── MESSAGES ── */
+.msgs{flex:1;overflow-y:auto;padding:22px 0 10px;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#191920 transparent;position:relative;z-index:1}
+.msgs::-webkit-scrollbar{width:4px}
+.msgs::-webkit-scrollbar-thumb{background:#191920;border-radius:4px}
+.msgs-in{max-width:760px;margin:0 auto;padding:0 22px;display:flex;flex-direction:column;gap:18px}
+
+/* WELCOME */
+.welcome{display:flex;flex-direction:column;align-items:center;text-align:center;padding:46px 20px 20px;animation:fu .5s ease both}
+@keyframes fu{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.wlogo{width:74px;height:74px;border-radius:20px;overflow:hidden;border:2px solid var(--rb);box-shadow:0 0 38px var(--rg),0 0 70px rgba(229,9,20,.05);margin-bottom:18px;flex-shrink:0}
+.wlogo img{width:100%;height:100%;object-fit:cover}
+.welcome h1{font-family:var(--fd);font-weight:800;font-size:1.85rem;letter-spacing:-.04em;margin-bottom:9px}
+.welcome h1 span{color:var(--red)}
+.welcome p{color:var(--td);font-size:.86rem;max-width:360px;line-height:1.65;margin-bottom:26px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;max-width:490px}
+.chip{background:var(--s2);border:1px solid var(--b2);color:var(--td);border-radius:100px;padding:7px 14px;font-size:.76rem;font-family:var(--fi);cursor:pointer;transition:all .18s;white-space:nowrap}
+.chip:hover{border-color:var(--rb);color:var(--tx);background:rgba(229,9,20,.06);transform:translateY(-1px)}
+
+/* ── ROWS ── */
+.row{display:flex;gap:10px;animation:fu .3s ease both}
+.row.user{flex-direction:row-reverse}
+.av{width:29px;height:29px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;overflow:hidden;margin-top:2px}
+.av.ai{border:1px solid var(--rb);box-shadow:0 0 10px var(--rg);background:#0f0f11}
+.av.ai img{width:100%;height:100%;object-fit:cover}
+.av.user{background:var(--red);color:#fff;font-family:var(--fd)}
+.bw{display:flex;flex-direction:column;max-width:78%}
+.row.user .bw{align-items:flex-end}
+
+/* ── BUBBLE ── */
+.bubble{padding:13px 16px;border-radius:13px;font-size:.875rem;line-height:1.75;word-break:break-word}
+.row.ai .bubble{background:var(--s1);border:1px solid var(--b1);border-top-left-radius:4px}
+.row.user .bubble{background:#190d0f;border:1px solid rgba(229,9,20,.17);border-top-right-radius:4px}
+
+/* Markdown rendering inside bubble */
+.bubble p{margin-bottom:.65em}
+.bubble p:last-child{margin-bottom:0}
+.bubble h1,.bubble h2,.bubble h3,.bubble h4{font-family:var(--fd);font-weight:700;margin:.8em 0 .35em;line-height:1.3}
+.bubble h1{font-size:1.15rem;color:#fff}
+.bubble h2{font-size:1.05rem;color:#eee}
+.bubble h3{font-size:.96rem;color:#ddd}
+.bubble h4{font-size:.88rem;color:#ccc}
+.bubble ul,.bubble ol{padding-left:1.3em;margin:.4em 0 .65em}
+.bubble li{margin:.22em 0;line-height:1.65}
+.bubble strong{color:#fff;font-weight:600}
+.bubble em{color:#aaa;font-style:italic}
+.bubble a{color:#ff8888;text-decoration:none}
+.bubble a:hover{text-decoration:underline}
+.bubble hr{border:none;border-top:1px solid var(--b2);margin:.8em 0}
+.bubble blockquote{border-left:3px solid var(--red);padding-left:12px;margin:.5em 0;color:var(--td);font-style:italic}
+.bubble table{border-collapse:collapse;width:100%;margin:.6em 0;font-size:.82rem}
+.bubble th,.bubble td{border:1px solid var(--b2);padding:7px 11px;text-align:left}
+.bubble th{background:var(--s3);color:#fff;font-weight:600}
+.bubble td{background:var(--s2)}
+.bubble tr:hover td{background:var(--s3)}
+
+/* Inline code */
+.bubble code:not([class]){background:rgba(255,255,255,.08);padding:2px 6px;border-radius:5px;font-size:.82em;font-family:'Fira Code','Courier New',monospace;color:#ff9aaf}
+
+/* ── CODE BLOCK ── */
+.code-wrap{position:relative;margin:.6em 0;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.07)}
+.code-header{display:flex;align-items:center;justify-content:space-between;background:#0d1117;padding:7px 14px;border-bottom:1px solid rgba(255,255,255,.06)}
+.code-lang{font-size:.67rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#6e7681;font-family:var(--fi)}
+.code-copy{display:flex;align-items:center;gap:5px;background:none;border:1px solid rgba(255,255,255,.1);color:#6e7681;font-size:.68rem;font-family:var(--fi);padding:3px 9px;border-radius:6px;cursor:pointer;transition:all .16s}
+.code-copy:hover{color:#e8e8e8;border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.05)}
+.code-copy.copied{color:#4ade80;border-color:rgba(74,222,128,.3)}
+.code-wrap pre{margin:0!important;border-radius:0!important}
+.code-wrap pre code{font-size:.8rem!important;font-family:'Fira Code','Courier New',monospace!important;padding:14px 16px!important;display:block;overflow-x:auto;line-height:1.6}
+
+/* ── MATH ── */
+.bubble .katex-display{overflow-x:auto;padding:.4em 0;margin:.5em 0}
+.bubble .katex{font-size:1.05em}
+
+/* ── BUBBLE META & ACTIONS ── */
+.bmeta-row{display:flex;align-items:center;gap:8px;margin-top:6px;padding:0 2px}
+.row.user .bmeta-row{justify-content:flex-end}
+.bmeta{font-size:.64rem;color:var(--tdd)}
+.bactions{display:flex;align-items:center;gap:3px;opacity:0;transition:opacity .18s}
+.row:hover .bactions{opacity:1}
+.bact-btn{display:flex;align-items:center;gap:4px;background:none;border:1px solid transparent;color:var(--tdd);font-size:.67rem;font-family:var(--fi);padding:3px 8px;border-radius:7px;cursor:pointer;transition:all .16s;white-space:nowrap}
+.bact-btn:hover{color:var(--tx);background:var(--s2);border-color:var(--b2)}
+.bact-btn.copied{color:#4ade80}
+.bact-btn svg{flex-shrink:0}
+
+/* ── TYPING ── */
+.tdots{display:flex;gap:4px;padding:4px 0;align-items:center}
+.tdots span{width:6px;height:6px;background:var(--red);border-radius:50%;animation:td 1.2s infinite;opacity:.5}
+.tdots span:nth-child(2){animation-delay:.15s}
+.tdots span:nth-child(3){animation-delay:.3s}
+@keyframes td{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+
+/* ── INPUT ── */
+.inp-zone{z-index:5;padding:12px 22px 16px;background:rgba(8,8,9,.93);backdrop-filter:blur(18px);border-top:1px solid var(--b1);flex-shrink:0}
+.inp-box{max-width:760px;margin:0 auto}
+.inp-row{display:flex;align-items:flex-end;gap:9px;background:var(--s2);border:1px solid var(--b2);border-radius:13px;padding:9px 11px;transition:border-color .2s,box-shadow .2s}
+.inp-row:focus-within{border-color:var(--rb);box-shadow:0 0 0 3px rgba(229,9,20,.07)}
+#inp{flex:1;background:none;border:none;outline:none;color:var(--tx);font-family:var(--fi);font-size:.875rem;line-height:1.5;resize:none;max-height:130px;overflow-y:auto;scrollbar-width:none}
+#inp::-webkit-scrollbar{display:none}
+#inp::placeholder{color:var(--tdd)}
+.sbtn{width:32px;height:32px;border-radius:8px;background:var(--red);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .18s}
+.sbtn:hover{background:var(--red2);transform:scale(1.06)}
+.sbtn:active{transform:scale(.95)}
+.sbtn:disabled{background:#2a1014;cursor:not-allowed;transform:none}
+.sbtn svg{width:14px;height:14px}
+.inp-foot{display:flex;align-items:center;justify-content:space-between;margin-top:6px;padding:0 2px}
+.hint{font-size:.65rem;color:var(--tdd)}
+.err{display:none;align-items:center;gap:5px;background:rgba(255,80,80,.08);border:1px solid rgba(255,80,80,.2);border-radius:100px;padding:3px 10px;font-size:.68rem;color:#ff7070}
+.err.show{display:flex}
+
+/* Mobile */
+@media(max-width:660px){
+  .mob-btn{display:flex}
+  .sb{position:fixed;inset:0 auto 0 0;width:min(268px,84vw);transform:translateX(-100%);transition:transform .24s ease;z-index:100}
+  .sb.open{transform:translateX(0)}
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99}
+  .sb.open+.overlay{display:block}
+  .bw{max-width:90%}
+  .bactions{opacity:1}
+}
+</style>
+</head>
+<body>
+
+<aside class="sb" id="sb">
+  <div class="sb-top">
+    <div class="brand">
+      <img src="https://screenifyplus.online/logo.png" class="brand-logo" onerror="this.style.display='none'">
+      <span class="brand-name">Screenify<b>+</b> AI</span>
+    </div>
+    <button class="ncb" onclick="newChat()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      New Chat
+    </button>
+  </div>
+  <div class="sb-lbl">Conversations</div>
+  <div class="cl" id="cl"></div>
+  <div class="sb-foot"><span class="dot-g"></span>Gemini 2.5 Flash · Online</div>
+</aside>
+<div class="overlay" onclick="closeSB()"></div>
+
+<main class="main">
+  <div class="topbar">
+    <button class="mob-btn" onclick="toggleSB()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="topbar-title" id="ttl">Screenify+ AI</div>
+    <div class="mbadge"><span class="pdot"></span>Gemini 2.5 Flash</div>
+  </div>
+
+  <div class="msgs" id="msgs">
+    <div class="msgs-in" id="mi"></div>
+  </div>
+
+  <div class="inp-zone">
+    <div class="inp-box">
+      <div class="inp-row">
+        <textarea id="inp" rows="1" placeholder="Ask me anything…"></textarea>
+        <button class="sbtn" id="sbtn" onclick="send()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </div>
+      <div class="inp-foot">
+        <span class="hint">Enter to send · Shift+Enter for new line</span>
+        <span class="err" id="err">⚠️ Failed to connect</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+const API = 'https://gemin1.iliassahnoun23.workers.dev/';
+const SK  = 'sp_chat_v4';
+
+let sessions = [];
+let aid = null;
+let busy = false;
+
+const mi   = document.getElementById('mi');
+const msgs = document.getElementById('msgs');
+const ttl  = document.getElementById('ttl');
+const sbtn = document.getElementById('sbtn');
+const inp  = document.getElementById('inp');
+const err  = document.getElementById('err');
+const cl   = document.getElementById('cl');
+
+/* ── STORAGE ── */
+function load() { try { sessions = JSON.parse(localStorage.getItem(SK)||'[]'); } catch { sessions=[]; } }
+function save() { localStorage.setItem(SK, JSON.stringify(sessions)); }
+
+/* ── UTILS ── */
+function uid()  { return Date.now().toString(36)+Math.random().toString(36).slice(2,5); }
+function ts()   { return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); }
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function sess(id) { return sessions.find(s=>s.id===id); }
+function bot() { msgs.scrollTo({top:msgs.scrollHeight,behavior:'smooth'}); }
+
+/* ── MARKDOWN + MATH + CODE RENDERER ── */
+// Configure marked
+marked.setOptions({ breaks: true, gfm: true });
+
+// Custom renderer for code blocks
+const renderer = new marked.Renderer();
+renderer.code = function(code, lang) {
+  const language = (lang || '').toLowerCase().trim();
+  // Map common aliases
+  const langMap = {js:'javascript',ts:'typescript',py:'python',rb:'ruby',sh:'bash',yml:'yaml'};
+  const hlLang = langMap[language] || language;
+  
+  let highlighted = '';
+  try {
+    if (hlLang && hljs.getLanguage(hlLang)) {
+      highlighted = hljs.highlight(code, {language: hlLang}).value;
+    } else {
+      highlighted = hljs.highlightAuto(code).value;
+    }
+  } catch(e) {
+    highlighted = esc(code);
+  }
+  
+  const displayLang = language || 'code';
+  return `<div class="code-wrap">
+    <div class="code-header">
+      <span class="code-lang">${displayLang}</span>
+      <button class="code-copy" onclick="copyCode(this)" data-code="${encodeURIComponent(code)}">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy
+      </button>
+    </div>
+    <pre><code class="hljs language-${hlLang}">${highlighted}</code></pre>
+  </div>`;
+};
+
+marked.use({ renderer });
+
+function renderMD(text) {
+  // Protect math blocks from markdown processing
+  const mathBlocks = [];
+  let i = 0;
+  // Replace $$...$$ display math
+  text = text.replace(/\$\$[\s\S]+?\$\$/g, (m) => {
+    mathBlocks.push(m);
+    return `%%MATH_DISPLAY_${i++}%%`;
+  });
+  // Replace $...$ inline math (not inside code)
+  text = text.replace(/(?<![`\\])\$([^\$\n]+?)\$(?!`)/g, (m) => {
+    mathBlocks.push(m);
+    return `%%MATH_INLINE_${i++}%%`;
+  });
+
+  // Run markdown
+  let html = marked.parse(text);
+
+  // Restore math
+  html = html.replace(/%%MATH_DISPLAY_(\d+)%%/g, (_, idx) => {
+    const raw = mathBlocks[parseInt(idx)].slice(2,-2).trim();
+    try { return katex.renderToString(raw, {displayMode:true,throwOnError:false}); }
+    catch(e) { return `<code>$$${raw}$$</code>`; }
+  });
+  html = html.replace(/%%MATH_INLINE_(\d+)%%/g, (_, idx) => {
+    const raw = mathBlocks[parseInt(idx)].slice(1,-1).trim();
+    try { return katex.renderToString(raw, {displayMode:false,throwOnError:false}); }
+    catch(e) { return `<code>$${raw}$</code>`; }
+  });
+
+  return html;
+}
+
+/* ── COPY HELPERS ── */
+async function copyToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch(e) {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    return true;
+  }
+}
+
+function copyCode(btn) {
+  const code = decodeURIComponent(btn.dataset.code);
+  copyToClipboard(code).then(() => {
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy`;
+    }, 2200);
+  });
+}
+
+/* ── SIDEBAR ── */
+function drawSB() {
+  cl.innerHTML = '';
+  if (!sessions.length) {
+    cl.innerHTML = '<div class="cl-empty">No conversations yet.<br>Start a new chat!</div>';
+    return;
+  }
+  sessions.forEach(s => {
+    const last = s.msgs.length ? s.msgs[s.msgs.length-1].text : '';
+    const d = document.createElement('div');
+    d.className = 'ci'+(s.id===aid?' active':'');
+    d.innerHTML = `
+      <div class="ci-ico">💬</div>
+      <div class="ci-inf">
+        <div class="ci-ttl">${esc(s.title)}</div>
+        <div class="ci-prv">${esc(last.slice(0,44).replace(/\n/g,' '))}</div>
+      </div>
+      <button class="ci-del" title="Delete">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <polyline points="3 6 5 6 21 6"/>
+          <path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/>
+        </svg>
+      </button>`;
+    d.querySelector('.ci-del').addEventListener('click',e=>{e.stopPropagation();delSess(s.id);});
+    d.addEventListener('click',()=>{openSess(s.id);closeSB();});
+    cl.appendChild(d);
+  });
+}
+
+/* ── SESSION OPS ── */
+function newChat() {
+  const id = uid();
+  sessions.unshift({id,title:'New Chat',msgs:[]});
+  save(); openSess(id); closeSB();
+}
+
+function openSess(id) {
+  aid = id;
+  const s = sess(id);
+  ttl.textContent = s ? s.title : 'Screenify+ AI';
+  mi.innerHTML = '';
+  err.classList.remove('show');
+  if (!s||!s.msgs.length) renderWelcome();
+  else { s.msgs.forEach(m=>bubble(m.role,m.text,m.time,false)); bot(); }
+  drawSB();
+}
+
+function delSess(id) {
+  sessions = sessions.filter(s=>s.id!==id);
+  save();
+  if (aid===id) {
+    if (sessions.length) openSess(sessions[0].id);
+    else { aid=null; mi.innerHTML=''; renderWelcome(); ttl.textContent='Screenify+ AI'; }
+  }
+  drawSB();
+}
+
+function setTitle(id, text) {
+  const s = sess(id); if(!s) return;
+  s.title = text.slice(0,40).replace(/\n/g,' ').trim()+(text.length>40?'…':'');
+  ttl.textContent = s.title;
+  save(); drawSB();
+}
+
+/* ── WELCOME ── */
+function renderWelcome() {
+  const w = document.createElement('div');
+  w.className='welcome'; w.id='ws';
+  w.innerHTML=`
+    <div class="wlogo"><img src="https://screenifyplus.online/logo.png" onerror="this.parentElement.innerHTML='⚡'"></div>
+    <h1>Screenify<span>+</span> AI</h1>
+    <p>Your smart AI assistant for movies, series, and everything in between.</p>
+    <div class="chips">
+      <button class="chip" onclick="qs('What are the best movies of 2024?')">🎬 Best movies 2024</button>
+      <button class="chip" onclick="qs('Recommend a great thriller series')">🔪 Thriller series</button>
+      <button class="chip" onclick="qs('Explain the plot of Inception')">🌀 About Inception</button>
+      <button class="chip" onclick="qs('أفضل الأفلام العربية في 2024')">🌙 أفلام عربية</button>
+      <button class="chip" onclick="qs('Tell me a surprising cinema history fact')">🎭 Cinema facts</button>
+      <button class="chip" onclick="qs('اقترح لي مسلسل جيد للمشاهدة')">📺 اقترح مسلسل</button>
+    </div>`;
+  mi.appendChild(w);
+}
+
+/* ── BUBBLES ── */
+function bubble(role, text, time, anim=true, msgIdx=null) {
+  const row = document.createElement('div');
+  row.className=`row ${role}`;
+  if(!anim) row.style.animation='none';
+  if(msgIdx !== null) row.dataset.msgIdx = msgIdx;
+  
+  const av = role==='ai'
+    ? `<div class="av ai"><img src="https://screenifyplus.online/logo.png" onerror="this.parentElement.textContent='⚡'"></div>`
+    : `<div class="av user">You</div>`;
+
+  const content = role==='ai'
+    ? `<div class="bubble md-body">${renderMD(text)}</div>`
+    : `<div class="bubble">${esc(text).replace(/\n/g,'<br>')}</div>`;
+
+  // Action buttons
+  const aiActions = role==='ai' ? `
+    <div class="bactions">
+      <button class="bact-btn" title="Copy response" onclick="copyBubble(this,'${encodeURIComponent(text)}')">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy
+      </button>
+      <button class="bact-btn" title="Regenerate" onclick="regenerate(this)">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        Regenerate
+      </button>
+    </div>` : '';
+
+  row.innerHTML=`${av}<div class="bw">${content}<div class="bmeta-row"><span class="bmeta">${time}</span>${aiActions}</div></div>`;
+  mi.appendChild(row);
+  bot();
+  return row;
+}
+
+function copyBubble(btn, encodedText) {
+  const text = decodeURIComponent(encodedText);
+  copyToClipboard(text).then(() => {
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy`;
+    }, 2200);
+  });
+}
+
+async function regenerate(btn) {
+  if (busy || !aid) return;
+  const s = sess(aid);
+  if (!s || s.msgs.length < 2) return;
+
+  // Find the last user message
+  let lastUserIdx = -1;
+  for (let i = s.msgs.length - 1; i >= 0; i--) {
+    if (s.msgs[i].role === 'user') { lastUserIdx = i; break; }
+  }
+  if (lastUserIdx < 0) return;
+
+  const userMsg = s.msgs[lastUserIdx];
+
+  // Remove all messages after lastUserIdx from DOM and session
+  const rows = mi.querySelectorAll('.row');
+  const toRemove = Array.from(rows).slice(lastUserIdx + 1);
+  toRemove.forEach(r => r.remove());
+  s.msgs = s.msgs.slice(0, lastUserIdx + 1);
+  save();
+
+  // Re-send
+  busy = true; sbtn.disabled = true;
+  err.classList.remove('show');
+  showTyping();
+
+  try {
+    const reply = await callAPI(userMsg.text);
+    hideTyping();
+    const at = ts();
+    bubble('ai', reply, at);
+    s.msgs.push({role:'ai', text:reply, time:at});
+    save(); drawSB();
+  } catch(e) {
+    hideTyping();
+    err.classList.add('show');
+  } finally {
+    busy = false; sbtn.disabled = false; inp.focus();
+  }
+}
+
+function showTyping() {
+  const r=document.createElement('div');
+  r.className='row ai';r.id='typing';
+  r.innerHTML=`<div class="av ai"><img src="https://screenifyplus.online/logo.png" onerror="this.parentElement.textContent='⚡'"></div>
+    <div class="bw"><div class="bubble"><div class="tdots"><span></span><span></span><span></span></div></div></div>`;
+  mi.appendChild(r);bot();
+}
+function hideTyping(){document.getElementById('typing')?.remove();}
+
+/* ── API ── */
+async function callAPI(text) {
+  const url = `${API}?text=${encodeURIComponent(text)}`;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('HTTP '+r.status);
+  const d = await r.json();
+  if (d.status==='success' && d.reply) return d.reply;
+  throw new Error('Bad response');
+}
+
+/* ── SEND ── */
+async function send() {
+  const text = inp.value.trim();
+  if (!text||busy) return;
+
+  if (!aid) newChat();
+  const s = sess(aid);
+
+  document.getElementById('ws')?.remove();
+  err.classList.remove('show');
+  busy=true; sbtn.disabled=true;
+  inp.value=''; inp.style.height='auto';
+
+  const t = ts();
+  bubble('user',text,t);
+  s.msgs.push({role:'user',text,time:t});
+  if (s.msgs.length===1) setTitle(aid,text);
+  save(); drawSB();
+
+  showTyping();
+
+  try {
+    const reply = await callAPI(text);
+    hideTyping();
+    const at=ts();
+    bubble('ai',reply,at);
+    s.msgs.push({role:'ai',text:reply,time:at});
+    save(); drawSB();
+  } catch(e) {
+    hideTyping();
+    err.classList.add('show');
+  } finally {
+    busy=false; sbtn.disabled=false; inp.focus();
+  }
+}
+
+function qs(t){inp.value=t;send();}
+
+/* ── TEXTAREA ── */
+inp.addEventListener('input',()=>{
+  inp.style.height='auto';
+  inp.style.height=Math.min(inp.scrollHeight,130)+'px';
+});
+inp.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}
+});
+
+/* ── MOBILE ── */
+function toggleSB(){document.getElementById('sb').classList.toggle('open');}
+function closeSB() {document.getElementById('sb').classList.remove('open');}
+
+/* ── BOOT ── */
+load();
+drawSB();
+if(sessions.length) openSess(sessions[0].id);
+else renderWelcome();
+inp.focus();
+</script>
+</body>
+</html>
