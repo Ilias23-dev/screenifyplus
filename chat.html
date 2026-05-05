@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Screenify+ - محادثة ذكية</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -53,7 +53,8 @@
     ::-webkit-scrollbar-thumb:hover { background: var(--border-light); }
 
     /* === LAYOUT === */
-    .app { display: flex; direction: ltr; height: 100vh; }
+    /* Using 100dvh ensures mobile browsers don't hide the bottom behind the address bar */
+    .app { display: flex; direction: ltr; height: 100vh; height: 100dvh; }
     .rtl { direction: rtl; }
 
     /* === SIDEBAR === */
@@ -140,7 +141,7 @@
     }
 
     /* === MAIN === */
-    .main { flex: 1; display: flex; flex-direction: column; min-width: 0; position: relative; }
+    .main { flex: 1; display: flex; flex-direction: column; min-width: 0; position: relative; height: 100%; }
     .main-header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 14px 20px; border-bottom: 1px solid var(--border);
@@ -348,9 +349,10 @@
       margin: 14px 0; padding: 18px; text-align: center;
       background: var(--bg-secondary); border: 1px solid var(--border);
       border-radius: var(--radius-sm); overflow-x: auto;
+      direction: ltr; /* Ensure math renders LTR properly */
     }
     .math-block .katex-display { margin: 0; }
-    .math-inline .katex { font-size: 1.05em; }
+    .math-inline .katex { font-size: 1.05em; direction: ltr; display: inline-block; }
 
     /* Message actions */
     .msg-actions {
@@ -479,9 +481,9 @@
     /* === RESPONSIVE === */
     @media (max-width: 768px) {
       .sidebar {
-        position: fixed; right: 0; top: 0; bottom: 0;
-        transform: translateX(100%);
-        box-shadow: -8px 0 32px rgba(0,0,0,0.5);
+        position: fixed; left: 0; right: auto; top: 0; bottom: 0;
+        transform: translateX(-100%); /* Slides from the left to match hamburger menu */
+        box-shadow: 8px 0 32px rgba(0,0,0,0.5);
       }
       .sidebar.open { transform: translateX(0); }
       .sidebar-overlay.show { display: block; }
@@ -489,7 +491,11 @@
       .suggestions { grid-template-columns: 1fr; }
       .msg-row { max-width: 95%; }
       .messages-inner { padding: 0 14px; }
-      .input-area { padding: 12px 14px 16px; }
+      
+      /* Mobile safe area padding to prevent input hiding behind iOS/Android bottom bars */
+      .input-area { 
+        padding: 12px 14px calc(16px + env(safe-area-inset-bottom)); 
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -502,7 +508,6 @@
 </head>
 <body>
   <div class="app">
-    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-head">
         <div class="sidebar-logo rtl">
@@ -517,10 +522,8 @@
       <div class="chat-list" id="chatList"></div>
     </aside>
 
-    <!-- Mobile overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-    <!-- Main -->
     <main class="main">
       <header class="main-header">
         <div class="header-left">
@@ -553,7 +556,6 @@
     </main>
   </div>
 
-  <!-- Delete Modal -->
   <div class="modal-overlay" id="deleteModal">
     <div class="modal-card">
       <div class="modal-icon">
@@ -568,7 +570,6 @@
     </div>
   </div>
 
-  <!-- Toast -->
   <div class="toast-wrap" id="toastWrap"></div>
 
   <script>
@@ -616,12 +617,25 @@
         inlineCodes.push(c);
         return `__IC_${inlineCodes.length - 1}__`;
       });
-      // حماية كتل الرياضيات
+      
+      // حماية كتل الرياضيات (مع دعم \[ ... \] الجديد)
+      text = text.replace(/\\\[([\s\S]*?)\\\]/g, (_, m) => {
+        mathBlocks.push(m.trim());
+        return `__MB_${mathBlocks.length - 1}__`;
+      });
       text = text.replace(/\$\$([\s\S]*?)\$\$/g, (_, m) => {
         mathBlocks.push(m.trim());
         return `__MB_${mathBlocks.length - 1}__`;
       });
-      // رياضيات مضمنة
+
+      // رياضيات مضمنة (مع دعم \( ... \) الجديد)
+      text = text.replace(/\\\(([\s\S]*?)\\\)/g, (_, m) => {
+        if (typeof katex !== 'undefined') {
+          try { return '<span class="math-inline">' + katex.renderToString(m.trim(), { throwOnError: false, displayMode: false }) + '</span>'; }
+          catch { return '\\(' + esc(m) + '\\)'; }
+        }
+        return '\\(' + esc(m) + '\\)';
+      });
       text = text.replace(/\$([^\$\n]+?)\$/g, (_, m) => {
         if (typeof katex !== 'undefined') {
           try { return '<span class="math-inline">' + katex.renderToString(m.trim(), { throwOnError: false, displayMode: false }) + '</span>'; }
@@ -629,6 +643,7 @@
         }
         return '$' + esc(m) + '$';
       });
+
       // تنسيق Markdown أساسي
       text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
       text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
