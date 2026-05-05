@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Screenify+ - محادثة ذكية</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -53,8 +53,7 @@
     ::-webkit-scrollbar-thumb:hover { background: var(--border-light); }
 
     /* === LAYOUT === */
-    /* Using 100dvh ensures mobile browsers don't hide the bottom behind the address bar */
-    .app { display: flex; direction: ltr; height: 100vh; height: 100dvh; }
+    .app { display: flex; direction: ltr; height: 100vh; }
     .rtl { direction: rtl; }
 
     /* === SIDEBAR === */
@@ -139,9 +138,36 @@
       display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
       backdrop-filter: blur(4px); z-index: 99;
     }
+    .sidebar-footer {
+      padding: 14px 18px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .footer-icon-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: var(--radius-xs);
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .footer-icon-btn:hover {
+      color: var(--text-primary);
+      background: var(--bg-hover);
+    }
+    .footer-icon-btn svg {
+      width: 20px;
+      height: 20px;
+    }
 
     /* === MAIN === */
-    .main { flex: 1; display: flex; flex-direction: column; min-width: 0; position: relative; height: 100%; }
+    .main { flex: 1; display: flex; flex-direction: column; min-width: 0; position: relative; }
     .main-header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 14px 20px; border-bottom: 1px solid var(--border);
@@ -156,7 +182,63 @@
     }
     .menu-btn svg { width: 20px; height: 20px; }
 
-    /* === MODEL DROPDOWN === */
+    /* === MODEL DROPDOWN & SWITCHER === */
+    .controls-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* Mode Switcher Slider */
+    .mode-slider {
+      display: flex;
+      align-items: center;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 3px;
+      position: relative;
+      height: 38px;
+    }
+    .mode-option {
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      z-index: 2;
+      transition: color 0.2s;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mode-option.active {
+      color: var(--text-primary);
+    }
+    .mode-indicator {
+      position: absolute;
+      top: 3px;
+      bottom: 3px;
+      width: 50%;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xs);
+      transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .mode-slider[data-mode="chat"] .mode-indicator {
+      transform: translateX(0);
+    }
+    .mode-slider[data-mode="coding"] .mode-indicator {
+      transform: translateX(-100%);
+    }
+    [dir="rtl"] .mode-slider[data-mode="chat"] .mode-indicator {
+      transform: translateX(0);
+    }
+    [dir="rtl"] .mode-slider[data-mode="coding"] .mode-indicator {
+      transform: translateX(100%);
+    }
+
     .model-dd { position: relative; }
     .model-dd-trigger {
       display: flex; align-items: center; gap: 9px;
@@ -164,6 +246,7 @@
       border: 1px solid var(--border); background: var(--bg-secondary);
       color: var(--text-primary); font-family: inherit; font-size: 13px; font-weight: 500;
       cursor: pointer; transition: all 0.15s; white-space: nowrap;
+      height: 38px;
     }
     .model-dd-trigger:hover { border-color: var(--border-light); background: var(--bg-tertiary); }
     .model-dd-icon {
@@ -181,10 +264,10 @@
       min-width: 260px; max-height: 320px; overflow-y: auto;
       background: var(--bg-secondary); border: 1px solid var(--border);
       border-radius: var(--radius-sm); padding: 6px;
-      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.6);
       opacity: 0; visibility: hidden; transform: translateY(-8px);
       transition: all 0.2s cubic-bezier(.4,0,.2,1);
-      z-index: 200;
+      z-index: 999;
     }
     .model-dd.open .model-dd-menu { opacity: 1; visibility: visible; transform: translateY(0); }
     .model-dd-option {
@@ -349,10 +432,9 @@
       margin: 14px 0; padding: 18px; text-align: center;
       background: var(--bg-secondary); border: 1px solid var(--border);
       border-radius: var(--radius-sm); overflow-x: auto;
-      direction: ltr; /* Ensure math renders LTR properly */
     }
     .math-block .katex-display { margin: 0; }
-    .math-inline .katex { font-size: 1.05em; direction: ltr; display: inline-block; }
+    .math-inline .katex { font-size: 1.05em; }
 
     /* Message actions */
     .msg-actions {
@@ -421,7 +503,7 @@
     .send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
     .send-btn svg { width: 20px; height: 20px; }
 
-    /* === DELETE MODAL === */
+    /* === SETTINGS / PROFILE MODALS === */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.7);
       backdrop-filter: blur(8px); z-index: 500;
@@ -449,6 +531,33 @@
     .modal-icon svg { width: 26px; height: 26px; }
     .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
     .modal-desc { font-size: 14px; color: var(--text-secondary); margin-bottom: 28px; line-height: 1.7; }
+    
+    .modal-form-group {
+      text-align: right;
+      margin-bottom: 16px;
+    }
+    .modal-form-group label {
+      display: block;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+    .modal-form-group input, .modal-form-group select {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .modal-form-group input:focus, .modal-form-group select:focus {
+      border-color: var(--accent-light);
+    }
+
     .modal-btns { display: flex; gap: 10px; }
     .modal-btn {
       flex: 1; padding: 12px; border-radius: var(--radius-sm);
@@ -464,6 +573,10 @@
       background: var(--accent); color: #fff;
     }
     .modal-btn.delete:hover { background: var(--accent-light); box-shadow: 0 4px 16px var(--accent-glow-md); }
+    .modal-btn.primary {
+      background: var(--accent); color: #fff;
+    }
+    .modal-btn.primary:hover { background: var(--accent-light); }
 
     /* === TOAST === */
     .toast-wrap { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 600; }
@@ -481,9 +594,9 @@
     /* === RESPONSIVE === */
     @media (max-width: 768px) {
       .sidebar {
-        position: fixed; left: 0; right: auto; top: 0; bottom: 0;
-        transform: translateX(-100%); /* Slides from the left to match hamburger menu */
-        box-shadow: 8px 0 32px rgba(0,0,0,0.5);
+        position: fixed; right: 0; top: 0; bottom: 0;
+        transform: translateX(100%);
+        box-shadow: -8px 0 32px rgba(0,0,0,0.5);
       }
       .sidebar.open { transform: translateX(0); }
       .sidebar-overlay.show { display: block; }
@@ -491,10 +604,17 @@
       .suggestions { grid-template-columns: 1fr; }
       .msg-row { max-width: 95%; }
       .messages-inner { padding: 0 14px; }
+      .input-area { padding: 12px 14px 16px; }
       
-      /* Mobile safe area padding to prevent input hiding behind iOS/Android bottom bars */
-      .input-area { 
-        padding: 12px 14px calc(16px + env(safe-area-inset-bottom)); 
+      .controls-wrapper {
+        gap: 8px;
+        flex-direction: column-reverse;
+        align-items: flex-end;
+      }
+      .model-dd-menu {
+        top: unset;
+        bottom: calc(100% + 10px);
+        right: 0;
       }
     }
 
@@ -520,6 +640,14 @@
         </button>
       </div>
       <div class="chat-list" id="chatList"></div>
+      <div class="sidebar-footer">
+        <button class="footer-icon-btn" onclick="openProfileModal()" title="الملف الشخصي">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        </button>
+        <button class="footer-icon-btn" onclick="openSettingsModal()" title="الإعدادات">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+      </div>
     </aside>
 
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
@@ -530,13 +658,22 @@
           <button class="menu-btn" onclick="toggleSidebar()" aria-label="القائمة">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
-          <div class="model-dd" id="modelDropdown">
-            <button class="model-dd-trigger" onclick="toggleModelDD()" aria-label="اختيار النموذج">
-              <span class="model-dd-icon" id="triggerIcon">?</span>
-              <span id="triggerName">جاري التحميل...</span>
-              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="model-dd-menu" id="modelMenu"></div>
+          
+          <div class="controls-wrapper">
+            <div class="mode-slider" id="modeSlider" data-mode="chat" onclick="toggleMode()">
+              <div class="mode-option active" id="modeChat" onclick="setMode('chat')">دردشة</div>
+              <div class="mode-option" id="modeCoding" onclick="setMode('coding')">برمجة</div>
+              <div class="mode-indicator"></div>
+            </div>
+
+            <div class="model-dd" id="modelDropdown">
+              <button class="model-dd-trigger" onclick="toggleModelDD()" aria-label="اختيار النموذج">
+                <span class="model-dd-icon" id="triggerIcon">?</span>
+                <span id="triggerName">جاري التحميل...</span>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+              <div class="model-dd-menu" id="modelMenu"></div>
+            </div>
           </div>
         </div>
       </header>
@@ -570,6 +707,42 @@
     </div>
   </div>
 
+  <div class="modal-overlay" id="profileModal">
+    <div class="modal-card">
+      <div class="modal-title">الملف الشخصي</div>
+      <div class="modal-desc">تعديل بيانات الحساب.</div>
+      <div class="modal-form-group">
+        <label for="profileNameInput">الاسم</label>
+        <input type="text" id="profileNameInput" value="إلياس سحنون">
+      </div>
+      <div class="modal-form-group">
+        <label for="profileBioInput">النبذة</label>
+        <input type="text" id="profileBioInput" value="مطور ومصمم واجهات">
+      </div>
+      <div class="modal-btns">
+        <button class="modal-btn cancel" onclick="closeProfileModal()">إلغاء</button>
+        <button class="modal-btn primary" onclick="saveProfile()">حفظ</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-card">
+      <div class="modal-title">الإعدادات</div>
+      <div class="modal-desc">تخصيص تفضيلات التطبيق.</div>
+      <div class="modal-form-group">
+        <label for="defaultTheme">الوضع الافتراضي</label>
+        <select id="defaultTheme">
+          <option value="dark">الوضع الداكن الأساسي</option>
+        </select>
+      </div>
+      <div class="modal-btns">
+        <button class="modal-btn cancel" onclick="closeSettingsModal()">إغلاق</button>
+        <button class="modal-btn primary" onclick="saveSettings()">حفظ</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast-wrap" id="toastWrap"></div>
 
   <script>
@@ -582,8 +755,9 @@
     let messages = [];
     let models = [];
     let currentModel = '';
+    let currentMode = 'chat'; // 'chat' or 'coding'
     let isLoading = false;
-    let lastUserMsg = '';
+    let lastUserMsgSent = '';
     let deleteTargetIdx = -1;
     let ddOpen = false;
 
@@ -607,34 +781,17 @@
       if (!text) return '';
       const codeBlocks = [], inlineCodes = [], mathBlocks = [];
 
-      // حماية كتل الكود
       text = text.replace(/```(\w*)\n?([\s\S]*?)```/g, (_, lang, code) => {
         codeBlocks.push({ lang: lang || 'code', code: code.replace(/\n$/, '') });
         return `__CB_${codeBlocks.length - 1}__`;
       });
-      // حماية الكود المضمن
       text = text.replace(/`([^`\n]+)`/g, (_, c) => {
         inlineCodes.push(c);
         return `__IC_${inlineCodes.length - 1}__`;
       });
-      
-      // حماية كتل الرياضيات (مع دعم \[ ... \] الجديد)
-      text = text.replace(/\\\[([\s\S]*?)\\\]/g, (_, m) => {
-        mathBlocks.push(m.trim());
-        return `__MB_${mathBlocks.length - 1}__`;
-      });
       text = text.replace(/\$\$([\s\S]*?)\$\$/g, (_, m) => {
         mathBlocks.push(m.trim());
         return `__MB_${mathBlocks.length - 1}__`;
-      });
-
-      // رياضيات مضمنة (مع دعم \( ... \) الجديد)
-      text = text.replace(/\\\(([\s\S]*?)\\\)/g, (_, m) => {
-        if (typeof katex !== 'undefined') {
-          try { return '<span class="math-inline">' + katex.renderToString(m.trim(), { throwOnError: false, displayMode: false }) + '</span>'; }
-          catch { return '\\(' + esc(m) + '\\)'; }
-        }
-        return '\\(' + esc(m) + '\\)';
       });
       text = text.replace(/\$([^\$\n]+?)\$/g, (_, m) => {
         if (typeof katex !== 'undefined') {
@@ -644,20 +801,16 @@
         return '$' + esc(m) + '$';
       });
 
-      // تنسيق Markdown أساسي
       text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
       text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
       text = text.replace(/^#### (.+)$/gm, '<h5>$1</h5>');
       text = text.replace(/^### (.+)$/gm, '<h4>$1</h4>');
       text = text.replace(/^## (.+)$/gm, '<h3>$1</h3>');
       text = text.replace(/^# (.+)$/gm, '<h2>$1</h2>');
-      // قوائم
       text = text.replace(/^(\s*)[-*] (.+)$/gm, '$1<li>$2</li>');
       text = text.replace(/((?:<li>[\s\S]*?<\/li>\s*)+)/g, '<ul>$1</ul>');
-      // فواصل أسطر
       text = text.replace(/\n/g, '<br>');
 
-      // استعادة كتل الرياضيات
       mathBlocks.forEach((m, i) => {
         if (typeof katex !== 'undefined') {
           try { text = text.replace(`__MB_${i}__`, '<div class="math-block">' + katex.renderToString(m, { throwOnError: false, displayMode: true }) + '</div>'); }
@@ -666,11 +819,9 @@
           text = text.replace(`__MB_${i}__`, '<div class="math-block">$$' + esc(m) + '$$</div>');
         }
       });
-      // استعادة الكود المضمن
       inlineCodes.forEach((c, i) => {
         text = text.replace(`__IC_${i}__`, '<code class="inline-code">' + esc(c) + '</code>');
       });
-      // استعادة كتل الكود
       codeBlocks.forEach((b, i) => {
         let hl;
         if (typeof hljs !== 'undefined') {
@@ -681,13 +832,12 @@
         const html = `<div class="code-wrap"><div class="code-head"><span class="code-lang">${esc(b.lang)}</span><button class="code-copy" onclick="copyCode(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>نسخ</button></div><pre class="code-pre"><code>${hl}</code></pre></div>`;
         text = text.replace(`__CB_${i}__`, html);
       });
-      // تنظيف فواصل أسطر زائدة حول العناصر الكتلية
+
       text = text.replace(/<br>\s*(<h[2-5]|<ul|<div class="(math-block|code-wrap)])/g, '$1');
       text = text.replace(/(<\/h[2-5]>|<\/ul>|<\/div>)\s*<br>/g, '$1');
       return text;
     }
 
-    /* === عرض رسالة المستخدم === */
     function renderUserText(text) {
       let h = esc(text);
       h = h.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
@@ -733,7 +883,6 @@
       scrollToBottom();
     }
 
-    /* === شاشة الترحيب === */
     function renderWelcome() {
       return `<div class="welcome">
         <img src="https://screenifyplus.online/logo.png" alt="Screenify+" class="welcome-logo">
@@ -833,10 +982,10 @@
           messages.push({ role: 'bot', text: t.bot, model: data.model_used || '' });
         });
         if (messages.length > 0) {
-          lastUserMsg = messages[messages.length - 2]?.text || '';
+          lastMsgSent = messages[messages.length - 2]?.text || '';
         }
         renderMessages();
-      } catch (e) { /* تجاهل */ }
+      } catch (e) { /* تجاهل الخطأ */ }
     }
 
     /* === حذف المحادثة === */
@@ -865,13 +1014,34 @@
       showToast('تم حذف المحادثة');
     }
 
+    /* === إدارة الملف الشخصي / الإعدادات === */
+    function openProfileModal() { document.getElementById('profileModal').classList.add('open'); }
+    function closeProfileModal() { document.getElementById('profileModal').classList.remove('open'); }
+    function saveProfile() {
+      closeProfileModal();
+      showToast('تم حفظ الملف الشخصي');
+    }
+
+    function openSettingsModal() { document.getElementById('settingsModal').classList.add('open'); }
+    function closeSettingsModal() { document.getElementById('settingsModal').classList.remove('open'); }
+    function saveSettings() {
+      closeSettingsModal();
+      showToast('تم حفظ الإعدادات');
+    }
+
     /* === النماذج === */
     async function loadModels() {
       try {
         const res = await fetch(WORKER_URL);
         const data = await res.json();
         models = data.models || [];
-        if (models.length > 0) currentModel = models[0];
+        if (models.length > 0) {
+          if (currentMode === 'coding' && models.includes('DeepSeek-Coder-V2')) {
+            currentModel = 'DeepSeek-Coder-V2';
+          } else {
+            currentModel = models.includes('DeepSeek-V3.2') ? 'DeepSeek-V3.2' : models[0];
+          }
+        }
         buildModelMenu();
         updateTrigger();
       } catch (e) {
@@ -914,7 +1084,41 @@
       document.getElementById('modelDropdown').classList.toggle('open', ddOpen);
     }
 
-    // إغلاق القائمة عند الضغط خارجها
+    /* === وضع العمل (Chat / Coding) === */
+    function toggleMode() {
+      if (currentMode === 'chat') {
+        setMode('coding');
+      } else {
+        setMode('chat');
+      }
+    }
+
+    function setMode(mode) {
+      currentMode = mode;
+      const slider = document.getElementById('modeSlider');
+      slider.setAttribute('data-mode', mode);
+      
+      const elChat = document.getElementById('modeChat');
+      const elCoding = document.getElementById('modeCoding');
+
+      if (mode === 'chat') {
+        elChat.classList.add('active');
+        elCoding.classList.remove('active');
+        if (models.includes('DeepSeek-V3.2')) {
+          currentModel = 'DeepSeek-V3.2';
+        }
+      } else {
+        elCoding.classList.add('active');
+        elChat.classList.remove('active');
+        if (models.includes('DeepSeek-Coder-V2')) {
+          currentModel = 'DeepSeek-Coder-V2';
+        }
+      }
+      buildModelMenu();
+      updateTrigger();
+    }
+
+    // إغلاق قائمة النماذج عند الضغط خارجها
     document.addEventListener('click', e => {
       if (!e.target.closest('#modelDropdown') && ddOpen) {
         ddOpen = false;
@@ -929,9 +1133,8 @@
       if (!text || isLoading) return;
       input.value = '';
       autoResize(input);
-      lastUserMsg = text;
+      lastMsgSent = text;
 
-      // إنشاء محادثة جديدة إذا لزم
       if (currentChatIdx === -1) {
         chats.unshift({ apiId: null, title: text.substring(0, 60), createdAt: Date.now(), lastModel: currentModel });
         currentChatIdx = 0;
@@ -976,14 +1179,13 @@
 
     /* === إعادة التوليد === */
     async function regenerate() {
-      if (isLoading || !lastUserMsg) return;
-      // إزالة آخر رد
+      if (isLoading || !lastMsgSent) return;
       if (messages.length > 0 && messages[messages.length - 1].role === 'bot') {
         messages.pop();
         renderMessages();
       }
       setLoading(true);
-      const payload = { model: currentModel, message: lastUserMsg };
+      const payload = { model: currentModel, message: lastMsgSent };
       if (currentApiId) payload.chatId = currentApiId;
       try {
         const res = await fetch(`${WORKER_URL}/api/chat`, {
@@ -1011,7 +1213,6 @@
       isLoading = on;
       document.getElementById('sendBtn').disabled = on;
       const inner = document.getElementById('messagesInner');
-      // إزالة المؤشر السابق
       const old = inner.querySelector('.typing-row');
       if (old) old.remove();
       if (on) {
@@ -1055,7 +1256,6 @@
       }, 2000);
     }
 
-    /* === أدوات مساعدة === */
     function scrollToBottom() {
       const w = document.getElementById('messagesWrap');
       requestAnimationFrame(() => w.scrollTop = w.scrollHeight);
@@ -1079,7 +1279,6 @@
       sendMessage();
     }
 
-    /* === الشريط الجانبي (موبايل) === */
     function toggleSidebar() {
       document.getElementById('sidebar').classList.toggle('open');
       document.getElementById('sidebarOverlay').classList.toggle('show');
@@ -1089,7 +1288,7 @@
       document.getElementById('sidebarOverlay').classList.remove('show');
     }
 
-    /* === ترحيل البيانات القديمة === */
+    /* === الترحيل والتهيئة === */
     function migrateOld() {
       const oldId = localStorage.getItem('deepseek_chatId');
       if (oldId && chats.length === 0) {
@@ -1099,13 +1298,11 @@
       }
     }
 
-    /* === التهيئة === */
     migrateOld();
     loadModels();
     renderChatList();
     renderMessages();
 
-    // تحميل آخر محادثة تلقائياً
     if (chats.length > 0) {
       currentChatIdx = 0;
       currentApiId = chats[0].apiId;
