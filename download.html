@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCREENIFY+ Downloader</title>
+    
+    <meta name="description" content="Download videos from YouTube, Instagram, TikTok, and more with Screenify+ Downloader. Fast, free, and ad-free.">
+    <meta property="og:title" content="SCREENIFY+ Downloader">
+    <meta property="og:description" content="Get direct video download links instantly. No ads, no tracking.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://screenifyplus.online/logo.png">
+
+    <link rel="icon" type="image/png" sizes="64x64" href="https://screenifyplus.online/favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://screenifyplus.online/logo.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="https://screenifyplus.online/logo.png">
+    <meta name="theme-color" content="#e11d48">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SCREENIFY+">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #09090b;
+            --card-bg: #111113;
+            --border: #27272a;
+            --accent: #e11d48;
+            --accent-hover: #be123c;
+            --accent-glow: rgba(225, 29, 72, 0.4);
+            --text-main: #ededed;
+            --text-dim: #a1a1aa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        ::selection {
+            background-color: var(--accent);
+            color: #fff;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        @keyframes fadeSlideUp {
+            0% { opacity: 0; transform: translateY(50px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes pulse-text {
+            0% { opacity: 0.8; text-shadow: 0 0 0px rgba(225, 29, 72, 0); }
+            50% { opacity: 1; text-shadow: 0 0 15px var(--accent-glow); }
+            100% { opacity: 0.8; text-shadow: 0 0 0px rgba(225, 29, 72, 0); }
+        }
+
+        .animate {
+            opacity: 0;
+            animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .animate-pop {
+            opacity: 0;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        nav {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: rgba(9, 9, 11, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo img {
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            background: transparent;
+            color: var(--text-dim);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .icon-btn:hover {
+            color: var(--text-main);
+            border-color: var(--accent);
+            background: rgba(225, 29, 72, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .icon-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .app-container {
+            width: 95%;
+            max-width: 700px;
+            margin: 0 auto 50px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .app-container:hover {
+            box-shadow: 0 30px 70px rgba(225, 29, 72, 0.08);
+            border-color: #3f3f46;
+        }
+
+        .input-area {
+            padding: 30px 30px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .input-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        textarea {
+            width: 100%;
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 18px;
+            line-height: 1.6;
+            resize: vertical;
+            outline: none;
+            min-height: 120px;
+            transition: border 0.3s;
+        }
+
+        textarea::placeholder { color: #3f3f46; }
+
+        textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .action-bar {
+            padding: 20px 30px;
+            background: #0d0d0f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .platform-count-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(225, 29, 72, 0.1);
+            border: 1px solid rgba(225, 29, 72, 0.3);
+            padding: 10px 20px;
+            border-radius: 50px;
+            animation: pulse-text 3s infinite ease-in-out;
+        }
+
+        .platform-count-container svg {
+            stroke: var(--accent);
+        }
+
+        .platform-count { 
+            font-size: 14px; 
+            color: var(--text-main); 
+            font-weight: 600;
+        }
+        
+        .platform-count span {
+            color: var(--accent);
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        button.download-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 14px 35px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button.download-btn:hover { 
+            transform: scale(1.05); 
+            background: var(--accent-hover); 
+            box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3);
+        }
+
+        button.download-btn:disabled {
+            background: #2c2c2c;
+            color: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        @media (max-width: 600px) {
+            .action-bar { flex-direction: column; gap: 20px; }
+            button.download-btn { width: 100%; justify-content: center; }
+        }
+
+        .features-section {
+            padding: 50px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .feature-card:hover { 
+            border-color: var(--accent); 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.05);
+        }
+
+        .feature-card h3 { margin-bottom: 15px; color: var(--accent); display: flex; align-items: center; gap: 10px;}
+        .feature-card p { color: var(--text-dim); line-height: 1.6; }
+
+        .promo-section {
+            background: #0d0d0f;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 80px 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .promo-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .promo-section p {
+            color: var(--text-dim);
+            max-width: 650px;
+            margin: 0 auto 30px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .promo-btn {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            padding: 14px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .promo-btn:hover {
+            background: var(--accent);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3);
+        }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 14px;
+            background: var(--bg-dark);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--accent-hover);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="animate" style="animation-delay: 0.1s;">
+        <div class="logo">
+            <img src="https://screenifyplus.online/logo.png" alt="Screenify+">
+            <span class="logo-text">Downloader</span>
+        </div>
+        <div class="nav-links">
+            <button class="icon-btn" onclick="window.scrollTo(0, 1000)">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                About
+            </button>
+            <a href="https://t.me/screenifyplus" target="_blank" class="icon-btn" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                Telegram
+            </a>
+        </div>
+    </nav>
+
+    <section class="hero animate" style="animation-delay: 0.2s;">
+        <h1>Download Any Video.</h1>
+        <p>Paste a link from YouTube, Instagram, TikTok, and more — we’ll open the download in a new tab instantly.</p>
+    </section>
+
+    <div class="app-container animate" style="animation-delay: 0.4s;">
+        <div class="input-area">
+            <div class="input-label">Video URL</div>
+            <textarea id="videoUrl" placeholder="https://www.youtube.com/watch?v=..."></textarea>
+            <div class="controls">
+                <button class="icon-btn" onclick="pasteText()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                    Paste
+                </button>
+            </div>
+        </div>
+        <div class="action-bar">
+            <div class="platform-count-container" id="platformCountDisplay">
+                </div>
+            <button class="download-btn" id="fetchBtn" onclick="processDownload()">
+                Download
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+        </div>
+    </div>
+
+    <section class="features-section">
+        <h2 class="animate" style="animation-delay: 0.5s; text-align:center; font-size: 2.5rem; margin-bottom: 20px;">Why Screenify+ Downloader?</h2>
+        <div class="section-grid">
+            <div class="feature-card animate-pop" style="animation-delay: 0.6s;">
+                <h3>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    Multi‑Platform
+                </h3>
+                <p>YouTube, Reels, TikTok, Twitter/X, Facebook, Snapchat, and many more. One tool, every link.</p>
+            </div>
+            <div class="feature-card animate-pop" style="animation-delay: 0.7s;">
+                <h3>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    Instant Results
+                </h3>
+                <p>No waiting, no queues. Your video link is extracted in real‑time with our blazing‑fast API.</p>
+            </div>
+            <div class="feature-card animate-pop" style="animation-delay: 0.8s;">
+                <h3>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    One Click Download
+                </h3>
+                <p>No more copy‑pasting links. Click the button and the video opens in a new tab, ready to save.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="promo-section animate" style="animation-delay: 0.9s;">
+        <h2>Screenify+ Mission</h2>
+        <p>Our goal is to offer essential internet services absolutely <strong>free</strong> and entirely <strong>without ads</strong>. The web belongs to everyone.</p>
+        <a href="https://screenifyplus.online/all" class="promo-btn">Discover all tools</a>
+    </section>
+
+    <footer class="animate" style="animation-delay: 1s;">
+        <p>&copy; 2026 Screenify+. All rights reserved.</p>
+        <p style="margin-top: 10px;">Reach out: <a href="mailto:contact@screenifyplus.online">contact@screenifyplus.online</a></p>
+    </footer>
+
+    <script>
+        const platforms = [
+            "YouTube", "Instagram", "TikTok", "Facebook", "X (Twitter)",
+            "Snapchat", "Pinterest", "Twitch", "Vimeo", "Reddit", "Likee", "ShareChat"
+        ];
+
+        function updatePlatformCount() {
+            const container = document.getElementById('platformCountDisplay');
+            container.innerHTML = `
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <div class="platform-count">Supports <span>${platforms.length}+</span> Platforms</div>
+            `;
+        }
+
+        async function processDownload() {
+            const url = document.getElementById('videoUrl').value.trim();
+            const btn = document.getElementById('fetchBtn');
+            const originalHTML = btn.innerHTML;
+
+            if (!url) {
+                alert('Please enter a valid URL.');
+                return;
+            }
+
+            // Loading state
+            btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> Fetching...`;
+            btn.disabled = true;
+
+            try {
+                const apiUrl = `https://downloader2.iliassahnoun23.workers.dev/?text=${encodeURIComponent(url)}`;
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.status === 'success' && data.answer) {
+                    // Open download link in new tab
+                    window.open(data.answer, '_blank');
+                } else {
+                    alert('Could not extract video. Please check the URL.');
+                }
+            } catch (error) {
+                alert('Error connecting to the server.');
+            } finally {
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            }
+        }
+
+        async function pasteText() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById('videoUrl').value = text;
+            } catch (err) {
+                alert('Unable to paste. Please grant clipboard permission.');
+            }
+        }
+
+        window.onload = updatePlatformCount;
+    </script>
+</body>
+</html>
