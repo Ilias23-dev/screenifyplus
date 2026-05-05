@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCREENIFY+ | تلاوات</title>
+    
+    <meta name="description" content="استمع إلى تلاوات القرآن الكريم بجودة عالية من Screenify+">
+    <meta property="og:title" content="SCREENIFY+ | تلاوات">
+    <meta property="og:description" content="أجمل التلاوات القرآنية بين يديك. بحث مباشر و تحميل مجاني.">
+    <meta property="og:image" content="https://screenifyplus.online/logo.png">
+
+    <link rel="icon" type="image/png" sizes="64x64" href="https://screenifyplus.online/favicon.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="https://screenifyplus.online/logo.png">
+    <meta name="theme-color" content="#e11d48">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #09090b;
+            --card-bg: #111113;
+            --border: #27272a;
+            --accent: #e11d48;
+            --accent-hover: #be123c;
+            --accent-glow: rgba(225, 29, 72, 0.4);
+            --text-main: #ededed;
+            --text-dim: #a1a1aa;
+            --radius: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        ::selection { background-color: var(--accent); color: #fff; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            direction: rtl;
+        }
+
+        @keyframes fadeSlideUp {
+            0% { opacity: 0; transform: translateY(50px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes pulse-text {
+            0% { opacity: 0.8; text-shadow: 0 0 0px rgba(225, 29, 72, 0); }
+            50% { opacity: 1; text-shadow: 0 0 15px var(--accent-glow); }
+            100% { opacity: 0.8; text-shadow: 0 0 0px rgba(225, 29, 72, 0); }
+        }
+
+        .animate {
+            opacity: 0;
+            animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .animate-pop {
+            opacity: 0;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* Navbar */
+        nav {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: rgba(9, 9, 11, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo img { height: 40px; transition: transform 0.3s ease; }
+        .logo:hover img { transform: scale(1.05); }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links { display: flex; gap: 10px; }
+
+        .icon-btn {
+            background: transparent;
+            color: var(--text-dim);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .icon-btn:hover {
+            color: var(--text-main);
+            border-color: var(--accent);
+            background: rgba(225, 29, 72, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .icon-btn svg { width: 16px; height: 16px; stroke: currentColor; }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* App Container */
+        .app-container {
+            width: 95%;
+            max-width: 900px;
+            margin: 0 auto 50px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .app-container:hover {
+            box-shadow: 0 30px 70px rgba(225, 29, 72, 0.08);
+            border-color: #3f3f46;
+        }
+
+        .input-area {
+            padding: 30px 30px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .input-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .search-bar:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 16px;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+
+        .search-bar input::placeholder { color: #555; }
+
+        .btn-search {
+            background: var(--accent);
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            margin: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            box-shadow: 0 0 14px var(--accent-glow);
+            transition: 0.3s;
+        }
+
+        .btn-search:hover { background: var(--accent-hover); transform: scale(1.05); }
+
+        /* Results list */
+        .results-container {
+            flex: 1;
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 20px 30px;
+        }
+
+        .track-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px 18px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: 0.2s;
+            animation: fadeSlideUp 0.3s ease forwards;
+        }
+
+        .track-item:hover {
+            border-color: var(--accent);
+            background: #1a1a1d;
+        }
+
+        .track-info { flex: 1; margin: 0 12px; overflow: hidden; }
+        .track-info h4 { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; }
+        .track-info p { font-size: 11px; color: var(--text-dim); }
+
+        .track-actions { display: flex; gap: 8px; }
+
+        .circle-btn {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-dim);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .circle-btn:hover {
+            color: white;
+            border-color: var(--accent);
+            background: rgba(225,29,72,0.15);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .action-bar {
+            padding: 20px 30px;
+            background: #0d0d0f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        /* Mini player indicator */
+        .mini-player-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(225, 29, 72, 0.1);
+            border: 1px solid rgba(225, 29, 72, 0.3);
+            padding: 10px 20px;
+            border-radius: 50px;
+            animation: pulse-text 3s infinite ease-in-out;
+            cursor: pointer;
+        }
+
+        .mini-player-indicator i { color: var(--accent); }
+        .mini-player-indicator span { font-size: 14px; font-weight: 600; color: var(--text-main); }
+
+        #loader {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 32px; height: 32px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+            animation: spin 0.8s infinite linear;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Player Overlay (reuse from previous, adapted colors) */
+        .player-page {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(13, 13, 15, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .close-player {
+            position: absolute;
+            top: 25px; right: 20px;
+            font-size: 26px;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .close-player:hover { color: var(--accent); }
+
+        .album-art {
+            width: 220px; height: 220px;
+            background: linear-gradient(135deg, #e11d48, #ff512f);
+            margin: 50px auto 30px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 30px rgba(225, 29, 72, 0.3);
+        }
+
+        .album-art i { font-size: 80px; color: white; }
+
+        .playing-title-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            margin-bottom: 40px;
+            height: 34px;
+        }
+
+        .playing-title {
+            display: inline-block;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-main);
+            animation: marquee 12s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .progress-container { width: 100%; margin-bottom: 30px; padding: 0 10px; }
+        .progress-bar { width: 100%; height: 6px; background: #333; border-radius: 10px; position: relative; cursor: pointer; }
+        .progress-fill { height: 100%; background: var(--accent); border-radius: 10px; width: 0%; position: absolute; right: 0; box-shadow: 0 0 8px var(--accent-glow); }
+        .time-info { display: flex; justify-content: space-between; font-size: 12px; margin-top: 10px; color: var(--text-dim); }
+
+        .main-controls { display: flex; align-items: center; justify-content: center; gap: 30px; }
+        .play-main {
+            width: 72px; height: 72px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            border: none;
+            font-size: 28px;
+            box-shadow: 0 0 25px var(--accent-glow);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+        .play-main:hover { background: var(--accent-hover); transform: scale(1.05); }
+        .side-ctrl { font-size: 22px; color: var(--text-dim); background: none; border: none; cursor: pointer; transition: 0.2s; }
+        .side-ctrl:hover { color: var(--accent); transform: scale(1.1); }
+
+        .toast {
+            position: fixed;
+            bottom: 40px; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(225, 29, 72, 0.15);
+            border: 1px solid rgba(225, 29, 72, 0.3);
+            color: white;
+            padding: 10px 22px;
+            border-radius: 20px;
+            font-size: 13px;
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            display: none;
+            white-space: nowrap;
+        }
+
+        /* Features / Promo */
+        .features-section {
+            padding: 50px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .feature-card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(225,29,72,0.05); }
+        .feature-card h3 { margin-bottom: 15px; color: var(--accent); display: flex; align-items: center; gap: 10px; }
+        .feature-card p { color: var(--text-dim); line-height: 1.6; }
+
+        .promo-section {
+            background: #0d0d0f;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 80px 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .promo-section h2 { font-size: 2.5rem; margin-bottom: 15px; color: #fff; }
+        .promo-section p { color: var(--text-dim); max-width: 650px; margin: 0 auto 30px; font-size: 1.2rem; line-height: 1.6; }
+        .promo-btn {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            padding: 14px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .promo-btn:hover { background: var(--accent); color: #fff; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(225,29,72,0.3); }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 14px;
+            background: var(--bg-dark);
+        }
+
+        footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        footer a:hover { color: var(--accent-hover); }
+
+        @media (max-width: 600px) {
+            .action-bar { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="animate" style="animation-delay: 0.1s;">
+        <div class="logo" onclick="window.location.href='https://screenifyplus.online'">
+            <img src="https://screenifyplus.online/logo.png" alt="Screenify+">
+            <span class="logo-text">تلاوات</span>
+        </div>
+        <div class="nav-links">
+            <button class="icon-btn" onclick="window.scrollTo(0, 1000)">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                عن التطبيق
+            </button>
+            <a href="https://t.me/screenifyplus" target="_blank" class="icon-btn" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                Telegram
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero animate" style="animation-delay: 0.2s;">
+        <h1>أجمل التلاوات</h1>
+        <p>ابحث عن أي قارئ أو سورة ، استمع أو نزلها بجودة عالية. مجاني بالكامل وبدون إعلانات.</p>
+    </section>
+
+    <!-- Main App Card -->
+    <div class="app-container animate" style="animation-delay: 0.4s;">
+        <div class="input-area">
+            <div class="input-label">ابحث عن تلاوة</div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="اسم القارئ أو السورة...">
+                <button class="btn-search" onclick="runSearch()"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+
+        <div id="loader"><div class="spinner"></div></div>
+        <div class="results-container" id="resultsArea"></div>
+
+        <div class="action-bar">
+            <div class="mini-player-indicator" id="miniPlayer" style="visibility: hidden;" onclick="openPlayer()">
+                <i class="fas fa-headphones"></i>
+                <span>المشغل مفتوح</span>
+            </div>
+            <div class="platform-count-container" id="platformCountDisplay"></div>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <section class="features-section" id="about">
+        <h2 class="animate" style="animation-delay: 0.5s; text-align:center; font-size: 2.5rem; margin-bottom: 20px;">لماذا تلاوات Screenify+؟</h2>
+        <div class="section-grid">
+            <div class="feature-card animate-pop" style="animation-delay: 0.6s;">
+                <h3><i class="fas fa-search" style="color: var(--accent); font-size: 24px;"></i> بحث ذكي</h3>
+                <p>ابحث باسم القارئ أو السورة و ستظهر النتائج مباشرة. يدعم اللغة العربية بدقة عالية.</p>
+            </div>
+            <div class="feature-card animate-pop" style="animation-delay: 0.7s;">
+                <h3><i class="fas fa-download" style="color: var(--accent); font-size: 24px;"></i> تحميل مباشر</h3>
+                <p>نزّل أي تلاوة بصيغة MP3 بجودة نقية و احتفظ بها على جهازك دون تعقيد.</p>
+            </div>
+            <div class="feature-card animate-pop" style="animation-delay: 0.8s;">
+                <h3><i class="fas fa-play-circle" style="color: var(--accent); font-size: 24px;"></i> استماع فوري</h3>
+                <p>استمع للتلاوات داخل المتصفح مع مشغل كامل و تقدم لحظي. تجربة روحانية سلسة.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promo -->
+    <section class="promo-section animate" style="animation-delay: 0.9s;">
+        <h2>Screenify+ Mission</h2>
+        <p>نهدف إلى تقديم جميع الخدمات الأساسية على الإنترنت مجاناً و بدون إعلانات. الويب للجميع.</p>
+        <a href="https://screenifyplus.online/all" class="promo-btn">اكتشف كل الأدوات</a>
+    </section>
+
+    <footer class="animate" style="animation-delay: 1s;">
+        <p>© 2026 Screenify+. جميع الحقوق محفوظة.</p>
+        <p style="margin-top: 10px;">للتواصل: <a href="mailto:contact@screenifyplus.online">contact@screenifyplus.online</a></p>
+    </footer>
+
+    <!-- Player Overlay -->
+    <div id="playerPage" class="player-page">
+        <i class="fas fa-chevron-right close-player" onclick="closePlayer()"></i>
+        <div class="album-art"><i class="fas fa-mosque"></i></div>
+        
+        <div class="playing-title-container">
+            <div class="playing-title" id="fullTitle">تلاوة خاشعة</div>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressWrapper" onclick="seek(event)">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="time-info">
+                <span id="currentTime">00:00</span>
+                <span id="duration">00:00</span>
+            </div>
+        </div>
+
+        <div class="main-controls">
+            <button class="side-ctrl" onclick="playNextPrev(-1)"><i class="fas fa-step-backward"></i></button>
+            <button class="play-main" onclick="togglePlay()"><i class="fas fa-play" id="mainPlayIcon"></i></button>
+            <button class="side-ctrl" onclick="playNextPrev(1)"><i class="fas fa-step-forward"></i></button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <audio id="player" style="display:none"></audio>
+
+    <script>
+        const player = document.getElementById('player');
+        const resultsArea = document.getElementById('resultsArea');
+        const playerPage = document.getElementById('playerPage');
+        const mainPlayIcon = document.getElementById('mainPlayIcon');
+        const progressFill = document.getElementById('progressFill');
+        const miniPlayer = document.getElementById('miniPlayer');
+        const platformCountDisplay = document.getElementById('platformCountDisplay');
+
+        let currentPlaylist = [];
+        let currentIndex = -1;
+
+        // Update platform count display dynamically
+        function updateStats() {
+            platformCountDisplay.innerHTML = `🎙️ آلاف التلاوات بين يديك`;
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg; t.style.display = 'block';
+            setTimeout(() => t.style.display = 'none', 3000);
+        }
+
+        async function runSearch() {
+            const q = document.getElementById('searchInput').value.trim();
+            if (!q) return;
+            document.getElementById('loader').style.display = 'block';
+            resultsArea.innerHTML = '';
+            try {
+                const response = await fetch("https://vidssave.com/api/proxy", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ url: "/media/hot_list", data: { hot_type: "ytb", keyword: q + " تلاوة" } })
+                });
+                const data = await response.json();
+                currentPlaylist = data.data.items || [];
+                displayResults(currentPlaylist);
+            } catch (e) { showToast('خطأ في الاتصال'); }
+            document.getElementById('loader').style.display = 'none';
+        }
+
+        function displayResults(items) {
+            resultsArea.innerHTML = items.map((item, index) => `
+                <div class="track-item">
+                    <div class="track-info">
+                        <h4>${item.title}</h4>
+                        <p>MP3 - جودة عالية</p>
+                    </div>
+                    <div class="track-actions">
+                        <button class="circle-btn" onclick="playFromList(${index})">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="circle-btn" onclick="handleAction('${item.url}', 'download', '${item.title.replace(/'/g, "\\'")}')">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function playFromList(index) {
+            currentIndex = index;
+            const item = currentPlaylist[index];
+            handleAction(item.url, 'play', item.title);
+        }
+
+        function playNextPrev(direction) {
+            let newIndex = currentIndex + direction;
+            if (newIndex >= 0 && newIndex < currentPlaylist.length) {
+                playFromList(newIndex);
+            } else {
+                showToast(direction === 1 ? 'نهاية القائمة' : 'بداية القائمة');
+            }
+        }
+
+        async function handleAction(url, type, title) {
+            showToast('جاري التحضير...');
+            try {
+                const response = await fetch("https://api.vidssave.com/api/contentsite_api/media/parse", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: `auth=20250901majwlqo&domain=api-ak.vidssave.com&origin=source&link=${encodeURIComponent(url)}`
+                });
+                const res = await response.json();
+                const audios = res.data.resources.filter(r => r.type === 'audio' || r.format === 'mp3');
+                let link = (audios.find(r => r.quality.includes('128')) || audios[0]).download_url;
+                if (link.startsWith('//')) link = 'https:' + link;
+
+                if (type === 'play') {
+                    player.src = link;
+                    player.play();
+                    document.getElementById('fullTitle').innerText = title;
+                    openPlayer();
+                    miniPlayer.style.visibility = 'visible';
+                } else {
+                    startDownload(link, title);
+                }
+            } catch (e) { showToast('عذراً، الرابط غير متاح'); }
+        }
+
+        function startDownload(url, title) {
+            showToast('بدأ التحميل...');
+            const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(url);
+            fetch(proxyUrl).then(res => res.blob()).then(blob => {
+                const bUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = bUrl;
+                a.download = title + ".mp3";
+                a.click();
+            }).catch(() => window.location.href = url + "&download=1");
+        }
+
+        function togglePlay() { player.paused ? player.play() : player.pause(); }
+        player.onplay = () => mainPlayIcon.className = 'fas fa-pause';
+        player.onpause = () => mainPlayIcon.className = 'fas fa-play';
+        player.ontimeupdate = () => {
+            if(!player.duration) return;
+            progressFill.style.width = (player.currentTime / player.duration) * 100 + '%';
+            document.getElementById('currentTime').innerText = formatTime(player.currentTime);
+            document.getElementById('duration').innerText = formatTime(player.duration);
+        };
+
+        function seek(e) {
+            const rect = document.getElementById('progressWrapper').getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const width = rect.width;
+            const pct = 1 - (x / width); // RTL
+            player.currentTime = pct * player.duration;
+        }
+
+        function formatTime(s) {
+            const m = Math.floor(s/60), sec = Math.floor(s%60);
+            return (m<10?'0'+m:m)+':'+(sec<10?'0'+sec:sec);
+        }
+
+        function openPlayer() { playerPage.style.display = 'flex'; }
+        function closePlayer() { playerPage.style.display = 'none'; }
+        document.getElementById('searchInput').onkeypress = (e) => { if(e.key === 'Enter') runSearch(); };
+
+        window.onload = updateStats;
+    </script>
+</body>
+</html>
