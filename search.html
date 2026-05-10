@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Search – Search Across Platforms</title>
+    
+    <meta name="description" content="Unified Search by Ilias & Redaa – Search across Google, YouTube, Wikipedia, GitHub and more from one place.">
+    <meta property="og:title" content="Unified Search – Multi-Platform Search">
+    <meta property="og:description" content="Search across multiple platforms instantly. Powered by Ilias & Redaa.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://screenifyplus.online/logo.png">
+
+    <link rel="icon" type="image/png" sizes="64x64" href="https://screenifyplus.online/favicon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="https://screenifyplus.online/logo.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="https://screenifyplus.online/logo.png">
+    <meta name="theme-color" content="#e11d48">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Unified Search">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Unified Search",
+      "url": "https://unified.vibertv23.workers.dev",
+      "applicationCategory": "UtilitiesApplication",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://screenifyplus.online/logo.png",
+        "width": 512,
+        "height": 512
+      }
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #09090b;
+            --card-bg: #111113;
+            --border: #27272a;
+            --accent: #e11d48;
+            --accent-hover: #be123c;
+            --accent-glow: rgba(225, 29, 72, 0.4);
+            --text-main: #ededed;
+            --text-dim: #a1a1aa;
+            --green: #22c55e;
+            --green-glow: rgba(34, 197, 94, 0.3);
+
+            /* Platform Colors */
+            --google-blue: #4285f4;
+            --google-red: #ea4335;
+            --google-yellow: #fbbc05;
+            --google-green: #34a853;
+            --youtube-red: #ff0000;
+            --youtube-dark: #0f0f0f;
+            --wikipedia-white: #ffffff;
+            --wikipedia-bg: #f8f9fa;
+            --github-purple: #8b5cf6;
+            --github-bg: #0d1117;
+            --github-border: #30363d;
+            --github-text: #c9d1d9;
+            --github-link: #58a6ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Noto Sans Arabic', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        ::selection {
+            background-color: var(--accent);
+            color: #fff;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeSlideUp {
+            0% { opacity: 0; transform: translateY(50px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes pulse-text {
+            0% { opacity: 0.8; text-shadow: 0 0 0px rgba(225, 29, 72, 0); }
+            50% { opacity: 1; text-shadow: 0 0 15px var(--accent-glow); }
+            100% { opacity: 0.8; text-shadow: 0 0 0px rgba(225, 29, 72, 0); }
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(225, 29, 72, 0.1); }
+            50% { box-shadow: 0 0 40px rgba(225, 29, 72, 0.25); }
+        }
+
+        @keyframes orbitSlow {
+            0% { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+        }
+
+        @keyframes orbitFast {
+            0% { transform: rotate(0deg) translateX(80px) rotate(0deg); }
+            100% { transform: rotate(-360deg) translateX(80px) rotate(360deg); }
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.3); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes slideInLeft {
+            0% { opacity: 0; transform: translateX(-30px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            opacity: 0;
+            animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .animate-pop {
+            opacity: 0;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* --- Navbar --- */
+        nav {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: rgba(9, 9, 11, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--green);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: statusPulse 2s infinite ease-in-out;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+            position: relative;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(225, 29, 72, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(225, 29, 72, 0.1);
+            border: 1px solid rgba(225, 29, 72, 0.3);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 25px;
+            animation: pulse-text 3s infinite ease-in-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--accent), #f43f5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-dim);
+            max-width: 650px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .hero-owners {
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .owner-tag {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-dim);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .owner-tag svg { color: var(--accent); }
+
+        .owner-tag a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .owner-tag a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        /* --- Search Bar (Hero Center) --- */
+        .search-bar-wrapper {
+            width: 95%;
+            max-width: 750px;
+            margin: 30px auto 0;
+            position: relative;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: 0.3s;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        .search-bar:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 10px 40px rgba(225, 29, 72, 0.15);
+        }
+
+        .search-bar input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 17px;
+            padding: 18px 24px;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-bar input::placeholder { color: #52525b; }
+
+        .search-bar .search-go-btn {
+            background: var(--accent);
+            border: none;
+            color: #fff;
+            padding: 18px 28px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .search-bar .search-go-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .search-bar .search-go-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .search-hint {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #52525b;
+        }
+
+        .search-hint kbd {
+            background: #18181b;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 11px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        @media (max-width: 600px) {
+            .search-bar { flex-direction: column; }
+            .search-bar input { width: 100%; }
+            .search-bar .search-go-btn { width: 100%; justify-content: center; padding: 16px; }
+        }
+
+        /* --- Results Area --- */
+        .results-area {
+            width: 95%;
+            max-width: 1100px;
+            margin: 40px auto;
+            display: none;
+        }
+
+        .results-area.visible { display: block; }
+
+        .results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .results-header h2 {
+            font-size: 1.3rem;
+            color: var(--text-dim);
+            font-weight: 500;
+        }
+
+        .results-header h2 strong {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        .results-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+
+        .results-meta .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* --- Platform Tabs --- */
+        .platform-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 25px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .platform-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            color: var(--text-dim);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .platform-tab:hover {
+            color: var(--text-main);
+            border-color: #3f3f46;
+            transform: translateY(-2px);
+        }
+
+        .platform-tab.active {
+            color: #fff;
+            border-color: transparent;
+        }
+
+        .platform-tab .tab-count {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* Platform-specific tab active states */
+        .platform-tab[data-platform="all"].active {
+            background: var(--accent);
+        }
+
+        .platform-tab[data-platform="google"].active {
+            background: var(--google-blue);
+        }
+
+        .platform-tab[data-platform="youtube"].active {
+            background: var(--youtube-red);
+        }
+
+        .platform-tab[data-platform="wikipedia"].active {
+            background: #636466;
+        }
+
+        .platform-tab[data-platform="github"].active {
+            background: var(--github-purple);
+        }
+
+        /* Platform tab icons */
+        .tab-icon {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .tab-icon.google-icon {
+            background: linear-gradient(135deg, var(--google-blue), var(--google-red), var(--google-yellow), var(--google-green));
+            color: #fff;
+            font-size: 10px;
+        }
+
+        .tab-icon.youtube-icon {
+            background: var(--youtube-red);
+            color: #fff;
+            border-radius: 50%;
+        }
+
+        .tab-icon.wikipedia-icon {
+            background: #636466;
+            color: #fff;
+            font-family: serif;
+        }
+
+        .tab-icon.github-icon {
+            background: var(--github-purple);
+            color: #fff;
+        }
+
+        .tab-icon.all-icon {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* --- Platform Results Container --- */
+        .platform-results {
+            display: none;
+        }
+
+        .platform-results.active {
+            display: block;
+            animation: slideInUp 0.4s ease forwards;
+        }
+
+        /* ========== GOOGLE RESULTS ========== */
+        .google-result-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--google-blue);
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin-bottom: 14px;
+            transition: 0.25s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .google-result-card:hover {
+            border-left-color: var(--google-blue);
+            border-color: var(--google-blue);
+            background: rgba(66, 133, 244, 0.04);
+            transform: translateX(4px);
+        }
+
+        .google-result-source {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .google-result-favicon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #1a1a2e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--google-blue);
+            border: 1px solid var(--border);
+        }
+
+        .google-result-url {
+            font-size: 13px;
+            color: var(--google-blue);
+            font-weight: 500;
+        }
+
+        .google-result-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #8ab4f8;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .google-result-card:hover .google-result-title {
+            text-decoration: underline;
+        }
+
+        .google-result-desc {
+            font-size: 14px;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        /* ========== YOUTUBE RESULTS ========== */
+        .youtube-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .youtube-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+        }
+
+        .youtube-result-card {
+            background: #0f0f0f;
+            border: 1px solid #272727;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .youtube-result-card:hover {
+            border-color: var(--youtube-red);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.08);
+        }
+
+        .youtube-thumbnail {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #1a1a1a;
+            overflow: hidden;
+        }
+
+        .youtube-thumbnail-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+
+        .youtube-result-card:hover .youtube-thumbnail-img {
+            opacity: 1;
+        }
+
+        .youtube-play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 0, 0, 0.85);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .youtube-play-overlay svg {
+            margin-left: 2px;
+        }
+
+        .youtube-result-card:hover .youtube-play-overlay {
+            background: rgba(255, 0, 0, 1);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        @media (max-width: 600px) {
+            .youtube-play-overlay {
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        .youtube-duration-badge {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .youtube-info {
+            padding: 10px 12px;
+        }
+
+        .youtube-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #f1f1f1;
+            line-height: 1.35;
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .youtube-channel {
+            font-size: 11px;
+            color: #aaa;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .youtube-channel-avatar {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--youtube-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        @media (max-width: 600px) {
+            .youtube-info {
+                padding: 7px 8px;
+            }
+            .youtube-title {
+                font-size: 11px;
+                margin-bottom: 3px;
+                -webkit-line-clamp: 2;
+            }
+            .youtube-channel {
+                font-size: 10px;
+            }
+            .youtube-channel-avatar {
+                width: 16px;
+                height: 16px;
+                font-size: 7px;
+            }
+        }
+
+        /* ========== WIKIPEDIA RESULTS ========== */
+        .wiki-result-card {
+            background: #1a1a2e;
+            border: 1px solid #2d2d4a;
+            border-left: 3px solid #636466;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 14px;
+            transition: 0.25s;
+            text-decoration: none;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .wiki-result-card:hover {
+            border-left-color: #a0a0b0;
+            border-color: #4a4a6a;
+            background: #1e1e38;
+            transform: translateX(4px);
+        }
+
+        .wiki-icon-box {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #2d2d4a, #1a1a2e);
+            border: 1px solid #3d3d5a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-family: 'Noto Serif', serif;
+            color: #c0c0d0;
+            font-weight: 700;
+        }
+
+        .wiki-content { flex: 1; }
+
+        .wiki-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #9fa8da;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .wiki-result-card:hover .wiki-title {
+            text-decoration: underline;
+        }
+
+        .wiki-source {
+            font-size: 12px;
+            color: #7a7a9a;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .wiki-lang-badge {
+            background: #2d2d4a;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #9fa8da;
+        }
+
+        .wiki-url {
+            font-size: 12px;
+            color: #7a7a9a;
+            word-break: break-all;
+            margin-top: 6px;
+            font-family: monospace;
+        }
+
+        /* ========== GITHUB RESULTS ========== */
+        .github-result-card {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 20px 22px;
+            margin-bottom: 14px;
+            transition: 0.25s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .github-result-card:hover {
+            border-color: var(--github-purple);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.1);
+        }
+
+        .github-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .github-repo-icon {
+            color: var(--github-text);
+            min-width: 16px;
+        }
+
+        .github-repo-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--github-link);
+            line-height: 1.3;
+        }
+
+        .github-result-card:hover .github-repo-name {
+            text-decoration: underline;
+        }
+
+        .github-visibility {
+            background: transparent;
+            border: 1px solid #30363d;
+            padding: 1px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: #8b949e;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .github-desc {
+            font-size: 14px;
+            color: #8b949e;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            padding-left: 26px;
+        }
+
+        .github-footer {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-left: 26px;
+            flex-wrap: wrap;
+        }
+
+        .github-stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: #8b949e;
+        }
+
+        .github-stat svg {
+            color: #8b949e;
+        }
+
+        .github-lang-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--github-purple);
+        }
+
+        /* --- No Results State --- */
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #3f3f46;
+        }
+
+        .no-results svg {
+            width: 64px;
+            height: 64px;
+            opacity: 0.3;
+            margin-bottom: 15px;
+        }
+
+        .no-results p {
+            font-size: 16px;
+        }
+
+        /* --- Loading State --- */
+        .loading-state {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .loading-state svg {
+            animation: spin 1s linear infinite;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .loading-state p {
+            color: var(--text-dim);
+            font-size: 15px;
+        }
+
+        .loading-platforms {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .loading-platform {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        .loading-platform .dot-pulse {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: statusPulse 1.5s infinite ease-in-out;
+        }
+
+        .loading-platform:nth-child(1) .dot-pulse { background: var(--google-blue); animation-delay: 0s; }
+        .loading-platform:nth-child(2) .dot-pulse { background: var(--youtube-red); animation-delay: 0.2s; }
+        .loading-platform:nth-child(3) .dot-pulse { background: #636466; animation-delay: 0.4s; }
+        .loading-platform:nth-child(4) .dot-pulse { background: var(--github-purple); animation-delay: 0.6s; }
+
+        /* --- Features Section --- */
+        .features-section {
+            padding: 50px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .feature-card:hover { 
+            border-color: var(--accent); 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 30px rgba(225, 29, 72, 0.05);
+        }
+
+        .feature-card h3 { 
+            margin-bottom: 15px; 
+            color: var(--accent); 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+        }
+
+        .feature-card p { 
+            color: var(--text-dim); 
+            line-height: 1.7; 
+        }
+
+        /* --- Promo Section --- */
+        .promo-section {
+            background: #0d0d0f;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 80px 20px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .promo-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .promo-section p {
+            color: var(--text-dim);
+            max-width: 650px;
+            margin: 0 auto 30px;
+            font-size: 1.15rem;
+            line-height: 1.7;
+        }
+
+        .promo-btn {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            padding: 14px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .promo-btn:hover {
+            background: var(--accent);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3);
+        }
+
+        /* --- Space Orbit Section --- */
+        .space-section {
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .orbit-container {
+            width: 280px;
+            height: 280px;
+            margin: 40px auto;
+            position: relative;
+        }
+
+        .orbit-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent), #7f1d1d);
+            box-shadow: 0 0 30px var(--accent-glow), 0 0 60px rgba(225, 29, 72, 0.15);
+            z-index: 2;
+        }
+
+        .orbit-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border-radius: 50%;
+            border: 1px solid rgba(225, 29, 72, 0.15);
+        }
+
+        .orbit-ring-1 { width: 160px; height: 160px; margin-top: -80px; margin-left: -80px; }
+        .orbit-ring-2 { width: 240px; height: 240px; margin-top: -120px; margin-left: -120px; }
+
+        .orbit-dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-top: -5px;
+            margin-left: -5px;
+        }
+
+        .orbit-dot-1 { background: var(--green); box-shadow: 0 0 10px var(--green-glow); animation: orbitSlow 8s linear infinite; }
+        .orbit-dot-2 { background: #f59e0b; box-shadow: 0 0 10px rgba(245, 158, 11, 0.5); animation: orbitFast 5s linear infinite; }
+        .orbit-dot-3 { background: #8b5cf6; box-shadow: 0 0 10px rgba(139, 92, 246, 0.5); animation: orbitSlow 12s linear infinite reverse; }
+
+        /* --- Footer --- */
+        footer {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 14px;
+            background: var(--bg-dark);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--accent-hover);
+        }
+
+        .footer-owners { margin-bottom: 15px; font-size: 15px; }
+        .footer-channel { margin-bottom: 15px; }
+
+        /* --- Scrollbar --- */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        /* --- Error State --- */
+        .error-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .error-state svg {
+            color: #ef4444;
+            margin-bottom: 15px;
+        }
+
+        .error-state h3 {
+            color: #ef4444;
+            margin-bottom: 10px;
+        }
+
+        .error-state p {
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+
+        /* --- Divider --- */
+        .section-divider {
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 10px;
+            margin: 0 auto 20px;
+        }
+
+        /* --- Utility button styles --- */
+        .icon-btn {
+            background: transparent;
+            color: var(--text-dim);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon-btn:hover {
+            color: var(--text-main);
+            border-color: var(--accent);
+            background: rgba(225, 29, 72, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .icon-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="animate" style="animation-delay: 0.1s;">
+        <a href="https://screenifyplus.online" class="logo" target="_blank">
+            <img src="https://screenifyplus.online/logo.png" alt="Screenify+">
+            <span class="logo-text">Unified <span>Search</span></span>
+        </a>
+        <div class="nav-links">
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                Online
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero animate" style="animation-delay: 0.2s;">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                Powered by Ilias & Redaa
+            </div>
+            <h1>Unified Search<br><span class="highlight">Across All Platforms</span></h1>
+            <p>Search Google, YouTube, Wikipedia, GitHub and more from one place. Instant results, beautifully organized by platform.</p>
+            <div class="hero-owners">
+                <div class="owner-tag">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <a href="https://t.me/Ilias2323" target="_blank">@Ilias2323</a>
+                </div>
+                <div class="owner-tag">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <a href="https://t.me/bh_redaa" target="_blank">@bh_redaa</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Bar -->
+    <div class="search-bar-wrapper animate" style="animation-delay: 0.3s;">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search anything across platforms..." autocomplete="off">
+            <button class="search-go-btn" id="searchBtn" onclick="performSearch()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                Search
+            </button>
+        </div>
+        <div class="search-hint">Press <kbd>Enter</kbd> to search</div>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="loading-state" style="display:none;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
+        <p>Searching across platforms...</p>
+        <div class="loading-platforms">
+            <div class="loading-platform"><div class="dot-pulse"></div>Google</div>
+            <div class="loading-platform"><div class="dot-pulse"></div>YouTube</div>
+            <div class="loading-platform"><div class="dot-pulse"></div>Wikipedia</div>
+            <div class="loading-platform"><div class="dot-pulse"></div>GitHub</div>
+        </div>
+    </div>
+
+    <!-- Error State -->
+    <div id="errorState" class="error-state" style="display:none;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+        <h3>Something went wrong</h3>
+        <p id="errorMessage">Failed to connect. Please check your connection and try again.</p>
+        <button class="icon-btn" style="margin-top: 15px;" onclick="performSearch()">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+            Retry
+        </button>
+    </div>
+
+    <!-- Results Area -->
+    <div class="results-area" id="resultsArea">
+        <div class="results-header">
+            <h2>Results for "<strong id="queryDisplay"></strong>"</h2>
+            <div class="results-meta">
+                <div class="meta-item" id="resultDate"></div>
+            </div>
+        </div>
+
+        <!-- Platform Tabs -->
+        <div class="platform-tabs" id="platformTabs"></div>
+
+        <!-- Platform Result Containers -->
+        <div id="allResults" class="platform-results active"></div>
+        <div id="googleResults" class="platform-results"></div>
+        <div id="youtubeResults" class="platform-results"></div>
+        <div id="wikipediaResults" class="platform-results"></div>
+        <div id="githubResults" class="platform-results"></div>
+    </div>
+
+    <!-- Space Orbit Visual -->
+    <div class="space-section animate" id="orbitSection" style="animation-delay: 0.45s;">
+        <h2 style="font-size: 1.6rem; color: var(--text-dim);">Always Spinning. Always Online.</h2>
+        <div class="orbit-container">
+            <div class="orbit-center"></div>
+            <div class="orbit-ring orbit-ring-1"></div>
+            <div class="orbit-ring orbit-ring-2"></div>
+            <div class="orbit-dot orbit-dot-1"></div>
+            <div class="orbit-dot orbit-dot-2"></div>
+            <div class="orbit-dot orbit-dot-3"></div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <h2 class="animate" style="animation-delay: 0.75s; text-align:center; font-size: 2.2rem; margin-bottom: 10px;">Why Unified Search?</h2>
+        <div class="section-divider" style="margin-bottom: 10px;"></div>
+        <p class="animate" style="animation-delay: 0.76s; text-align:center; color: var(--text-dim); max-width: 600px; margin: 0 auto;">One search box, every platform. No more switching tabs.</p>
+        <div class="section-grid">
+            <div class="feature-card animate-pop" style="animation-delay: 0.8s;">
+                <h3>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    Multi-Platform
+                </h3>
+                <p>Search Google, YouTube, Wikipedia, GitHub and more simultaneously. All results organized by platform in a beautiful interface.</p>
+            </div>
+            <div class="feature-card animate-pop" style="animation-delay: 0.85s;">
+                <h3>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    Lightning Fast
+                </h3>
+                <p>Powered by Cloudflare Workers for edge-level performance. Get results from all platforms in under a second.</p>
+            </div>
+            <div class="feature-card animate-pop" style="animation-delay: 0.9s;">
+                <h3>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    Privacy First
+                </h3>
+                <p>No tracking, no ads, no data collection. Your searches stay yours. Built with a clean, ad-free interface for everyone.</p>
+            </div>
+            <div class="feature-card animate-pop" style="animation-delay: 0.95s;">
+                <h3>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    Always Online
+                </h3>
+                <p>Running on global infrastructure with automatic failover and zero downtime. Search anytime, anywhere, without interruption.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Promo Section -->
+    <section class="promo-section animate" style="animation-delay: 1s;">
+        <h2>Screenify+ Mission</h2>
+        <p>Our ultimate goal is to offer all essential internet services absolutely <strong>free</strong> and entirely <strong>without ads</strong>. The web belongs to everyone.</p>
+        <a href="https://screenifyplus.online/all" class="promo-btn" target="_blank">See what we offer</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="animate" style="animation-delay: 1.05s;">
+        <div class="footer-owners">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent); vertical-align: middle;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            Built by <a href="https://t.me/Ilias2323" target="_blank">@Ilias2323</a> & <a href="https://t.me/bh_redaa" target="_blank">@bh_redaa</a>
+        </div>
+        <div class="footer-channel">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent); vertical-align: middle;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            Channel: <a href="https://t.me/screenifyplus" target="_blank">@screenifyplus</a>
+        </div>
+        <p>&copy; 2026 Screenify+. All rights reserved.</p>
+        <p style="margin-top: 8px;">Reach out: <a href="mailto:contact@screenifyplus.online">contact@screenifyplus.online</a></p>
+    </footer>
+
+    <script>
+        const API_BASE = 'https://unified.vibertv23.workers.dev';
+        let currentPlatform = 'all';
+        let lastResults = null;
+
+        // --- Platform Config ---
+        const platformConfig = {
+            google: {
+                name: 'Google',
+                icon: 'G',
+                iconClass: 'google-icon',
+                color: '#4285f4'
+            },
+            youtube: {
+                name: 'YouTube',
+                icon: '▶',
+                iconClass: 'youtube-icon',
+                color: '#ff0000'
+            },
+            wikipedia: {
+                name: 'Wikipedia',
+                icon: 'W',
+                iconClass: 'wikipedia-icon',
+                color: '#636466'
+            },
+            github: {
+                name: 'GitHub',
+                icon: '⚡',
+                iconClass: 'github-icon',
+                color: '#8b5cf6'
+            }
+        };
+
+        // --- Search Functionality ---
+        async function performSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) return;
+
+            const btn = document.getElementById('searchBtn');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> Searching...`;
+            btn.disabled = true;
+
+            // Show loading, hide others
+            document.getElementById('loadingState').style.display = 'block';
+            document.getElementById('resultsArea').classList.remove('visible');
+            document.getElementById('errorState').style.display = 'none';
+            document.getElementById('orbitSection').style.display = 'none';
+
+            const url = `${API_BASE}/api/search?q=${encodeURIComponent(query)}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                lastResults = data;
+                renderAllResults(data, query);
+            } catch (e) {
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('errorState').style.display = 'block';
+                document.getElementById('errorMessage').textContent = e.message || 'Failed to connect. Please check your connection and try again.';
+            } finally {
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+            }
+        }
+
+        // --- Render All Results ---
+        function renderAllResults(data, query) {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('resultsArea').classList.add('visible');
+            document.getElementById('queryDisplay').textContent = query;
+
+            if (data.date) {
+                document.getElementById('resultDate').innerHTML = `
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    ${data.date}
+                `;
+            }
+
+            const results = data.results || {};
+            const platforms = Object.keys(results);
+
+            // Build tabs
+            let tabsHTML = `
+                <div class="platform-tab active" data-platform="all" onclick="switchPlatform('all')">
+                    <span class="tab-icon all-icon">✦</span>
+                    All
+                    <span class="tab-count">${platforms.reduce((sum, p) => sum + (results[p]?.length || 0), 0)}</span>
+                </div>
+            `;
+
+            platforms.forEach(p => {
+                const config = platformConfig[p] || { name: p, icon: p[0].toUpperCase(), iconClass: '', color: '#e11d48' };
+                const count = results[p]?.length || 0;
+                tabsHTML += `
+                    <div class="platform-tab" data-platform="${p}" onclick="switchPlatform('${p}')">
+                        <span class="tab-icon ${config.iconClass}">${config.icon}</span>
+                        ${config.name}
+                        <span class="tab-count">${count}</span>
+                    </div>
+                `;
+            });
+
+            document.getElementById('platformTabs').innerHTML = tabsHTML;
+
+            // Render each platform
+            renderAllPlatform(results);
+            platforms.forEach(p => {
+                renderPlatformResults(p, results[p] || []);
+            });
+
+            // Default to "all"
+            switchPlatform('all');
+        }
+
+        // --- Switch Platform Tab ---
+        function switchPlatform(platform) {
+            currentPlatform = platform;
+
+            // Update tab active states
+            document.querySelectorAll('.platform-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.platform === platform);
+            });
+
+            // Show/hide result containers
+            document.querySelectorAll('.platform-results').forEach(el => el.classList.remove('active'));
+
+            if (platform === 'all') {
+                document.getElementById('allResults').classList.add('active');
+            } else {
+                const el = document.getElementById(`${platform}Results`);
+                if (el) el.classList.add('active');
+            }
+        }
+
+        // --- Render "All" Platform (Combined) ---
+        function renderAllPlatform(results) {
+            let html = '';
+            const platforms = Object.keys(results);
+
+            platforms.forEach(p => {
+                const items = results[p] || [];
+                if (items.length === 0) return;
+
+                const config = platformConfig[p] || { name: p, icon: p[0].toUpperCase(), color: '#e11d48' };
+
+                html += `<div style="margin-bottom: 35px;">`;
+                html += `<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px; cursor: pointer;" onclick="switchPlatform('${p}')">`;
+                html += `<span class="tab-icon ${config.iconClass}" style="width:28px;height:28px;font-size:14px;border-radius:6px;">${config.icon}</span>`;
+                html += `<h3 style="font-size: 1.2rem; font-weight: 700; color: ${config.color};">${config.name}</h3>`;
+                html += `<span style="font-size: 13px; color: var(--text-dim);">${items.length} results</span>`;
+                html += `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-dim); margin-left: auto;"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
+                html += `</div>`;
+
+                // Show top 3 from each platform in "All" view
+                const preview = items.slice(0, 3);
+                preview.forEach((item, i) => {
+                    html += renderSingleResult(p, item, i);
+                });
+
+                if (items.length > 3) {
+                    html += `<button class="icon-btn" style="margin-top: 10px;" onclick="switchPlatform('${p}')">
+                        View all ${items.length} ${config.name} results
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>`;
+                }
+
+                html += `</div>`;
+            });
+
+            document.getElementById('allResults').innerHTML = html || '<div class="no-results"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><p>No results found</p></div>';
+        }
+
+        // --- Render Single Result (dispatches to platform renderer) ---
+        function renderSingleResult(platform, item, index) {
+            switch (platform) {
+                case 'google': return renderGoogleResult(item, index);
+                case 'youtube': return renderYouTubeResult(item, index);
+                case 'wikipedia': return renderWikipediaResult(item, index);
+                case 'github': return renderGitHubResult(item, index);
+                default: return renderGenericResult(item, index, platform);
+            }
+        }
+
+        // --- Render Platform Results (full list) ---
+        function renderPlatformResults(platform, items) {
+            const container = document.getElementById(`${platform}Results`);
+            if (!container) return;
+
+            if (items.length === 0) {
+                container.innerHTML = '<div class="no-results"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><p>No results found on this platform</p></div>';
+                return;
+            }
+
+            let html = '';
+            if (platform === 'youtube') {
+                html += '<div class="youtube-grid">';
+                items.forEach((item, i) => { html += renderYouTubeResult(item, i); });
+                html += '</div>';
+            } else {
+                items.forEach((item, i) => { html += renderSingleResult(platform, item, i); });
+            }
+
+            container.innerHTML = html;
+        }
+
+        // ========== GOOGLE RESULT CARD ==========
+        function renderGoogleResult(item, index) {
+            const title = esc(item.title || 'Untitled');
+            const url = esc(item.url || '');
+            const source = esc(item.source || new URL(item.url || 'https://example.com').hostname);
+            const desc = esc(item.description || '');
+            const initial = (item.source || 'G')[0].toUpperCase();
+
+            return `
+                <a href="${url}" target="_blank" rel="noopener" class="google-result-card" style="animation: slideInLeft 0.4s ease forwards; animation-delay: ${index * 0.06}s; opacity: 0;">
+                    <div class="google-result-source">
+                        <div class="google-result-favicon">${initial}</div>
+                        <span class="google-result-url">${source}</span>
+                    </div>
+                    <div class="google-result-title">${title}</div>
+                    ${desc ? `<div class="google-result-desc">${desc}</div>` : ''}
+                </a>
+            `;
+        }
+
+        // ========== YOUTUBE RESULT CARD ==========
+        function renderYouTubeResult(item, index) {
+            const title = esc(item.title || 'Untitled');
+            const url = esc(item.url || '');
+            const source = esc(item.source || 'youtube.com');
+            const desc = esc(item.description || '');
+            const videoId = extractYouTubeId(url);
+            const thumbnail = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
+            const channelInitial = (desc || 'M')[0].toUpperCase();
+
+            return `
+                <a href="${url}" target="_blank" rel="noopener" class="youtube-result-card" style="animation: slideInUp 0.4s ease forwards; animation-delay: ${index * 0.08}s; opacity: 0;">
+                    <div class="youtube-thumbnail">
+                        ${thumbnail ? `<img class="youtube-thumbnail-img" src="${thumbnail}" alt="" loading="lazy" onerror="this.style.display='none'">` : `
+                            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#1a1a1a;">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            </div>
+                        `}
+                        <div class="youtube-play-overlay">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        </div>
+                    </div>
+                    <div class="youtube-info">
+                        <div class="youtube-title">${title}</div>
+                        <div class="youtube-channel">
+                            <div class="youtube-channel-avatar">${channelInitial}</div>
+                            ${desc ? `<span>${desc.length > 40 ? desc.substring(0, 40) + '...' : desc}</span>` : `<span>${source}</span>`}
+                        </div>
+                    </div>
+                </a>
+            `;
+        }
+
+        // ========== WIKIPEDIA RESULT CARD ==========
+        function renderWikipediaResult(item, index) {
+            const title = esc(item.title || 'Untitled');
+            const url = esc(item.url || '');
+            const source = esc(item.source || 'wikipedia.org');
+            const desc = esc(item.description || '');
+            const initial = (item.title || 'W')[0].toUpperCase();
+
+            // Detect language from URL
+            let langBadge = '';
+            try {
+                const u = new URL(url);
+                const lang = u.hostname.split('.')[0];
+                if (lang && lang !== 'en') {
+                    langBadge = `<span class="wiki-lang-badge">${lang.toUpperCase()}</span>`;
+                }
+            } catch(e) {}
+
+            return `
+                <a href="${url}" target="_blank" rel="noopener" class="wiki-result-card" style="animation: slideInLeft 0.4s ease forwards; animation-delay: ${index * 0.06}s; opacity: 0;">
+                    <div class="wiki-icon-box">${initial}</div>
+                    <div class="wiki-content">
+                        <div class="wiki-title">${title}</div>
+                        <div class="wiki-source">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                            ${source} ${langBadge}
+                        </div>
+                        ${desc ? `<div style="font-size: 13px; color: #7a7a9a; line-height: 1.5;">${desc}</div>` : ''}
+                        <div class="wiki-url">${url}</div>
+                    </div>
+                </a>
+            `;
+        }
+
+        // ========== GITHUB RESULT CARD ==========
+        function renderGitHubResult(item, index) {
+            const title = esc(item.title || 'Untitled');
+            const url = esc(item.url || '');
+            const source = esc(item.source || 'github.com');
+            const desc = esc(item.description || '');
+
+            return `
+                <a href="${url}" target="_blank" rel="noopener" class="github-result-card" style="animation: slideInLeft 0.4s ease forwards; animation-delay: ${index * 0.06}s; opacity: 0;">
+                    <div class="github-header">
+                        <svg class="github-repo-icon" width="16" height="16" viewBox="0 0 16 16" fill="#8b949e"><path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1h-8a1 1 0 00-1 1v6.708A2.486 2.486 0 014.5 9h8.5V1.5zm-8 11a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+                        <span class="github-repo-name">${title}</span>
+                        <span class="github-visibility">Public</span>
+                    </div>
+                    ${desc ? `<div class="github-desc">${desc}</div>` : ''}
+                    <div class="github-footer">
+                        <div class="github-stat">
+                            <div class="github-lang-dot"></div>
+                            <span>${source}</span>
+                        </div>
+                    </div>
+                </a>
+            `;
+        }
+
+        // ========== GENERIC RESULT (fallback) ==========
+        function renderGenericResult(item, index, platform) {
+            const title = esc(item.title || 'Untitled');
+            const url = esc(item.url || '');
+            const source = esc(item.source || platform);
+            const desc = esc(item.description || '');
+
+            return `
+                <a href="${url}" target="_blank" rel="noopener" class="google-result-card" style="animation: slideInLeft 0.4s ease forwards; animation-delay: ${index * 0.06}s; opacity: 0;">
+                    <div class="google-result-source">
+                        <div class="google-result-favicon">${source[0].toUpperCase()}</div>
+                        <span class="google-result-url">${source}</span>
+                    </div>
+                    <div class="google-result-title">${title}</div>
+                    ${desc ? `<div class="google-result-desc">${desc}</div>` : ''}
+                </a>
+            `;
+        }
+
+        // --- Utility Functions ---
+        function esc(str) {
+            if (typeof str !== 'string') return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function extractYouTubeId(url) {
+            if (!url) return null;
+            const match = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+            return match ? match[1] : null;
+        }
+
+        // Enter key triggers search
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('searchInput').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    performSearch();
+                }
+            });
+
+            // Focus search input on load
+            document.getElementById('searchInput').focus();
+        });
+    </script>
+</body>
+</html>
