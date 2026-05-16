@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Screenify+ APP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Open Sans', sans-serif;
+            background: linear-gradient(145deg, #0f0f1a 0%, #1a1a2f 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 1.5rem;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 480px;
+            width: 100%;
+            animation: fadeSlide 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .logo-wrapper {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            padding: 2.5rem 1.8rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            margin-bottom: 2.2rem;
+        }
+
+        .logo {
+            max-width: 140px;
+            width: 100%;
+            height: auto;
+            margin-bottom: 1.75rem;
+            filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.5));
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.04);
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 8vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #ffffff 0%, #c0caf0 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.4rem;
+            line-height: 1.2;
+        }
+
+        .android-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #0d0d1a;
+            padding: 0.75rem 1.8rem;
+            border-radius: 3rem;
+            margin-top: 1.4rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #b4c2f0;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: 0.2s ease;
+        }
+
+        .android-badge:hover {
+            border-color: rgba(180, 200, 255, 0.35);
+            color: #d6e0ff;
+        }
+
+        .android-icon {
+            font-size: 1.6rem;
+            filter: drop-shadow(0 4px 6px #00000030);
+        }
+
+        .soon-text {
+            letter-spacing: 0.4px;
+            font-weight: 400;
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-wrapper {
+                padding: 2rem 1.2rem;
+            }
+            body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <div class="logo-wrapper">
+            <!-- Logo -->
+            <img 
+                src="https://screenifyplus.online/logo.png" 
+                alt="Screenify+ Logo" 
+                class="logo"
+                onerror="this.style.display='none';"
+            >
+
+            <!-- App title -->
+            <h1>Screenify<span style="font-weight: 300;">+</span> APP</h1>
+
+            <!-- Android availability badge -->
+            <div class="android-badge">
+                <span class="android-icon">🤖</span>
+                <span class="soon-text">soon on android</span>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
