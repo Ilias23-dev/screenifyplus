@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenify+ — Terms of Service</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            200: '#fecaca',
+                            300: '#fca5a5',
+                            400: '#f87171',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d',
+                        },
+                        dark: {
+                            50: '#1a1a2e',
+                            100: '#16162a',
+                            200: '#131327',
+                            300: '#101024',
+                            400: '#0d0d20',
+                            500: '#0a0a1c',
+                            600: '#080818',
+                            700: '#060614',
+                            800: '#040410',
+                            900: '#02020c',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a1c; }
+        ::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 3px; }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #ef4444, #f97316, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glass {
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(239, 68, 68, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(26, 26, 46, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(239, 68, 68, 0.08);
+        }
+
+        .glow-red {
+            box-shadow: 0 0 60px rgba(239, 68, 68, 0.15), 0 0 120px rgba(239, 68, 68, 0.05);
+        }
+
+        .glow-btn {
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.4), 0 0 60px rgba(220, 38, 38, 0.1);
+        }
+
+        .hero-bg {
+            background: radial-gradient(ellipse at 50% 0%, rgba(220, 38, 38, 0.12) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 50%, rgba(239, 68, 68, 0.06) 0%, transparent 50%),
+                        radial-gradient(ellipse at 20% 80%, rgba(249, 115, 22, 0.04) 0%, transparent 50%),
+                        #0a0a1c;
+        }
+
+        .section-divider {
+            background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.3), transparent);
+            height: 1px;
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+        .toc-link {
+            transition: all 0.2s ease;
+        }
+        .toc-link:hover {
+            color: #ef4444;
+            padding-left: 8px;
+        }
+
+        .content-section h2 {
+            scroll-margin-top: 100px;
+        }
+
+        [dir="rtl"] {
+            text-align: right;
+        }
+
+        [dir="rtl"] .toc-link:hover {
+            padding-left: 0;
+            padding-right: 8px;
+        }
+
+        .lang-btn.active {
+            background: #dc2626;
+            color: white;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(239, 68, 68, 0.4);
+            border-radius: 50%;
+            animation: float-particle linear infinite;
+        }
+
+        @keyframes float-particle {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+        }
+
+        .privacy-badge {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+    </style>
+</head>
+<body class="hero-bg text-white min-h-screen">
+
+    <!-- Particles -->
+    <div id="particles" class="fixed inset-0 pointer-events-none overflow-hidden z-0"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <img src="https://screenifyplus.online/logo.png" alt="Screenify+" class="w-8 h-8 rounded-lg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="w-8 h-8 rounded-lg bg-brand-600 items-center justify-center text-white font-bold text-sm hidden">
+                        S+
+                    </div>
+                    <span class="text-lg font-semibold gradient-text">Screenify+</span>
+                </div>
+
+                <!-- Language Switcher -->
+                <div class="flex items-center gap-2">
+                    <button onclick="switchLang('en')" class="lang-btn active px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 hover:bg-brand-600/20 border border-white/5" data-lang="en">
+                        EN
+                    </button>
+                    <button onclick="switchLang('ar')" class="lang-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 hover:bg-brand-600/20 border border-white/5 text-gray-400" data-lang="ar">
+                        العربية
+                    </button>
+                    <button onclick="switchLang('fr')" class="lang-btn px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 hover:bg-brand-600/20 border border-white/5 text-gray-400" data-lang="fr">
+                        FR
+                    </button>
+                </div>
+
+                <!-- Install CTA -->
+                <a href="https://screenifyplus.online" target="_blank" class="hidden sm:flex items-center gap-2 bg-brand-600 hover:bg-brand-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 glow-btn hover:scale-105">
+                    <span class="iconify" data-icon="lucide:download" data-width="16"></span>
+                    <span data-i18n="nav_install">Install App</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-20 -left-20 w-72 h-72 bg-brand-600/10 rounded-full blur-3xl"></div>
+            <div class="absolute top-40 -right-20 w-96 h-96 bg-brand-500/5 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <!-- App Icon -->
+            <div class="float-animation inline-block mb-8">
+                <div class="w-24 h-24 rounded-3xl overflow-hidden border-2 border-brand-500/20 glow-red mx-auto">
+                    <img src="https://screenifyplus.online/logo.png" alt="Screenify+" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full bg-brand-600 flex items-center justify-center text-3xl font-bold\'>S+</div>'">
+                </div>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4">
+                <span data-i18n="hero_title" class="gradient-text">Terms of Service</span>
+            </h1>
+            <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-4" data-i18n="hero_subtitle">
+                Last updated: June 2026
+            </p>
+            <p class="text-gray-500 text-sm max-w-xl mx-auto mb-8" data-i18n="hero_desc">
+                Please read these terms carefully before using Screenify+. By using the app, you agree to these terms.
+            </p>
+
+            <!-- Privacy Badge -->
+            <div class="inline-flex items-center gap-2 privacy-badge rounded-full px-5 py-2 mb-8">
+                <span class="iconify text-green-400" data-icon="lucide:shield-check" data-width="18"></span>
+                <span class="text-sm text-green-300 font-medium" data-i18n="hero_zero_data">Zero Data Collection — Your Privacy is Absolute</span>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="flex flex-wrap justify-center gap-4 sm:gap-6 mb-8">
+                <div class="glass-card rounded-2xl px-5 py-3 flex items-center gap-3">
+                    <span class="iconify text-brand-500" data-icon="lucide:film" data-width="20"></span>
+                    <span class="text-sm text-gray-300" data-i18n="feat_movies">Movies & Series</span>
+                </div>
+                <div class="glass-card rounded-2xl px-5 py-3 flex items-center gap-3">
+                    <span class="iconify text-brand-500" data-icon="lucide:tv" data-width="20"></span>
+                    <span class="text-sm text-gray-300" data-i18n="feat_live">Live TV</span>
+                </div>
+                <div class="glass-card rounded-2xl px-5 py-3 flex items-center gap-3">
+                    <span class="iconify text-brand-500" data-icon="lucide:calendar" data-width="20"></span>
+                    <span class="text-sm text-gray-300" data-i18n="feat_matches">Matches Calendar</span>
+                </div>
+                <div class="glass-card rounded-2xl px-5 py-3 flex items-center gap-3">
+                    <span class="iconify text-brand-500" data-icon="lucide:newspaper" data-width="20"></span>
+                    <span class="text-sm text-gray-300" data-i18n="feat_news">Football News</span>
+                </div>
+            </div>
+
+            <!-- App Screenshot -->
+            <div class="max-w-md mx-auto mb-8">
+                <div class="rounded-2xl overflow-hidden border border-brand-500/10 glow-red">
+                    <img src="https://screenifyplus.online/screen.jpg" alt="Screenify+ Screenshot" class="w-full object-cover" onerror="this.parentElement.innerHTML='<div class=\'w-full h-48 bg-dark-50 flex items-center justify-center text-gray-500\'><span class=\'iconify\' data-icon=\'lucide:smartphone\' data-width=\'48\'></span></div>'">
+                </div>
+            </div>
+
+            <a href="https://screenifyplus.online" target="_blank" class="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-500 text-white px-8 py-3 rounded-2xl font-medium transition-all duration-300 glow-btn hover:scale-105 sm:hidden">
+                <span class="iconify" data-icon="lucide:download" data-width="18"></span>
+                <span data-i18n="nav_install">Install App</span>
+            </a>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- Main Content -->
+    <section class="relative py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="grid lg:grid-cols-4 gap-8">
+
+                <!-- Table of Contents - Sidebar -->
+                <div class="lg:col-span-1">
+                    <div class="glass-card rounded-2xl p-6 lg:sticky lg:top-24">
+                        <h3 class="text-sm font-semibold text-brand-400 uppercase tracking-wider mb-4" data-i18n="toc_title">Contents</h3>
+                        <nav class="space-y-2 text-sm" id="toc-nav">
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Terms Content -->
+                <div class="lg:col-span-3 content-section space-y-12" id="terms-content">
+
+                    <!-- Section 1 -->
+                    <div id="section-1" class="scroll-mt-24">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-600/20 flex items-center justify-center">
+                                <span class="iconify text-brand-500" data-icon="lucide:file-text" data-width="20"></span>
+                            </div>
+                            <h2 class="text-2xl font-semibold text-white" data-i18n="s1_title">1. Acceptance of Terms</h2>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 space-y-4 text-gray-400 leading-relaxed">
+                            <p data-i18n="s1_p1">By downloading, installing, or using Screenify+ ("the App"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use the App.</p>
+                            <p data-i18n="s1_p2">These Terms constitute a legally binding agreement between you ("User", "you", or "your") and Screenify+ ("we", "us", or "our"). We reserve the right to update these Terms at any time, and your continued use of the App after any changes signifies your acceptance of the new Terms.</p>
+                            <p data-i18n="s1_p3">You must be at least 13 years of age to use this App. If you are under 18, you must have parental or guardian consent to use the App.</p>
+                        </div>
+                    </div>
+
+                    <!-- Section 2 -->
+                    <div id="section-2" class="scroll-mt-24">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-600/20 flex items-center justify-center">
+                                <span class="iconify text-brand-500" data-icon="lucide:play-circle" data-width="20"></span>
+                            </div>
+                            <h2 class="text-2xl font-semibold text-white" data-i18n="s2_title">2. Description of Service</h2>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 space-y-4 text-gray-400 leading-relaxed">
+                            <p data-i18n="s2_p1">Screenify+ is an entertainment application available for Android phones and Android TV devices. The App provides access to the following features:</p>
+                            <ul class="space-y-2 ml-4">
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:check" data-width="16"></span>
+                                    <span data-i18n="s2_li1">Movies, Series, and Anime catalog</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:check" data-width="16"></span>
+                                    <span data-i18n="s2_li2">Live TV channels</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:check" data-width="16"></span>
+                                    <span data-i18n="s2_li3">Sports matches calendar and schedules</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:check" data-width="16"></span>
+                                    <span data-i18n="s2_li4">Latest football news and transfer updates</span>
+                                </li>
+                            </ul>
+                            <p data-i18n="s2_p2">We reserve the right to modify, suspend, or discontinue any feature at any time without prior notice.</p>
+                        </div>
+                    </div>
+
+                    <!-- Section 3 -->
+                    <div id="section-3" class="scroll-mt-24">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-600/20 flex items-center justify-center">
+                                <span class="iconify text-brand-500" data-icon="lucide:shield-alert" data-width="20"></span>
+                            </div>
+                            <h2 class="text-2xl font-semibold text-white" data-i18n="s3_title">3. Content Disclaimer</h2>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 space-y-4 text-gray-400 leading-relaxed">
+                            <div class="bg-brand-600/10 border border-brand-600/20 rounded-xl p-4 flex items-start gap-3">
+                                <span class="iconify text-brand-400 mt-0.5 shrink-0" data-icon="lucide:alert-triangle" data-width="18"></span>
+                                <p class="text-sm text-brand-200" data-i18n="s3_warning">Important: Screenify+ does not host, store, or distribute any media content. The App acts as an aggregator that indexes content available from third-party sources.</p>
+                            </div>
+                            <p data-i18n="s3_p1">All movies, series, anime, live TV channels, and other media content accessible through the App are sourced from third-party providers that are not owned or controlled by Screenify+.</p>
+                            <p data-i18n="s3_p2">We do not assume responsibility for the accuracy, legality, or copyright compliance of any content provided by third-party sources. If you believe any content infringes your intellectual property rights, please contact us for immediate removal.</p>
+                            <p data-i18n="s3_p3">Football news, transfer information, and match schedules are aggregated from publicly available sources and are provided for informational purposes only.</p>
+                        </div>
+                    </div>
+
+                    <!-- Section 4 -->
+                    <div id="section-4" class="scroll-mt-24">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-600/20 flex items-center justify-center">
+                                <span class="iconify text-brand-500" data-icon="lucide:crown" data-width="20"></span>
+                            </div>
+                            <h2 class="text-2xl font-semibold text-white" data-i18n="s4_title">4. Intellectual Property</h2>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 space-y-4 text-gray-400 leading-relaxed">
+                            <p data-i18n="s4_p1">The App itself, including its design, code, logo, graphics, and user interface, is the intellectual property of Screenify+ and is protected by applicable copyright and trademark laws.</p>
+                            <p data-i18n="s4_p2">You may not reproduce, distribute, modify, create derivative works of, reverse engineer, decompile, or disassemble the App or any part of it.</p>
+                            <p data-i18n="s4_p3">The "Screenify+" name, logo, and all related names, logos, product and service names, designs, and slogans are trademarks of Screenify+. You may not use these marks without our prior written permission.</p>
+                        </div>
+                    </div>
+
+                    <!-- Section 5 -->
+                    <div id="section-5" class="scroll-mt-24">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-600/20 flex items-center justify-center">
+                                <span class="iconify text-brand-500" data-icon="lucide:user-check" data-width="20"></span>
+                            </div>
+                            <h2 class="text-2xl font-semibold text-white" data-i18n="s5_title">5. User Conduct</h2>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 space-y-4 text-gray-400 leading-relaxed">
+                            <p data-i18n="s5_p1">By using Screenify+, you agree not to:</p>
+                            <ul class="space-y-2 ml-4">
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:x" data-width="16"></span>
+                                    <span data-i18n="s5_li1">Use the App for any illegal or unauthorized purpose</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:x" data-width="16"></span>
+                                    <span data-i18n="s5_li2">Attempt to interfere with or disrupt the App's functionality</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:x" data-width="16"></span>
+                                    <span data-i18n="s5_li3">Use automated systems, bots, or scrapers to access the App</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:x" data-width="16"></span>
+                                    <span data-i18n="s5_li4">Attempt to reverse engineer the App's source code</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:x" data-width="16"></span>
+                                    <span data-i18n="s5_li5">Distribute or share the App's APK without authorization</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:x" data-width="16"></span>
+                                    <span data-i18n="s5_li6">Impersonate any person or entity</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Section 6 — PRIVACY (Updated: Zero Data Collection) -->
+                    <div id="section-6" class="scroll-mt-24">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-green-600/20 flex items-center justify-center">
+                                <span class="iconify text-green-400" data-icon="lucide:shield-check" data-width="20"></span>
+                            </div>
+                            <h2 class="text-2xl font-semibold text-white" data-i18n="s6_title">6. Privacy — Zero Data Collection</h2>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 space-y-4 text-gray-400 leading-relaxed">
+                            <!-- Zero Data Banner -->
+                            <div class="privacy-badge rounded-xl p-4 flex items-start gap-3">
+                                <span class="iconify text-green-400 mt-0.5 shrink-0" data-icon="lucide:shield-check" data-width="18"></span>
+                                <div>
+                                    <p class="text-sm text-green-300 font-semibold" data-i18n="s6_badge_title">We collect absolutely nothing.</p>
+                                    <p class="text-xs text-green-400/70 mt-1" data-i18n="s6_badge_sub">No personal data. No usage data. No analytics. Nothing.</p>
+                                </div>
+                            </div>
+
+                            <p data-i18n="s6_p1">Screenify+ does not collect, store, process, or transmit any personal data or user information whatsoever. We have zero access to your viewing habits, preferences, device information, location, or any other data point.</p>
+                            <p data-i18n="s6_p2">Specifically, we do NOT collect:</p>
+                            <ul class="space-y-2 ml-4">
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-green-400 mt-1 shrink-0" data-icon="lucide:shield-off" data-width="16"></span>
+                                    <span data-i18n="s6_li1">Personal identification information (name, email, phone)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-green-400 mt-1 shrink-0" data-icon="lucide:shield-off" data-width="16"></span>
+                                    <span data-i18n="s6_li2">Usage analytics or viewing history</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-green-400 mt-1 shrink-0" data-icon="lucide:shield-off" data-width="16"></span>
+                                    <span data-i18n="s6_li3">Device information or identifiers</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-green-400 mt-1 shrink-0" data-icon="lucide:shield-off" data-width="16"></span>
+                                    <span data-i18n="s6_li4">Location data</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-green-400 mt-1 shrink-0" data-icon="lucide:shield-off" data-width="16"></span>
+                                    <span data-i18n="s6_li5">Cookies or tracking mechanisms of any kind</span>
+                                </li>
+                            </ul>
+                            <p data-i18n="s6_p3">There are no accounts, no sign-ups, and no login requirements. The App works entirely offline from a data collection perspective. Your privacy is absolute when using Screenify+.</p>
+                            <p data-i18n="s6_p4">We do not sell, trade, or share any data — because we simply don't have any data to begin with.</p>
+                        </div>
+                    </div>
+
+                    <!-- Section 7 -->
+                    <div id="section-7" class="scroll-mt-24">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-600/20 flex items-center justify-center">
+                                <span class="iconify text-brand-500" data-icon="lucide:shield-off" data-width="20"></span>
+                            </div>
+                            <h2 class="text-2xl font-semibold text-white" data-i18n="s7_title">7. Disclaimer of Warranties</h2>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 space-y-4 text-gray-400 leading-relaxed">
+                            <p data-i18n="s7_p1">THE APP IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.</p>
+                            <p data-i18n="s7_p2">We do not warrant that:</p>
+                            <ul class="space-y-2 ml-4">
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:minus" data-width="16"></span>
+                                    <span data-i18n="s7_li1">The App will be uninterrupted, timely, secure, or error-free</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:minus" data-width="16"></span>
+                                    <span data-i18n="s7_li2">The results obtained from the use of the App will be accurate or reliable</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:minus" data-width="16"></span>
+                                    <span data-i18n="s7_li3">Any errors in the App will be corrected</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:minus" data-width="16"></span>
+                                    <span data-i18n="s7_li4">Third-party content sources will remain available or accessible</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Section 8 -->
+                    <div id="section-8" class="scroll-mt-24">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-600/20 flex items-center justify-center">
+                                <span class="iconify text-brand-500" data-icon="lucide:ban" data-width="20"></span>
+                            </div>
+                            <h2 class="text-2xl font-semibold text-white" data-i18n="s8_title">8. Limitation of Liability</h2>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 space-y-4 text-gray-400 leading-relaxed">
+                            <p data-i18n="s8_p1">TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL SCREENIFY+ OR ITS DEVELOPERS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING WITHOUT LIMITATION, LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, RESULTING FROM:</p>
+                            <ul class="space-y-2 ml-4 mt-2">
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:arrow-right" data-width="16"></span>
+                                    <span data-i18n="s8_li1">Your access to or use of (or inability to access or use) the App</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:arrow-right" data-width="16"></span>
+                                    <span data-i18n="s8_li2">Any conduct or content of any third party on the App</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:arrow-right" data-width="16"></span>
+                                    <span data-i18n="s8_li3">Any content obtained from the App</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="iconify text-brand-500 mt-1 shrink-0" data-icon="lucide:arrow-right" data-width="16"></span>
+                                    <span data-i18n="s8_li4">Unauthorized access, use, or alteration of your transmissions or content</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Section 9 -->
+                    <div id="section-9" class="scroll-mt-24">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-600/20 flex items-center justify-center">
+                                <span class="iconify text-brand-500" data-icon="lucide:external-link" data-width="20"></span>
+                            </div>
+                            <h2 class="text-2xl font-semibold text-white" data-i18n="s9_title">9. Third-Party Content & Links</h2>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 space-y-4 text-gray-400 leading-relaxed">
+                            <p data-i18n="s9_p1">The App may contain links to or embed content from third-party websites, servers, or services that are not owned or controlled by Screenify+.</p>
+                            <p data-i18n="s9_p2">We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites or services. You acknowledge and agree that Screenify+ shall not be responsible or liable for any damage or loss caused by or in connection with the use of any such content.</p>
+                            <p data-i18n="s9_p3">The inclusion of any content does not imply endorsement by Screenify+. We strongly advise users to verify the legality of content in their jurisdiction before accessing it.</p>
+                        </div>
+                    </div>
+
+                    <!-- Section 10 -->
+                    <div id="section-10" class="scroll-mt-24">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-600/20 flex items-center justify-center">
+                                <span class="iconify text-brand-500" data-icon="lucide:refresh-cw" data-width="20"></span>
+                            </div>
+                            <h2 class="text-2xl font-semibold text-white" data-i18n="s10_title">10. Modifications to Terms</h2>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 space-y-4 text-gray-400 leading-relaxed">
+                            <p data-i18n="s10_p1">We reserve the right to modify or replace these Terms at any time at our sole discretion. If a revision is material, we will provide at least 7 days' notice prior to any new terms taking effect.</p>
+                            <p data-i18n="s10_p2">What constitutes a material change will be determined at our sole discretion. By continuing to access or use the App after those revisions become effective, you agree to be bound by the revised terms.</p>
+                            <p data-i18n="s10_p3">It is your responsibility to check these Terms periodically for changes.</p>
+                        </div>
+                    </div>
+
+                    <!-- Section 11 -->
+                    <div id="section-11" class="scroll-mt-24">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-600/20 flex items-center justify-center">
+                                <span class="iconify text-brand-500" data-icon="lucide:globe" data-width="20"></span>
+                            </div>
+                            <h2 class="text-2xl font-semibold text-white" data-i18n="s11_title">11. Governing Law</h2>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 space-y-4 text-gray-400 leading-relaxed">
+                            <p data-i18n="s11_p1">These Terms shall be governed and construed in accordance with applicable laws, without regard to conflict of law provisions.</p>
+                            <p data-i18n="s11_p2">Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable, the remaining provisions shall remain in effect.</p>
+                            <p data-i18n="s11_p3">Users are solely responsible for ensuring their use of the App complies with the laws of their jurisdiction.</p>
+                        </div>
+                    </div>
+
+                    <!-- Section 12 -->
+                    <div id="section-12" class="scroll-mt-24">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-brand-600/20 flex items-center justify-center">
+                                <span class="iconify text-brand-500" data-icon="lucide:mail" data-width="20"></span>
+                            </div>
+                            <h2 class="text-2xl font-semibold text-white" data-i18n="s12_title">12. Contact Us</h2>
+                        </div>
+                        <div class="glass-card rounded-2xl p-6 space-y-4 text-gray-400 leading-relaxed">
+                            <p data-i18n="s12_p1">If you have any questions, concerns, or requests regarding these Terms of Service, including DMCA takedown requests, please contact us:</p>
+                            <div class="space-y-3 mt-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-brand-600/20 flex items-center justify-center shrink-0">
+                                        <span class="iconify text-brand-400" data-icon="lucide:globe" data-width="16"></span>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Website</p>
+                                        <a href="https://screenifyplus.online" target="_blank" class="text-brand-400 hover:text-brand-300 transition-colors text-sm">screenifyplus.online</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg bg-brand-600/20 flex items-center justify-center shrink-0">
+                                        <span class="iconify text-brand-400" data-icon="lucide:download" data-width="16"></span>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Download</p>
+                                        <a href="https://screenifyplus.online" target="_blank" class="text-brand-400 hover:text-brand-300 transition-colors text-sm">screenifyplus.online</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-sm mt-4" data-i18n="s12_p2">We will make our best effort to respond to all legitimate inquiries within 48 hours.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider max-w-4xl mx-auto"></div>
+
+    <!-- CTA Section -->
+    <section class="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand-600/10 rounded-full blur-3xl"></div>
+        </div>
+        <div class="max-w-2xl mx-auto text-center relative z-10">
+            <div class="glass-card rounded-3xl p-10 glow-red">
+                <div class="w-16 h-16 rounded-2xl overflow-hidden border border-brand-500/20 mx-auto mb-6">
+                    <img src="https://screenifyplus.online/logo.png" alt="Screenify+" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full bg-brand-600 flex items-center justify-center text-xl font-bold\'>S+</div>'">
+                </div>
+                <h2 class="text-3xl font-bold mb-3 gradient-text" data-i18n="cta_title">Ready to Watch?</h2>
+                <p class="text-gray-400 mb-4" data-i18n="cta_desc">Download Screenify+ now and enjoy unlimited entertainment on your phone or TV.</p>
+                <div class="inline-flex items-center gap-2 privacy-badge rounded-full px-4 py-1.5 mb-8">
+                    <span class="iconify text-green-400" data-icon="lucide:shield-check" data-width="14"></span>
+                    <span class="text-xs text-green-300 font-medium" data-i18n="cta_privacy">Zero data collected — 100% private</span>
+                </div>
+                <div>
+                    <a href="https://screenifyplus.online" target="_blank" class="inline-flex items-center gap-3 bg-brand-600 hover:bg-brand-500 text-white px-10 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 glow-btn hover:scale-105">
+                        <span class="iconify" data-icon="lucide:download" data-width="22"></span>
+                        <span data-i18n="cta_btn">Install Screenify+</span>
+                    </a>
+                </div>
+                <div class="flex items-center justify-center gap-6 mt-6 text-xs text-gray-500">
+                    <span class="flex items-center gap-1">
+                        <span class="iconify" data-icon="lucide:smartphone" data-width="14"></span>
+                        <span data-i18n="cta_phone">Phones</span>
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="iconify" data-icon="lucide:tv" data-width="14"></span>
+                        <span data-i18n="cta_tv">Android TV</span>
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <span class="iconify" data-icon="lucide:shield-check" data-width="14"></span>
+                        <span data-i18n="cta_free">Free & Private</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-6 h-6 rounded-md overflow-hidden">
+                    <img src="https://screenifyplus.online/logo.png" alt="Screenify+" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full bg-brand-600 flex items-center justify-center text-xs font-bold\'>S+</div>'">
+                </div>
+                <span class="text-sm text-gray-500">© 2025 Screenify+. <span data-i18n="footer_rights">All rights reserved.</span></span>
+            </div>
+            <div class="flex items-center gap-4 text-xs text-gray-500">
+                <span class="flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 pulse-dot"></span>
+                    <span data-i18n="footer_status">All systems operational</span>
+                </span>
+                <span class="flex items-center gap-1">
+                    <span class="iconify text-green-400" data-icon="lucide:shield-check" data-width="12"></span>
+                    <span data-i18n="footer_privacy">Zero data collection</span>
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // ========== TRANSLATIONS ==========
+    const translations = {
+        en: {
+            nav_install: "Install App",
+            hero_title: "Terms of Service",
+            hero_subtitle: "Last updated: June 2026",
+            hero_desc: "Please read these terms carefully before using Screenify+. By using the app, you agree to these terms.",
+            hero_zero_data: "Zero Data Collection — Your Privacy is Absolute",
+            feat_movies: "Movies & Series",
+            feat_live: "Live TV",
+            feat_matches: "Matches Calendar",
+            feat_news: "Football News",
+            toc_title: "Contents",
+            s1_title: "1. Acceptance of Terms",
+            s1_p1: 'By downloading, installing, or using Screenify+ ("the App"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use the App.',
+            s1_p2: 'These Terms constitute a legally binding agreement between you ("User", "you", or "your") and Screenify+ ("we", "us", or "our"). We reserve the right to update these Terms at any time, and your continued use of the App after any changes signifies your acceptance of the new Terms.',
+            s1_p3: "You must be at least 13 years of age to use this App. If you are under 18, you must have parental or guardian consent to use the App.",
+            s2_title: "2. Description of Service",
+            s2_p1: "Screenify+ is an entertainment application available for Android phones and Android TV devices. The App provides access to the following features:",
+            s2_li1: "Movies, Series, and Anime catalog",
+            s2_li2: "Live TV channels",
+            s2_li3: "Sports matches calendar and schedules",
+            s2_li4: "Latest football news and transfer updates",
+            s2_p2: "We reserve the right to modify, suspend, or discontinue any feature at any time without prior notice.",
+            s3_title: "3. Content Disclaimer",
+            s3_warning: "Important: Screenify+ does not host, store, or distribute any media content. The App acts as an aggregator that indexes content available from third-party sources.",
+            s3_p1: "All movies, series, anime, live TV channels, and other media content accessible through the App are sourced from third-party providers that are not owned or controlled by Screenify+.",
+            s3_p2: "We do not assume responsibility for the accuracy, legality, or copyright compliance of any content provided by third-party sources. If you believe any content infringes your intellectual property rights, please contact us for immediate removal.",
+            s3_p3: "Football news, transfer information, and match schedules are aggregated from publicly available sources and are provided for informational purposes only.",
+            s4_title: "4. Intellectual Property",
+            s4_p1: "The App itself, including its design, code, logo, graphics, and user interface, is the intellectual property of Screenify+ and is protected by applicable copyright and trademark laws.",
+            s4_p2: "You may not reproduce, distribute, modify, create derivative works of, reverse engineer, decompile, or disassemble the App or any part of it.",
+            s4_p3: 'The "Screenify+" name, logo, and all related names, logos, product and service names, designs, and slogans are trademarks of Screenify+. You may not use these marks without our prior written permission.',
+            s5_title: "5. User Conduct",
+            s5_p1: "By using Screenify+, you agree not to:",
+            s5_li1: "Use the App for any illegal or unauthorized purpose",
+            s5_li2: "Attempt to interfere with or disrupt the App's functionality",
+            s5_li3: "Use automated systems, bots, or scrapers to access the App",
+            s5_li4: "Attempt to reverse engineer the App's source code",
+            s5_li5: "Distribute or share the App's APK without authorization",
+            s5_li6: "Impersonate any person or entity",
+            s6_title: "6. Privacy — Zero Data Collection",
+            s6_badge_title: "We collect absolutely nothing.",
+            s6_badge_sub: "No personal data. No usage data. No analytics. Nothing.",
+            s6_p1: "Screenify+ does not collect, store, process, or transmit any personal data or user information whatsoever. We have zero access to your viewing habits, preferences, device information, location, or any other data point.",
+            s6_p2: "Specifically, we do NOT collect:",
+            s6_li1: "Personal identification information (name, email, phone)",
+            s6_li2: "Usage analytics or viewing history",
+            s6_li3: "Device information or identifiers",
+            s6_li4: "Location data",
+            s6_li5: "Cookies or tracking mechanisms of any kind",
+            s6_p3: "There are no accounts, no sign-ups, and no login requirements. The App works entirely offline from a data collection perspective. Your privacy is absolute when using Screenify+.",
+            s6_p4: "We do not sell, trade, or share any data — because we simply don't have any data to begin with.",
+            s7_title: "7. Disclaimer of Warranties",
+            s7_p1: 'THE APP IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.',
+            s7_p2: "We do not warrant that:",
+            s7_li1: "The App will be uninterrupted, timely, secure, or error-free",
+            s7_li2: "The results obtained from the use of the App will be accurate or reliable",
+            s7_li3: "Any errors in the App will be corrected",
+            s7_li4: "Third-party content sources will remain available or accessible",
+            s8_title: "8. Limitation of Liability",
+            s8_p1: "TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL SCREENIFY+ OR ITS DEVELOPERS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING WITHOUT LIMITATION, LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, RESULTING FROM:",
+            s8_li1: "Your access to or use of (or inability to access or use) the App",
+            s8_li2: "Any conduct or content of any third party on the App",
+            s8_li3: "Any content obtained from the App",
+            s8_li4: "Unauthorized access, use, or alteration of your transmissions or content",
+            s9_title: "9. Third-Party Content & Links",
+            s9_p1: "The App may contain links to or embed content from third-party websites, servers, or services that are not owned or controlled by Screenify+.",
+            s9_p2: "We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites or services. You acknowledge and agree that Screenify+ shall not be responsible or liable for any damage or loss caused by or in connection with the use of any such content.",
+            s9_p3: "The inclusion of any content does not imply endorsement by Screenify+. We strongly advise users to verify the legality of content in their jurisdiction before accessing it.",
+            s10_title: "10. Modifications to Terms",
+            s10_p1: "We reserve the right to modify or replace these Terms at any time at our sole discretion. If a revision is material, we will provide at least 7 days' notice prior to any new terms taking effect.",
+            s10_p2: "What constitutes a material change will be determined at our sole discretion. By continuing to access or use the App after those revisions become effective, you agree to be bound by the revised terms.",
+            s10_p3: "It is your responsibility to check these Terms periodically for changes.",
+            s11_title: "11. Governing Law",
+            s11_p1: "These Terms shall be governed and construed in accordance with applicable laws, without regard to conflict of law provisions.",
+            s11_p2: "Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable, the remaining provisions shall remain in effect.",
+            s11_p3: "Users are solely responsible for ensuring their use of the App complies with the laws of their jurisdiction.",
+            s12_title: "12. Contact Us",
+            s12_p1: "If you have any questions, concerns, or requests regarding these Terms of Service, including DMCA takedown requests, please contact us:",
+            s12_p2: "We will make our best effort to respond to all legitimate inquiries within 48 hours.",
+            cta_title: "Ready to Watch?",
+            cta_desc: "Download Screenify+ now and enjoy unlimited entertainment on your phone or TV.",
+            cta_privacy: "Zero data collected — 100% private",
+            cta_btn: "Install Screenify+",
+            cta_phone: "Phones",
+            cta_tv: "Android TV",
+            cta_free: "Free & Private",
+            footer_rights: "All rights reserved.",
+            footer_status: "All systems operational",
+            footer_privacy: "Zero data collection",
+            toc_items: [
+                "Acceptance of Terms",
+                "Description of Service",
+                "Content Disclaimer",
+                "Intellectual Property",
+                "User Conduct",
+                "Privacy — Zero Data",
+                "Disclaimer of Warranties",
+                "Limitation of Liability",
+                "Third-Party Content",
+                "Modifications",
+                "Governing Law",
+                "Contact Us"
+            ]
+        },
+        ar: {
+            nav_install: "تثبيت التطبيق",
+            hero_title: "شروط الخدمة",
+            hero_subtitle: "آخر تحديث: يونيو 2026",
+            hero_desc: "يرجى قراءة هذه الشروط بعناية قبل استخدام Screenify+. باستخدامك للتطبيق، فإنك توافق على هذه الشروط.",
+            hero_zero_data: "جمع بيانات صفر — خصوصيتك مطلقة",
+            feat_movies: "أفلام ومسلسلات",
+            feat_live: "تلفزيون مباشر",
+            feat_matches: "تقويم المباريات",
+            feat_news: "أخبار كرة القدم",
+            toc_title: "المحتويات",
+            s1_title: "1. قبول الشروط",
+            s1_p1: 'بالتحميل أو التثبيت أو استخدام Screenify+ ("التطبيق")، فإنك توافق على الالتزام بشروط الخدمة هذه ("الشروط"). إذا كنت لا توافق على هذه الشروط، يرجى عدم استخدام التطبيق.',
+            s1_p2: 'تشكل هذه الشروط اتفاقية ملزمة قانونيًا بينك ("المستخدم" أو "أنت") وScreenify+ ("نحن"). نحتفظ بالحق في تحديث هذه الشروط في أي وقت، واستمرارك في استخدام التطبيق بعد أي تغييرات يعني قبولك للشروط الجديدة.',
+            s1_p3: "يجب أن يكون عمرك 13 عامًا على الأقل لاستخدام هذا التطبيق. إذا كنت دون سن 18، يجب أن تحصل على موافقة ولي أمرك.",
+            s2_title: "2. وصف الخدمة",
+            s2_p1: "Screenify+ هو تطبيق ترفيهي متاح لهواتف أندرويد وأجهزة تلفزيون أندرويد. يوفر التطبيق الوصول إلى الميزات التالية:",
+            s2_li1: "كتالوج الأفلام والمسلسلات والأنمي",
+            s2_li2: "قنوات التلفزيون المباشر",
+            s2_li3: "تقويم وجداول مباريات الرياضة",
+            s2_li4: "أحدث أخبار كرة القدم وتحديثات الانتقالات",
+            s2_p2: "نحتفظ بالحق في تعديل أو تعليق أو إيقاف أي ميزة في أي وقت دون إشعار مسبق.",
+            s3_title: "3. إخلاء المسؤولية عن المحتوى",
+            s3_warning: "مهم: Screenify+ لا يستضيف أو يخزن أو يوزع أي محتوى وسائط. يعمل التطبيق كمجمع يفهرس المحتوى المتاح من مصادر خارجية.",
+            s3_p1: "جميع الأفلام والمسلسلات والأنمي وقنوات التلفزيون المباشر والمحتويات الإعلامية الأخرى التي يمكن الوصول إليها من خلال التطبيق مصدرها مقدمو خدمات خارجيون لا يملكهم أو يتحكم فيهم Screenify+.",
+            s3_p2: "لا نتحمل مسؤولية دقة أو قانونية أو امتثال حقوق النشر لأي محتوى تقدمه مصادر خارجية. إذا كنت تعتقد أن أي محتوى ينتهك حقوق الملكية الفكرية الخاصة بك، يرجى الاتصال بنا للإزالة الفورية.",
+            s3_p3: "أخبار كرة القدم ومعلومات الانتقالات وجداول المباريات مجمعة من مصادر متاحة للجمهور ومقدمة لأغراض إعلامية فقط.",
+            s4_title: "4. الملكية الفكرية",
+            s4_p1: "التطبيق نفسه، بما في ذلك تصميمه وكوده وشعاره ورسومياته وواجهة المستخدم، هو ملكية فكرية لـ Screenify+ ومحمي بموجب قوانين حقوق النشر والعلامات التجارية المعمول بها.",
+            s4_p2: "لا يجوز لك نسخ أو توزيع أو تعديل أو إنشاء أعمال مشتقة أو الهندسة العكسية أو فك تجميع التطبيق أو أي جزء منه.",
+            s4_p3: 'اسم "Screenify+" والشعار وجميع الأسماء والشعارات ذات الصلة هي علامات تجارية لـ Screenify+. لا يجوز لك استخدام هذه العلامات دون إذن كتابي مسبق منا.',
+            s5_title: "5. سلوك المستخدم",
+            s5_p1: "باستخدام Screenify+، توافق على عدم:",
+            s5_li1: "استخدام التطبيق لأي غرض غير قانوني أو غير مصرح به",
+            s5_li2: "محاولة التداخل مع أو تعطيل وظائف التطبيق",
+            s5_li3: "استخدام أنظمة آلية أو روبوتات للوصول إلى التطبيق",
+            s5_li4: "محاولة الهندسة العكسية للكود المصدري للتطبيق",
+            s5_li5: "توزيع أو مشاركة ملف APK للتطبيق دون إذن",
+            s5_li6: "انتحال شخصية أي شخص أو كيان",
+            s6_title: "6. الخصوصية — جمع بيانات صفر",
+            s6_badge_title: "نحن لا نجمع أي شيء إطلاقًا.",
+            s6_badge_sub: "لا بيانات شخصية. لا بيانات استخدام. لا تحليلات. لا شيء.",
+            s6_p1: "Screenify+ لا يجمع أو يخزن أو يعالج أو ينقل أي بيانات شخصية أو معلومات مستخدم على الإطلاق. ليس لدينا أي وصول لعادات المشاهدة أو التفضيلات أو معلومات الجهاز أو الموقع أو أي نقطة بيانات أخرى.",
+            s6_p2: "تحديدًا، نحن لا نجمع:",
+            s6_li1: "معلومات التعريف الشخصية (الاسم، البريد الإلكتروني، الهاتف)",
+            s6_li2: "تحليلات الاستخدام أو سجل المشاهدة",
+            s6_li3: "معلومات الجهاز أو المعرفات",
+            s6_li4: "بيانات الموقع",
+            s6_li5: "ملفات تعريف الارتباط أو آليات التتبع من أي نوع",
+            s6_p3: "لا توجد حسابات، ولا تسجيل، ومتطلبات تسجيل دخول. التطبيق يعمل بشكل كامل دون جمع أي بيانات. خصوصيتك مطلقة عند استخدام Screenify+.",
+            s6_p4: "نحن لا نبيع أو نتاجر أو نشارك أي بيانات — لأننا ببساطة لا نملك أي بيانات من الأساس.",
+            s7_title: "7. إخلاء المسؤولية عن الضمانات",
+            s7_p1: 'يُقدم التطبيق "كما هو" و"كما هو متاح" دون ضمانات من أي نوع، سواء صريحة أو ضمنية، بما في ذلك على سبيل المثال لا الحصر الضمانات الضمنية للقابلية للتسويق والملاءمة لغرض معين وعدم الانتهاك.',
+            s7_p2: "لا نضمن أن:",
+            s7_li1: "سيكون التطبيق غير منقطع أو آمنًا أو خاليًا من الأخطاء",
+            s7_li2: "النتائج التي يتم الحصول عليها من استخدام التطبيق ستكون دقيقة أو موثوقة",
+            s7_li3: "سيتم تصحيح أي أخطاء في التطبيق",
+            s7_li4: "مصادر المحتوى الخارجية ستظل متاحة أو قابلة للوصول",
+            s8_title: "8. تحديد المسؤولية",
+            s8_p1: "إلى أقصى حد يسمح به القانون المعمول به، لا يكون Screenify+ أو مطوروه مسؤولين عن أي أضرار غير مباشرة أو عرضية أو خاصة أو تبعية أو عقابية، بما في ذلك على سبيل المثال لا الحصر فقدان الأرباح أو البيانات أو الاستخدام أو السمعة التجارية، الناتجة عن:",
+            s8_li1: "وصولك إلى أو استخدامك (أو عدم قدرتك على الوصول إلى أو استخدام) التطبيق",
+            s8_li2: "أي سلوك أو محتوى من أي طرف ثالث على التطبيق",
+            s8_li3: "أي محتوى تم الحصول عليه من التطبيق",
+            s8_li4: "الوصول غير المصرح به أو استخدام أو تعديل عمليات النقل أو المحتوى الخاص بك",
+            s9_title: "9. المحتوى والروابط الخارجية",
+            s9_p1: "قد يحتوي التطبيق على روابط أو محتوى مضمن من مواقع أو خوادم أو خدمات خارجية لا يملكها أو يتحكم فيها Screenify+.",
+            s9_p2: "ليس لدينا سيطرة على، ولا نتحمل مسؤولية، محتوى أو سياسات الخصوصية أو ممارسات أي مواقع أو خدمات خارجية. أنت تقر وتوافق على أن Screenify+ لن يكون مسؤولاً عن أي ضرر أو خسارة ناتجة عن أو فيما يتعلق باستخدام أي محتوى من هذا القبيل.",
+            s9_p3: "إدراج أي محتوى لا يعني تأييد Screenify+ له. ننصح المستخدمين بشدة بالتحقق من قانونية المحتوى في ولايتهم القضائية قبل الوصول إليه.",
+            s10_title: "10. تعديل الشروط",
+            s10_p1: "نحتفظ بالحق في تعديل أو استبدال هذه الشروط في أي وقت وفقًا لتقديرنا الخاص. إذا كان التعديل جوهريًا، سنقدم إشعارًا مسبقًا لمدة 7 أيام على الأقل قبل سريان أي شروط جديدة.",
+            s10_p2: "ما يشكل تغييرًا جوهريًا سيتم تحديده وفقًا لتقديرنا الخاص. بالاستمرار في الوصول إلى أو استخدام التطبيق بعد أن تصبح هذه التعديلات سارية، فإنك توافق على الالتزام بالشروط المنقحة.",
+            s10_p3: "من مسؤوليتك مراجعة هذه الشروط بشكل دوري للتغييرات.",
+            s11_title: "11. القانون الحاكم",
+            s11_p1: "تخضع هذه الشروط وتُفسر وفقًا للقوانين المعمول بها، دون مراعاة أحكام تنازع القوانين.",
+            s11_p2: "عدم قيامنا بإنفاذ أي حق أو حكم من هذه الشروط لا يُعتبر تنازلاً عن تلك الحقوق. إذا تم الحكم بعدم صلاحية أو قابلية إنفاذ أي حكم من هذه الشروط، فستظل الأحكام المتبقية سارية.",
+            s11_p3: "يتحمل المستخدمون المسؤولية الكاملة عن التأكد من أن استخدامهم للتطبيق يتوافق مع قوانين ولايتهم القضائية.",
+            s12_title: "12. اتصل بنا",
+            s12_p1: "إذا كان لديك أي أسئلة أو مخاوف أو طلبات تتعلق بشروط الخدمة هذه، بما في ذلك طلبات إزالة DMCA، يرجى الاتصال بنا:",
+            s12_p2: "سنبذل قصارى جهدنا للرد على جميع الاستفسارات المشروعة في غضون 48 ساعة.",
+            cta_title: "مستعد للمشاهدة؟",
+            cta_desc: "قم بتنزيل Screenify+ الآن واستمتع بترفيه غير محدود على هاتفك أو تلفزيونك.",
+            cta_privacy: "صفر بيانات مجمعة — خصوصية 100%",
+            cta_btn: "تثبيت Screenify+",
+            cta_phone: "الهواتف",
+            cta_tv: "أندرويد تي في",
+            cta_free: "مجاني وخاص",
+            footer_rights: "جميع الحقوق محفوظة.",
+            footer_status: "جميع الأنظمة تعمل",
+            footer_privacy: "جمع بيانات صفر",
+            toc_items: [
+                "قبول الشروط",
+                "وصف الخدمة",
+                "إخلاء المسؤولية",
+                "الملكية الفكرية",
+                "سلوك المستخدم",
+                "الخصوصية — بيانات صفر",
+                "إخلاء الضمانات",
+                "تحديد المسؤولية",
+                "المحتوى الخارجي",
+                "تعديل الشروط",
+                "القانون الحاكم",
+                "اتصل بنا"
+            ]
+        },
+        fr: {
+            nav_install: "Installer l'App",
+            hero_title: "Conditions d'Utilisation",
+            hero_subtitle: "Dernière mise à jour : Juin 2026",
+            hero_desc: "Veuillez lire attentivement ces conditions avant d'utiliser Screenify+. En utilisant l'application, vous acceptez ces conditions.",
+            hero_zero_data: "Collecte de données zéro — Votre vie privée est absolue",
+            feat_movies: "Films & Séries",
+            feat_live: "TV en Direct",
+            feat_matches: "Calendrier Matchs",
+            feat_news: "Actualités Foot",
+            toc_title: "Sommaire",
+            s1_title: "1. Acceptation des Conditions",
+            s1_p1: 'En téléchargeant, installant ou utilisant Screenify+ ("l\'Application"), vous acceptez d\'être lié par ces Conditions d\'Utilisation ("Conditions"). Si vous n\'acceptez pas ces Conditions, veuillez ne pas utiliser l\'Application.',
+            s1_p2: 'Ces Conditions constituent un accord juridiquement contraignant entre vous ("Utilisateur", "vous") et Screenify+ ("nous"). Nous nous réservons le droit de mettre à jour ces Conditions à tout moment, et votre utilisation continue de l\'Application après tout changement signifie votre acceptation des nouvelles Conditions.',
+            s1_p3: "Vous devez avoir au moins 13 ans pour utiliser cette Application. Si vous avez moins de 18 ans, vous devez obtenir le consentement d'un parent ou tuteur.",
+            s2_title: "2. Description du Service",
+            s2_p1: "Screenify+ est une application de divertissement disponible pour les téléphones Android et les appareils Android TV. L'Application donne accès aux fonctionnalités suivantes :",
+            s2_li1: "Catalogue de films, séries et anime",
+            s2_li2: "Chaînes de télévision en direct",
+            s2_li3: "Calendrier et programmation des matchs sportifs",
+            s2_li4: "Dernières nouvelles de football et mises à jour des transferts",
+            s2_p2: "Nous nous réservons le droit de modifier, suspendre ou interrompre toute fonctionnalité à tout moment sans préavis.",
+            s3_title: "3. Avertissement sur le Contenu",
+            s3_warning: "Important : Screenify+ n'héberge, ne stocke ni ne distribue aucun contenu multimédia. L'Application agit comme un agrégateur qui indexe le contenu disponible auprès de sources tierces.",
+            s3_p1: "Tous les films, séries, anime, chaînes de télévision en direct et autres contenus multimédias accessibles via l'Application proviennent de fournisseurs tiers qui ne sont ni détenus ni contrôlés par Screenify+.",
+            s3_p2: "Nous ne sommes pas responsables de l'exactitude, de la légalité ou de la conformité aux droits d'auteur de tout contenu fourni par des sources tierces. Si vous pensez qu'un contenu porte atteinte à vos droits de propriété intellectuelle, veuillez nous contacter pour un retrait immédiat.",
+            s3_p3: "Les nouvelles de football, les informations sur les transferts et les calendriers des matchs sont agrégés à partir de sources accessibles au public et sont fournis à titre informatif uniquement.",
+            s4_title: "4. Propriété Intellectuelle",
+            s4_p1: "L'Application elle-même, y compris sa conception, son code, son logo, ses graphiques et son interface utilisateur, est la propriété intellectuelle de Screenify+ et est protégée par les lois applicables sur les droits d'auteur et les marques commerciales.",
+            s4_p2: "Vous ne pouvez pas reproduire, distribuer, modifier, créer des œuvres dérivées, faire de l'ingénierie inverse, décompiler ou désassembler l'Application ou toute partie de celle-ci.",
+            s4_p3: 'Le nom "Screenify+", le logo et tous les noms, logos, noms de produits et services associés sont des marques commerciales de Screenify+. Vous ne pouvez pas utiliser ces marques sans notre autorisation écrite préalable.',
+            s5_title: "5. Conduite de l'Utilisateur",
+            s5_p1: "En utilisant Screenify+, vous acceptez de ne pas :",
+            s5_li1: "Utiliser l'Application à des fins illégales ou non autorisées",
+            s5_li2: "Tenter d'interférer avec ou de perturber la fonctionnalité de l'Application",
+            s5_li3: "Utiliser des systèmes automatisés, des bots ou des scrapers pour accéder à l'Application",
+            s5_li4: "Tenter de faire de l'ingénierie inverse du code source de l'Application",
+            s5_li5: "Distribuer ou partager l'APK de l'Application sans autorisation",
+            s5_li6: "Usurper l'identité de toute personne ou entité",
+            s6_title: "6. Confidentialité — Collecte Zéro",
+            s6_badge_title: "Nous ne collectons absolument rien.",
+            s6_badge_sub: "Pas de données personnelles. Pas de données d'utilisation. Pas d'analyses. Rien.",
+            s6_p1: "Screenify+ ne collecte, ne stocke, ne traite ni ne transmet aucune donnée personnelle ou information utilisateur. Nous n'avons zéro accès à vos habitudes de visionnage, préférences, informations d'appareil, localisation ou tout autre point de données.",
+            s6_p2: "Plus précisément, nous ne collectons PAS :",
+            s6_li1: "Informations d'identification personnelle (nom, email, téléphone)",
+            s6_li2: "Analyses d'utilisation ou historique de visionnage",
+            s6_li3: "Informations ou identifiants d'appareil",
+            s6_li4: "Données de localisation",
+            s6_li5: "Cookies ou mécanismes de suivi de quelque type que ce soit",
+            s6_p3: "Il n'y a pas de comptes, pas d'inscriptions et pas d'exigences de connexion. L'Application fonctionne entièrement sans collecte de données. Votre vie privée est absolue lors de l'utilisation de Screenify+.",
+            s6_p4: "Nous ne vendons, n'échangeons ni ne partageons aucune donnée — parce que nous n'avons tout simplement aucune donnée pour commencer.",
+            s7_title: "7. Exclusion de Garanties",
+            s7_p1: 'L\'APPLICATION EST FOURNIE "EN L\'ÉTAT" ET "SELON DISPONIBILITÉ" SANS GARANTIES D\'AUCUNE SORTE, QU\'ELLES SOIENT EXPRESSES OU IMPLICITES, Y COMPRIS MAIS SANS S\'Y LIMITER LES GARANTIES IMPLICITES DE QUALITÉ MARCHANDE, D\'ADÉQUATION À UN USAGE PARTICULIER ET DE NON-CONTREFAÇON.',
+            s7_p2: "Nous ne garantissons pas que :",
+            s7_li1: "L'Application sera ininterrompue, opportune, sécurisée ou sans erreur",
+            s7_li2: "Les résultats obtenus de l'utilisation de l'Application seront exacts ou fiables",
+            s7_li3: "Toute erreur dans l'Application sera corrigée",
+            s7_li4: "Les sources de contenu tiers resteront disponibles ou accessibles",
+            s8_title: "8. Limitation de Responsabilité",
+            s8_p1: "DANS LA MESURE MAXIMALE AUTORISÉE PAR LA LOI APPLICABLE, EN AUCUN CAS SCREENIFY+ OU SES DÉVELOPPEURS NE SERONT RESPONSABLES DE TOUT DOMMAGE INDIRECT, ACCESSOIRE, SPÉCIAL, CONSÉCUTIF OU PUNITIF, Y COMPRIS SANS LIMITATION LA PERTE DE PROFITS, DE DONNÉES, D'UTILISATION, DE CLIENTÈLE OU D'AUTRES PERTES INTANGIBLES, RÉSULTANT DE :",
+            s8_li1: "Votre accès ou utilisation de (ou incapacité d'accéder ou d'utiliser) l'Application",
+            s8_li2: "Toute conduite ou contenu de tout tiers sur l'Application",
+            s8_li3: "Tout contenu obtenu de l'Application",
+            s8_li4: "Accès, utilisation ou altération non autorisés de vos transmissions ou contenus",
+            s9_title: "9. Contenu et Liens Tiers",
+            s9_p1: "L'Application peut contenir des liens vers ou intégrer du contenu de sites Web, serveurs ou services tiers qui ne sont pas détenus ou contrôlés par Screenify+.",
+            s9_p2: "Nous n'avons aucun contrôle sur, et n'assumons aucune responsabilité pour, le contenu, les politiques de confidentialité ou les pratiques de tout site Web ou service tiers. Vous reconnaissez et acceptez que Screenify+ ne sera pas responsable de tout dommage ou perte causé par ou en relation avec l'utilisation de tout contenu de ce type.",
+            s9_p3: "L'inclusion de tout contenu n'implique pas l'approbation par Screenify+. Nous conseillons vivement aux utilisateurs de vérifier la légalité du contenu dans leur juridiction avant d'y accéder.",
+            s10_title: "10. Modifications des Conditions",
+            s10_p1: "Nous nous réservons le droit de modifier ou de remplacer ces Conditions à tout moment à notre seule discrétion. Si une révision est importante, nous fournirons un préavis d'au moins 7 jours avant l'entrée en vigueur des nouvelles conditions.",
+            s10_p2: "Ce qui constitue un changement important sera déterminé à notre seule discrétion. En continuant à accéder ou à utiliser l'Application après que ces révisions sont effectives, vous acceptez d'être lié par les conditions révisées.",
+            s10_p3: "Il est de votre responsabilité de vérifier périodiquement ces Conditions pour des changements.",
+            s11_title: "11. Loi Applicable",
+            s11_p1: "Ces Conditions seront régies et interprétées conformément aux lois applicables, sans égard aux dispositions relatives aux conflits de lois.",
+            s11_p2: "Notre manque d'appliquer tout droit ou disposition de ces Conditions ne sera pas considéré comme une renonciation à ces droits. Si une disposition de ces Conditions est tenue pour invalide ou inapplicable, les dispositions restantes resteront en vigueur.",
+            s11_p3: "Les utilisateurs sont seuls responsables de s'assurer que leur utilisation de l'Application est conforme aux lois de leur juridiction.",
+            s12_title: "12. Contactez-Nous",
+            s12_p1: "Si vous avez des questions, des préoccupations ou des demandes concernant ces Conditions d'Utilisation, y compris les demandes de retrait DMCA, veuillez nous contacter :",
+            s12_p2: "Nous ferons de notre mieux pour répondre à toutes les demandes légitimes dans les 48 heures.",
+            cta_title: "Prêt à Regarder ?",
+            cta_desc: "Téléchargez Screenify+ maintenant et profitez d'un divertissement illimité sur votre téléphone ou votre TV.",
+            cta_privacy: "Zéro donnée collectée — 100% privé",
+            cta_btn: "Installer Screenify+",
+            cta_phone: "Téléphones",
+            cta_tv: "Android TV",
+            cta_free: "Gratuit & Privé",
+            footer_rights: "Tous droits réservés.",
+            footer_status: "Tous les systèmes opérationnels",
+            footer_privacy: "Collecte de données zéro",
+            toc_items: [
+                "Acceptation",
+                "Description du Service",
+                "Avertissement",
+                "Propriété Intellectuelle",
+                "Conduite",
+                "Confidentialité — Zéro",
+                "Exclusion de Garanties",
+                "Limitation",
+                "Contenu Tiers",
+                "Modifications",
+                "Loi Applicable",
+                "Contact"
+            ]
+        }
+    };
+
+    let currentLang = 'en';
+
+    function switchLang(lang) {
+        currentLang = lang;
+        const t = translations[lang];
+        const htmlEl = document.documentElement;
+
+        if (lang === 'ar') {
+            htmlEl.setAttribute('dir', 'rtl');
+            htmlEl.setAttribute('lang', 'ar');
+        } else {
+            htmlEl.setAttribute('dir', 'ltr');
+            htmlEl.setAttribute('lang', lang);
+        }
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.remove('active');
+            btn.classList.add('text-gray-400');
+        });
+        const activeBtn = document.querySelector(`.lang-btn[data-lang="${lang}"]`);
+        if (activeBtn) {
+            activeBtn.classList.add('active');
+            activeBtn.classList.remove('text-gray-400');
+        }
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key]) {
+                el.textContent = t[key];
+            }
+        });
+
+        buildTOC(t.toc_items);
+    }
+
+    function buildTOC(items) {
+        const nav = document.getElementById('toc-nav');
+        nav.innerHTML = '';
+        items.forEach((item, i) => {
+            const link = document.createElement('a');
+            link.href = `#section-${i + 1}`;
+            link.className = 'toc-link block text-gray-500 hover:text-brand-400 transition-all duration-200 py-1';
+            link.textContent = item;
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.getElementById(`section-${i + 1}`);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+            nav.appendChild(link);
+        });
+    }
+
+    function createParticles() {
+        const container = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (8 + Math.random() * 12) + 's';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.width = (1 + Math.random() * 2) + 'px';
+            particle.style.height = particle.style.width;
+            container.appendChild(particle);
+        }
+    }
+
+    function updateActiveTOC() {
+        const sections = document.querySelectorAll('[id^="section-"]');
+        const tocLinks = document.querySelectorAll('#toc-nav a');
+        let current = '';
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (window.scrollY >= sectionTop - 150) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        tocLinks.forEach(link => {
+            link.classList.remove('text-brand-400', 'font-medium');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('text-brand-400', 'font-medium');
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        buildTOC(translations.en.toc_items);
+        createParticles();
+        window.addEventListener('scroll', updateActiveTOC);
+    });
+    </script>
+
+</body>
+</html>
