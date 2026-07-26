@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenify+ v1.7.0 Beta</title>
+    <link rel="icon" href="https://i.ibb.co/ycxg0PG2/logo.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --red-primary: #E50914;
+            --red-glow: #FF1A25;
+            --red-dark: #8B0000;
+            --bg-darkest: #0A0A0A;
+            --bg-dark: #111111;
+            --bg-card: #1A1A1A;
+            --bg-card-hover: #222222;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0A0;
+            --text-muted: #666666;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Tajawal', 'Inter', sans-serif;
+            background: var(--bg-darkest);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        body.ltr { direction: ltr; }
+        body.rtl { direction: rtl; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-darkest); }
+        ::-webkit-scrollbar-thumb { background: var(--red-primary); border-radius: 3px; }
+
+        .hero-bg {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 20%, rgba(229,9,20,0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 80%, rgba(229,9,20,0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 50% 50%, rgba(139,0,0,0.05) 0%, transparent 70%);
+            animation: bgPulse 8s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes bgPulse {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.1) rotate(2deg); }
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--red-primary);
+            opacity: 0;
+            animation: floatParticle linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes floatParticle {
+            0% { opacity: 0; transform: translateY(100vh) scale(0); }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { opacity: 0; transform: translateY(-10vh) scale(1); }
+        }
+
+        .glow-red {
+            box-shadow: 0 0 20px rgba(229,9,20,0.3), 0 0 60px rgba(229,9,20,0.1);
+        }
+        .glow-red-strong {
+            box-shadow: 0 0 30px rgba(229,9,20,0.5), 0 0 80px rgba(229,9,20,0.2), 0 0 120px rgba(229,9,20,0.1);
+        }
+        .text-glow {
+            text-shadow: 0 0 40px rgba(229,9,20,0.5), 0 0 80px rgba(229,9,20,0.2);
+        }
+
+        .gradient-border {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 1px;
+            background: linear-gradient(135deg, var(--red-primary), transparent 50%, var(--red-dark));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .feature-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(229,9,20,0.1) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(229,9,20,0.4) !important;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px rgba(229,9,20,0.15);
+        }
+        .feature-card:hover::after { opacity: 1; }
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 10px rgba(229,9,20,0.5));
+        }
+        .feature-icon {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--red-primary), #B8070F);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.5s;
+        }
+        .btn-primary:hover::before { left: 100%; }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(229,9,20,0.4), 0 0 60px rgba(229,9,20,0.15);
+        }
+        .btn-primary:active { transform: translateY(0); }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(229,9,20,0.5);
+            transform: translateY(-2px);
+        }
+
+        .code-box {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .code-box:hover {
+            border-color: var(--red-primary) !important;
+            box-shadow: 0 0 20px rgba(229,9,20,0.2);
+        }
+        .copy-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, var(--red-primary), #B8070F);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            z-index: 9999;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(229,9,20,0.4);
+        }
+        .copy-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .logo-float {
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .lang-btn {
+            transition: all 0.3s;
+            position: relative;
+        }
+        .lang-btn.active {
+            color: var(--red-primary);
+        }
+        .lang-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: var(--red-primary);
+            border-radius: 1px;
+        }
+
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .marquee-track {
+            display: flex;
+            animation: marquee 30s linear infinite;
+            width: max-content;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .phone-mockup {
+            position: relative;
+        }
+        .phone-mockup::before {
+            content: '';
+            position: absolute;
+            inset: -20px;
+            background: radial-gradient(circle, rgba(229,9,20,0.2) 0%, transparent 70%);
+            filter: blur(40px);
+            z-index: -1;
+        }
+
+        .stat-item {
+            position: relative;
+        }
+        .stat-item::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+        }
+        body.ltr .stat-item::after { right: auto; left: 0; }
+        .stat-item:last-child::after { display: none; }
+
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(229,9,20,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(229,9,20,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .telegram-btn {
+            background: linear-gradient(135deg, #2AABEE, #229ED9);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .telegram-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            transition: left 0.5s;
+        }
+        .telegram-btn:hover::before { left: 100%; }
+        .telegram-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(42,171,238,0.4), 0 0 60px rgba(42,171,238,0.15);
+        }
+    </style>
+</head>
+<body class="rtl">
+
+    <!-- Copy Toast -->
+    <div id="copyToast" class="copy-toast">
+        <span data-ar="تم نسخ الكود!" data-en="Code copied!" data-fr="Code copié!">تم نسخ الكود!</span>
+    </div>
+
+    <!-- Floating Particles Container -->
+    <div id="particles" style="position:fixed;inset:0;pointer-events:none;z-index:0;"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur" style="background:rgba(10,10,10,0.8); border-bottom:1px solid rgba(255,255,255,0.05);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <img src="https://i.ibb.co/ycxg0PG2/logo.png" alt="Screenify+" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl" style="box-shadow: 0 0 15px rgba(229,9,20,0.3);">
+                    <span class="text-xl sm:text-2xl font-black" style="background:linear-gradient(135deg, #fff, #E50914);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Screenify+ <span class="text-sm text-red-500">BETA</span></span>
+                </div>
+
+                <!-- Nav Links (Desktop) -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#features" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-ar="المميزات" data-en="Features" data-fr="Fonctionnalités">المميزات</a>
+                    <a href="#download" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-ar="التحميل" data-en="Download" data-fr="Télécharger">التحميل</a>
+                </div>
+
+                <!-- Language Switcher + CTA -->
+                <div class="flex items-center gap-3 sm:gap-4">
+                    <div class="flex items-center gap-1 sm:gap-2 bg-white/5 rounded-full px-2 sm:px-3 py-1.5 border border-white/10">
+                        <button onclick="setLang('ar')" class="lang-btn active text-xs sm:text-sm font-bold px-2 py-1 rounded-full" id="langAr">عربي</button>
+                        <span class="text-white/20">|</span>
+                        <button onclick="setLang('en')" class="lang-btn text-xs sm:text-sm font-bold px-2 py-1 rounded-full text-gray-500" id="langEn">EN</button>
+                        <span class="text-white/20">|</span>
+                        <button onclick="setLang('fr')" class="lang-btn text-xs sm:text-sm font-bold px-2 py-1 rounded-full text-gray-500" id="langFr">FR</button>
+                    </div>
+                    <a href="#download" class="btn-primary text-xs sm:text-sm font-bold px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-white hidden sm:block" data-ar="حمّل الآن" data-en="Download" data-fr="Télécharger">حمّل الآن</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center relative grid-pattern" style="padding-top:80px;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 w-full">
+            <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+                <!-- Text Content -->
+                <div class="flex-1 text-center lg:text-right order-2 lg:order-1">
+                    <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-2 mb-6">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                        <span class="text-red-400 text-xs sm:text-sm font-bold" data-ar="إصدار v1.7.0 BETA متاح الآن" data-en="v1.7.0 BETA Available Now" data-fr="v1.7.0 BÊTA Disponible">إصدار v1.7.0 BETA متاح الآن</span>
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight mb-6">
+                        <span data-ar="كل ما تريد" data-en="Everything you" data-fr="Tout ce que vous">كل ما تريد</span>
+                        <br>
+                        <span style="background:linear-gradient(135deg, #E50914, #FF6B6B);-webkit-background-clip:text;-webkit-text-fill-color:transparent;" data-ar="في مكان واحد" data-en="want in one place" data-fr="voulez en un seul endroit">في مكان واحد</span>
+                    </h1>
+                    
+                    <p class="text-base sm:text-lg md:text-xl text-gray-400 leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0 lg:mr-0" data-ar="مسلسلات من مختلف البلدان والتصنيفات، أفلام متنوعة، أنمي، تقويم المباريات، وقنوات تلفزيونية مباشرة — كل هذا في تطبيق واحد مجاني!" data-en="Series from different countries and genres, diverse movies, anime, matches calendar, and live TV channels — all in one free app!" data-fr="Séries de différents pays et genres, films variés, anime, calendrier de matchs et chaînes TV en direct — tout dans une seule application gratuite!">مسلسلات من مختلف البلدان والتصنيفات، أفلام متنوعة، أنمي، تقويم المباريات، وقنوات تلفزيونية مباشرة — كل هذا في تطبيق واحد مجاني!</p>
+
+                    <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
+                        <a href="#download" class="btn-primary text-base sm:text-lg font-bold px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl text-white flex items-center gap-3 w-full sm:w-auto justify-center">
+                            <i data-lucide="download" class="w-5 h-5"></i>
+                            <span data-ar="حمّل التطبيق" data-en="Download App" data-fr="Télécharger l'app">حمّل التطبيق</span>
+                        </a>
+                        <a href="https://t.me/screenifyplus" target="_blank" class="telegram-btn text-base sm:text-lg font-bold px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl text-white flex items-center gap-3 w-full sm:w-auto justify-center">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                            <span data-ar="انضم لتيليجرام" data-en="Join Telegram" data-fr="Rejoindre Telegram">انضم لتيليجرام</span>
+                        </a>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="flex items-center justify-center lg:justify-start gap-6 sm:gap-10 mt-10 sm:mt-12">
+                        <div class="stat-item text-center lg:text-right px-4 sm:px-6">
+                            <div class="text-2xl sm:text-3xl font-black text-white">10K+</div>
+                            <div class="text-xs sm:text-sm text-gray-500 mt-1" data-ar="مسلسل و فيلم" data-en="Series & Movies" data-fr="Séries & Films">مسلسل و فيلم</div>
+                        </div>
+                        <div class="stat-item text-center lg:text-right px-4 sm:px-6">
+                            <div class="text-2xl sm:text-3xl font-black text-white">20+</div>
+                            <div class="text-xs sm:text-sm text-gray-500 mt-1" data-ar="قناة مباشرة" data-en="Live Channels" data-fr="Chaînes en direct">قناة مباشرة</div>
+                        </div>
+                        <div class="stat-item text-center lg:text-right px-4 sm:px-6">
+                            <div class="text-2xl sm:text-3xl font-black text-white">4.8</div>
+                            <div class="text-xs sm:text-sm text-gray-500 mt-1" data-ar="تقييم المستخدمين" data-en="User Rating" data-fr="Note utilisateurs">تقييم المستخدمين</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phone Mockup -->
+                <div class="flex-1 order-1 lg:order-2 flex justify-center">
+                    <div class="phone-mockup logo-float">
+                        <div class="relative">
+                            <!-- Glow behind phone -->
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-64 h-64 sm:w-80 sm:h-80 rounded-full" style="background:radial-gradient(circle, rgba(229,9,20,0.3) 0%, transparent 70%);filter:blur(60px);"></div>
+                            </div>
+                            <!-- Phone Frame -->
+                            <div class="relative w-[240px] sm:w-[280px] h-[480px] sm:h-[560px] rounded-[40px] sm:rounded-[50px] border-2 sm:border-[3px] border-white/10 overflow-hidden" style="background:linear-gradient(180deg, #1A1A1A 0%, #0A0A0A 100%);box-shadow:0 30px 60px rgba(0,0,0,0.5),0 0 80px rgba(229,9,20,0.15),inset 0 1px 0 rgba(255,255,255,0.1);">
+                                <!-- Notch -->
+                                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 sm:w-28 h-6 sm:h-7 bg-black rounded-b-2xl z-20"></div>
+                                <!-- Screen Content - Real Screenshot -->
+                                <div class="absolute inset-2 sm:inset-3 rounded-[32px] sm:rounded-[40px] overflow-hidden">
+                                    <img src="https://i.ibb.co/PZsGLnq0/screen.jpg" alt="Screenify+ App Screenshot" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+            <span class="text-xs text-gray-600" data-ar="اسحب للأسفل" data-en="Scroll down" data-fr="Défiler vers le bas">اسحب للأسفل</span>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-600"></i>
+        </div>
+    </section>
+
+    <!-- Marquee Section -->
+    <div class="py-6 border-y border-white/5 overflow-hidden" style="background:rgba(229,9,20,0.03);">
+        <div class="marquee-track">
+            <div class="flex items-center gap-8 px-4">
+                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="tv" class="w-4 h-4 text-red-500"></i> <span data-ar="قنوات مباشرة" data-en="Live TV" data-fr="TV en direct">قنوات مباشرة</span></span>
+                <span class="text-red-500/30">★</span>
+                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="film" class="w-4 h-4 text-red-500"></i> <span data-ar="أفلام عالمية" data-en="Global Movies" data-fr="Films mondiaux">أفلام عالمية</span></span>
+                <span class="text-red-500/30">★</span>
+                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="clapperboard" class="w-4 h-4 text-red-500"></i> <span data-ar="مسلسلات متنوعة" data-en="Diverse Series" data-fr="Séries diverses">مسلسلات متنوعة</span></span>
+                <span class="text-red-500/30">★</span>
+                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="sword" class="w-4 h-4 text-red-500"></i> <span data-ar="أنمي" data-en="Anime" data-fr="Anime">أنمي</span></span>
+                <span class="text-red-500/30">★</span>
+                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4 text-red-500"></i> <span data-ar="تقويم المباريات" data-en="Match Calendar" data-fr="Calendrier des matchs">تقويم المباريات</span></span>
+                <span class="text-red-500/30">★</span>
+                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="smartphone" class="w-4 h-4 text-red-500"></i> <span data-ar="أندرويد" data-en="Android" data-fr="Android">أندرويد</span></span>
+                <span class="text-red-500/30">★</span>
+                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="monitor" class="w-4 h-4 text-red-500"></i> <span data-ar="أندرويد تيفي" data-en="Android TV" data-fr="Android TV">أندرويد تيفي</span></span>
+                <span class="text-red-500/30">★</span>
+            </div>
+            <div class="flex items-center gap-8 px-4">
+                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="tv" class="w-4 h-4 text-red-500"></i> <span data-ar="قنوات مباشرة" data-en="Live TV" data-fr="TV en direct">قنوات مباشرة</span></span>
+                <span class="text-red-500/30">★</span>
+                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="film" class="w-4 h-4 text-red-500"></i> <span data-ar="أفلام عالمية" data-en="Global Movies" data-fr="Films mondiaux">أفلام عالمية</span></span>
+                <span class="text-red-500/30">★</span>
+                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="clapperboard" class="w-4 h-4 text-red-500"></i> <span data-ar="مسلسلات متنوعة" data-en="Diverse Series" data-fr="Séries diverses">مسلسلات متنوعة</span></span>
+                <span class="text-red-500/30">★</span>
+                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="sword" class="w-4 h-4 text-red-500"></i> <span data-ar="أنمي" data-en="Anime" data-fr="Anime">أنمي</span></span>
+                <span class="text-red-500/30">★</span>
+                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4 text-red-500"></i> <span data-ar="تقويم المباريات" data-en="Match Calendar" data-fr="Calendrier des matchs">تقويم المباريات</span></span>
+                <span class="text-red-500/30">★</span>
+                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="smartphone" class="w-4 h-4 text-red-500"></i> <span data-ar="أندرويد" data-en="Android" data-fr="Android">أندرويد</span></span>
+                <span class="text-red-500/30">★</span>
+                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="monitor" class="w-4 h-4 text-red-500"></i> <span data-ar="أندرويد تيفي" data-en="Android TV" data-fr="Android TV">أندرويد تيفي</span></span>
+                <span class="text-red-500/30">★</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 sm:py-28 relative grid-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 sm:mb-20 reveal">
+                <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-2 mb-5">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-red-500"></i>
+                    <span class="text-red-400 text-xs sm:text-sm font-bold" data-ar="مميزات التطبيق" data-en="App Features" data-fr="Fonctionnalités">مميزات التطبيق</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mb-4" data-ar="كل ما تحتاجه في تطبيق واحد" data-en="Everything you need in one app" data-fr="Tout ce dont vous avez besoin">كل ما تحتاجه في تطبيق واحد</h2>
+                <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto" data-ar="استمتع بتجربة ترفيهية شاملة تجمع بين الأفلام والمسلسلات والأنمي والرياضة والتلفزيون المباشر" data-en="Enjoy a comprehensive entertainment experience combining movies, series, anime, sports, and live TV" data-fr="Profitez d'une expérience de divertissement complète combinant films, séries, anime, sport et TV en direct">استمتع بتجربة ترفيهية شاملة تجمع بين الأفلام والمسلسلات والأنمي والرياضة والتلفزيون المباشر</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+                <!-- Feature 1: Series -->
+                <div class="feature-card gradient-border rounded-2xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
+                    <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
+                        <i data-lucide="clapperboard" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold mb-3" data-ar="مسلسلات عالمية" data-en="Global Series" data-fr="Séries mondiales">مسلسلات عالمية</h3>
+                    <p class="text-sm sm:text-base text-gray-500 leading-relaxed" data-ar="مسلسلات من مختلف البلدان والتصنيفات — دراما، كوميديا، إثارة، رعب، والمزيد. محتوى محدث باستمرار." data-en="Series from different countries and genres — drama, comedy, thriller, horror, and more. Constantly updated content." data-fr="Séries de différents pays et genres — drame, comédie, thriller, horreur et plus. Contenu constamment mis à jour.">مسلسلات من مختلف البلدان والتصنيفات — دراما، كوميديا، إثارة، رعب، والمزيد. محتوى محدث باستمرار.</p>
+                </div>
+
+                <!-- Feature 2: Movies -->
+                <div class="feature-card gradient-border rounded-2xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
+                    <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
+                        <i data-lucide="film" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold mb-3" data-ar="أفلام متنوعة" data-en="Diverse Movies" data-fr="Films variés">أفلام متنوعة</h3>
+                    <p class="text-sm sm:text-base text-gray-500 leading-relaxed" data-ar="مكتبة ضخمة من الأفلام من مختلف البلدان والتصنيفات — أكشن، رومانسي، خيال علمي، وثائقي، وأكثر." data-en="A massive library of movies from different countries and genres — action, romance, sci-fi, documentary, and more." data-fr="Une immense bibliothèque de films de différents pays et genres — action, romance, sci-fi, documentaire et plus.">مكتبة ضخمة من الأفلام من مختلف البلدان والتصنيفات — أكشن، رومانسي، خيال علمي، وثائقي، وأكثر.</p>
+                </div>
+
+                <!-- Feature 3: Anime -->
+                <div class="feature-card gradient-border rounded-2xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
+                    <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
+                        <i data-lucide="sword" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold mb-3" data-ar="أنمي" data-en="Anime" data-fr="Anime">أنمي</h3>
+                    <p class="text-sm sm:text-base text-gray-500 leading-relaxed" data-ar="أكبر مجموعة أنمي بترجمة عربية — شونين، شوجو، إيسيكاي، ميكا، وغيرها من الأنواع الممتعة." data-en="The largest anime collection with Arabic subtitles — shonen, shojo, isekai, mecha, and more exciting genres." data-fr="La plus grande collection d'anime avec sous-titres arabes — shonen, shojo, isekai, mecha et plus.">أكبر مجموعة أنمي بترجمة عربية — شونين، شوجو، إيسيكاي، ميكا، وغيرها من الأنواع الممتعة.</p>
+                </div>
+
+                <!-- Feature 4: Matches Calendar -->
+                <div class="feature-card gradient-border rounded-2xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
+                    <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
+                        <i data-lucide="calendar-days" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold mb-3" data-ar="تقويم المباريات" data-en="Matches Calendar" data-fr="Calendrier des matchs">تقويم المباريات</h3>
+                    <p class="text-sm sm:text-base text-gray-500 leading-relaxed" data-ar="تابع مواعيد جميع المباريات — كرة القدم، كرة السلة، التنس، وغيرها. لا تفوت أي مباراة مهمة." data-en="Follow all match schedules — football, basketball, tennis, and more. Never miss an important match." data-fr="Suivez tous les calendriers de matchs — football, basket, tennis et plus. Ne ratez aucun match important.">تابع مواعيد جميع المباريات — كرة القدم، كرة السلة، التنس، وغيرها. لا تفوت أي مباراة مهمة.</p>
+                </div>
+
+                <!-- Feature 5: Live TV -->
+                <div class="feature-card gradient-border rounded-2xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
+                    <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
+                        <i data-lucide="radio" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold mb-3" data-ar="قنوات تلفزيونية مباشرة" data-en="Live TV Channels" data-fr="Chaînes TV en direct">قنوات تلفزيونية مباشرة</h3>
+                    <p class="text-sm sm:text-base text-gray-500 leading-relaxed" data-ar="شاهد +20 قناة مباشرة — أخبار، ترفيه، رياضة، أطفال، ومزيد من القنوات ببث مباشر عالي الجودة." data-en="Watch 20+ live channels — news, entertainment, sports, kids, and more in high-quality live streaming." data-fr="Regardez +20 chaînes en direct — news, divertissement, sport, enfants et plus en streaming haute qualité.">شاهد +20 قناة مباشرة — أخبار، ترفيه، رياضة، أطفال، ومزيد من القنوات ببث مباشر عالي الجودة.</p>
+                </div>
+
+                <!-- Feature 6: Multi-device -->
+                <div class="feature-card gradient-border rounded-2xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
+                    <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
+                        <i data-lucide="monitor-smartphone" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
+                    </div>
+                    <h3 class="text-lg sm:text-xl font-bold mb-3" data-ar="هاتف و تلفزيون" data-en="Phone & TV" data-fr="Téléphone & TV">هاتف و تلفزيون</h3>
+                    <p class="text-sm sm:text-base text-gray-500 leading-relaxed" data-ar="متوافق مع هواتف أندرويد وأجهزة أندرويد تيفي — شاهد على الشاشة الكبيرة أو على هاتفك أينما كنت." data-en="Compatible with Android phones and Android TV — watch on the big screen or on your phone anywhere." data-fr="Compatible avec les téléphones Android et Android TV — regardez sur grand écran ou sur votre téléphone partout.">متوافق مع هواتف أندرويد وأجهزة أندرويد تيفي — شاهد على الشاشة الكبيرة أو على هاتفك أينما كنت.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Telegram CTA Section -->
+    <section class="py-16 sm:py-20 relative overflow-hidden" style="background:linear-gradient(135deg, rgba(42,171,238,0.08) 0%, rgba(229,9,20,0.05) 100%);">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
+            <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-6">
+                <svg class="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                <span class="text-blue-400 text-xs sm:text-sm font-bold" data-ar="تابعنا على تيليجرام" data-en="Follow us on Telegram" data-fr="Suivez-nous sur Telegram">تابعنا على تيليجرام</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-black mb-4" data-ar="انضم لمجتمعنا على تيليجرام" data-en="Join our community on Telegram" data-fr="Rejoignez notre communauté sur Telegram">انضم لمجتمعنا على تيليجرام</h2>
+            <p class="text-sm sm:text-base text-gray-400 mb-8 max-w-lg mx-auto" data-ar="كن أول من يعرف عن التحديثات الجديدة والمحتوى الحصري" data-en="Be the first to know about new updates and exclusive content" data-fr="Soyez les premiers à connaître les mises à jour et le contenu exclusif">كن أول من يعرف عن التحديثات الجديدة والمحتوى الحصري</p>
+            <a href="https://t.me/screenifyplus" target="_blank" class="telegram-btn text-base sm:text-lg font-bold px-10 sm:px-14 py-4 sm:py-5 rounded-2xl text-white inline-flex items-center gap-3" style="box-shadow:0 10px 30px rgba(42,171,238,0.3);">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                <span data-ar="t.me/screenifyplus" data-en="t.me/screenifyplus" data-fr="t.me/screenifyplus">t.me/screenifyplus</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- How to Download Section -->
+    <section id="download" class="py-20 sm:py-28 relative grid-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 sm:mb-20 reveal">
+                <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-2 mb-5">
+                    <i data-lucide="download" class="w-4 h-4 text-red-500"></i>
+                    <span class="text-red-400 text-xs sm:text-sm font-bold" data-ar="التحميل" data-en="Download" data-fr="Télécharger">التحميل</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mb-4" data-ar="حمّل Screenify+ v1.7.0 BETA الآن" data-en="Download Screenify+ v1.7.0 BETA Now" data-fr="Téléchargez Screenify+ v1.7.0 BÊTA">حمّل Screenify+ v1.7.0 BETA الآن</h2>
+                <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto" data-ar="اتبع الخطوات البسيطة التالية لتحميل التطبيق والبدء في المشاهدة" data-en="Follow these simple steps to download the app and start watching" data-fr="Suivez ces étapes simples pour télécharger l'application">اتبع الخطوات البسيطة التالية لتحميل التطبيق والبدء في المشاهدة</p>
+            </div>
+
+            <!-- Steps -->
+            <div class="max-w-3xl mx-auto space-y-6 sm:space-y-8 mb-12 sm:mb-16">
+                <!-- Step 1 -->
+                <div class="reveal flex items-start gap-4 sm:gap-6">
+                    <div class="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center font-black text-lg sm:text-xl" style="background:linear-gradient(135deg, #E50914, #B8070F);box-shadow:0 0 20px rgba(229,9,20,0.3);">1</div>
+                    <div class="flex-1 pt-1 sm:pt-2">
+                        <h4 class="text-lg sm:text-xl font-bold mb-2" data-ar="اضغط على زر التحميل" data-en="Click the download button" data-fr="Cliquez sur le bouton de téléchargement">اضغط على زر التحميل</h4>
+                        <p class="text-sm sm:text-base text-gray-500" data-ar="اضغط على زر التحميل أدناه لبدء تحميل ملف APK" data-en="Click the download button below to start downloading the APK file" data-fr="Cliquez sur le bouton ci-dessous pour télécharger le fichier APK">اضغط على زر التحميل أدناه لبدء تحميل ملف APK</p>
+                    </div>
+                </div>
+                <!-- Step 2 -->
+                <div class="reveal flex items-start gap-4 sm:gap-6">
+                    <div class="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center font-black text-lg sm:text-xl" style="background:linear-gradient(135deg, #E50914, #B8070F);box-shadow:0 0 20px rgba(229,9,20,0.3);">2</div>
+                    <div class="flex-1 pt-1 sm:pt-2">
+                        <h4 class="text-lg sm:text-xl font-bold mb-2" data-ar="انسخ كود المحمل" data-en="Copy the downloader code" data-fr="Copiez le code du téléchargeur">انسخ كود المحمل</h4>
+                        <p class="text-sm sm:text-base text-gray-500" data-ar="اضغط على الكود أدناه لنسخه تلقائياً — ستحتاجه في خطوة التثبيت" data-en="Click the code below to copy it automatically — you'll need it for the installation step" data-fr="Cliquez sur le code ci-dessous pour le copier automatiquement">اضغط على الكود أدناه لنسخه تلقائياً — ستحتاجه في خطوة التثبيت</p>
+                    </div>
+                </div>
+                <!-- Step 3 -->
+                <div class="reveal flex items-start gap-4 sm:gap-6">
+                    <div class="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center font-black text-lg sm:text-xl" style="background:linear-gradient(135deg, #E50914, #B8070F);box-shadow:0 0 20px rgba(229,9,20,0.3);">3</div>
+                    <div class="flex-1 pt-1 sm:pt-2">
+                        <h4 class="text-lg sm:text-xl font-bold mb-2" data-ar="ثبّت و استمتع" data-en="Install & Enjoy" data-fr="Installez et profitez">ثبّت و استمتع</h4>
+                        <p class="text-sm sm:text-base text-gray-500" data-ar="ثبّت التطبيق على جهازك وابدأ في مشاهدة محتواك المفضل" data-en="Install the app on your device and start watching your favorite content" data-fr="Installez l'application et commencez à regarder votre contenu préféré">ثبّت التطبيق على جهازك وابدأ في مشاهدة محتواك المفضل</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto reveal">
+
+                <!-- Phone Card -->
+                <div class="gradient-border rounded-3xl p-7 sm:p-9 border border-white/5 text-center flex flex-col" style="background:linear-gradient(180deg, #1A1A1A, #111111);">
+                    <!-- Icon -->
+                    <div class="mb-5">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl mx-auto flex items-center justify-center" style="background:linear-gradient(135deg, rgba(229,9,20,0.25), rgba(229,9,20,0.05));box-shadow:0 0 20px rgba(229,9,20,0.2);">
+                            <i data-lucide="smartphone" class="w-8 h-8 sm:w-10 sm:h-10 text-red-500"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-black mb-1" data-ar="نسخة الهاتف (Beta)" data-en="Phone Version (Beta)" data-fr="Version Mobile (Beta)">نسخة الهاتف (Beta)</h3>
+                    <p class="text-xs text-gray-500 mb-6" data-ar="أندرويد — هواتف وأجهزة لوحية" data-en="Android — phones & tablets" data-fr="Android — téléphones & tablettes">أندرويد — هواتف وأجهزة لوحية</p>
+
+                    <!-- Code Box -->
+                    <div class="code-box border-2 border-dashed border-white/10 rounded-2xl p-4 sm:p-5 mb-6 flex-1" onclick="copyCode('phone')" id="codeBoxPhone">
+                        <div class="text-xs text-gray-500 mb-2" data-ar="كود المحمل (اضغط للنسخ)" data-en="Downloader Code (Click to copy)" data-fr="Code du téléchargeur (Cliquez pour copier)">كود المحمل (اضغط للنسخ)</div>
+                        <div class="text-3xl sm:text-4xl font-black tracking-[0.2em]" style="color:var(--red-primary);">3743878</div>
+                        <div class="flex items-center justify-center gap-1.5 mt-3 text-gray-600">
+                            <i data-lucide="copy" class="w-4 h-4"></i>
+                            <span class="text-xs" data-ar="اضغط للنسخ" data-en="Click to copy" data-fr="Cliquez pour copier">اضغط للنسخ</span>
+                        </div>
+                    </div>
+
+                    <!-- Download Button -->
+                    <a href="https://www.mediafire.com/file/brw45gbtqn4tz4y/screenifyPHONEbeta.apk/file" target="_blank" class="btn-primary text-sm sm:text-base font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl text-white inline-flex items-center justify-center gap-2.5 glow-red-strong">
+                        <i data-lucide="download" class="w-5 h-5"></i>
+                        <span data-ar="تحميل للهاتف (Beta)" data-en="Download for Phone (Beta)" data-fr="Télécharger (Beta)">تحميل للهاتف (Beta)</span>
+                    </a>
+
+                    <!-- Terms -->
+                    <p class="text-xs text-gray-700 mt-4">
+                        <a href="https://screenifyplus.online/appterms" target="_blank" class="hover:text-gray-500 transition-colors" data-ar="الشروط والأحكام" data-en="Terms & Conditions" data-fr="Conditions d'utilisation">الشروط والأحكام</a>
+                    </p>
+                </div>
+
+                <!-- TV Card -->
+                <div class="gradient-border rounded-3xl p-7 sm:p-9 border border-white/5 text-center flex flex-col" style="background:linear-gradient(180deg, #1A1A1A, #111111);">
+                    <!-- Icon -->
+                    <div class="mb-5">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl mx-auto flex items-center justify-center" style="background:linear-gradient(135deg, rgba(229,9,20,0.25), rgba(229,9,20,0.05));box-shadow:0 0 20px rgba(229,9,20,0.2);">
+                            <i data-lucide="tv-2" class="w-8 h-8 sm:w-10 sm:h-10 text-red-500"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-black mb-1" data-ar="نسخة التلفزيون (Beta)" data-en="TV Version (Beta)" data-fr="Version TV (Beta)">نسخة التلفزيون (Beta)</h3>
+                    <p class="text-xs text-gray-500 mb-6" data-ar="أندرويد تيفي — شاشة كبيرة" data-en="Android TV — big screen" data-fr="Android TV — grand écran">أندرويد تيفي — شاشة كبيرة</p>
+
+                    <!-- Code Box -->
+                    <div class="code-box border-2 border-dashed border-white/10 rounded-2xl p-4 sm:p-5 mb-6 flex-1" onclick="copyCode('tv')" id="codeBoxTv">
+                        <div class="text-xs text-gray-500 mb-2" data-ar="كود المحمل (اضغط للنسخ)" data-en="Downloader Code (Click to copy)" data-fr="Code du téléchargeur (Cliquez pour copier)">كود المحمل (اضغط للنسخ)</div>
+                        <div class="text-3xl sm:text-4xl font-black tracking-[0.2em]" style="color:var(--red-primary);">4396998</div>
+                        <div class="flex items-center justify-center gap-1.5 mt-3 text-gray-600">
+                            <i data-lucide="copy" class="w-4 h-4"></i>
+                            <span class="text-xs" data-ar="اضغط للنسخ" data-en="Click to copy" data-fr="Cliquez pour copier">اضغط للنسخ</span>
+                        </div>
+                    </div>
+
+                    <!-- Download Button -->
+                    <a href="https://www.mediafire.com/file/wi55nxyeguubfhf/screenifyTVbeta.apk/file" target="_blank" class="btn-primary text-sm sm:text-base font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl text-white inline-flex items-center justify-center gap-2.5 glow-red-strong">
+                        <i data-lucide="download" class="w-5 h-5"></i>
+                        <span data-ar="تحميل للتلفزيون (Beta)" data-en="Download for TV (Beta)" data-fr="Télécharger TV (Beta)">تحميل للتلفزيون (Beta)</span>
+                    </a>
+
+                    <!-- Terms -->
+                    <p class="text-xs text-gray-700 mt-4">
+                        <a href="https://screenifyplus.online/appterms" target="_blank" class="hover:text-gray-500 transition-colors" data-ar="الشروط والأحكام" data-en="Terms & Conditions" data-fr="Conditions d'utilisation">الشروط والأحكام</a>
+                    </p>
+                </div>
+
+                <!-- Low Devices Card -->
+                <div class="gradient-border rounded-3xl p-7 sm:p-9 border border-white/5 text-center flex flex-col" style="background:linear-gradient(180deg, #1A1A1A, #111111);">
+                    <!-- Icon -->
+                    <div class="mb-5">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl mx-auto flex items-center justify-center" style="background:linear-gradient(135deg, rgba(229,9,20,0.25), rgba(229,9,20,0.05));box-shadow:0 0 20px rgba(229,9,20,0.2);">
+                            <i data-lucide="gauge" class="w-8 h-8 sm:w-10 sm:h-10 text-red-500"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl sm:text-2xl font-black mb-1" data-ar="نسخة الأجهزة الضعيفة (Beta)" data-en="Low Devices Version (Beta)" data-fr="Version Appareils Faibles (Beta)">نسخة الأجهزة الضعيفة (Beta)</h3>
+                    <p class="text-xs text-gray-500 mb-6" data-ar="للهواتف والتلفزيونات — خفيف وسريع" data-en="For phones & TVs — light & fast" data-fr="Pour téléphones et TV — léger et rapide">للهواتف والتلفزيونات — خفيف وسريع</p>
+
+                    <!-- Code Box -->
+                    <div class="code-box border-2 border-dashed border-white/10 rounded-2xl p-4 sm:p-5 mb-6 flex-1" onclick="copyCode('low')" id="codeBoxLow">
+                        <div class="text-xs text-gray-500 mb-2" data-ar="كود المحمل (اضغط للنسخ)" data-en="Downloader Code (Click to copy)" data-fr="Code du téléchargeur (Cliquez pour copier)">كود المحمل (اضغط للنسخ)</div>
+                        <div class="text-3xl sm:text-4xl font-black tracking-[0.2em]" style="color:var(--red-primary);">3251958</div>
+                        <div class="flex items-center justify-center gap-1.5 mt-3 text-gray-600">
+                            <i data-lucide="copy" class="w-4 h-4"></i>
+                            <span class="text-xs" data-ar="اضغط للنسخ" data-en="Click to copy" data-fr="Cliquez pour copier">اضغط للنسخ</span>
+                        </div>
+                    </div>
+
+                    <!-- Download Button -->
+                    <a href="https://www.mediafire.com/file/wjj2ew7d18j2rho/screenifyLOWbeta.apk/file" target="_blank" class="btn-primary text-sm sm:text-base font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl text-white inline-flex items-center justify-center gap-2.5 glow-red-strong">
+                        <i data-lucide="download" class="w-5 h-5"></i>
+                        <span data-ar="تحميل للأجهزة الضعيفة (Beta)" data-en="Download for Low Devices (Beta)" data-fr="Télécharger Faibles (Beta)">تحميل للأجهزة الضعيفة (Beta)</span>
+                    </a>
+
+                    <!-- Terms -->
+                    <p class="text-xs text-gray-700 mt-4">
+                        <a href="https://screenifyplus.online/appterms" target="_blank" class="hover:text-gray-500 transition-colors" data-ar="الشروط والأحكام" data-en="Terms & Conditions" data-fr="Conditions d'utilisation">الشروط والأحكام</a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 sm:py-28 relative overflow-hidden">
+        <div class="absolute inset-0" style="background:radial-gradient(ellipse at center, rgba(229,9,20,0.12) 0%, transparent 60%);"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-glow" data-ar="ابدأ المشاهدة الآن" data-en="Start Watching Now" data-fr="Commencez à regarder">ابدأ المشاهدة الآن</h2>
+            <p class="text-base sm:text-lg md:text-xl text-gray-400 mb-10 max-w-xl mx-auto" data-ar="الآلاف من المسلسلات والأفلام والأنمي ينتظرونك — مجاناً وبدون تعقيدات" data-en="Thousands of series, movies, and anime are waiting for you — free and hassle-free" data-fr="Des milliers de séries, films et anime vous attendent — gratuitement">الآلاف من المسلسلات والأفلام والأنمي ينتظرونك — مجاناً وبدون تعقيدات</p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#download" class="btn-primary text-base sm:text-lg font-bold px-10 sm:px-14 py-4 sm:py-5 rounded-2xl text-white inline-flex items-center gap-3 glow-red-strong">
+                    <i data-lucide="download" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                    <span data-ar="حمّل Screenify+ BETA مجاناً" data-en="Download Screenify+ BETA Free" data-fr="Télécharger Screenify+ BÊTA">حمّل Screenify+ BETA مجاناً</span>
+                </a>
+                <a href="https://t.me/screenifyplus" target="_blank" class="telegram-btn text-base sm:text-lg font-bold px-10 sm:px-14 py-4 sm:py-5 rounded-2xl text-white inline-flex items-center gap-3">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    <span data-ar="تيليجرام" data-en="Telegram" data-fr="Telegram">تيليجرام</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-10 sm:py-14" style="background:var(--bg-dark);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+                <!-- Logo & Description -->
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://i.ibb.co/ycxg0PG2/logo.png" alt="Screenify+" class="w-8 h-8 rounded-lg">
+                        <span class="text-lg font-bold" style="background:linear-gradient(135deg, #fff, #E50914);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Screenify+ <span class="text-sm text-red-500">BETA</span></span>
+                    </div>
+                    <p class="text-sm text-gray-500 leading-relaxed" data-ar="تطبيق الترفيه الشامل — مسلسلات، أفلام، أنمي، رياضة وقنوات مباشرة" data-en="The ultimate entertainment app — series, movies, anime, sports and live channels" data-fr="L'application de divertissement ultime — séries, films, anime, sport et chaînes en direct">تطبيق الترفيه الشامل — مسلسلات، أفلام، أنمي، رياضة وقنوات مباشرة</p>
+                </div>
+                <!-- Websites -->
+                <div>
+                    <h4 class="text-sm font-bold text-white mb-4" data-ar="مواقعنا" data-en="Our Websites" data-fr="Nos sites">مواقعنا</h4>
+                    <div class="space-y-3">
+                        <a href="https://screenifyplus.online/mena" target="_blank" class="flex items-center gap-2 text-sm text-gray-500 hover:text-red-400 transition-colors group">
+                            <i data-lucide="globe" class="w-4 h-4 group-hover:text-red-500"></i>
+                            <span data-ar="الموقع العربي" data-en="Arabic Website" data-fr="Site arabe">الموقع العربي</span>
+                            <span class="text-xs text-gray-700">screenifyplus.online/mena</span>
+                        </a>
+                        <a href="https://screenifyplus.online/watch" target="_blank" class="flex items-center gap-2 text-sm text-gray-500 hover:text-red-400 transition-colors group">
+                            <i data-lucide="globe" class="w-4 h-4 group-hover:text-red-500"></i>
+                            <span data-ar="الموقع الإنجليزي" data-en="English Website" data-fr="Site anglais">الموقع الإنجليزي</span>
+                            <span class="text-xs text-gray-700">screenifyplus.online/watch</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- Social -->
+                <div>
+                    <h4 class="text-sm font-bold text-white mb-4" data-ar="تابعنا" data-en="Follow Us" data-fr="Suivez-nous">تابعنا</h4>
+                    <div class="flex items-center gap-3">
+                        <a href="https://t.me/screenifyplus" target="_blank" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-blue-500/20 transition-colors border border-white/5 hover:border-blue-500/30">
+                            <svg class="w-4 h-4 text-gray-500" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-red-500/20 transition-colors border border-white/5 hover:border-red-500/30">
+                            <i data-lucide="instagram" class="w-4 h-4 text-gray-500"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-red-500/20 transition-colors border border-white/5 hover:border-red-500/30">
+                            <i data-lucide="youtube" class="w-4 h-4 text-gray-500"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <span class="text-xs sm:text-sm text-gray-600" data-ar="© 2026 Screenify+ v1.7.0 Beta. جميع الحقوق محفوظة." data-en="© 2026 Screenify+ v1.7.0 Beta. All rights reserved." data-fr="© 2026 Screenify+ v1.7.0 Bêta. Tous droits réservés.">© 2026 Screenify+ v1.7.0 Beta. جميع الحقوق محفوظة.</span>
+                <div class="flex items-center gap-4">
+                    <a href="https://screenifyplus.online/mena" target="_blank" class="text-xs text-gray-600 hover:text-red-400 transition-colors">screenifyplus.online/mena</a>
+                    <span class="text-gray-800">|</span>
+                    <a href="https://screenifyplus.online/watch" target="_blank" class="text-xs text-gray-600 hover:text-red-400 transition-colors">screenifyplus.online/watch</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Current Language
+        let currentLang = 'ar';
+
+        // Language Switching
+        function setLang(lang) {
+            currentLang = lang;
+            const body = document.body;
+            const html = document.documentElement;
+
+            if (lang === 'ar') {
+                body.classList.add('rtl');
+                body.classList.remove('ltr');
+                html.setAttribute('dir', 'rtl');
+                html.setAttribute('lang', 'ar');
+                body.style.fontFamily = "'Tajawal', 'Inter', sans-serif";
+            } else {
+                body.classList.remove('rtl');
+                body.classList.add('ltr');
+                html.setAttribute('dir', 'ltr');
+                html.setAttribute('lang', lang);
+                body.style.fontFamily = "'Inter', 'Tajawal', sans-serif";
+            }
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('text-gray-500');
+            });
+            const activeBtn = document.getElementById('lang' + lang.charAt(0).toUpperCase() + lang.slice(1));
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+                activeBtn.classList.remove('text-gray-500');
+            }
+
+            document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+                el.textContent = el.getAttribute('data-' + lang);
+            });
+
+            setTimeout(() => lucide.createIcons(), 50);
+        }
+
+        // Copy Code
+        function copyCode(type) {
+            const codes = { phone: '3743878', tv: '4396998', low: '3251958' };
+            const ids = { phone: 'codeBoxPhone', tv: 'codeBoxTv', low: 'codeBoxLow' };
+            const code = codes[type] || codes['phone'];
+            const boxId = ids[type] || ids['phone'];
+
+            navigator.clipboard.writeText(code).then(() => {
+                showToast();
+            }).catch(() => {
+                const textArea = document.createElement('textarea');
+                textArea.value = code;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showToast();
+            });
+
+            const codeBox = document.getElementById(boxId);
+            if (codeBox) {
+                codeBox.style.borderColor = '#E50914';
+                codeBox.style.boxShadow = '0 0 30px rgba(229,9,20,0.3)';
+                setTimeout(() => {
+                    codeBox.style.borderColor = '';
+                    codeBox.style.boxShadow = '';
+                }, 1500);
+            }
+        }
+
+        function showToast() {
+            const toast = document.getElementById('copyToast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // Scroll Reveal
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Floating Particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 15;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                particle.style.animationDelay = (Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Navbar scroll effect
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(10,10,10,0.95)';
+                nav.style.borderBottomColor = 'rgba(229,9,20,0.1)';
+            } else {
+                nav.style.background = 'rgba(10,10,10,0.8)';
+                nav.style.borderBottomColor = 'rgba(255,255,255,0.05)';
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Counter animation for stats
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-item .font-black');
+            counters.forEach(counter => {
+                const target = counter.textContent;
+                const num = parseInt(target);
+                if (isNaN(num)) return;
+
+                let current = 0;
+                const increment = num / 60;
+                const suffix = target.replace(/[0-9.]/g, '');
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= num) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current) + suffix;
+                    }
+                }, 30);
+            });
+        }
+
+        const heroObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setTimeout(animateCounters, 500);
+                    heroObserver.unobserve(entry.target);
+                }
+            });
+        });
+        const statSection = document.querySelector('.stat-item');
+        if (statSection) heroObserver.observe(statSection.closest('div'));
+    </script>
+</body>
+</html>
