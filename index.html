@@ -14,10 +14,10 @@
             --red-primary: #E50914;
             --red-glow: #FF1A25;
             --red-dark: #8B0000;
-            --bg-darkest: #0A0A0A;
-            --bg-dark: #111111;
-            --bg-card: #1A1A1A;
-            --bg-card-hover: #222222;
+            --bg-darkest: #050505;
+            --bg-dark: #0A0A0A;
+            --bg-card: #121212;
+            --bg-card-hover: #181818;
             --text-primary: #FFFFFF;
             --text-secondary: #A0A0A0;
             --text-muted: #666666;
@@ -37,9 +37,9 @@
         body.ltr { direction: ltr; }
         body.rtl { direction: rtl; }
 
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-darkest); }
-        ::-webkit-scrollbar-thumb { background: var(--red-primary); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--red-primary), var(--red-dark)); border-radius: 4px; }
 
         .hero-bg {
             position: relative;
@@ -71,6 +71,7 @@
             opacity: 0;
             animation: floatParticle linear infinite;
             pointer-events: none;
+            box-shadow: 0 0 10px var(--red-glow);
         }
 
         @keyframes floatParticle {
@@ -92,14 +93,15 @@
 
         .gradient-border {
             position: relative;
-            border-radius: 16px;
+            border-radius: 24px;
             overflow: hidden;
+            background: var(--bg-card);
         }
         .gradient-border::before {
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: 16px;
+            border-radius: 24px;
             padding: 1px;
             background: linear-gradient(135deg, var(--red-primary), transparent 50%, var(--red-dark));
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -125,7 +127,6 @@
         }
         .feature-card:hover {
             transform: translateY(-8px);
-            border-color: rgba(229,9,20,0.4) !important;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px rgba(229,9,20,0.15);
         }
         .feature-card:hover::after { opacity: 1; }
@@ -160,21 +161,24 @@
         }
         .btn-primary:active { transform: translateY(0); }
 
-        .btn-secondary {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.15);
-            transition: all 0.3s;
+        .btn-white {
+            background: #fff;
+            color: #000;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: rgba(229,9,20,0.5);
+        .btn-white:hover {
             transform: translateY(-2px);
+            background: #f0f0f0;
+            box-shadow: 0 10px 30px rgba(255,255,255,0.2);
         }
 
         .code-box {
             position: relative;
             cursor: pointer;
             transition: all 0.3s;
+            background: rgba(255,255,255,0.02);
         }
         .code-box:hover {
             border-color: var(--red-primary) !important;
@@ -241,6 +245,7 @@
         .nav-blur {
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
+            background: rgba(5,5,5,0.8);
         }
 
         .marquee-track {
@@ -311,8 +316,24 @@
         }
 
         /* Scroll offset for sticky nav */
-        #download-cards {
+        #download-cards, #web-player {
             scroll-margin-top: 100px;
+        }
+
+        /* Web Player CTA */
+        .web-cta-bg {
+            background: linear-gradient(135deg, #0A0A0A 0%, #1A0505 50%, #0A0A0A 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .web-cta-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(229,9,20,0.15) 0%, transparent 60%);
         }
     </style>
 </head>
@@ -327,7 +348,7 @@
     <div id="particles" style="position:fixed;inset:0;pointer-events:none;z-index:0;"></div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur" style="background:rgba(10,10,10,0.8); border-bottom:1px solid rgba(255,255,255,0.05);">
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 sm:h-20">
                 <!-- Logo -->
@@ -339,6 +360,7 @@
                 <!-- Nav Links (Desktop) -->
                 <div class="hidden md:flex items-center gap-8">
                     <a href="#features" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-ar="المميزات" data-en="Features" data-fr="Fonctionnalités">Features</a>
+                    <a href="#web-player" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-ar="المشغل" data-en="Web Player" data-fr="Lecteur Web">Web Player</a>
                     <a href="#download-cards" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-ar="التحميل" data-en="Download" data-fr="Télécharger">Download</a>
                 </div>
 
@@ -374,7 +396,7 @@
                         <span style="background:linear-gradient(135deg, #E50914, #FF6B6B);-webkit-background-clip:text;-webkit-text-fill-color:transparent;" data-ar="في مكان واحد" data-en="want in one place" data-fr="voulez en un seul endroit">want in one place</span>
                     </h1>
                     
-                    <p class="text-base sm:text-lg md:text-xl text-gray-400 leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0 lg:ml-0" data-ar="مسلسلات من مختلف البلدان والتصنيفات، أفلام متنوعة، أنمي، تقويم المباريات، وقنوات تلفزيونية مباشرة — كل هذا في تطبيق واحد مجاني!" data-en="Series from different countries and genres, diverse movies, anime, matches calendar, and live TV channels — all in one free app!" data-fr="Séries de différents pays et genres, films variés, anime, calendrier de matchs et chaînes TV en direct — tout dans une seule application gratuite!">Series from different countries and genres, diverse movies, anime, matches calendar, and live TV channels — all in one free app!</p>
+                    <p class="text-base sm:text-lg md:text-xl text-gray-400 leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0 lg:ml-0" data-ar="مسلسلات من مختلف البلدان والتصنيفات، أفلام متنوعة، أنمي، تقويم المباريات، وقنوات تلفزيونية مباشرة — كل هذا في تطبيق واحد مجاني!" data-en="Series from different countries and genres, diverse movies, anime, matches calendar, and 1000+ live TV channels — all in one free app!" data-fr="Séries de différents pays et genres, films variés, anime, calendrier de matchs et 1000+ chaînes TV en direct — tout dans une seule application gratuite!">Series from different countries and genres, diverse movies, anime, matches calendar, and 1000+ live TV channels — all in one free app!</p>
 
                     <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
                         <a href="#download-cards" class="btn-primary text-base sm:text-lg font-bold px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl text-white flex items-center gap-3 w-full sm:w-auto justify-center">
@@ -394,7 +416,7 @@
                             <div class="text-xs sm:text-sm text-gray-500 mt-1" data-ar="مسلسل و فيلم" data-en="Series & Movies" data-fr="Séries & Films">Series & Movies</div>
                         </div>
                         <div class="stat-item text-center lg:text-left px-4 sm:px-6">
-                            <div class="text-2xl sm:text-3xl font-black text-white">20+</div>
+                            <div class="text-2xl sm:text-3xl font-black text-white">1000+</div>
                             <div class="text-xs sm:text-sm text-gray-500 mt-1" data-ar="قناة مباشرة" data-en="Live Channels" data-fr="Chaînes en direct">Live Channels</div>
                         </div>
                         <div class="stat-item text-center lg:text-left px-4 sm:px-6">
@@ -434,8 +456,30 @@
         </div>
     </section>
 
+    <!-- Web Player CTA Section (Moved Here) -->
+    <section id="web-player" class="web-cta-bg py-24 sm:py-32 relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
+            <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-8 backdrop-blur-sm">
+                <i data-lucide="monitor-play" class="w-4 h-4 text-red-500"></i>
+                <span class="text-white text-sm font-medium" data-ar="مشغل الويب" data-en="Web Player" data-fr="Lecteur Web">Web Player</span>
+            </div>
+            
+            <h2 class="text-4xl sm:text-5xl md:text-6xl font-black mb-6 leading-tight">
+                <span class="text-white block mb-2" data-ar="شاهد الأفلام والمسلسلات" data-en="Watch Movies & Series" data-fr="Regardez Films & Séries">Watch Movies & Series</span>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 text-glow" data-ar="من هنا مباشرة" data-en="Directly From Here" data-fr="Directement Ici">Directly From Here</span>
+            </h2>
+            
+            <p class="text-lg sm:text-xl text-gray-400 mb-10 max-w-2xl mx-auto" data-ar="لا حاجة لتحميل التطبيق! شاهد محتواك المفضل مباشرة من متصفحك على أي جهاز." data-en="No app required! Stream your favorite content instantly right from your browser on any device." data-fr="Aucune application requise! Diffusez votre contenu préféré instantanément depuis votre navigateur.">No app required! Stream your favorite content instantly right from your browser on any device.</p>
+            
+            <a href="https://screenifyplus.online/watch" target="_blank" class="btn-white inline-flex items-center gap-3 font-bold py-4 px-10 sm:py-5 sm:px-14 rounded-full text-lg hover:scale-105 transition-transform duration-300 shadow-2xl">
+                <i data-lucide="play-circle" class="w-6 h-6 text-red-600"></i>
+                <span data-ar="ابدأ المشاهدة الآن" data-en="Start Watching Now" data-fr="Commencer à Regarder">Start Watching Now</span>
+            </a>
+        </div>
+    </section>
+
     <!-- Marquee Section -->
-    <div class="py-6 border-y border-white/5 overflow-hidden" style="background:rgba(229,9,20,0.03);">
+    <div class="py-6 border-y border-white/5 overflow-hidden bg-[#080808]">
         <div class="marquee-track">
             <div class="flex items-center gap-8 px-4">
                 <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="tv" class="w-4 h-4 text-red-500"></i> <span data-ar="قنوات مباشرة" data-en="Live TV" data-fr="TV en direct">Live TV</span></span>
@@ -473,7 +517,7 @@
     </div>
 
     <!-- Features Section -->
-    <section id="features" class="py-20 sm:py-28 relative grid-pattern">
+    <section id="features" class="py-20 sm:py-28 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-14 sm:mb-20 reveal">
                 <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-2 mb-5">
@@ -486,7 +530,7 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
                 <!-- Feature 1: Series -->
-                <div class="feature-card gradient-border rounded-2xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
+                <div class="feature-card rounded-3xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
                     <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
                         <i data-lucide="clapperboard" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
                     </div>
@@ -495,7 +539,7 @@
                 </div>
 
                 <!-- Feature 2: Movies -->
-                <div class="feature-card gradient-border rounded-2xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
+                <div class="feature-card rounded-3xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
                     <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
                         <i data-lucide="film" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
                     </div>
@@ -504,7 +548,7 @@
                 </div>
 
                 <!-- Feature 3: Anime -->
-                <div class="feature-card gradient-border rounded-2xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
+                <div class="feature-card rounded-3xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
                     <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
                         <i data-lucide="sword" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
                     </div>
@@ -513,7 +557,7 @@
                 </div>
 
                 <!-- Feature 4: Matches Calendar -->
-                <div class="feature-card gradient-border rounded-2xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
+                <div class="feature-card rounded-3xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
                     <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
                         <i data-lucide="calendar-days" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
                     </div>
@@ -522,16 +566,16 @@
                 </div>
 
                 <!-- Feature 5: Live TV -->
-                <div class="feature-card gradient-border rounded-2xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
+                <div class="feature-card rounded-3xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
                     <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
                         <i data-lucide="radio" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
                     </div>
                     <h3 class="text-lg sm:text-xl font-bold mb-3" data-ar="قنوات تلفزيونية مباشرة" data-en="Live TV Channels" data-fr="Chaînes TV en direct">Live TV Channels</h3>
-                    <p class="text-sm sm:text-base text-gray-500 leading-relaxed" data-ar="شاهد +20 قناة مباشرة — أخبار، ترفيه، رياضة، أطفال، ومزيد من القنوات ببث مباشر عالي الجودة." data-en="Watch 20+ live channels — news, entertainment, sports, kids, and more in high-quality live streaming." data-fr="Regardez +20 chaînes en direct — news, divertissement, sport, enfants et plus en streaming haute qualité.">Watch 20+ live channels — news, entertainment, sports, kids, and more in high-quality live streaming.</p>
+                    <p class="text-sm sm:text-base text-gray-500 leading-relaxed" data-ar="شاهد +1000 قناة مباشرة — أخبار، ترفيه، رياضة، أطفال، ومزيد من القنوات ببث مباشر عالي الجودة." data-en="Watch 1000+ live channels — news, entertainment, sports, kids, and more in high-quality live streaming." data-fr="Regardez +1000 chaînes en direct — news, divertissement, sport, enfants et plus en streaming haute qualité.">Watch 1000+ live channels — news, entertainment, sports, kids, and more in high-quality live streaming.</p>
                 </div>
 
                 <!-- Feature 6: Multi-device -->
-                <div class="feature-card gradient-border rounded-2xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
+                <div class="feature-card rounded-3xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
                     <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
                         <i data-lucide="monitor-smartphone" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
                     </div>
@@ -602,7 +646,7 @@
             <div id="download-cards" class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto reveal">
 
                 <!-- Phone Card -->
-                <div class="gradient-border rounded-3xl p-7 sm:p-9 border border-white/5 text-center flex flex-col" style="background:linear-gradient(180deg, #1A1A1A, #111111);">
+                <div class="gradient-border p-7 sm:p-9 text-center flex flex-col">
                     <!-- Icon -->
                     <div class="mb-5">
                         <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl mx-auto flex items-center justify-center" style="background:linear-gradient(135deg, rgba(229,9,20,0.25), rgba(229,9,20,0.05));box-shadow:0 0 20px rgba(229,9,20,0.2);">
@@ -635,7 +679,7 @@
                 </div>
 
                 <!-- TV Card -->
-                <div class="gradient-border rounded-3xl p-7 sm:p-9 border border-white/5 text-center flex flex-col" style="background:linear-gradient(180deg, #1A1A1A, #111111);">
+                <div class="gradient-border p-7 sm:p-9 text-center flex flex-col">
                     <!-- Icon -->
                     <div class="mb-5">
                         <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl mx-auto flex items-center justify-center" style="background:linear-gradient(135deg, rgba(229,9,20,0.25), rgba(229,9,20,0.05));box-shadow:0 0 20px rgba(229,9,20,0.2);">
@@ -668,7 +712,7 @@
                 </div>
 
                 <!-- Low Devices Card -->
-                <div class="gradient-border rounded-3xl p-7 sm:p-9 border border-white/5 text-center flex flex-col" style="background:linear-gradient(180deg, #1A1A1A, #111111);">
+                <div class="gradient-border p-7 sm:p-9 text-center flex flex-col">
                     <!-- Icon -->
                     <div class="mb-5">
                         <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl mx-auto flex items-center justify-center" style="background:linear-gradient(135deg, rgba(229,9,20,0.25), rgba(229,9,20,0.05));box-shadow:0 0 20px rgba(229,9,20,0.2);">
@@ -704,27 +748,8 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="py-20 sm:py-28 relative overflow-hidden">
-        <div class="absolute inset-0" style="background:radial-gradient(ellipse at center, rgba(229,9,20,0.12) 0%, transparent 60%);"></div>
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
-            <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-glow" data-ar="ابدأ المشاهدة الآن" data-en="Start Watching Now" data-fr="Commencez à regarder">Start Watching Now</h2>
-            <p class="text-base sm:text-lg md:text-xl text-gray-400 mb-10 max-w-xl mx-auto" data-ar="الآلاف من المسلسلات والأفلام والأنمي ينتظرونك — مجاناً وبدون تعقيدات" data-en="Thousands of series, movies, and anime are waiting for you — free and hassle-free" data-fr="Des milliers de séries, films et anime vous attendent — gratuitement">Thousands of series, movies, and anime are waiting for you — free and hassle-free</p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#download-cards" class="btn-primary text-base sm:text-lg font-bold px-10 sm:px-14 py-4 sm:py-5 rounded-2xl text-white inline-flex items-center gap-3 glow-red-strong">
-                    <i data-lucide="download" class="w-5 h-5 sm:w-6 sm:h-6"></i>
-                    <span data-ar="حمّل Screenify+ مجاناً" data-en="Download Screenify+ Free" data-fr="Télécharger Screenify+ gratuitement">Download Screenify+ Free</span>
-                </a>
-                <a href="https://t.me/screenifyplus" target="_blank" class="telegram-btn text-base sm:text-lg font-bold px-10 sm:px-14 py-4 sm:py-5 rounded-2xl text-white inline-flex items-center gap-3">
-                    <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                    <span data-ar="تيليجرام" data-en="Telegram" data-fr="Telegram">Telegram</span>
-                </a>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
-    <footer class="border-t border-white/5 py-10 sm:py-14" style="background:var(--bg-dark);">
+    <footer class="border-t border-white/5 py-10 sm:py-14 bg-[#080808]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
                 <!-- Logo & Description -->
@@ -878,7 +903,7 @@
         // Floating Particles
         function createParticles() {
             const container = document.getElementById('particles');
-            const particleCount = 15;
+            const particleCount = 20;
 
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
@@ -898,10 +923,10 @@
         const nav = document.querySelector('nav');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                nav.style.background = 'rgba(10,10,10,0.95)';
+                nav.style.background = 'rgba(5,5,5,0.95)';
                 nav.style.borderBottomColor = 'rgba(229,9,20,0.1)';
             } else {
-                nav.style.background = 'rgba(10,10,10,0.8)';
+                nav.style.background = 'rgba(5,5,5,0.8)';
                 nav.style.borderBottomColor = 'rgba(255,255,255,0.05)';
             }
         });
