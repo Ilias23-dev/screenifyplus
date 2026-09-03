@@ -1,981 +1,990 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Screenify+ v1.7.0</title>
-    <link rel="icon" href="https://i.ibb.co/ycxg0PG2/logo.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        :root {
-            --red-primary: #E50914;
-            --red-glow: #FF1A25;
-            --red-dark: #8B0000;
-            --bg-darkest: #050505;
-            --bg-dark: #0A0A0A;
-            --bg-card: #121212;
-            --bg-card-hover: #181818;
-            --text-primary: #FFFFFF;
-            --text-secondary: #A0A0A0;
-            --text-muted: #666666;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Screenify 1.8.0 Beta — Downloads (Phone · TV · Low-end)</title>
+<meta name="description" content="Screenify 1.8.0 beta — 6 entertainment servers, rebased Live TV, phone-as-remote. Download for Phone, TV or low-end devices.">
+<link rel="icon" href="https://screenifyplus.online/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,500;0,600;0,700;0,800;0,900;1,800&family=JetBrains+Mono:wght@400;500;600;700&family=Cairo:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E0A0A; --bg2:#171010; --bg3:#120C0C;
+    --line:#2E2121; --text:#F5EDEB; --muted:#A39694;
+    --accent:#FF4438; --accent-hi:#FF6A5E; --accent-dim:rgba(255,68,56,.08);
+    --mono:'JetBrains Mono',monospace; --sans:'Archivo',sans-serif;
+  }
+  html[lang="ar"]{
+    --sans:'Cairo','Archivo',sans-serif;
+    --mono:'JetBrains Mono','Cairo',monospace;
+  }
+  html[lang="ar"] *{letter-spacing:0 !important}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;color-scheme:dark}
+  body{
+    background:var(--bg);color:var(--text);
+    font:500 16px/1.6 var(--sans);
+    -webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(rgba(245,237,235,.035) 1px,transparent 1.2px);
+    background-size:26px 26px;
+  }
+  ::selection{background:var(--accent);color:#120B0B}
+  ::-webkit-scrollbar{width:10px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:#3A2826;border:2px solid var(--bg)}
+  a{color:inherit}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  img{display:block}
+  .ic{width:18px;height:18px;flex:none}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+  .sl{color:var(--accent);opacity:.8}
+  section{scroll-margin-top:90px}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* ---------- reveal ---------- */
+  .rv{opacity:0;transform:translateY(16px);
+      transition:opacity .7s ease var(--d,0s),transform .7s cubic-bezier(.22,.8,.3,1) var(--d,0s)}
+  .rv.on{opacity:1;transform:none}
 
-        html { scroll-behavior: smooth; }
+  /* ---------- header ---------- */
+  header{position:sticky;top:0;z-index:50;background:rgba(14,10,10,.86);
+         backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .top-in{display:flex;align-items:center;gap:24px;height:64px}
+  .brand{display:flex;align-items:center;gap:11px;text-decoration:none;
+         font:800 15px var(--sans);letter-spacing:.14em}
+  .logo-img{width:26px;height:26px;object-fit:contain}
+  .logo-fb{display:none;width:26px;height:26px}
+  .brand small{font:600 9.5px var(--mono);letter-spacing:.2em;color:var(--accent);
+               border:1px solid rgba(255,68,56,.35);padding:3px 7px;border-radius:999px}
+  nav{display:flex;gap:24px}
+  nav a{font:500 11px var(--mono);letter-spacing:.16em;color:var(--muted);
+        text-decoration:none;transition:color .2s}
+  nav a:hover{color:var(--accent)}
+  .top-meta{margin-inline-start:auto;display:flex;align-items:center;gap:16px}
+  .lang{display:flex;border:1px solid var(--line)}
+  .lang-btn{padding:8px 11px;font:700 10.5px var(--mono);color:var(--muted);
+            transition:color .2s,background .2s}
+  .lang-btn + .lang-btn{border-inline-start:1px solid var(--line)}
+  .lang-btn:hover{color:var(--text)}
+  .lang-btn.on{color:var(--accent);background:var(--accent-dim)}
+  .live{display:flex;align-items:center;gap:8px;font:600 10.5px var(--mono);
+        letter-spacing:.18em;color:var(--muted)}
+  .live i{width:7px;height:7px;border-radius:50%;background:var(--accent);
+          animation:pulse 2.2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,68,56,.45)}
+                   70%{box-shadow:0 0 0 7px rgba(255,68,56,0)}
+                   100%{box-shadow:0 0 0 0 rgba(255,68,56,0)}}
+  .clock{font:500 12px var(--mono);color:var(--muted);letter-spacing:.08em}
+  @media(max-width:900px){nav{display:none}}
+  @media(max-width:760px){.clock{display:none}}
+  @media(max-width:620px){.live{display:none}}
+  @media(max-width:400px){.lang-btn{padding:8px 8px}}
 
-        body {
-            font-family: 'Inter', 'Tajawal', sans-serif;
-            background: var(--bg-darkest);
-            color: var(--text-primary);
-            overflow-x: hidden;
-        }
+  /* ---------- hero ---------- */
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;
+        align-items:center;padding:64px 24px 56px}
+  .eyebrow{font:600 11px var(--mono);letter-spacing:.22em;color:var(--muted)}
+  h1{font:900 clamp(2.5rem,5.6vw,4.4rem)/1.04 var(--sans);
+     letter-spacing:-.025em;text-transform:uppercase;margin:18px 0 22px}
+  html[lang="ar"] h1{line-height:1.18}
+  h1 em{font-style:italic;color:var(--accent)}
+  html[lang="ar"] h1 em{font-style:normal}
+  .lede{color:var(--muted);font-size:16.5px;max-width:36rem}
+  .lede b{color:var(--text);font-weight:600}
+  .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+  .meta-line{margin-top:32px;font:600 11px var(--mono);letter-spacing:.18em;color:var(--muted)}
 
-        body.ltr { direction: ltr; }
-        body.rtl { direction: rtl; }
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;
+       font:700 14.5px var(--sans);letter-spacing:.03em;text-decoration:none;
+       border:1px solid transparent;transition:transform .18s,background .18s,border-color .18s,color .18s}
+  .btn:active{transform:translateY(0)}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .btn-solid{background:var(--accent);color:#150A0A}
+  .btn-solid:hover{background:var(--accent-hi);transform:translateY(-2px)}
+  .btn-ghost{border-color:var(--line);color:var(--text)}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
 
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-darkest); }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--red-primary), var(--red-dark)); border-radius: 4px; }
+  /* ---------- phone mockup ---------- */
+  .hero-fig{position:relative;display:flex;flex-direction:column;align-items:center;
+            justify-content:center;perspective:1200px;padding:30px 34px}
+  .phone{width:min(300px,74vw);aspect-ratio:9/19.2;border-radius:46px;
+         background:#070505;border:1px solid #3A2826;padding:11px;position:relative;
+         box-shadow:0 34px 90px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.04);
+         transform-style:preserve-3d;will-change:transform}
+  .screen{width:100%;height:100%;border-radius:36px;overflow:hidden;background:#000;position:relative}
+  .screen img{width:100%;height:100%;object-fit:cover;object-position:top center}
+  .punch{position:absolute;top:13px;left:50%;transform:translateX(-50%);
+         width:12px;height:12px;border-radius:50%;background:#000;
+         border:2px solid #201616;z-index:2}
+  .side-btn{position:absolute;background:#4A3432;border-radius:2px}
+  .sb-power{right:-3.5px;top:27%;width:3.5px;height:66px}
+  .sb-vol{left:-3.5px;top:22%;width:3.5px;height:44px}
+  .sb-vol2{left:-3.5px;top:calc(22% + 54px);width:3.5px;height:44px}
+  .fig-cap{margin-top:20px;font:500 10.5px var(--mono);letter-spacing:.16em;
+           color:var(--muted);text-align:center}
+  .chip{position:absolute;display:flex;align-items:center;gap:9px;white-space:nowrap;
+        background:rgba(23,16,16,.92);border:1px solid var(--line);padding:10px 14px;
+        font:600 10px var(--mono);letter-spacing:.14em;color:var(--muted);
+        backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:3;
+        will-change:transform}
+  .chip i{width:6px;height:6px;border-radius:50%;background:var(--accent);flex:none}
+  .chip b{color:var(--text);font-weight:700}
+  .chips-float .c1{top:13%;left:-14px}
+  .chips-float .c2{top:40%;right:-20px}
+  .chips-float .c3{bottom:26%;left:-26px}
+  .chips-float .c4{bottom:8%;right:-8px}
+  .chips-float .c5{top:-6px;left:32%}
+  .chips-row{display:none;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px}
+  .chips-row .chip{position:static}
+  @media(max-width:960px){
+    .hero{grid-template-columns:1fr;gap:36px;padding-top:48px}
+    .chips-float{display:none}
+    .chips-row{display:flex}
+  }
 
-        .hero-bg {
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-bg::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(ellipse at 30% 20%, rgba(229,9,20,0.15) 0%, transparent 50%),
-                        radial-gradient(ellipse at 70% 80%, rgba(229,9,20,0.08) 0%, transparent 50%),
-                        radial-gradient(ellipse at 50% 50%, rgba(139,0,0,0.05) 0%, transparent 70%);
-            animation: bgPulse 8s ease-in-out infinite alternate;
-            pointer-events: none;
-        }
+  /* ---------- marquee ---------- */
+  .marquee{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+           padding:11px 0;direction:ltr}
+  .mq-track{display:flex;width:max-content;white-space:nowrap;animation:mq 28s linear infinite}
+  .marquee:hover .mq-track{animation-play-state:paused}
+  .mq-track span{font:600 11px var(--mono);letter-spacing:.2em;color:var(--muted)}
+  .mq-track i{font-style:normal;color:var(--accent)}
+  @keyframes mq{to{transform:translateX(-50%)}}
 
-        @keyframes bgPulse {
-            0% { transform: scale(1) rotate(0deg); }
-            100% { transform: scale(1.1) rotate(2deg); }
-        }
+  /* ---------- interactive matrix band ---------- */
+  .matrix-band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+               background:var(--bg3);position:relative;overflow:hidden}
+  .matrix-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+               flex-wrap:wrap;max-width:1240px;margin:0 auto;padding:16px 24px 0;
+               font:600 10px var(--mono);letter-spacing:.18em;color:var(--muted)}
+  .matrix-head .m-hint{color:var(--accent);opacity:.85}
+  .matrix-stage{position:relative;height:clamp(170px,26vw,300px)}
+  #matrix{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:crosshair}
+  @media(max-width:560px){.matrix-head{font-size:9px;padding-top:12px}}
 
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: var(--red-primary);
-            opacity: 0;
-            animation: floatParticle linear infinite;
-            pointer-events: none;
-            box-shadow: 0 0 10px var(--red-glow);
-        }
+  /* ---------- sections ---------- */
+  .section{padding-top:92px}
+  .sec-head{display:flex;align-items:center;gap:18px;margin-bottom:38px}
+  .sec-idx{font:700 13px var(--mono);color:var(--accent);letter-spacing:.1em}
+  .sec-head h2{font:800 clamp(1.65rem,3.4vw,2.35rem)/1.1 var(--sans);letter-spacing:-.02em}
+  .rule{flex:1;height:1px;background:var(--line)}
+  .sec-tip{font:500 10.5px var(--mono);letter-spacing:.16em;color:var(--muted)}
+  @media(max-width:640px){.sec-tip{display:none}}
 
-        @keyframes floatParticle {
-            0% { opacity: 0; transform: translateY(100vh) scale(0); }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
-            100% { opacity: 0; transform: translateY(-10vh) scale(1); }
-        }
+  /* ---------- downloads ---------- */
+  .dl-grid{display:grid;grid-template-columns:5fr 7fr;gap:20px;align-items:start}
+  .dl-list{border:1px solid var(--line);background:var(--bg2)}
+  .dev{width:100%;text-align:start;display:grid;grid-template-columns:auto auto 1fr auto;
+       gap:18px;align-items:center;padding:23px 20px;transition:background .2s,box-shadow .2s;
+       border-bottom:1px solid var(--line)}
+  .dev:last-child{border-bottom:0}
+  .dev:hover{background:rgba(245,237,235,.03)}
+  .dev:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  .dev-num{font:600 12px var(--mono);color:var(--muted);letter-spacing:.08em}
+  .dev-ic{color:var(--muted);display:flex;transition:color .2s}
+  .dev-ic .ic{width:22px;height:22px}
+  .dev-txt b{display:block;font:700 17px var(--sans);letter-spacing:.01em}
+  .dev-txt small{display:block;margin-top:3px;font:500 11px var(--mono);letter-spacing:.06em;color:var(--muted)}
+  .dev-arrow{color:var(--muted);display:flex;transition:transform .2s,color .2s}
+  .dev.sel{background:var(--accent-dim);box-shadow:inset 3px 0 0 var(--accent)}
+  .dev.sel .dev-num,.dev.sel .dev-ic,.dev.sel .dev-arrow{color:var(--accent)}
+  .dev.sel .dev-arrow{transform:translate(2px,-2px)}
+  [dir="rtl"] .dev.sel{box-shadow:inset -3px 0 0 var(--accent)}
+  [dir="rtl"] .dev.sel .dev-arrow{transform:translate(-2px,-2px)}
 
-        .glow-red {
-            box-shadow: 0 0 20px rgba(229,9,20,0.3), 0 0 60px rgba(229,9,20,0.1);
-        }
-        .glow-red-strong {
-            box-shadow: 0 0 30px rgba(229,9,20,0.5), 0 0 80px rgba(229,9,20,0.2), 0 0 120px rgba(229,9,20,0.1);
-        }
-        .text-glow {
-            text-shadow: 0 0 40px rgba(229,9,20,0.5), 0 0 80px rgba(229,9,20,0.2);
-        }
+  .dl-panel{position:sticky;top:92px;border:1px solid var(--line);background:var(--bg2);padding:26px}
+  .panel-in.in{animation:pIn .38s cubic-bezier(.22,.8,.3,1)}
+  @keyframes pIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .p-top{display:flex;gap:16px;align-items:center;margin-bottom:18px}
+  .p-ic{width:48px;height:48px;border:1px solid var(--line);background:var(--bg3);
+        display:grid;place-items:center;color:var(--accent);flex:none}
+  .p-ic .ic{width:22px;height:22px}
+  .p-name{font:800 24px/1.1 var(--sans)}
+  .p-tag{margin-top:5px;font:500 10.5px var(--mono);letter-spacing:.15em;color:var(--muted);text-transform:uppercase}
+  .p-desc{color:var(--muted);font-size:15px;margin-bottom:20px}
+  .p-meta{margin-bottom:20px}
+  .pm{display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+      padding:9px 2px;border-bottom:1px dashed var(--line)}
+  .pm:last-child{border-bottom:0}
+  .pm span{font:500 10.5px var(--mono);letter-spacing:.16em;color:var(--muted)}
+  .pm b{font:600 12.5px var(--mono);text-align:end;word-break:break-all}
+  .plus-strip{display:flex;align-items:center;gap:11px;border:1px dashed rgba(255,68,56,.5);
+              background:var(--accent-dim);padding:12px 15px;margin-bottom:20px;
+              font:600 12px var(--mono);color:var(--muted)}
+  .plus-strip b{color:var(--accent);font-weight:700;white-space:nowrap}
+  .plus-strip .ic{width:16px;height:16px;color:var(--accent);flex:none}
+  .key-block{border:1px solid var(--line);background:var(--bg3);margin-bottom:20px}
+  .key-head{display:flex;justify-content:space-between;gap:10px;padding:10px 15px;
+            border-bottom:1px solid var(--line);
+            font:600 10px var(--mono);letter-spacing:.16em;color:var(--muted)}
+  .key-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px}
+  .key{font:700 clamp(26px,3vw,32px) var(--mono);letter-spacing:.14em;color:var(--accent);
+       cursor:pointer;user-select:all}
+  .copy-btn{display:flex;align-items:center;gap:8px;border:1px solid var(--line);
+            padding:10px 14px;font:600 11px var(--mono);letter-spacing:.12em;transition:.2s;flex:none}
+  .copy-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .copy-btn .ic{width:14px;height:14px}
+  .btn-big{width:100%;justify-content:center;padding:17px 20px;font-size:15.5px;letter-spacing:.06em}
+  .p-host{margin-top:13px;text-align:center;font:500 10px var(--mono);letter-spacing:.18em;color:var(--muted)}
+  @media(max-width:920px){.dl-grid{grid-template-columns:1fr}.dl-panel{position:static}}
 
-        .gradient-border {
-            position: relative;
-            border-radius: 24px;
-            overflow: hidden;
-            background: var(--bg-card);
-        }
-        .gradient-border::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 24px;
-            padding: 1px;
-            background: linear-gradient(135deg, var(--red-primary), transparent 50%, var(--red-dark));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-        }
+  /* ---------- quick keys ---------- */
+  .quick{display:flex;flex-wrap:wrap;border:1px solid var(--line);background:var(--bg2);margin-top:18px}
+  .q-label{display:flex;align-items:center;padding:15px 18px;
+           font:600 10.5px var(--mono);letter-spacing:.2em;color:var(--muted)}
+  .q-key{display:flex;align-items:center;gap:13px;padding:15px 18px;
+         border-inline-start:1px solid var(--line);flex:1;min-width:190px;justify-content:space-between;
+         transition:background .2s}
+  .q-key:hover{background:var(--accent-dim)}
+  .q-key b{font:700 11px var(--mono);letter-spacing:.14em;color:var(--muted)}
+  .q-key code{font:700 15px var(--mono);letter-spacing:.1em;transition:color .2s}
+  .q-key:hover code{color:var(--accent)}
+  .q-key .ic{width:13px;height:13px;color:var(--muted)}
+  @media(max-width:760px){.q-label{width:100%;border-bottom:1px solid var(--line)}
+                          .q-key+.q-key{border-inline-start:0;border-top:1px solid var(--line)}}
 
-        .feature-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .feature-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(229,9,20,0.1) 0%, transparent 60%);
-            opacity: 0;
-            transition: opacity 0.4s;
-            pointer-events: none;
-        }
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px rgba(229,9,20,0.15);
-        }
-        .feature-card:hover::after { opacity: 1; }
-        .feature-card:hover .feature-icon {
-            transform: scale(1.1);
-            filter: drop-shadow(0 0 10px rgba(229,9,20,0.5));
-        }
-        .feature-icon {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+  /* ---------- what's new ---------- */
+  .notes{list-style:none}
+  .note{display:grid;grid-template-columns:56px 1fr;gap:22px;padding:30px 0;border-top:1px solid var(--line)}
+  .note-ic{width:50px;height:50px;border:1px solid var(--line);background:var(--bg2);
+           display:grid;place-items:center;color:var(--muted)}
+  .note-ic .ic{width:22px;height:22px}
+  .note h3{font:700 19px var(--sans)}
+  .note p{color:var(--muted);font-size:15px;margin-top:7px;max-width:62ch}
+  .tag{display:inline-block;margin-bottom:11px;font:700 10px var(--mono);letter-spacing:.16em;
+       color:var(--accent);border:1px solid rgba(255,68,56,.4);padding:4px 9px}
+  .note-hl{background:var(--accent-dim);border:1px solid rgba(255,68,56,.28);
+           box-shadow:inset 3px 0 0 var(--accent);padding:26px;margin-top:26px}
+  .note-hl .note-ic{color:var(--accent);border-color:rgba(255,68,56,.35);background:var(--bg3)}
+  [dir="rtl"] .note-hl{box-shadow:inset -3px 0 0 var(--accent)}
+  @media(max-width:560px){.note{grid-template-columns:1fr}.note-ic{display:none}
+                          .note-hl{padding:22px}}
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--red-primary), #B8070F);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-            transition: left 0.5s;
-        }
-        .btn-primary:hover::before { left: 100%; }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(229,9,20,0.4), 0 0 60px rgba(229,9,20,0.15);
-        }
-        .btn-primary:active { transform: translateY(0); }
+  /* ---------- steps ---------- */
+  .steps{list-style:none}
+  .steps li{display:grid;grid-template-columns:110px 1fr;gap:26px;
+            padding:36px 0;border-top:1px solid var(--line)}
+  .step-num{font:800 clamp(2.1rem,4.4vw,3rem)/1 var(--sans);color:transparent;
+            -webkit-text-stroke:1.5px var(--accent)}
+  .steps h3{font:700 19px var(--sans);margin-bottom:8px}
+  .steps p{color:var(--muted);font-size:15px;max-width:56ch}
+  @media(max-width:560px){.steps li{grid-template-columns:64px 1fr;gap:16px}}
 
-        .btn-white {
-            background: #fff;
-            color: #000;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-white:hover {
-            transform: translateY(-2px);
-            background: #f0f0f0;
-            box-shadow: 0 10px 30px rgba(255,255,255,0.2);
-        }
+  /* ---------- footer ---------- */
+  footer{margin-top:100px;border-top:1px solid var(--line);padding:42px 0 58px}
+  .f-brand{display:flex;align-items:center;gap:10px;font:800 14px var(--sans);letter-spacing:.14em}
+  .f-brand img{width:22px;height:22px;object-fit:contain}
+  .f-brand span{font:600 9.5px var(--mono);letter-spacing:.2em;color:var(--muted)}
+  .f-note{margin-top:16px;color:var(--muted);font-size:13.5px;max-width:52ch}
+  .f-meta{margin-top:14px;font:600 10.5px var(--mono);letter-spacing:.18em;color:var(--muted)}
 
-        .code-box {
-            position: relative;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: rgba(255,255,255,0.02);
-        }
-        .code-box:hover {
-            border-color: var(--red-primary) !important;
-            box-shadow: 0 0 20px rgba(229,9,20,0.2);
-        }
-        .copy-toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: linear-gradient(135deg, var(--red-primary), #B8070F);
-            color: white;
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 14px;
-            z-index: 9999;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 30px rgba(229,9,20,0.4);
-        }
-        .copy-toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
+  /* ---------- toast ---------- */
+  .toast{position:fixed;left:50%;bottom:28px;z-index:99;display:flex;align-items:center;gap:10px;
+         background:#1B1010;border:1px solid var(--accent);padding:13px 19px;
+         font:600 13px var(--mono);letter-spacing:.04em;color:var(--text);
+         transform:translate(-50%,16px);opacity:0;pointer-events:none;
+         transition:transform .3s cubic-bezier(.22,.8,.3,1),opacity .3s}
+  .toast.show{transform:translate(-50%,0);opacity:1}
+  .toast .ic{width:15px;height:15px;color:var(--accent)}
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .logo-float {
-            animation: logoFloat 3s ease-in-out infinite;
-        }
-        @keyframes logoFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .lang-btn {
-            transition: all 0.3s;
-            position: relative;
-        }
-        .lang-btn.active {
-            color: var(--red-primary);
-        }
-        .lang-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 2px;
-            background: var(--red-primary);
-            border-radius: 1px;
-        }
-
-        .nav-blur {
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            background: rgba(5,5,5,0.8);
-        }
-
-        .marquee-track {
-            display: flex;
-            animation: marquee 30s linear infinite;
-            width: max-content;
-        }
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .phone-mockup {
-            position: relative;
-        }
-        .phone-mockup::before {
-            content: '';
-            position: absolute;
-            inset: -20px;
-            background: radial-gradient(circle, rgba(229,9,20,0.2) 0%, transparent 70%);
-            filter: blur(40px);
-            z-index: -1;
-        }
-
-        .stat-item {
-            position: relative;
-        }
-        .stat-item::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 1px;
-            height: 40px;
-            background: rgba(255,255,255,0.1);
-        }
-        body.ltr .stat-item::after { right: auto; left: 0; }
-        .stat-item:last-child::after { display: none; }
-
-        .grid-pattern {
-            background-image: 
-                linear-gradient(rgba(229,9,20,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(229,9,20,0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-        }
-
-        .telegram-btn {
-            background: linear-gradient(135deg, #2AABEE, #229ED9);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-        .telegram-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-            transition: left 0.5s;
-        }
-        .telegram-btn:hover::before { left: 100%; }
-        .telegram-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(42,171,238,0.4), 0 0 60px rgba(42,171,238,0.15);
-        }
-
-        /* Scroll offset for sticky nav */
-        #download-cards, #web-player {
-            scroll-margin-top: 100px;
-        }
-
-        /* Web Player CTA */
-        .web-cta-bg {
-            background: linear-gradient(135deg, #0A0A0A 0%, #1A0505 50%, #0A0A0A 100%);
-            position: relative;
-            overflow: hidden;
-        }
-        .web-cta-bg::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(229,9,20,0.15) 0%, transparent 60%);
-        }
-    </style>
+  @media (prefers-reduced-motion:reduce){
+    .rv{transition:none;opacity:1;transform:none}
+    .mq-track{animation:none}
+    .live i{animation:none}
+    html{scroll-behavior:auto}
+  }
+</style>
 </head>
-<body class="ltr">
+<body>
 
-    <!-- Copy Toast -->
-    <div id="copyToast" class="copy-toast">
-        <span data-ar="تم نسخ الكود!" data-en="Code copied!" data-fr="Code copié!">Code copied!</span>
-    </div>
-
-    <!-- Floating Particles Container -->
-    <div id="particles" style="position:fixed;inset:0;pointer-events:none;z-index:0;"></div>
-
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 sm:h-20">
-                <!-- Logo -->
-                <div class="flex items-center gap-3">
-                    <img src="https://i.ibb.co/ycxg0PG2/logo.png" alt="Screenify+" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl" style="box-shadow: 0 0 15px rgba(229,9,20,0.3);">
-                    <span class="text-xl sm:text-2xl font-black" style="background:linear-gradient(135deg, #fff, #E50914);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Screenify+</span>
-                </div>
-
-                <!-- Nav Links (Desktop) -->
-                <div class="hidden md:flex items-center gap-8">
-                    <a href="#features" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-ar="المميزات" data-en="Features" data-fr="Fonctionnalités">Features</a>
-                    <a href="#web-player" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-ar="المشغل" data-en="Web Player" data-fr="Lecteur Web">Web Player</a>
-                    <a href="#download-cards" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-ar="التحميل" data-en="Download" data-fr="Télécharger">Download</a>
-                </div>
-
-                <!-- Language Switcher + CTA -->
-                <div class="flex items-center gap-3 sm:gap-4">
-                    <div class="flex items-center gap-1 sm:gap-2 bg-white/5 rounded-full px-2 sm:px-3 py-1.5 border border-white/10">
-                        <button onclick="setLang('ar')" class="lang-btn text-xs sm:text-sm font-bold px-2 py-1 rounded-full text-gray-500" id="langAr">عربي</button>
-                        <span class="text-white/20">|</span>
-                        <button onclick="setLang('en')" class="lang-btn active text-xs sm:text-sm font-bold px-2 py-1 rounded-full" id="langEn">EN</button>
-                        <span class="text-white/20">|</span>
-                        <button onclick="setLang('fr')" class="lang-btn text-xs sm:text-sm font-bold px-2 py-1 rounded-full text-gray-500" id="langFr">FR</button>
-                    </div>
-                    <a href="#download-cards" class="btn-primary text-xs sm:text-sm font-bold px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-white hidden sm:block" data-ar="حمّل الآن" data-en="Download" data-fr="Télécharger">Download</a>
-                </div>
-            </div>
-        </div>
+<header>
+  <div class="wrap top-in">
+    <a class="brand" href="#top">
+      <img class="logo-img" src="https://screenifyplus.online/logo.png" alt="Screenify logo"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <svg class="logo-fb" viewBox="0 0 20 20" fill="none"><rect x="1.5" y="1.5" width="17" height="17" stroke="#FF4438" stroke-width="2"/><rect x="6" y="6" width="8" height="8" fill="#FF4438"/></svg>
+      SCREENIFY <small>1.8.0-BETA</small>
+    </a>
+    <nav>
+      <a href="#downloads" data-i18n="nav_dl"></a>
+      <a href="#whatsnew" data-i18n="nav_new"></a>
+      <a href="#install" data-i18n="nav_install"></a>
     </nav>
+    <div class="top-meta">
+      <div class="lang" role="group" aria-label="Language">
+        <button class="lang-btn on" data-lang="en" title="English">EN</button>
+        <button class="lang-btn" data-lang="fr" title="Français">FR</button>
+        <button class="lang-btn" data-lang="ar" title="العربية">ع</button>
+      </div>
+      <span class="live"><i></i><span data-i18n="live_label"></span></span>
+      <span class="clock" id="clock">--:--:--</span>
+    </div>
+  </div>
+</header>
 
-    <!-- Hero Section -->
-    <section class="hero-bg min-h-screen flex items-center relative grid-pattern" style="padding-top:80px;">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 w-full">
-            <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
-                <!-- Text Content -->
-                <div class="flex-1 text-center lg:text-left order-2 lg:order-1">
-                    <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-2 mb-6">
-                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-                        <span class="text-red-400 text-xs sm:text-sm font-bold" data-ar="إصدار v1.7.0 متاح الآن" data-en="v1.7.0 Available Now" data-fr="v1.7.0 Disponible">v1.7.0 Available Now</span>
-                    </div>
-                    
-                    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight mb-6">
-                        <span data-ar="كل ما تريد" data-en="Everything you" data-fr="Tout ce que vous">Everything you</span>
-                        <br>
-                        <span style="background:linear-gradient(135deg, #E50914, #FF6B6B);-webkit-background-clip:text;-webkit-text-fill-color:transparent;" data-ar="في مكان واحد" data-en="want in one place" data-fr="voulez en un seul endroit">want in one place</span>
-                    </h1>
-                    
-                    <p class="text-base sm:text-lg md:text-xl text-gray-400 leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0 lg:ml-0" data-ar="مسلسلات من مختلف البلدان والتصنيفات، أفلام متنوعة، أنمي، تقويم المباريات، وقنوات تلفزيونية مباشرة — كل هذا في تطبيق واحد مجاني!" data-en="Series from different countries and genres, diverse movies, anime, matches calendar, and 1000+ live TV channels — all in one free app!" data-fr="Séries de différents pays et genres, films variés, anime, calendrier de matchs et 1000+ chaînes TV en direct — tout dans une seule application gratuite!">Series from different countries and genres, diverse movies, anime, matches calendar, and 1000+ live TV channels — all in one free app!</p>
+<main id="top">
 
-                    <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
-                        <a href="#download-cards" class="btn-primary text-base sm:text-lg font-bold px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl text-white flex items-center gap-3 w-full sm:w-auto justify-center">
-                            <i data-lucide="download" class="w-5 h-5"></i>
-                            <span data-ar="حمّل التطبيق" data-en="Download App" data-fr="Télécharger l'app">Download App</span>
-                        </a>
-                        <a href="https://t.me/screenifyplus" target="_blank" class="telegram-btn text-base sm:text-lg font-bold px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl text-white flex items-center gap-3 w-full sm:w-auto justify-center">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                            <span data-ar="انضم لتيليجرام" data-en="Join Telegram" data-fr="Rejoindre Telegram">Join Telegram</span>
-                        </a>
-                    </div>
-
-                    <!-- Stats -->
-                    <div class="flex items-center justify-center lg:justify-start gap-6 sm:gap-10 mt-10 sm:mt-12">
-                        <div class="stat-item text-center lg:text-left px-4 sm:px-6">
-                            <div class="text-2xl sm:text-3xl font-black text-white">10K+</div>
-                            <div class="text-xs sm:text-sm text-gray-500 mt-1" data-ar="مسلسل و فيلم" data-en="Series & Movies" data-fr="Séries & Films">Series & Movies</div>
-                        </div>
-                        <div class="stat-item text-center lg:text-left px-4 sm:px-6">
-                            <div class="text-2xl sm:text-3xl font-black text-white">1000+</div>
-                            <div class="text-xs sm:text-sm text-gray-500 mt-1" data-ar="قناة مباشرة" data-en="Live Channels" data-fr="Chaînes en direct">Live Channels</div>
-                        </div>
-                        <div class="stat-item text-center lg:text-left px-4 sm:px-6">
-                            <div class="text-2xl sm:text-3xl font-black text-white">4.8</div>
-                            <div class="text-xs sm:text-sm text-gray-500 mt-1" data-ar="تقييم المستخدمين" data-en="User Rating" data-fr="Note utilisateurs">User Rating</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Phone Mockup -->
-                <div class="flex-1 order-1 lg:order-2 flex justify-center">
-                    <div class="phone-mockup logo-float">
-                        <div class="relative">
-                            <!-- Glow behind phone -->
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="w-64 h-64 sm:w-80 sm:h-80 rounded-full" style="background:radial-gradient(circle, rgba(229,9,20,0.3) 0%, transparent 70%);filter:blur(60px);"></div>
-                            </div>
-                            <!-- Phone Frame -->
-                            <div class="relative w-[240px] sm:w-[280px] h-[480px] sm:h-[560px] rounded-[40px] sm:rounded-[50px] border-2 sm:border-[3px] border-white/10 overflow-hidden" style="background:linear-gradient(180deg, #1A1A1A 0%, #0A0A0A 100%);box-shadow:0 30px 60px rgba(0,0,0,0.5),0 0 80px rgba(229,9,20,0.15),inset 0 1px 0 rgba(255,255,255,0.1);">
-                                <!-- Notch -->
-                                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-24 sm:w-28 h-6 sm:h-7 bg-black rounded-b-2xl z-20"></div>
-                                <!-- Screen Content - Real Screenshot -->
-                                <div class="absolute inset-2 sm:inset-3 rounded-[32px] sm:rounded-[40px] overflow-hidden">
-                                    <img src="https://i.ibb.co/4R8CvQf6/Screenshot-2026-08-09-22-35-12-397-com-multiaccounts-cloneapps.jpg" alt="Screenify+ App Screenshot" class="w-full h-full object-cover">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Scroll indicator -->
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-            <span class="text-xs text-gray-600" data-ar="اسحب للأسفل" data-en="Scroll down" data-fr="Défiler vers le bas">Scroll down</span>
-            <i data-lucide="chevron-down" class="w-5 h-5 text-gray-600"></i>
-        </div>
-    </section>
-
-    <!-- Web Player CTA Section (Moved Here) -->
-    <section id="web-player" class="web-cta-bg py-24 sm:py-32 relative">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
-            <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-8 backdrop-blur-sm">
-                <i data-lucide="monitor-play" class="w-4 h-4 text-red-500"></i>
-                <span class="text-white text-sm font-medium" data-ar="مشغل الويب" data-en="Web Player" data-fr="Lecteur Web">Web Player</span>
-            </div>
-            
-            <h2 class="text-4xl sm:text-5xl md:text-6xl font-black mb-6 leading-tight">
-                <span class="text-white block mb-2" data-ar="شاهد الأفلام والمسلسلات" data-en="Watch Movies & Series" data-fr="Regardez Films & Séries">Watch Movies & Series</span>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 text-glow" data-ar="من هنا مباشرة" data-en="Directly From Here" data-fr="Directement Ici">Directly From Here</span>
-            </h2>
-            
-            <p class="text-lg sm:text-xl text-gray-400 mb-10 max-w-2xl mx-auto" data-ar="لا حاجة لتحميل التطبيق! شاهد محتواك المفضل مباشرة من متصفحك على أي جهاز." data-en="No app required! Stream your favorite content instantly right from your browser on any device." data-fr="Aucune application requise! Diffusez votre contenu préféré instantanément depuis votre navigateur.">No app required! Stream your favorite content instantly right from your browser on any device.</p>
-            
-            <a href="https://screenifyplus.online/watch" target="_blank" class="btn-white inline-flex items-center gap-3 font-bold py-4 px-10 sm:py-5 sm:px-14 rounded-full text-lg hover:scale-105 transition-transform duration-300 shadow-2xl">
-                <i data-lucide="play-circle" class="w-6 h-6 text-red-600"></i>
-                <span data-ar="ابدأ المشاهدة الآن" data-en="Start Watching Now" data-fr="Commencer à Regarder">Start Watching Now</span>
-            </a>
-        </div>
-    </section>
-
-    <!-- Marquee Section -->
-    <div class="py-6 border-y border-white/5 overflow-hidden bg-[#080808]">
-        <div class="marquee-track">
-            <div class="flex items-center gap-8 px-4">
-                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="tv" class="w-4 h-4 text-red-500"></i> <span data-ar="قنوات مباشرة" data-en="Live TV" data-fr="TV en direct">Live TV</span></span>
-                <span class="text-red-500/30">★</span>
-                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="film" class="w-4 h-4 text-red-500"></i> <span data-ar="أفلام عالمية" data-en="Global Movies" data-fr="Films mondiaux">Global Movies</span></span>
-                <span class="text-red-500/30">★</span>
-                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="clapperboard" class="w-4 h-4 text-red-500"></i> <span data-ar="مسلسلات متنوعة" data-en="Diverse Series" data-fr="Séries diverses">Diverse Series</span></span>
-                <span class="text-red-500/30">★</span>
-                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="sword" class="w-4 h-4 text-red-500"></i> <span data-ar="أنمي" data-en="Anime" data-fr="Anime">Anime</span></span>
-                <span class="text-red-500/30">★</span>
-                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4 text-red-500"></i> <span data-ar="تقويم المباريات" data-en="Match Calendar" data-fr="Calendrier des matchs">Match Calendar</span></span>
-                <span class="text-red-500/30">★</span>
-                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="smartphone" class="w-4 h-4 text-red-500"></i> <span data-ar="أندرويد" data-en="Android" data-fr="Android">Android</span></span>
-                <span class="text-red-500/30">★</span>
-                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="monitor" class="w-4 h-4 text-red-500"></i> <span data-ar="أندرويد تيفي" data-en="Android TV" data-fr="Android TV">Android TV</span></span>
-                <span class="text-red-500/30">★</span>
-            </div>
-            <div class="flex items-center gap-8 px-4">
-                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="tv" class="w-4 h-4 text-red-500"></i> <span data-ar="قنوات مباشرة" data-en="Live TV" data-fr="TV en direct">Live TV</span></span>
-                <span class="text-red-500/30">★</span>
-                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="film" class="w-4 h-4 text-red-500"></i> <span data-ar="أفلام عالمية" data-en="Global Movies" data-fr="Films mondiaux">Global Movies</span></span>
-                <span class="text-red-500/30">★</span>
-                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="clapperboard" class="w-4 h-4 text-red-500"></i> <span data-ar="مسلسلات متنوعة" data-en="Diverse Series" data-fr="Séries diverses">Diverse Series</span></span>
-                <span class="text-red-500/30">★</span>
-                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="sword" class="w-4 h-4 text-red-500"></i> <span data-ar="أنمي" data-en="Anime" data-fr="Anime">Anime</span></span>
-                <span class="text-red-500/30">★</span>
-                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="calendar" class="w-4 h-4 text-red-500"></i> <span data-ar="تقويم المباريات" data-en="Match Calendar" data-fr="Calendrier des matchs">Match Calendar</span></span>
-                <span class="text-red-500/30">★</span>
-                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="smartphone" class="w-4 h-4 text-red-500"></i> <span data-ar="أندرويد" data-en="Android" data-fr="Android">Android</span></span>
-                <span class="text-red-500/30">★</span>
-                <span class="text-sm font-bold text-gray-500 whitespace-nowrap flex items-center gap-2"><i data-lucide="monitor" class="w-4 h-4 text-red-500"></i> <span data-ar="أندرويد تيفي" data-en="Android TV" data-fr="Android TV">Android TV</span></span>
-                <span class="text-red-500/30">★</span>
-            </div>
-        </div>
+  <!-- ============ HERO ============ -->
+  <section class="hero wrap">
+    <div class="hero-copy">
+      <p class="eyebrow rv" data-i18n="eyebrow"></p>
+      <h1 class="rv" style="--d:.06s" data-i18n="h1"></h1>
+      <p class="lede rv" style="--d:.12s" data-i18n="lede"></p>
+      <div class="cta rv" style="--d:.18s">
+        <a href="#downloads" class="btn btn-solid">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span data-i18n="btn_get"></span>
+        </a>
+        <a href="#whatsnew" class="btn btn-ghost" data-i18n="btn_new"></a>
+      </div>
+      <p class="meta-line rv" style="--d:.24s" data-i18n="meta_line"></p>
     </div>
 
-    <!-- Features Section -->
-    <section id="features" class="py-20 sm:py-28 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-14 sm:mb-20 reveal">
-                <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-2 mb-5">
-                    <i data-lucide="sparkles" class="w-4 h-4 text-red-500"></i>
-                    <span class="text-red-400 text-xs sm:text-sm font-bold" data-ar="مميزات التطبيق" data-en="App Features" data-fr="Fonctionnalités">App Features</span>
-                </div>
-                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mb-4" data-ar="كل ما تحتاجه في تطبيق واحد" data-en="Everything you need in one app" data-fr="Tout ce dont vous avez besoin">Everything you need in one app</h2>
-                <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto" data-ar="استمتع بتجربة ترفيهية شاملة تجمع بين الأفلام والمسلسلات والأنمي والرياضة والتلفزيون المباشر" data-en="Enjoy a comprehensive entertainment experience combining movies, series, anime, sports, and live TV" data-fr="Profitez d'une expérience de divertissement complète combinant films, séries, anime, sport et TV en direct">Enjoy a comprehensive entertainment experience combining movies, series, anime, sports, and live TV</p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-                <!-- Feature 1: Series -->
-                <div class="feature-card rounded-3xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
-                    <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
-                        <i data-lucide="clapperboard" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
-                    </div>
-                    <h3 class="text-lg sm:text-xl font-bold mb-3" data-ar="مسلسلات عالمية" data-en="Global Series" data-fr="Séries mondiales">Global Series</h3>
-                    <p class="text-sm sm:text-base text-gray-500 leading-relaxed" data-ar="مسلسلات من مختلف البلدان والتصنيفات — دراما، كوميديا، إثارة، رعب، والمزيد. محتوى محدث باستمرار." data-en="Series from different countries and genres — drama, comedy, thriller, horror, and more. Constantly updated content." data-fr="Séries de différents pays et genres — drame, comédie, thriller, horreur et plus. Contenu constamment mis à jour.">Series from different countries and genres — drama, comedy, thriller, horror, and more. Constantly updated content.</p>
-                </div>
-
-                <!-- Feature 2: Movies -->
-                <div class="feature-card rounded-3xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
-                    <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
-                        <i data-lucide="film" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
-                    </div>
-                    <h3 class="text-lg sm:text-xl font-bold mb-3" data-ar="أفلام متنوعة" data-en="Diverse Movies" data-fr="Films variés">Diverse Movies</h3>
-                    <p class="text-sm sm:text-base text-gray-500 leading-relaxed" data-ar="مكتبة ضخمة من الأفلام من مختلف البلدان والتصنيفات — أكشن، رومانسي، خيال علمي، وثائقي، وأكثر." data-en="A massive library of movies from different countries and genres — action, romance, sci-fi, documentary, and more." data-fr="Une immense bibliothèque de films de différents pays et genres — action, romance, sci-fi, documentaire et plus.">A massive library of movies from different countries and genres — action, romance, sci-fi, documentary, and more.</p>
-                </div>
-
-                <!-- Feature 3: Anime -->
-                <div class="feature-card rounded-3xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
-                    <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
-                        <i data-lucide="sword" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
-                    </div>
-                    <h3 class="text-lg sm:text-xl font-bold mb-3" data-ar="أنمي" data-en="Anime" data-fr="Anime">Anime</h3>
-                    <p class="text-sm sm:text-base text-gray-500 leading-relaxed" data-ar="أكبر مجموعة أنمي بترجمة عربية — شونين، شوجو، إيسيكاي، ميكا، وغيرها من الأنواع الممتعة." data-en="The largest anime collection with Arabic subtitles — shonen, shojo, isekai, mecha, and more exciting genres." data-fr="La plus grande collection d'anime avec sous-titres arabes — shonen, shojo, isekai, mecha et plus.">The largest anime collection with Arabic subtitles — shonen, shojo, isekai, mecha, and more exciting genres.</p>
-                </div>
-
-                <!-- Feature 4: Matches Calendar -->
-                <div class="feature-card rounded-3xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
-                    <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
-                        <i data-lucide="calendar-days" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
-                    </div>
-                    <h3 class="text-lg sm:text-xl font-bold mb-3" data-ar="تقويم المباريات" data-en="Matches Calendar" data-fr="Calendrier des matchs">Matches Calendar</h3>
-                    <p class="text-sm sm:text-base text-gray-500 leading-relaxed" data-ar="تابع مواعيد جميع المباريات — كرة القدم، كرة السلة، التنس، وغيرها. لا تفوت أي مباراة مهمة." data-en="Follow all match schedules — football, basketball, tennis, and more. Never miss an important match." data-fr="Suivez tous les calendriers de matchs — football, basket, tennis et plus. Ne ratez aucun match important.">Follow all match schedules — football, basketball, tennis, and more. Never miss an important match.</p>
-                </div>
-
-                <!-- Feature 5: Live TV -->
-                <div class="feature-card rounded-3xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
-                    <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
-                        <i data-lucide="radio" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
-                    </div>
-                    <h3 class="text-lg sm:text-xl font-bold mb-3" data-ar="قنوات تلفزيونية مباشرة" data-en="Live TV Channels" data-fr="Chaînes TV en direct">Live TV Channels</h3>
-                    <p class="text-sm sm:text-base text-gray-500 leading-relaxed" data-ar="شاهد +1000 قناة مباشرة — أخبار، ترفيه، رياضة، أطفال، ومزيد من القنوات ببث مباشر عالي الجودة." data-en="Watch 1000+ live channels — news, entertainment, sports, kids, and more in high-quality live streaming." data-fr="Regardez +1000 chaînes en direct — news, divertissement, sport, enfants et plus en streaming haute qualité.">Watch 1000+ live channels — news, entertainment, sports, kids, and more in high-quality live streaming.</p>
-                </div>
-
-                <!-- Feature 6: Multi-device -->
-                <div class="feature-card rounded-3xl p-6 sm:p-8 border border-white/5 reveal" style="background:var(--bg-card);">
-                    <div class="feature-icon w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-5" style="background:linear-gradient(135deg, rgba(229,9,20,0.2), rgba(229,9,20,0.05));">
-                        <i data-lucide="monitor-smartphone" class="w-7 h-7 sm:w-8 sm:h-8 text-red-500"></i>
-                    </div>
-                    <h3 class="text-lg sm:text-xl font-bold mb-3" data-ar="هاتف و تلفزيون" data-en="Phone & TV" data-fr="Téléphone & TV">Phone & TV</h3>
-                    <p class="text-sm sm:text-base text-gray-500 leading-relaxed" data-ar="متوافق مع هواتف أندرويد وأجهزة أندرويد تيفي — شاهد على الشاشة الكبيرة أو على هاتفك أينما كنت." data-en="Compatible with Android phones and Android TV — watch on the big screen or on your phone anywhere." data-fr="Compatible avec les téléphones Android et Android TV — regardez sur grand écran ou sur votre téléphone partout.">Compatible with Android phones and Android TV — watch on the big screen or on your phone anywhere.</p>
-                </div>
-            </div>
+    <div class="hero-fig rv" style="--d:.15s" id="heroFig">
+      <div class="phone" id="phone">
+        <span class="side-btn sb-power"></span>
+        <span class="side-btn sb-vol"></span>
+        <span class="side-btn sb-vol2"></span>
+        <div class="screen">
+          <img src="https://i.ibb.co/4R8CvQf6/Screenshot-2026-08-09-22-35-12-397-com-multiaccounts-cloneapps.jpg"
+               alt="Screenify 1.8.0 beta running on a phone">
+          <span class="punch"></span>
         </div>
-    </section>
+      </div>
 
-    <!-- Telegram CTA Section -->
-    <section class="py-16 sm:py-20 relative overflow-hidden" style="background:linear-gradient(135deg, rgba(42,171,238,0.08) 0%, rgba(229,9,20,0.05) 100%);">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 reveal">
-            <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 mb-6">
-                <svg class="w-4 h-4 text-blue-400" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                <span class="text-blue-400 text-xs sm:text-sm font-bold" data-ar="تابعنا على تيليجرام" data-en="Follow us on Telegram" data-fr="Suivez-nous sur Telegram">Follow us on Telegram</span>
-            </div>
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-black mb-4" data-ar="انضم لمجتمعنا على تيليجرام" data-en="Join our community on Telegram" data-fr="Rejoignez notre communauté sur Telegram">Join our community on Telegram</h2>
-            <p class="text-sm sm:text-base text-gray-400 mb-8 max-w-lg mx-auto" data-ar="كن أول من يعرف عن التحديثات الجديدة والمحتوى الحصري" data-en="Be the first to know about new updates and exclusive content" data-fr="Soyez les premiers à connaître les mises à jour et le contenu exclusif">Be the first to know about new updates and exclusive content</p>
-            <a href="https://t.me/screenifyplus" target="_blank" class="telegram-btn text-base sm:text-lg font-bold px-10 sm:px-14 py-4 sm:py-5 rounded-2xl text-white inline-flex items-center gap-3" style="box-shadow:0 10px 30px rgba(42,171,238,0.3);">
-                <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                <span data-ar="t.me/screenifyplus" data-en="t.me/screenifyplus" data-fr="t.me/screenifyplus">t.me/screenifyplus</span>
-            </a>
+      <div class="chips-float">
+        <span class="chip c1"><i></i><span data-i18n="chip1"></span></span>
+        <span class="chip c2"><i></i><span data-i18n="chip2"></span></span>
+        <span class="chip c3"><i></i><span data-i18n="chip3"></span></span>
+        <span class="chip c4"><i></i><span data-i18n="chip4"></span></span>
+        <span class="chip c5"><i></i><span data-i18n="chip5"></span></span>
+      </div>
+
+      <div class="chips-row">
+        <span class="chip"><i></i><span data-i18n="chip1"></span></span>
+        <span class="chip"><i></i><span data-i18n="chip2"></span></span>
+        <span class="chip"><i></i><span data-i18n="chip3"></span></span>
+        <span class="chip"><i></i><span data-i18n="chip4"></span></span>
+        <span class="chip"><i></i><span data-i18n="chip5"></span></span>
+      </div>
+
+      <p class="fig-cap" data-i18n="fig_cap"></p>
+    </div>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="mq-track"><span></span><span></span></div>
+  </div>
+
+  <!-- ============ INTERACTIVE 1.8.0 ============ -->
+  <section class="matrix-band" aria-label="Interactive build number">
+    <div class="matrix-head">
+      <span class="m-cap" data-i18n="matrix_cap"></span>
+      <span class="m-hint" data-i18n="matrix_hint"></span>
+    </div>
+    <div class="matrix-stage">
+      <canvas id="matrix"></canvas>
+    </div>
+  </section>
+
+  <!-- ============ DOWNLOADS ============ -->
+  <section id="downloads" class="wrap section">
+    <div class="sec-head rv">
+      <span class="sec-idx">( 01 )</span>
+      <h2 data-i18n="sec1_h2"></h2>
+      <span class="rule"></span>
+      <span class="sec-tip" data-i18n="sec1_tip"></span>
+    </div>
+
+    <div class="dl-grid">
+      <div class="dl-list rv" role="tablist" aria-label="Device builds">
+        <button class="dev sel" data-dev="phone" role="tab" aria-selected="true">
+          <span class="dev-num">01</span>
+          <span class="dev-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></span>
+          <span class="dev-txt"><b data-i18n="dn_phone"></b><small data-i18n="ds_phone"></small></span>
+          <span class="dev-arrow"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+        </button>
+        <button class="dev" data-dev="tv" role="tab" aria-selected="false">
+          <span class="dev-num">02</span>
+          <span class="dev-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg></span>
+          <span class="dev-txt"><b data-i18n="dn_tv"></b><small data-i18n="ds_tv"></small></span>
+          <span class="dev-arrow"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+        </button>
+        <button class="dev" data-dev="low" role="tab" aria-selected="false">
+          <span class="dev-num">03</span>
+          <span class="dev-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg></span>
+          <span class="dev-txt"><b data-i18n="dn_low"></b><small data-i18n="ds_low"></small></span>
+          <span class="dev-arrow"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+        </button>
+      </div>
+
+      <aside class="dl-panel rv" style="--d:.1s" role="tabpanel" aria-live="polite">
+        <div class="panel-in" id="panelIn"><!-- rendered by JS --></div>
+      </aside>
+    </div>
+
+    <div class="quick rv" id="quick">
+      <span class="q-label" data-i18n="q_label"></span>
+      <button class="q-key" data-code="9622656"><b data-i18n="q_phone"></b><code>9622656</code><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+      <button class="q-key" data-code="4079956"><b data-i18n="q_tv"></b><code>4079956</code><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+      <button class="q-key" data-code="2449714"><b data-i18n="q_low"></b><code>2449714</code><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+    </div>
+  </section>
+
+  <!-- ============ WHAT'S NEW ============ -->
+  <section id="whatsnew" class="wrap section">
+    <div class="sec-head rv">
+      <span class="sec-idx">( 02 )</span>
+      <h2 data-i18n="sec2_h2"></h2>
+      <span class="rule"></span>
+    </div>
+    <ol class="notes">
+
+      <li class="note note-hl rv">
+        <span class="note-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"/></svg></span>
+        <div>
+          <span class="tag" data-i18n="n1_tag"></span>
+          <h3 data-i18n="n1_h3"></h3>
+          <p data-i18n="n1_p"></p>
         </div>
-    </section>
+      </li>
 
-    <!-- How to Download Section -->
-    <section id="download" class="py-20 sm:py-28 relative grid-pattern">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-14 sm:mb-20 reveal">
-                <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-2 mb-5">
-                    <i data-lucide="download" class="w-4 h-4 text-red-500"></i>
-                    <span class="text-red-400 text-xs sm:text-sm font-bold" data-ar="التحميل" data-en="Download" data-fr="Télécharger">Download</span>
-                </div>
-                <h2 class="text-3xl sm:text-4xl md:text-5xl font-black mb-4" data-ar="حمّل Screenify+ v1.7.0 الآن" data-en="Download Screenify+ v1.7.0 Now" data-fr="Téléchargez Screenify+ v1.7.0">Download Screenify+ v1.7.0 Now</h2>
-                <p class="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto" data-ar="اتبع الخطوات البسيطة التالية لتحميل التطبيق والبدء في المشاهدة" data-en="Follow these simple steps to download the app and start watching" data-fr="Suivez ces étapes simples pour télécharger l'application">Follow these simple steps to download the app and start watching</p>
-            </div>
-
-            <!-- Steps -->
-            <div class="max-w-3xl mx-auto space-y-6 sm:space-y-8 mb-12 sm:mb-16">
-                <!-- Step 1 -->
-                <div class="reveal flex items-start gap-4 sm:gap-6">
-                    <div class="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center font-black text-lg sm:text-xl" style="background:linear-gradient(135deg, #E50914, #B8070F);box-shadow:0 0 20px rgba(229,9,20,0.3);">1</div>
-                    <div class="flex-1 pt-1 sm:pt-2">
-                        <h4 class="text-lg sm:text-xl font-bold mb-2" data-ar="اضغط على زر التحميل" data-en="Click the download button" data-fr="Cliquez sur le bouton de téléchargement">Click the download button</h4>
-                        <p class="text-sm sm:text-base text-gray-500" data-ar="اضغط على زر التحميل أدناه لبدء تحميل ملف APK" data-en="Click the download button below to start downloading the APK file" data-fr="Cliquez sur le bouton ci-dessous pour télécharger le fichier APK">Click the download button below to start downloading the APK file</p>
-                    </div>
-                </div>
-                <!-- Step 2 -->
-                <div class="reveal flex items-start gap-4 sm:gap-6">
-                    <div class="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center font-black text-lg sm:text-xl" style="background:linear-gradient(135deg, #E50914, #B8070F);box-shadow:0 0 20px rgba(229,9,20,0.3);">2</div>
-                    <div class="flex-1 pt-1 sm:pt-2">
-                        <h4 class="text-lg sm:text-xl font-bold mb-2" data-ar="انسخ كود المحمل" data-en="Copy the downloader code" data-fr="Copiez le code du téléchargeur">Copy the downloader code</h4>
-                        <p class="text-sm sm:text-base text-gray-500" data-ar="اضغط على الكود أدناه لنسخه تلقائياً — ستحتاجه في خطوة التثبيت" data-en="Click the code below to copy it automatically — you'll need it for the installation step" data-fr="Cliquez sur le code ci-dessous pour le copier automatiquement">Click the code below to copy it automatically — you'll need it for the installation step</p>
-                    </div>
-                </div>
-                <!-- Step 3 -->
-                <div class="reveal flex items-start gap-4 sm:gap-6">
-                    <div class="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center font-black text-lg sm:text-xl" style="background:linear-gradient(135deg, #E50914, #B8070F);box-shadow:0 0 20px rgba(229,9,20,0.3);">3</div>
-                    <div class="flex-1 pt-1 sm:pt-2">
-                        <h4 class="text-lg sm:text-xl font-bold mb-2" data-ar="ثبّت و استمتع" data-en="Install & Enjoy" data-fr="Installez et profitez">Install & Enjoy</h4>
-                        <p class="text-sm sm:text-base text-gray-500" data-ar="ثبّت التطبيق على جهازك وابدأ في مشاهدة محتواك المفضل" data-en="Install the app on your device and start watching your favorite content" data-fr="Installez l'application et commencez à regarder votre contenu préféré">Install the app on your device and start watching your favorite content</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Download Cards -->
-            <div id="download-cards" class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto reveal">
-
-                <!-- Phone Card -->
-                <div class="gradient-border p-7 sm:p-9 text-center flex flex-col">
-                    <!-- Icon -->
-                    <div class="mb-5">
-                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl mx-auto flex items-center justify-center" style="background:linear-gradient(135deg, rgba(229,9,20,0.25), rgba(229,9,20,0.05));box-shadow:0 0 20px rgba(229,9,20,0.2);">
-                            <i data-lucide="smartphone" class="w-8 h-8 sm:w-10 sm:h-10 text-red-500"></i>
-                        </div>
-                    </div>
-                    <h3 class="text-xl sm:text-2xl font-black mb-1" data-ar="نسخة الهاتف" data-en="Phone Version" data-fr="Version Mobile">Phone Version</h3>
-                    <p class="text-xs text-gray-500 mb-6" data-ar="أندرويد — هواتف وأجهزة لوحية" data-en="Android — phones & tablets" data-fr="Android — téléphones & tablettes">Android — phones & tablets</p>
-
-                    <!-- Code Box -->
-                    <div class="code-box border-2 border-dashed border-white/10 rounded-2xl p-4 sm:p-5 mb-6 flex-1" onclick="copyCode('phone')" id="codeBoxPhone">
-                        <div class="text-xs text-gray-500 mb-2" data-ar="كود المحمل (اضغط للنسخ)" data-en="Downloader Code (Click to copy)" data-fr="Code du téléchargeur (Cliquez pour copier)">Downloader Code (Click to copy)</div>
-                        <div class="text-3xl sm:text-4xl font-black tracking-[0.2em]" style="color:var(--red-primary);">8284947</div>
-                        <div class="flex items-center justify-center gap-1.5 mt-3 text-gray-600">
-                            <i data-lucide="copy" class="w-4 h-4"></i>
-                            <span class="text-xs" data-ar="اضغط للنسخ" data-en="Click to copy" data-fr="Cliquez pour copier">Click to copy</span>
-                        </div>
-                    </div>
-
-                    <!-- Download Button -->
-                    <a href="https://www.mediafire.com/file/ozzq2kzfk8n8ofi/screenifyPHONE7fix.apk/file" target="_blank" class="btn-primary text-sm sm:text-base font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl text-white inline-flex items-center justify-center gap-2.5 glow-red-strong">
-                        <i data-lucide="download" class="w-5 h-5"></i>
-                        <span data-ar="تحميل للهاتف" data-en="Download for Phone" data-fr="Télécharger (Mobile)">Download for Phone</span>
-                    </a>
-
-                    <!-- Terms -->
-                    <p class="text-xs text-gray-700 mt-4">
-                        <a href="https://screenifyplus.online/appterms" target="_blank" class="hover:text-gray-500 transition-colors" data-ar="الشروط والأحكام" data-en="Terms & Conditions" data-fr="Conditions d'utilisation">Terms & Conditions</a>
-                    </p>
-                </div>
-
-                <!-- TV Card -->
-                <div class="gradient-border p-7 sm:p-9 text-center flex flex-col">
-                    <!-- Icon -->
-                    <div class="mb-5">
-                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl mx-auto flex items-center justify-center" style="background:linear-gradient(135deg, rgba(229,9,20,0.25), rgba(229,9,20,0.05));box-shadow:0 0 20px rgba(229,9,20,0.2);">
-                            <i data-lucide="tv-2" class="w-8 h-8 sm:w-10 sm:h-10 text-red-500"></i>
-                        </div>
-                    </div>
-                    <h3 class="text-xl sm:text-2xl font-black mb-1" data-ar="نسخة التلفزيون" data-en="TV Version" data-fr="Version TV">TV Version</h3>
-                    <p class="text-xs text-gray-500 mb-6" data-ar="أندرويد تيفي — شاشة كبيرة" data-en="Android TV — big screen" data-fr="Android TV — grand écran">Android TV — big screen</p>
-
-                    <!-- Code Box -->
-                    <div class="code-box border-2 border-dashed border-white/10 rounded-2xl p-4 sm:p-5 mb-6 flex-1" onclick="copyCode('tv')" id="codeBoxTv">
-                        <div class="text-xs text-gray-500 mb-2" data-ar="كود المحمل (اضغط للنسخ)" data-en="Downloader Code (Click to copy)" data-fr="Code du téléchargeur (Cliquez pour copier)">Downloader Code (Click to copy)</div>
-                        <div class="text-3xl sm:text-4xl font-black tracking-[0.2em]" style="color:var(--red-primary);">9884763</div>
-                        <div class="flex items-center justify-center gap-1.5 mt-3 text-gray-600">
-                            <i data-lucide="copy" class="w-4 h-4"></i>
-                            <span class="text-xs" data-ar="اضغط للنسخ" data-en="Click to copy" data-fr="Cliquez pour copier">Click to copy</span>
-                        </div>
-                    </div>
-
-                    <!-- Download Button -->
-                    <a href="https://www.mediafire.com/file/1lss3y490sppkqd/sscrenifyTV7fix.apk/file" target="_blank" class="btn-primary text-sm sm:text-base font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl text-white inline-flex items-center justify-center gap-2.5 glow-red-strong">
-                        <i data-lucide="download" class="w-5 h-5"></i>
-                        <span data-ar="تحميل للتلفزيون" data-en="Download for TV" data-fr="Télécharger (TV)">Download for TV</span>
-                    </a>
-
-                    <!-- Terms -->
-                    <p class="text-xs text-gray-700 mt-4">
-                        <a href="https://screenifyplus.online/appterms" target="_blank" class="hover:text-gray-500 transition-colors" data-ar="الشروط والأحكام" data-en="Terms & Conditions" data-fr="Conditions d'utilisation">Terms & Conditions</a>
-                    </p>
-                </div>
-
-                <!-- Low Devices Card -->
-                <div class="gradient-border p-7 sm:p-9 text-center flex flex-col">
-                    <!-- Icon -->
-                    <div class="mb-5">
-                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-3xl mx-auto flex items-center justify-center" style="background:linear-gradient(135deg, rgba(229,9,20,0.25), rgba(229,9,20,0.05));box-shadow:0 0 20px rgba(229,9,20,0.2);">
-                            <i data-lucide="gauge" class="w-8 h-8 sm:w-10 sm:h-10 text-red-500"></i>
-                        </div>
-                    </div>
-                    <h3 class="text-xl sm:text-2xl font-black mb-1" data-ar="نسخة الأجهزة الضعيفة" data-en="Low Devices Version" data-fr="Version Appareils Faibles">Low Devices Version</h3>
-                    <p class="text-xs text-gray-500 mb-6" data-ar="للهواتف والتلفزيونات — خفيف وسريع" data-en="For phones & TVs — light & fast" data-fr="Pour téléphones et TV — léger et rapide">For phones & TVs — light & fast</p>
-
-                    <!-- Code Box -->
-                    <div class="code-box border-2 border-dashed border-white/10 rounded-2xl p-4 sm:p-5 mb-6 flex-1" onclick="copyCode('low')" id="codeBoxLow">
-                        <div class="text-xs text-gray-500 mb-2" data-ar="كود المحمل (اضغط للنسخ)" data-en="Downloader Code (Click to copy)" data-fr="Code du téléchargeur (Cliquez pour copier)">Downloader Code (Click to copy)</div>
-                        <div class="text-3xl sm:text-4xl font-black tracking-[0.2em]" style="color:var(--red-primary);">9927964</div>
-                        <div class="flex items-center justify-center gap-1.5 mt-3 text-gray-600">
-                            <i data-lucide="copy" class="w-4 h-4"></i>
-                            <span class="text-xs" data-ar="اضغط للنسخ" data-en="Click to copy" data-fr="Cliquez pour copier">Click to copy</span>
-                        </div>
-                    </div>
-
-                    <!-- Download Button -->
-                    <a href="https://www.mediafire.com/file/j4xq4a28er6c3gm/screenifyLOW7fix.apk/file" target="_blank" class="btn-primary text-sm sm:text-base font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl text-white inline-flex items-center justify-center gap-2.5 glow-red-strong">
-                        <i data-lucide="download" class="w-5 h-5"></i>
-                        <span data-ar="تحميل للأجهزة الضعيفة" data-en="Download for Low Devices" data-fr="Télécharger (Appareils Faibles)">Download for Low Devices</span>
-                    </a>
-
-                    <!-- Terms -->
-                    <p class="text-xs text-gray-700 mt-4">
-                        <a href="https://screenifyplus.online/appterms" target="_blank" class="hover:text-gray-500 transition-colors" data-ar="الشروط والأحكام" data-en="Terms & Conditions" data-fr="Conditions d'utilisation">Terms & Conditions</a>
-                    </p>
-                </div>
-
-            </div>
+      <li class="note rv">
+        <span class="note-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></span>
+        <div>
+          <span class="tag" data-i18n="n2_tag"></span>
+          <h3 data-i18n="n2_h3"></h3>
+          <p data-i18n="n2_p"></p>
         </div>
-    </section>
+      </li>
 
-    <!-- Footer -->
-    <footer class="border-t border-white/5 py-10 sm:py-14 bg-[#080808]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
-                <!-- Logo & Description -->
-                <div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <img src="https://i.ibb.co/ycxg0PG2/logo.png" alt="Screenify+" class="w-8 h-8 rounded-lg">
-                        <span class="text-lg font-bold" style="background:linear-gradient(135deg, #fff, #E50914);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Screenify+</span>
-                    </div>
-                    <p class="text-sm text-gray-500 leading-relaxed" data-ar="تطبيق الترفيه الشامل — مسلسلات، أفلام، أنمي، رياضة وقنوات مباشرة" data-en="The ultimate entertainment app — series, movies, anime, sports and live channels" data-fr="L'application de divertissement ultime — séries, films, anime, sport et chaînes en direct">The ultimate entertainment app — series, movies, anime, sports and live channels</p>
-                </div>
-                <!-- Websites -->
-                <div>
-                    <h4 class="text-sm font-bold text-white mb-4" data-ar="مواقعنا" data-en="Our Websites" data-fr="Nos sites">Our Websites</h4>
-                    <div class="space-y-3">
-                        <a href="https://screenifyplus.online/mena" target="_blank" class="flex items-center gap-2 text-sm text-gray-500 hover:text-red-400 transition-colors group">
-                            <i data-lucide="globe" class="w-4 h-4 group-hover:text-red-500"></i>
-                            <span data-ar="الموقع العربي" data-en="Arabic Website" data-fr="Site arabe">Arabic Website</span>
-                            <span class="text-xs text-gray-700">screenifyplus.online/mena</span>
-                        </a>
-                        <a href="https://screenifyplus.online/watch" target="_blank" class="flex items-center gap-2 text-sm text-gray-500 hover:text-red-400 transition-colors group">
-                            <i data-lucide="globe" class="w-4 h-4 group-hover:text-red-500"></i>
-                            <span data-ar="الموقع الإنجليزي" data-en="English Website" data-fr="Site anglais">English Website</span>
-                            <span class="text-xs text-gray-700">screenifyplus.online/watch</span>
-                        </a>
-                    </div>
-                </div>
-                <!-- Social -->
-                <div>
-                    <h4 class="text-sm font-bold text-white mb-4" data-ar="تابعنا" data-en="Follow Us" data-fr="Suivez-nous">Follow Us</h4>
-                    <div class="flex items-center gap-3">
-                        <a href="https://t.me/screenifyplus" target="_blank" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-blue-500/20 transition-colors border border-white/5 hover:border-blue-500/30">
-                            <svg class="w-4 h-4 text-gray-500" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-red-500/20 transition-colors border border-white/5 hover:border-red-500/30">
-                            <i data-lucide="instagram" class="w-4 h-4 text-gray-500"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-red-500/20 transition-colors border border-white/5 hover:border-red-500/30">
-                            <i data-lucide="youtube" class="w-4 h-4 text-gray-500"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <span class="text-xs sm:text-sm text-gray-600" data-ar="© 2026 Screenify+ v1.7.0. جميع الحقوق محفوظة." data-en="© 2026 Screenify+ v1.7.0. All rights reserved." data-fr="© 2026 Screenify+ v1.7.0. Tous droits réservés.">© 2026 Screenify+ v1.7.0. All rights reserved.</span>
-                <div class="flex items-center gap-4">
-                    <a href="https://screenifyplus.online/mena" target="_blank" class="text-xs text-gray-600 hover:text-red-400 transition-colors">screenifyplus.online/mena</a>
-                    <span class="text-gray-800">|</span>
-                    <a href="https://screenifyplus.online/watch" target="_blank" class="text-xs text-gray-600 hover:text-red-400 transition-colors">screenifyplus.online/watch</a>
-                </div>
-            </div>
+      <li class="note rv">
+        <span class="note-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49M7.76 16.24a6 6 0 0 1 0-8.49M19.07 4.93a10 10 0 0 1 0 14.14M4.93 19.07a10 10 0 0 1 0-14.14"/></svg></span>
+        <div>
+          <span class="tag" data-i18n="n3_tag"></span>
+          <h3 data-i18n="n3_h3"></h3>
+          <p data-i18n="n3_p"></p>
         </div>
-    </footer>
+      </li>
 
-    <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
+      <li class="note rv">
+        <span class="note-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+        <div>
+          <span class="tag" data-i18n="n4_tag"></span>
+          <h3 data-i18n="n4_h3"></h3>
+          <p data-i18n="n4_p"></p>
+        </div>
+      </li>
 
-        // Current Language
-        let currentLang = 'en';
+      <li class="note rv">
+        <span class="note-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+        <div>
+          <span class="tag" data-i18n="n5_tag"></span>
+          <h3 data-i18n="n5_h3"></h3>
+          <p data-i18n="n5_p"></p>
+        </div>
+      </li>
 
-        // Language Switching
-        function setLang(lang) {
-            currentLang = lang;
-            const body = document.body;
-            const html = document.documentElement;
+      <li class="note rv">
+        <span class="note-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 16h8"/></svg></span>
+        <div>
+          <span class="tag" data-i18n="n6_tag"></span>
+          <h3 data-i18n="n6_h3"></h3>
+          <p data-i18n="n6_p"></p>
+        </div>
+      </li>
 
-            if (lang === 'ar') {
-                body.classList.add('rtl');
-                body.classList.remove('ltr');
-                html.setAttribute('dir', 'rtl');
-                html.setAttribute('lang', 'ar');
-                body.style.fontFamily = "'Tajawal', 'Inter', sans-serif";
-            } else {
-                body.classList.remove('rtl');
-                body.classList.add('ltr');
-                html.setAttribute('dir', 'ltr');
-                html.setAttribute('lang', lang);
-                body.style.fontFamily = "'Inter', 'Tajawal', sans-serif";
-            }
+      <li class="note rv">
+        <span class="note-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></span>
+        <div>
+          <span class="tag" data-i18n="n7_tag"></span>
+          <h3 data-i18n="n7_h3"></h3>
+          <p data-i18n="n7_p"></p>
+        </div>
+      </li>
 
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-                btn.classList.add('text-gray-500');
-            });
-            const activeBtn = document.getElementById('lang' + lang.charAt(0).toUpperCase() + lang.slice(1));
-            if (activeBtn) {
-                activeBtn.classList.add('active');
-                activeBtn.classList.remove('text-gray-500');
-            }
+      <li class="note rv">
+        <span class="note-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
+        <div>
+          <span class="tag" data-i18n="n8_tag"></span>
+          <h3 data-i18n="n8_h3"></h3>
+          <p data-i18n="n8_p"></p>
+        </div>
+      </li>
 
-            document.querySelectorAll('[data-' + lang + ']').forEach(el => {
-                el.textContent = el.getAttribute('data-' + lang);
-            });
+    </ol>
+  </section>
 
-            setTimeout(() => lucide.createIcons(), 50);
+  <!-- ============ INSTALL ============ -->
+  <section id="install" class="wrap section">
+    <div class="sec-head rv">
+      <span class="sec-idx">( 03 )</span>
+      <h2 data-i18n="sec3_h2"></h2>
+      <span class="rule"></span>
+    </div>
+    <ol class="steps">
+      <li class="rv">
+        <span class="step-num">01</span>
+        <div><h3 data-i18n="st1_h3"></h3><p data-i18n="st1_p"></p></div>
+      </li>
+      <li class="rv" style="--d:.08s">
+        <span class="step-num">02</span>
+        <div><h3 data-i18n="st2_h3"></h3><p data-i18n="st2_p"></p></div>
+      </li>
+    </ol>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-brand">
+      <img src="https://screenifyplus.online/logo.png" alt="" onerror="this.style.display='none'">
+      SCREENIFY <span data-i18n="f_span"></span>
+    </div>
+    <p class="f-note" data-i18n="f_note"></p>
+    <p class="f-meta" data-i18n="f_meta"></p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status">
+  <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toastMsg"></span>
+</div>
+
+<script>
+  /* ================= i18n ================= */
+  const T = {
+    en:{
+      title:'Screenify 1.8.0 Beta — Downloads (Phone · TV · Low-end)',
+      nav_dl:'DOWNLOADS', nav_new:"WHAT'S NEW", nav_install:'INSTALL',
+      live_label:'BETA CHANNEL',
+      eyebrow:'BETA CHANNEL /// BUILD 1.8.0 /// DROP 08',
+      h1:'Pick your screen.<br><em>Grab the build.</em>',
+      lede:'This drop is big: <b>6 entertainment servers</b>, a fully <b>rebased Live TV</b>, and <b>your phone is now the remote</b> for the TV app — all way smoother. Three purpose-built APKs below. Download yours and you\u2019re in.',
+      btn_get:'GET THE APP', btn_new:"WHAT'S NEW IN 1.8.0",
+      meta_line:'ENTERTAINMENT 2→6 /// LIVE TV REBASED /// PHONE REMOTE /// KEYS BELOW',
+      fig_cap:'FIG.01 — SCREENIFY 1.8.0 BETA /// REAL SCREENSHOT, PHONE BUILD',
+      matrix_cap:'FIG.02 — BUILD NUMBER 1.8.0 /// LIVE',
+      matrix_hint:'DISTURB IT WITH YOUR CURSOR',
+      chip1:'<b>ENTERTAINMENT</b> /// 2 → 6 SERVERS',
+      chip2:'<b>LIVE TV</b> /// REBASED',
+      chip3:'<b>REMOTE</b> /// PHONE → TV',
+      chip4:'<b>PROFILES</b> /// NEW',
+      chip5:'<b>SCREENIFY+</b> /// NO KEY NEEDED',
+      marquee:'SCREENIFY 1.8.0 BETA /// NOW LIVE /// PHONE — TV — LOW-END /// 6 ENTERTAINMENT SERVERS /// PHONE REMOTE FOR TV /// KEYS INSIDE /// ',
+      sec1_h2:'Choose your device', sec1_tip:'TIP — PRESS 1 · 2 · 3 TO SWITCH',
+      dn_phone:'Phone', ds_phone:'ANDROID PHONES & TABLETS',
+      dn_tv:'TV', ds_tv:'ANDROID TV & BIG SCREENS',
+      dn_low:'Low-end devices', ds_low:'OLDER & BUDGET HARDWARE',
+      q_label:'QUICK COPY — ALL KEYS', q_phone:'PHONE', q_tv:'TV', q_low:'LOW-END',
+      sec2_h2:"What's new in 1.8.0",
+      n1_tag:'HEADLINE /// CONTROL', n1_h3:'Your phone is now the remote',
+      n1_p:'Phone and TV on the same WiFi? Open Screenify on your phone and control the app on your TV — navigate, type, play, everything. No extra setup, no cables, no more hunting for the D-pad.',
+      n2_tag:'SERVERS /// ENTERTAINMENT', n2_h3:'Entertainment just went 2 → 6',
+      n2_p:'Server 1 is fixed, and five brand-new servers joined the lineup — six in total. More capacity, more content, so you actually find everything you\u2019re looking for.',
+      n3_tag:'STREAMING /// LIVE TV', n3_h3:'Live TV moved to a new server base',
+      n3_p:'We rebuilt Live TV on a completely new server base. That fixes the channels that refused to show up in certain countries — if your list was empty before, check it again now.',
+      n4_tag:'PERFORMANCE', n4_h3:'Way smoother, way less lag',
+      n4_p:'A full performance pass across the whole app. Scrolling, opening, switching — everything responds faster and glides. The difference is noticeable from the first tap.',
+      n5_tag:'NEW /// PROFILES', n5_h3:'Profiles — with names & photos',
+      n5_p:'Everyone gets their own space. Add profiles with a custom name and a photo, so the whole household keeps their stuff separate and exactly where they left it.',
+      n6_tag:'INPUT', n6_h3:'Built-in virtual keyboard',
+      n6_p:'Some devices choke on the system keyboard — so we built our own. Typing inside the app is now instant and lag-free, on every device, every time.',
+      n7_tag:'UI', n7_h3:'Interface fixes',
+      n7_p:'Plenty of polish across the app — misaligned bits, odd spacing, stubborn corners. Found them, fixed them, moved on.',
+      n8_tag:'GOOD TO KNOW /// ADS', n8_h3:'A very few ads — on purpose',
+      n8_p:'1.8.0 introduces ads to help keep Screenify free. We kept the count extremely low and the placement respectful — no full-screen takeovers, nothing that interrupts what you\u2019re watching. You\u2019ll barely notice they\u2019re there, and they never ruin the app experience.',
+      sec3_h2:'Install in two steps',
+      st1_h3:'Download your build', st1_p:'Pick Phone, TV or Low-end above and grab the APK from MediaFire. The link opens in a new tab.',
+      st2_h3:'Install & open', st2_p:'Open the downloaded file. If Android asks, allow installs from unknown sources for your browser — you only need to do this once. Then open Screenify and start watching.',
+      f_span:'BETA CHANNEL',
+      f_note:'Activation keys are tied to this 1.8.0 beta — please keep them inside the test group.',
+      f_meta:'BUILD 08 /// v1.8.0-BETA /// SCREENIFYPLUS.ONLINE /// APKs ON MEDIAFIRE',
+      panel_file:'FILE', panel_type:'TYPE', panel_type_val:'APK · Android',
+      panel_channel:'CHANNEL', panel_channel_val:'Beta — drop 08',
+      key_head_l:'ACTIVATION KEY', key_head_r:'FREE VERSION ONLY',
+      panel_copy:'COPY KEY', panel_dl:'DOWNLOAD FROM MEDIAFIRE',
+      panel_host:'HOSTED ON MEDIAFIRE /// OPENS IN A NEW TAB',
+      panel_plus:'<b>SCREENIFY+</b> needs no key — activation is only for the free version.',
+      dev_phone_tag:'For Android phones & tablets',
+      dev_phone_desc:'The full Screenify experience, tuned for touch. Six entertainment servers, rebased Live TV — and it doubles as a remote for your TV.',
+      dev_tv_tag:'For Android TV & big screens',
+      dev_tv_desc:'Built for the ten-foot view. Now controllable straight from your phone over the same WiFi, and steadier than ever through long sessions.',
+      dev_low_tag:'For older & budget hardware',
+      dev_low_desc:'A featherweight build that strips out every non-essential process — and with the built-in virtual keyboard, typing no longer lags.',
+      toast_copied:'Activation key copied — ', toast_fail:"Couldn't copy — key: "
+    },
+    fr:{
+      title:'Screenify 1.8.0 Bêta — Téléchargements (Téléphone · TV · Bas de gamme)',
+      nav_dl:'TÉLÉCHARGEMENTS', nav_new:'NOUVEAUTÉS', nav_install:'INSTALLATION',
+      live_label:'CANAL BETA',
+      eyebrow:'CANAL BETA /// BUILD 1.8.0 /// SORTIE 08',
+      h1:'Choisis ton écran.<br><em>Récupère ta version.</em>',
+      lede:'Cette version fait fort : <b>6 serveurs de divertissement</b>, une <b>TV Live entièrement refondue</b>, et <b>ton téléphone devient la télécommande</b> de l\u2019app TV — le tout bien plus fluide. Trois APK ci-dessous : télécharge le tien et c\u2019est parti.',
+      btn_get:"OBTENIR L'APP", btn_new:'NOUVEAUTÉS 1.8.0',
+      meta_line:'DIVERTISSEMENT 2→6 /// TV LIVE REFONDUE /// TÉLÉCOMMANDE /// CLÉS CI-DESSOUS',
+      fig_cap:'FIG.01 — SCREENIFY 1.8.0 BETA /// CAPTURE RÉELLE, VERSION TÉLÉPHONE',
+      matrix_cap:'FIG.02 — NUMÉRO DE BUILD 1.8.0 /// EN DIRECT',
+      matrix_hint:'AGITEZ-LE AVEC VOTRE CURSEUR',
+      chip1:'<b>DIVERTISSEMENT</b> /// 2 → 6 SERVEURS',
+      chip2:'<b>TV LIVE</b> /// REFONDUE',
+      chip3:'<b>TÉLÉCOMMANDE</b> /// TÉLÉ → TV',
+      chip4:'<b>PROFILS</b> /// NOUVEAU',
+      chip5:'<b>SCREENIFY+</b> /// SANS CLÉ',
+      marquee:'SCREENIFY 1.8.0 BETA /// DISPONIBLE /// TÉLÉPHONE — TV — BAS DE GAMME /// 6 SERVEURS DE DIVERTISSEMENT /// TÉLÉCOMMANDE DEPUIS LE TÉLÉPHONE /// CLÉS ICI /// ',
+      sec1_h2:'Choisis ton appareil', sec1_tip:'ASTUCE — APPUYEZ SUR 1 · 2 · 3',
+      dn_phone:'Téléphone', ds_phone:'TÉLÉPHONES & TABLETTES ANDROID',
+      dn_tv:'TV', ds_tv:'ANDROID TV & GRANDS ÉCRANS',
+      dn_low:'Appareils bas de gamme', ds_low:'MATÉRIEL ANCIEN & ABORDABLE',
+      q_label:'COPIE RAPIDE — TOUTES LES CLÉS', q_phone:'TÉLÉPHONE', q_tv:'TV', q_low:'BAS DE GAMME',
+      sec2_h2:'Nouveautés de la 1.8.0',
+      n1_tag:'À LA UNE /// CONTRÔLE', n1_h3:'Ton téléphone devient la télécommande',
+      n1_p:'Téléphone et TV sur le même WiFi ? Ouvre Screenify sur ton téléphone et contrôle l\u2019app sur ta TV — navigue, tape, lance la lecture, tout. Aucun réglage, aucun câble, fini le D-pad.',
+      n2_tag:'SERVEURS /// DIVERTISSEMENT', n2_h3:'Le divertissement passe de 2 à 6',
+      n2_p:'Le serveur 1 est réparé et cinq nouveaux serveurs rejoignent la flotte — six au total. Plus de capacité, plus de contenu : tu trouves vraiment tout.',
+      n3_tag:'STREAMING /// TV LIVE', n3_h3:'La TV Live passe sur une nouvelle base de serveurs',
+      n3_p:'Nous avons reconstruit la TV Live sur une toute nouvelle base de serveurs. Cela corrige les chaînes qui n\u2019apparaissaient pas dans certains pays — si ta liste était vide, revérifie maintenant.',
+      n4_tag:'PERFORMANCE', n4_h3:'Bien plus fluide, bien moins de lag',
+      n4_p:'Un gros passage optimisation sur toute l\u2019app. Défiler, ouvrir, changer — tout répond plus vite et glisse. La différence se sent dès le premier toucher.',
+      n5_tag:'NOUVEAU /// PROFILS', n5_h3:'Profils — avec noms & photos',
+      n5_p:'Chacun son espace. Créez des profils avec nom et photo personnalisés, pour que toute la maison garde ses affaires séparées et à leur place.',
+      n6_tag:'SAISIE', n6_h3:'Clavier virtuel intégré',
+      n6_p:'Certains appareils étouffent le clavier système — du coup on a fabriqué le nôtre. Taper dans l\u2019app est désormais instantané, sur tous les appareils, à chaque fois.',
+      n7_tag:'INTERFACE', n7_h3:'Corrections d\u2019interface',
+      n7_p:'Pas mal de polish dans toute l\u2019app — éléments mal alignés, espacements bizarres, coins têtus. Trouvés, corrigés, au revoir.',
+      n8_tag:'À SAVOIR /// PUBS', n8_h3:'Très peu de pubs — c\u2019est voulu',
+      n8_p:'La 1.8.0 introduit des pubs pour garder Screenify gratuit. Nombre minimal, placement respectueux — pas de plein écran, rien qui coupe ce que tu regardes. À peine visibles, elles ne gâchent jamais l\u2019expérience.',
+      sec3_h2:'Installer en deux étapes',
+      st1_h3:'Télécharge ta version', st1_p:'Choisis Téléphone, TV ou Bas de gamme ci-dessus et récupère l\u2019APK sur MediaFire. Le lien s\u2019ouvre dans un nouvel onglet.',
+      st2_h3:'Installe & ouvre', st2_p:'Ouvre le fichier téléchargé. Si Android le demande, autorise l\u2019installation depuis des sources inconnues pour ton navigateur — une seule fois. Puis ouvre Screenify et regarde.',
+      f_span:'CANAL BETA',
+      f_note:'Les clés d\u2019activation sont liées à cette bêta 1.8.0 — merci de les garder dans le groupe de test.',
+      f_meta:'BUILD 08 /// v1.8.0-BETA /// SCREENIFYPLUS.ONLINE /// APKs SUR MEDIAFIRE',
+      panel_file:'FICHIER', panel_type:'TYPE', panel_type_val:'APK · Android',
+      panel_channel:'CANAL', panel_channel_val:'Bêta — sortie 08',
+      key_head_l:'CLÉ D\u2019ACTIVATION', key_head_r:'VERSION GRATUITE UNIQUEMENT',
+      panel_copy:'COPIER LA CLÉ', panel_dl:'TÉLÉCHARGER SUR MEDIAFIRE',
+      panel_host:'HÉBERGÉ SUR MEDIAFIRE /// S\u2019OUVRE DANS UN NOUVEL ONGLET',
+      panel_plus:'<b>SCREENIFY+</b> n\u2019a besoin d\u2019aucune clé — l\u2019activation ne concerne que la version gratuite.',
+      dev_phone_tag:'Pour téléphones & tablettes Android',
+      dev_phone_desc:'L\u2019expérience Screenify complète, pensée pour le tactile. Six serveurs de divertissement, TV Live refondue — et il sert aussi de télécommande pour ta TV.',
+      dev_tv_tag:'Pour Android TV & grands écrans',
+      dev_tv_desc:'Pensé pour le canapé. Maintenant contrôlable directement depuis ton téléphone en WiFi, et plus stable que jamais sur les longues séances.',
+      dev_low_tag:'Pour matériels anciens & abordables',
+      dev_low_desc:'Une version ultra-légère qui retire tout le superflu — et grâce au clavier virtuel intégré, la saisie ne rame plus.',
+      toast_copied:'Clé copiée — ', toast_fail:'Copie impossible — clé : '
+    },
+    ar:{
+      title:'Screenify 1.8.0 بيتا — التحميلات (جوال · تلفاز · أجهزة ضعيفة)',
+      nav_dl:'التحميلات', nav_new:'ما الجديد', nav_install:'التثبيت',
+      live_label:'القناة التجريبية',
+      eyebrow:'القناة التجريبية /// الإصدار 1.8.0 /// دروب 08',
+      h1:'اختر شاشتك.<br><em>وحمّل نسختك.</em>',
+      lede:'تحديث ضخم: <b>6 سيرفرات للترفيه</b>، و<b>بث مباشر بأُسرة جديدة بالكامل</b>، و<b>جوالك صار هو الريموت</b> لتطبيق التلفاز — وكل شيء أسرع وأسلس. ثلاث نسخ APK بالأسفل: حمّل نسختك وانتهى الأمر.',
+      btn_get:'حمّل التطبيق', btn_new:'ما الجديد في 1.8.0',
+      meta_line:'ترفيه من 2 إلى 6 /// بث مباشر بأساس جديد /// جوالك ريموت /// المفاتيح بالأسفل',
+      fig_cap:'شكل.01 — SCREENIFY 1.8.0 BETA /// لقطة شاشة حقيقية، نسخة الجوال',
+      matrix_cap:'شكل.02 — رقم الإصدار 1.8.0 /// مباشر',
+      matrix_hint:'حرّكها بمؤشر الفأرة',
+      chip1:'<b>الترفيه</b> /// من 2 إلى 6 سيرفرات',
+      chip2:'<b>البث المباشر</b> /// أساس جديد',
+      chip3:'<b>ريموت</b> /// جوالك يتحكم بالتلفاز',
+      chip4:'<b>الملفات الشخصية</b> /// جديدة',
+      chip5:'<b>SCREENIFY+</b> /// بدون مفتاح',
+      marquee:'SCREENIFY 1.8.0 BETA /// متاح الآن /// جوال — تلفاز — أجهزة ضعيفة /// 6 سيرفرات ترفيه /// جوالك ريموت للتلفاز /// المفاتيح بالداخل /// ',
+      sec1_h2:'اختر جهازك', sec1_tip:'نصيحة — اضغط 1 · 2 · 3 للتبديل',
+      dn_phone:'جوال', ds_phone:'هواتف وتابلت أندرويد',
+      dn_tv:'تلفاز', ds_tv:'أندرويد تي في والشاشات الكبيرة',
+      dn_low:'الأجهزة الضعيفة', ds_low:'أجهزة قديمة ومحدودة الإمكانيات',
+      q_label:'نسخ سريع — كل المفاتيح', q_phone:'جوال', q_tv:'تلفاز', q_low:'أجهزة ضعيفة',
+      sec2_h2:'ما الجديد في 1.8.0',
+      n1_tag:'الأبرز /// تحكم', n1_h3:'جوالك صار هو الريموت',
+      n1_p:'الجوال والتلفاز على نفس الواي فاي؟ افتح Screenify على جوالك وتحكم بتطبيق التلفاز — تنقّل، اكتب، شغّل، كل شيء. بدون إعدادات أو أسلاك، ووداعًا لعناء الريموت العادي.',
+      n2_tag:'سيرفرات /// ترفيه', n2_h3:'الترفيه صار من 2 إلى 6',
+      n2_p:'السيرفر الأول اتصلح وانضمّ له خمسة سيرفرات جديدة — صاروا ستة. سعة أكبر ومحتوى أكثر، بتلقى كل شي بتدور عليه.',
+      n3_tag:'بث /// مباشر', n3_h3:'البث المباشر انتقل لسيرفرات جديدة',
+      n3_p:'أعدنا بناء البث المباشر على قاعدة سيرفرات جديدة بالكامل. هذا يحل مشكلة القنوات التي ما كانت تظهر في بعض الدول — إذا كانت قائمتك فاضية قبل، جرّبها الآن.',
+      n4_tag:'أداء', n4_h3:'أسلس بكثير وبدون تهنيج',
+      n4_p:'تحسين شامل للأداء في كل التطبيق. التمرير والفتح والتنقل — كل شيء أسرع وأنعم. الفرق محسوس من أول لمسة.',
+      n5_tag:'جديد /// ملفات شخصية', n5_h3:'ملفات شخصية — بالاسم والصورة',
+      n5_p:'كل واحد له مساحته. أضف ملفات شخصية باسم وصورة مخصصة، عشان كل العيلة يبقى كل واحد بأشيائه ومكانها.',
+      n6_tag:'إدخال', n6_h3:'كيبورد افتراضي مدمج',
+      n6_p:'بعض الأجهزة بتعلق مع كيبورد النظام — فبنينا كيبورد خاص فينا. الكتابة داخل التطبيق صارت فورية، على كل جهاز وبدون تأخير.',
+      n7_tag:'الواجهة', n7_h3:'تحسينات على الواجهة',
+      n7_p:'لمسات كثيرة في كل التطبيق — عناصر غير متراصة، مسافات غريبة، وزوايا عنيدة. لقيناها، أصلحناها، وخلاص.',
+      n8_tag:'للمعلومية /// إعلانات', n8_h3:'إعلانات قليلة جدًا — وقصد',
+      n8_p:'الإصدار 1.8.0 أضاف إعلانات لإبقاء Screenify مجانيًا. عدد قليل جدًا ومواضع محترمة — بدون إعلانات تملأ الشاشة أو تقطع عليك المشاهدة. بالكاد ستلاحظها، وما بتخرب تجربة التطبيق أبدًا.',
+      sec3_h2:'التثبيت في خطوتين',
+      st1_h3:'حمّل نسختك', st1_p:'اختر جوال أو تلفاز أو أجهزة ضعيفة بالأعلى وحمّل ملف APK من ميديا فاير. الرابط يفتح في تبويب جديد.',
+      st2_h3:'ثبّت وافتح', st2_p:'افتح الملف الذي حمّلته. إذا سأل أندرويد، اسمح بالتثبيت من مصادر غير معروفة لمتصفحك — مرة واحدة فقط. ثم افتح Screenify وابدأ المشاهدة.',
+      f_span:'القناة التجريبية',
+      f_note:'مفاتيح التفعيل مخصصة لإصدار 1.8.0 التجريبي — يرجى إبقاؤها داخل مجموعة التجربة.',
+      f_meta:'BUILD 08 /// v1.8.0-BETA /// SCREENIFYPLUS.ONLINE /// ملفات APK على ميديا فاير',
+      panel_file:'ملف', panel_type:'النوع', panel_type_val:'APK · أندرويد',
+      panel_channel:'القناة', panel_channel_val:'بيتا — دروب 08',
+      key_head_l:'مفتاح التفعيل', key_head_r:'للنسخة المجانية فقط',
+      panel_copy:'انسخ المفتاح', panel_dl:'تحميل من ميديا فاير',
+      panel_host:'مستضاف على ميديا فاير /// يفتح في تبويب جديد',
+      panel_plus:'<b>SCREENIFY+</b> ما يحتاج مفتاح — التفعيل للنسخة المجانية فقط.',
+      dev_phone_tag:'للهواتف والتابلت أندرويد',
+      dev_phone_desc:'تجربة Screenify الكاملة المصممة للمس. ستة سيرفرات ترفيه، وبث مباشر بأُسرة جديدة — ويشتغل ريموت لتلفازك كمان.',
+      dev_tv_tag:'لأندرويد تي في والشاشات الكبيرة',
+      dev_tv_desc:'مصمم للشاشات الكبيرة. صار يتحكم فيه جوالك مباشرة عبر نفس الواي فاي، وأثبت من أي وقت في الجلسات الطويلة.',
+      dev_low_tag:'للأجهزة القديمة ومحدودة الإمكانيات',
+      dev_low_desc:'نسخة خفيفة جدًا تحذف كل ما هو غير ضروري — ومع الكيبورد الافتراضي المدمج، الكتابة ما عادت تتأخر.',
+      toast_copied:'تم نسخ المفتاح — ', toast_fail:'تعذّر النسخ — المفتاح: '
+    }
+  };
+
+  let LANG = 'en', curDev = 'phone';
+  const fmt = s => s.replace(/\/\/\//g,'<span class="sl">///</span>');
+
+  /* ================= data ================= */
+  const ICONS = {
+    phone:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>',
+    tv:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>',
+    cpu:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg>',
+    copy:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+    download:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
+    out:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>',
+    plus:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/></svg>'
+  };
+
+  const DEVICES = {
+    phone:{ icon:'phone', file:'screenifyPHONE8beta.apk', key:'9622656',
+      url:'https://www.mediafire.com/file/l47fc8fd3motrmr/screenifyPHONE8beta.apk/file' },
+    tv:{ icon:'tv', file:'screenifyTV8beta.apk', key:'4079956',
+      url:'https://www.mediafire.com/file/k9skfibsvxhmfw6/screenifyTV8beta.apk/file' },
+    low:{ icon:'cpu', file:'screenifyLOW8beta.apk', key:'2449714',
+      url:'https://www.mediafire.com/file/5zbcs13usevzq6l/screenifyLOW8beta.apk/file' }
+  };
+  const NAMES = { phone:'dn_phone', tv:'dn_tv', low:'dn_low' };
+  const ORDER = ['phone','tv','low'];
+  const panel = document.getElementById('panelIn');
+
+  /* ================= language ================= */
+  function setLang(l){
+    LANG = l;
+    try{ localStorage.setItem('screenify_lang', l); }catch(e){}
+    const html = document.documentElement;
+    html.lang = l;
+    html.dir = (l === 'ar') ? 'rtl' : 'ltr';
+    document.title = T[l].title;
+    document.querySelectorAll('.lang-btn').forEach(b=>
+      b.classList.toggle('on', b.dataset.lang === l));
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const v = T[l][el.getAttribute('data-i18n')];
+      if(v != null) el.innerHTML = fmt(v);
+    });
+    const mq = fmt(T[l].marquee);
+    document.querySelectorAll('.mq-track span').forEach(s=> s.innerHTML = mq + mq);
+    renderPanel(curDev);
+  }
+  document.querySelectorAll('.lang-btn').forEach(b=>
+    b.addEventListener('click', ()=>setLang(b.dataset.lang)));
+
+  /* ================= toast & copy ================= */
+  let toastTimer;
+  function toast(msg){
+    document.getElementById('toastMsg').textContent = msg;
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>t.classList.remove('show'), 2600);
+  }
+  function copyFallback(text, done){
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); done(); }
+    catch(e){ toast(T[LANG].toast_fail + text); }
+    ta.remove();
+  }
+  function copyKey(code){
+    const done = ()=>toast(T[LANG].toast_copied + code);
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(code).then(done).catch(()=>copyFallback(code,done));
+    } else copyFallback(code,done);
+  }
+
+  /* ================= device picker ================= */
+  function renderPanel(id){
+    const d = DEVICES[id], t = T[LANG];
+    panel.innerHTML = `
+      <div class="p-top">
+        <span class="p-ic">${ICONS[d.icon]}</span>
+        <div>
+          <h3 class="p-name">${fmt(T[LANG][NAMES[id]])}</h3>
+          <p class="p-tag">${t['dev_'+id+'_tag']}</p>
+        </div>
+      </div>
+      <p class="p-desc">${t['dev_'+id+'_desc']}</p>
+      <div class="p-meta">
+        <div class="pm"><span>${t.panel_file}</span><b>${d.file}</b></div>
+        <div class="pm"><span>${t.panel_type}</span><b>${t.panel_type_val}</b></div>
+        <div class="pm"><span>${t.panel_channel}</span><b>${t.panel_channel_val}</b></div>
+      </div>
+      <div class="plus-strip">${ICONS.plus}<span>${fmt(t.panel_plus)}</span></div>
+      <div class="key-block">
+        <div class="key-head"><span>${t.key_head_l}</span><span>${t.key_head_r}</span></div>
+        <div class="key-row">
+          <code class="key" title="${t.panel_copy}">${d.key}</code>
+          <button class="copy-btn">${ICONS.copy} ${t.panel_copy}</button>
+        </div>
+      </div>
+      <a class="btn btn-solid btn-big" href="${d.url}" target="_blank" rel="noopener">
+        ${ICONS.download} ${t.panel_dl} ${ICONS.out}
+      </a>
+      <p class="p-host">${fmt(t.panel_host)}</p>`;
+    panel.classList.remove('in'); void panel.offsetWidth; panel.classList.add('in');
+    panel.querySelector('.copy-btn').addEventListener('click', ()=>copyKey(d.key));
+    panel.querySelector('.key').addEventListener('click', ()=>copyKey(d.key));
+  }
+  function selectDevice(id){
+    curDev = id;
+    document.querySelectorAll('.dev').forEach(b=>{
+      const on = b.dataset.dev === id;
+      b.classList.toggle('sel', on);
+      b.setAttribute('aria-selected', on);
+    });
+    renderPanel(id);
+  }
+  document.querySelectorAll('.dev').forEach(b=>
+    b.addEventListener('click', ()=>selectDevice(b.dataset.dev)));
+  document.addEventListener('keydown', e=>{
+    if(e.metaKey || e.ctrlKey || e.altKey) return;
+    if(e.key >= '1' && e.key <= '3') selectDevice(ORDER[+e.key - 1]);
+  });
+
+  /* quick-copy strip */
+  document.getElementById('quick').addEventListener('click', e=>{
+    const k = e.target.closest('.q-key');
+    if(k) copyKey(k.dataset.code);
+  });
+
+  /* ================= clock ================= */
+  const clockEl = document.getElementById('clock');
+  function tick(){ clockEl.textContent = new Date().toLocaleTimeString('en-GB',{hour12:false}); }
+  tick(); setInterval(tick, 1000);
+
+  /* ================= reveal on scroll ================= */
+  const io = new IntersectionObserver(es=>es.forEach(x=>{
+    if(x.isIntersecting){ x.target.classList.add('on'); io.unobserve(x.target); }
+  }),{threshold:.12});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+  /* ================= phone tilt + chip parallax ================= */
+  (function(){
+    const fine = matchMedia('(pointer:fine)').matches;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!fine || reduce) return;
+    const fig = document.getElementById('heroFig');
+    const phone = document.getElementById('phone');
+    const chips = [...document.querySelectorAll('.chips-float .chip')];
+    let tx=0, ty=0, cx=0, cy=0;
+    fig.addEventListener('pointermove', e=>{
+      const r = fig.getBoundingClientRect();
+      tx = (e.clientX - r.left)/r.width - .5;
+      ty = (e.clientY - r.top)/r.height - .5;
+    });
+    fig.addEventListener('pointerleave', ()=>{ tx=0; ty=0; });
+    (function loop(){
+      cx += (tx-cx)*.07; cy += (ty-cy)*.07;
+      phone.style.transform = `rotateY(${(cx*9).toFixed(2)}deg) rotateX(${(-cy*7).toFixed(2)}deg)`;
+      chips.forEach((c,i)=>{
+        const f = (i%2 ? 22 : 14);
+        c.style.transform = `translate(${(cx*f).toFixed(1)}px,${(cy*f).toFixed(1)}px)`;
+      });
+      requestAnimationFrame(loop);
+    })();
+  })();
+
+  /* ================= interactive dot-matrix "1.8.0" ================= */
+  (function(){
+    const cv = document.getElementById('matrix');
+    const ctx = cv.getContext('2d');
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const FONT = {
+      '1':["..#..",".##..","..#..","..#..","..#..","..#..",".###."],
+      '.':[".....",".....",".....",".....",".....",".##..",".##.."],
+      '8':[".###.","#...#","#...#",".###.","#...#","#...#",".###."],
+      '0':[".###.","#...#","#..##","#.#.#","##..#","#...#",".###."]
+    };
+    let dots=[], GRID=[], W=0, H=0, cell=10;
+    const mouse = {x:-9999, y:-9999, active:false, last:0};
+
+    function build(){
+      const DPR = Math.min(window.devicePixelRatio||1, 2);
+      const r = cv.parentElement.getBoundingClientRect();
+      W = r.width; H = r.height;
+      cv.width = W*DPR; cv.height = H*DPR;
+      ctx.setTransform(DPR,0,0,DPR,0,0);
+      const cols=29, rows=7, pad=2;
+      cell = Math.min(W/(cols+pad*2), H/(rows+pad*2));
+      const ox=(W-cols*cell)/2, oy=(H-rows*cell)/2;
+      dots=[]; GRID=[];
+      let cx=0;
+      for(const ch of '1.8.0'){
+        const g=FONT[ch];
+        for(let y=0;y<7;y++) for(let x=0;x<5;x++){
+          const px=ox+(cx+x+.5)*cell, py=oy+(y+.5)*cell;
+          GRID.push({x:px,y:py});
+          if(g[y][x]==='#') dots.push({hx:px,hy:py,x:px,y:py,vx:0,vy:0,ph:Math.random()*6.28});
         }
+        cx+=6;
+      }
+    }
+    function pointerPos(t){
+      if(mouse.active && performance.now()-mouse.last < 2500) return {x:mouse.x, y:mouse.y};
+      const t2 = t*0.001; // idle: a virtual pointer stirs the pixels on its own
+      return { x: W/2 + Math.cos(t2*0.7)*W*0.33, y: H/2 + Math.sin(t2*1.1)*H*0.28 };
+    }
+    function drawStatic(){
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle='rgba(245,237,235,.05)';
+      GRID.forEach(g=>ctx.fillRect(g.x-.75,g.y-.75,1.5,1.5));
+      ctx.fillStyle='rgba(255,68,56,.9)';
+      dots.forEach(d=>{ctx.beginPath();ctx.arc(d.x,d.y,cell*.3,0,7);ctx.fill();});
+    }
+    function frame(t){
+      ctx.clearRect(0,0,W,H);
+      ctx.fillStyle='rgba(245,237,235,.05)';
+      GRID.forEach(g=>ctx.fillRect(g.x-.75,g.y-.75,1.5,1.5));
+      const p = pointerPos(t);
+      const scanX = -cell*2 + ((t % 5200)/5200)*(W+cell*4); // slow refresh sweep
+      for(const d of dots){
+        d.vx += (d.hx-d.x)*0.085; d.vy += (d.hy-d.y)*0.085;
+        const dx=d.x-p.x, dy=d.y-p.y, dist=Math.hypot(dx,dy), R=cell*4.5;
+        if(dist<R && dist>0.01){ const f=(1-dist/R)*2.1; d.vx+=dx/dist*f; d.vy+=dy/dist*f; }
+        d.vx*=0.86; d.vy*=0.86; d.x+=d.vx; d.y+=d.vy;
+        const sd=Math.abs(d.x-scanX);
+        const s = sd<cell*1.4 ? 1-sd/(cell*1.4) : 0;
+        const speed=Math.hypot(d.vx,d.vy);
+        const ex=Math.min(1, s + Math.min(1, speed*0.14));
+        const rad = cell*0.3*(0.82+0.18*Math.sin(t*0.0023+d.ph)) + s*cell*0.18 + Math.min(1,speed*0.15)*cell*0.1;
+        ctx.fillStyle = `rgba(255,${Math.round(68+122*ex)},${Math.round(56+124*ex)},${(0.62+0.38*ex).toFixed(2)})`;
+        ctx.beginPath(); ctx.arc(d.x,d.y,rad,0,7); ctx.fill();
+      }
+      requestAnimationFrame(frame);
+    }
+    cv.addEventListener('pointermove', e=>{
+      const r = cv.getBoundingClientRect();
+      mouse.x = e.clientX-r.left; mouse.y = e.clientY-r.top;
+      mouse.active = true; mouse.last = performance.now();
+    });
+    cv.addEventListener('pointerleave', ()=>{ mouse.active=false; });
+    let rz;
+    addEventListener('resize', ()=>{ clearTimeout(rz); rz=setTimeout(()=>{ build(); if(RM) drawStatic(); },150); });
+    build();
+    if(RM) drawStatic(); else requestAnimationFrame(frame);
+  })();
 
-        // Copy Code
-        function copyCode(type) {
-            const codes = { phone: '8284947', tv: '9884763', low: '9927964' };
-            const ids = { phone: 'codeBoxPhone', tv: 'codeBoxTv', low: 'codeBoxLow' };
-            const code = codes[type] || codes['phone'];
-            const boxId = ids[type] || ids['phone'];
-
-            navigator.clipboard.writeText(code).then(() => {
-                showToast();
-            }).catch(() => {
-                const textArea = document.createElement('textarea');
-                textArea.value = code;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                showToast();
-            });
-
-            const codeBox = document.getElementById(boxId);
-            if (codeBox) {
-                codeBox.style.borderColor = '#E50914';
-                codeBox.style.boxShadow = '0 0 30px rgba(229,9,20,0.3)';
-                setTimeout(() => {
-                    codeBox.style.borderColor = '';
-                    codeBox.style.boxShadow = '';
-                }, 1500);
-            }
-        }
-
-        function showToast() {
-            const toast = document.getElementById('copyToast');
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2500);
-        }
-
-        // Scroll Reveal
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, index * 100);
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-        revealElements.forEach(el => revealObserver.observe(el));
-
-        // Floating Particles
-        function createParticles() {
-            const container = document.getElementById('particles');
-            const particleCount = 20;
-
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                const size = Math.random() * 4 + 2;
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
-                particle.style.animationDelay = (Math.random() * 10) + 's';
-                container.appendChild(particle);
-            }
-        }
-        createParticles();
-
-        // Navbar scroll effect
-        const nav = document.querySelector('nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                nav.style.background = 'rgba(5,5,5,0.95)';
-                nav.style.borderBottomColor = 'rgba(229,9,20,0.1)';
-            } else {
-                nav.style.background = 'rgba(5,5,5,0.8)';
-                nav.style.borderBottomColor = 'rgba(255,255,255,0.05)';
-            }
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        // Counter animation for stats
-        function animateCounters() {
-            const counters = document.querySelectorAll('.stat-item .font-black');
-            counters.forEach(counter => {
-                const target = counter.textContent;
-                const num = parseInt(target);
-                if (isNaN(num)) return;
-
-                let current = 0;
-                const increment = num / 60;
-                const suffix = target.replace(/[0-9.]/g, '');
-
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= num) {
-                        counter.textContent = target;
-                        clearInterval(timer);
-                    } else {
-                        counter.textContent = Math.floor(current) + suffix;
-                    }
-                }, 30);
-            });
-        }
-
-        const heroObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setTimeout(animateCounters, 500);
-                    heroObserver.unobserve(entry.target);
-                }
-            });
-        });
-        const statSection = document.querySelector('.stat-item');
-        if (statSection) heroObserver.observe(statSection.closest('div'));
-    </script>
+  /* ================= boot ================= */
+  let saved = 'en';
+  try{ saved = localStorage.getItem('screenify_lang') || 'en'; }catch(e){}
+  setLang(T[saved] ? saved : 'en');
+</script>
 </body>
 </html>
