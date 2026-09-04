@@ -778,7 +778,19 @@ volumeSlider.onclick = e => {
 $('retryBtn').onclick = () => { if (lastChannel) playChannel(lastChannel, lastCard); };
 fullscreenBtn.onclick = () => {
   const w = $('playerWrapper');
-  if (!document.fullscreenElement) w.requestFullscreen?.(); else document.exitFullscreen?.();
+  if (document.fullscreenElement || document.webkitFullscreenElement) {
+    (document.exitFullscreen || document.webkitExitFullscreen)?.call(document);
+  } else if (w.requestFullscreen) {
+    w.requestFullscreen();
+  } else if (w.webkitRequestFullscreen) {
+    w.webkitRequestFullscreen();
+  } else if (video.webkitEnterFullscreen) {
+    // iOS Safari: only the <video> element itself supports fullscreen,
+    // not a wrapping div — this is the native player chrome fallback.
+    video.webkitEnterFullscreen();
+  } else {
+    showToast('Fullscreen not supported on this browser');
+  }
 };
 fitBtn.onclick = () => {
   isFitCover = !isFitCover;
