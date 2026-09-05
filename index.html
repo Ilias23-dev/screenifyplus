@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Screenify 1.8.0 Beta — Downloads (Phone · TV · Low-end)</title>
-<meta name="description" content="Screenify 1.8.0 beta — 6 entertainment servers, rebased Live TV, phone-as-remote. Download for Phone, TV or low-end devices.">
+<meta name="description" content="Screenify 1.8.0 beta — 100% free, no ads. 6 entertainment servers, rebased Live TV, phone-as-remote. Download for Phone, TV or low-end devices.">
 <link rel="icon" href="https://screenifyplus.online/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -152,8 +152,38 @@
   .mq-track i{font-style:normal;color:var(--accent)}
   @keyframes mq{to{transform:translateX(-50%)}}
 
+  /* ---------- telegram banner ---------- */
+  .tg-band{border-bottom:1px solid var(--line);
+           background:linear-gradient(120deg,#151011 0%,#1C100E 55%,#150E0D 100%);
+           position:relative;overflow:hidden}
+  .tg-band::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(560px 220px at 78% 50%, rgba(255,68,56,.14), transparent 70%)}
+  .tg-inner{display:flex;align-items:center;justify-content:space-between;gap:30px;
+            flex-wrap:wrap;max-width:1140px;margin:0 auto;padding:58px 24px;position:relative;
+            text-decoration:none;color:inherit}
+  .tg-left{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+  .tg-ic{width:86px;height:86px;border:1px solid rgba(255,68,56,.45);flex:none;
+         display:grid;place-items:center;color:var(--accent);transition:.25s}
+  .tg-ic svg{width:38px;height:38px}
+  .tg-band:hover .tg-ic{background:var(--accent-dim);transform:translateY(-4px)}
+  .tg-h2{font:900 clamp(1.9rem,4.6vw,3.3rem)/1.05 var(--sans);letter-spacing:-.02em;
+         text-transform:uppercase}
+  html[lang="ar"] .tg-h2{text-transform:none;letter-spacing:0}
+  .tg-p{margin-top:8px;color:var(--muted);font-size:15.5px;max-width:46ch}
+  .tg-sub{margin-top:10px;font:700 12px var(--mono);letter-spacing:.16em;color:var(--accent)}
+  .tg-btn{display:inline-flex;align-items:center;gap:12px;border:1px solid var(--accent);
+          color:var(--accent);padding:18px 26px;font:700 14px var(--mono);letter-spacing:.1em;
+          transition:.22s;flex:none;white-space:nowrap}
+  .tg-band:hover .tg-btn{background:var(--accent);color:#150A0A;transform:translateY(-3px);
+          box-shadow:0 14px 34px rgba(255,68,56,.28)}
+  .tg-btn .ic{transition:transform .2s}
+  .tg-band:hover .tg-btn .ic{transform:translate(3px,-3px)}
+  .tg-btn:focus-visible,.tg-inner:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+  @media(max-width:760px){.tg-inner{flex-direction:column;align-items:flex-start;padding:44px 24px}
+                          .tg-btn{width:100%;justify-content:center}}
+
   /* ---------- interactive matrix band ---------- */
-  .matrix-band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  .matrix-band{border-bottom:1px solid var(--line);
                background:var(--bg3);position:relative;overflow:hidden}
   .matrix-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;
                flex-wrap:wrap;max-width:1240px;margin:0 auto;padding:16px 24px 0;
@@ -209,11 +239,6 @@
   .pm:last-child{border-bottom:0}
   .pm span{font:500 10.5px var(--mono);letter-spacing:.16em;color:var(--muted)}
   .pm b{font:600 12.5px var(--mono);text-align:end;word-break:break-all}
-  .plus-strip{display:flex;align-items:center;gap:11px;border:1px dashed rgba(255,68,56,.5);
-              background:var(--accent-dim);padding:12px 15px;margin-bottom:20px;
-              font:600 12px var(--mono);color:var(--muted)}
-  .plus-strip b{color:var(--accent);font-weight:700;white-space:nowrap}
-  .plus-strip .ic{width:16px;height:16px;color:var(--accent);flex:none}
   .key-block{border:1px solid var(--line);background:var(--bg3);margin-bottom:20px}
   .key-head{display:flex;justify-content:space-between;gap:10px;padding:10px 15px;
             border-bottom:1px solid var(--line);
@@ -292,6 +317,7 @@
     .rv{transition:none;opacity:1;transform:none}
     .mq-track{animation:none}
     .live i{animation:none}
+    .tg-ic,.tg-btn{transition:none}
     html{scroll-behavior:auto}
   }
 </style>
@@ -427,10 +453,29 @@
 
     <div class="quick rv" id="quick">
       <span class="q-label" data-i18n="q_label"></span>
-      <button class="q-key" data-code="9622656"><b data-i18n="q_phone"></b><code>9622656</code><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
-      <button class="q-key" data-code="4079956"><b data-i18n="q_tv"></b><code>4079956</code><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
-      <button class="q-key" data-code="2449714"><b data-i18n="q_low"></b><code>2449714</code><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+      <button class="q-key" data-code="5706973"><b data-i18n="q_phone"></b><code>5706973</code><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+      <button class="q-key" data-code="3184143"><b data-i18n="q_tv"></b><code>3184143</code><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+      <button class="q-key" data-code="5619126"><b data-i18n="q_low"></b><code>5619126</code><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
     </div>
+  </section>
+
+  <!-- ============ TELEGRAM BANNER ============ -->
+  <section class="tg-band" aria-label="Telegram">
+    <a class="tg-inner" href="https://t.me/screenifyplus" target="_blank" rel="noopener">
+      <div class="tg-left">
+        <span class="tg-ic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
+        </span>
+        <div>
+          <h2 class="tg-h2" data-i18n="tg_h2"></h2>
+          <p class="tg-p" data-i18n="tg_p"></p>
+          <p class="tg-sub">t.me/screenifyplus</p>
+        </div>
+      </div>
+      <span class="tg-btn"><span data-i18n="tg_btn"></span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </span>
+    </a>
   </section>
 
   <!-- ============ WHAT'S NEW ============ -->
@@ -506,7 +551,7 @@
       </li>
 
       <li class="note rv">
-        <span class="note-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span>
+        <span class="note-ic"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C7 17 3 13.5 3 9.5 3 6.5 5.5 4 8.5 4c1.9 0 3.1 1 3.5 1.7C12.4 5 13.6 4 15.5 4 18.5 4 21 6.5 21 9.5c0 4-4 7.5-9 11.5z"/></svg></span>
         <div>
           <span class="tag" data-i18n="n8_tag"></span>
           <h3 data-i18n="n8_h3"></h3>
@@ -560,11 +605,11 @@
       title:'Screenify 1.8.0 Beta — Downloads (Phone · TV · Low-end)',
       nav_dl:'DOWNLOADS', nav_new:"WHAT'S NEW", nav_install:'INSTALL',
       live_label:'BETA CHANNEL',
-      eyebrow:'BETA CHANNEL /// BUILD 1.8.0 /// DROP 08',
+      eyebrow:'BETA CHANNEL /// BUILD 1.8.0 /// DROP 08 — FIX',
       h1:'Pick your screen.<br><em>Grab the build.</em>',
-      lede:'This drop is big: <b>6 entertainment servers</b>, a fully <b>rebased Live TV</b>, and <b>your phone is now the remote</b> for the TV app — all way smoother. Three purpose-built APKs below. Download yours and you\u2019re in.',
+      lede:'This drop is big: <b>6 entertainment servers</b>, a fully <b>rebased Live TV</b>, and <b>your phone is now the remote</b> for the TV app — all way smoother. Three purpose-built APKs below, 100% free. Download yours and you\u2019re in.',
       btn_get:'GET THE APP', btn_new:"WHAT'S NEW IN 1.8.0",
-      meta_line:'ENTERTAINMENT 2→6 /// LIVE TV REBASED /// PHONE REMOTE /// KEYS BELOW',
+      meta_line:'ENTERTAINMENT 2→6 /// LIVE TV REBASED /// PHONE REMOTE /// CODES BELOW',
       fig_cap:'FIG.01 — SCREENIFY 1.8.0 BETA /// REAL SCREENSHOT, PHONE BUILD',
       matrix_cap:'FIG.02 — BUILD NUMBER 1.8.0 /// LIVE',
       matrix_hint:'DISTURB IT WITH YOUR CURSOR',
@@ -572,13 +617,16 @@
       chip2:'<b>LIVE TV</b> /// REBASED',
       chip3:'<b>REMOTE</b> /// PHONE → TV',
       chip4:'<b>PROFILES</b> /// NEW',
-      chip5:'<b>SCREENIFY+</b> /// NO KEY NEEDED',
-      marquee:'SCREENIFY 1.8.0 BETA /// NOW LIVE /// PHONE — TV — LOW-END /// 6 ENTERTAINMENT SERVERS /// PHONE REMOTE FOR TV /// KEYS INSIDE /// ',
+      chip5:'<b>100% FREE</b> /// NO ADS · NO SUBS',
+      marquee:'SCREENIFY 1.8.0 BETA /// NOW LIVE /// 100% FREE — NO ADS /// PHONE — TV — LOW-END /// FIX BUILDS OUT /// JOIN TELEGRAM — T.ME/SCREENIFYPLUS /// ',
       sec1_h2:'Choose your device', sec1_tip:'TIP — PRESS 1 · 2 · 3 TO SWITCH',
       dn_phone:'Phone', ds_phone:'ANDROID PHONES & TABLETS',
       dn_tv:'TV', ds_tv:'ANDROID TV & BIG SCREENS',
       dn_low:'Low-end devices', ds_low:'OLDER & BUDGET HARDWARE',
-      q_label:'QUICK COPY — ALL KEYS', q_phone:'PHONE', q_tv:'TV', q_low:'LOW-END',
+      q_label:'QUICK COPY — ALL CODES', q_phone:'PHONE', q_tv:'TV', q_low:'LOW-END',
+      tg_h2:'Join our Telegram',
+      tg_p:'Be the first to get every fix, update and new drop — announced straight from the team, the moment it ships.',
+      tg_btn:'JOIN THE CHANNEL',
       sec2_h2:"What's new in 1.8.0",
       n1_tag:'HEADLINE /// CONTROL', n1_h3:'Your phone is now the remote',
       n1_p:'Phone and TV on the same WiFi? Open Screenify on your phone and control the app on your TV — navigate, type, play, everything. No extra setup, no cables, no more hunting for the D-pad.',
@@ -594,37 +642,36 @@
       n6_p:'Some devices choke on the system keyboard — so we built our own. Typing inside the app is now instant and lag-free, on every device, every time.',
       n7_tag:'UI', n7_h3:'Interface fixes',
       n7_p:'Plenty of polish across the app — misaligned bits, odd spacing, stubborn corners. Found them, fixed them, moved on.',
-      n8_tag:'GOOD TO KNOW /// ADS', n8_h3:'A very few ads — on purpose',
-      n8_p:'1.8.0 introduces ads to help keep Screenify free. We kept the count extremely low and the placement respectful — no full-screen takeovers, nothing that interrupts what you\u2019re watching. You\u2019ll barely notice they\u2019re there, and they never ruin the app experience.',
+      n8_tag:'FREE /// FOREVER', n8_h3:'100% free. Really.',
+      n8_p:'No subscriptions, no paywalls, no locked features, no ads. Every server, every channel, every tool in the app — open to everyone, for nothing. That\u2019s not a promo, that\u2019s the model.',
       sec3_h2:'Install in two steps',
       st1_h3:'Download your build', st1_p:'Pick Phone, TV or Low-end above and grab the APK from MediaFire. The link opens in a new tab.',
-      st2_h3:'Install & open', st2_p:'Open the downloaded file. If Android asks, allow installs from unknown sources for your browser — you only need to do this once. Then open Screenify and start watching.',
+      st2_h3:'Install & open', st2_p:'Open the downloaded file. If Android asks, allow installs from unknown sources for your browser — once. Then open Screenify, pop in the activation code shown next to your download if it asks, and start watching.',
       f_span:'BETA CHANNEL',
-      f_note:'Activation keys are tied to this 1.8.0 beta — please keep them inside the test group.',
-      f_meta:'BUILD 08 /// v1.8.0-BETA /// SCREENIFYPLUS.ONLINE /// APKs ON MEDIAFIRE',
+      f_note:'Activation codes are tied to this 1.8.0 beta — share the page, not just the codes.',
+      f_meta:'BUILD 08 /// v1.8.0-BETA /// TELEGRAM @SCREENIFYPLUS /// APKs ON MEDIAFIRE',
       panel_file:'FILE', panel_type:'TYPE', panel_type_val:'APK · Android',
-      panel_channel:'CHANNEL', panel_channel_val:'Beta — drop 08',
-      key_head_l:'ACTIVATION KEY', key_head_r:'FREE VERSION ONLY',
-      panel_copy:'COPY KEY', panel_dl:'DOWNLOAD FROM MEDIAFIRE',
+      panel_channel:'CHANNEL', panel_channel_val:'Beta — drop 08 (fix)',
+      key_head_l:'ACTIVATION CODE', key_head_r:'ASKED ON FIRST LAUNCH',
+      panel_copy:'COPY CODE', panel_dl:'DOWNLOAD FROM MEDIAFIRE',
       panel_host:'HOSTED ON MEDIAFIRE /// OPENS IN A NEW TAB',
-      panel_plus:'<b>SCREENIFY+</b> needs no key — activation is only for the free version.',
       dev_phone_tag:'For Android phones & tablets',
       dev_phone_desc:'The full Screenify experience, tuned for touch. Six entertainment servers, rebased Live TV — and it doubles as a remote for your TV.',
       dev_tv_tag:'For Android TV & big screens',
       dev_tv_desc:'Built for the ten-foot view. Now controllable straight from your phone over the same WiFi, and steadier than ever through long sessions.',
       dev_low_tag:'For older & budget hardware',
       dev_low_desc:'A featherweight build that strips out every non-essential process — and with the built-in virtual keyboard, typing no longer lags.',
-      toast_copied:'Activation key copied — ', toast_fail:"Couldn't copy — key: "
+      toast_copied:'Activation code copied — ', toast_fail:"Couldn't copy — code: "
     },
     fr:{
       title:'Screenify 1.8.0 Bêta — Téléchargements (Téléphone · TV · Bas de gamme)',
       nav_dl:'TÉLÉCHARGEMENTS', nav_new:'NOUVEAUTÉS', nav_install:'INSTALLATION',
       live_label:'CANAL BETA',
-      eyebrow:'CANAL BETA /// BUILD 1.8.0 /// SORTIE 08',
+      eyebrow:'CANAL BETA /// BUILD 1.8.0 /// SORTIE 08 — FIX',
       h1:'Choisis ton écran.<br><em>Récupère ta version.</em>',
-      lede:'Cette version fait fort : <b>6 serveurs de divertissement</b>, une <b>TV Live entièrement refondue</b>, et <b>ton téléphone devient la télécommande</b> de l\u2019app TV — le tout bien plus fluide. Trois APK ci-dessous : télécharge le tien et c\u2019est parti.',
+      lede:'Cette version fait fort : <b>6 serveurs de divertissement</b>, une <b>TV Live entièrement refondue</b>, et <b>ton téléphone devient la télécommande</b> de l\u2019app TV — le tout bien plus fluide. Trois APK ci-dessous, 100% gratuits. Télécharge le tien et c\u2019est parti.',
       btn_get:"OBTENIR L'APP", btn_new:'NOUVEAUTÉS 1.8.0',
-      meta_line:'DIVERTISSEMENT 2→6 /// TV LIVE REFONDUE /// TÉLÉCOMMANDE /// CLÉS CI-DESSOUS',
+      meta_line:'DIVERTISSEMENT 2→6 /// TV LIVE REFONDUE /// TÉLÉCOMMANDE /// CODES CI-DESSOUS',
       fig_cap:'FIG.01 — SCREENIFY 1.8.0 BETA /// CAPTURE RÉELLE, VERSION TÉLÉPHONE',
       matrix_cap:'FIG.02 — NUMÉRO DE BUILD 1.8.0 /// EN DIRECT',
       matrix_hint:'AGITEZ-LE AVEC VOTRE CURSEUR',
@@ -632,13 +679,16 @@
       chip2:'<b>TV LIVE</b> /// REFONDUE',
       chip3:'<b>TÉLÉCOMMANDE</b> /// TÉLÉ → TV',
       chip4:'<b>PROFILS</b> /// NOUVEAU',
-      chip5:'<b>SCREENIFY+</b> /// SANS CLÉ',
-      marquee:'SCREENIFY 1.8.0 BETA /// DISPONIBLE /// TÉLÉPHONE — TV — BAS DE GAMME /// 6 SERVEURS DE DIVERTISSEMENT /// TÉLÉCOMMANDE DEPUIS LE TÉLÉPHONE /// CLÉS ICI /// ',
+      chip5:'<b>100% GRATUIT</b> /// SANS PUB · SANS ABOS',
+      marquee:'SCREENIFY 1.8.0 BETA /// DISPONIBLE /// 100% GRATUIT — SANS PUB /// TÉLÉPHONE — TV — BAS DE GAMME /// BUILDS FIX DISPONIBLES /// REJOIGNEZ TELEGRAM — T.ME/SCREENIFYPLUS /// ',
       sec1_h2:'Choisis ton appareil', sec1_tip:'ASTUCE — APPUYEZ SUR 1 · 2 · 3',
       dn_phone:'Téléphone', ds_phone:'TÉLÉPHONES & TABLETTES ANDROID',
       dn_tv:'TV', ds_tv:'ANDROID TV & GRANDS ÉCRANS',
       dn_low:'Appareils bas de gamme', ds_low:'MATÉRIEL ANCIEN & ABORDABLE',
-      q_label:'COPIE RAPIDE — TOUTES LES CLÉS', q_phone:'TÉLÉPHONE', q_tv:'TV', q_low:'BAS DE GAMME',
+      q_label:'COPIE RAPIDE — TOUS LES CODES', q_phone:'TÉLÉPHONE', q_tv:'TV', q_low:'BAS DE GAMME',
+      tg_h2:'Rejoignez notre Telegram',
+      tg_p:'Soyez les premiers à recevoir chaque correctif, mise à jour et nouvelle version — annoncés directement par l\u2019équipe, dès la sortie.',
+      tg_btn:'REJOINDRE LE CANAL',
       sec2_h2:'Nouveautés de la 1.8.0',
       n1_tag:'À LA UNE /// CONTRÔLE', n1_h3:'Ton téléphone devient la télécommande',
       n1_p:'Téléphone et TV sur le même WiFi ? Ouvre Screenify sur ton téléphone et contrôle l\u2019app sur ta TV — navigue, tape, lance la lecture, tout. Aucun réglage, aucun câble, fini le D-pad.',
@@ -654,37 +704,36 @@
       n6_p:'Certains appareils étouffent le clavier système — du coup on a fabriqué le nôtre. Taper dans l\u2019app est désormais instantané, sur tous les appareils, à chaque fois.',
       n7_tag:'INTERFACE', n7_h3:'Corrections d\u2019interface',
       n7_p:'Pas mal de polish dans toute l\u2019app — éléments mal alignés, espacements bizarres, coins têtus. Trouvés, corrigés, au revoir.',
-      n8_tag:'À SAVOIR /// PUBS', n8_h3:'Très peu de pubs — c\u2019est voulu',
-      n8_p:'La 1.8.0 introduit des pubs pour garder Screenify gratuit. Nombre minimal, placement respectueux — pas de plein écran, rien qui coupe ce que tu regardes. À peine visibles, elles ne gâchent jamais l\u2019expérience.',
+      n8_tag:'GRATUIT /// POUR TOUJOURS', n8_h3:'100% gratuit. Vraiment.',
+      n8_p:'Aucun abonnement, aucun paywall, aucune fonctionnalité verrouillée, aucune pub. Chaque serveur, chaque chaîne, chaque outil de l\u2019app — ouvert à tous, gratuitement. C\u2019est pas une promo, c\u2019est le modèle.',
       sec3_h2:'Installer en deux étapes',
       st1_h3:'Télécharge ta version', st1_p:'Choisis Téléphone, TV ou Bas de gamme ci-dessus et récupère l\u2019APK sur MediaFire. Le lien s\u2019ouvre dans un nouvel onglet.',
-      st2_h3:'Installe & ouvre', st2_p:'Ouvre le fichier téléchargé. Si Android le demande, autorise l\u2019installation depuis des sources inconnues pour ton navigateur — une seule fois. Puis ouvre Screenify et regarde.',
+      st2_h3:'Installe & ouvre', st2_p:'Ouvre le fichier téléchargé. Si Android le demande, autorise l\u2019installation depuis des sources inconnues pour ton navigateur — une seule fois. Puis ouvre Screenify, entre le code d\u2019activation affiché à côté de ton téléchargement si l\u2019app le demande, et regarde.',
       f_span:'CANAL BETA',
-      f_note:'Les clés d\u2019activation sont liées à cette bêta 1.8.0 — merci de les garder dans le groupe de test.',
-      f_meta:'BUILD 08 /// v1.8.0-BETA /// SCREENIFYPLUS.ONLINE /// APKs SUR MEDIAFIRE',
+      f_note:'Les codes d\u2019activation sont liés à cette bêta 1.8.0 — partagez la page, pas seulement les codes.',
+      f_meta:'BUILD 08 /// v1.8.0-BETA /// TELEGRAM @SCREENIFYPLUS /// APKs SUR MEDIAFIRE',
       panel_file:'FICHIER', panel_type:'TYPE', panel_type_val:'APK · Android',
-      panel_channel:'CANAL', panel_channel_val:'Bêta — sortie 08',
-      key_head_l:'CLÉ D\u2019ACTIVATION', key_head_r:'VERSION GRATUITE UNIQUEMENT',
-      panel_copy:'COPIER LA CLÉ', panel_dl:'TÉLÉCHARGER SUR MEDIAFIRE',
+      panel_channel:'CANAL', panel_channel_val:'Bêta — sortie 08 (fix)',
+      key_head_l:'CODE D\u2019ACTIVATION', key_head_r:'DEMANDÉ AU PREMIER LANCEMENT',
+      panel_copy:'COPIER LE CODE', panel_dl:'TÉLÉCHARGER SUR MEDIAFIRE',
       panel_host:'HÉBERGÉ SUR MEDIAFIRE /// S\u2019OUVRE DANS UN NOUVEL ONGLET',
-      panel_plus:'<b>SCREENIFY+</b> n\u2019a besoin d\u2019aucune clé — l\u2019activation ne concerne que la version gratuite.',
       dev_phone_tag:'Pour téléphones & tablettes Android',
       dev_phone_desc:'L\u2019expérience Screenify complète, pensée pour le tactile. Six serveurs de divertissement, TV Live refondue — et il sert aussi de télécommande pour ta TV.',
       dev_tv_tag:'Pour Android TV & grands écrans',
       dev_tv_desc:'Pensé pour le canapé. Maintenant contrôlable directement depuis ton téléphone en WiFi, et plus stable que jamais sur les longues séances.',
       dev_low_tag:'Pour matériels anciens & abordables',
       dev_low_desc:'Une version ultra-légère qui retire tout le superflu — et grâce au clavier virtuel intégré, la saisie ne rame plus.',
-      toast_copied:'Clé copiée — ', toast_fail:'Copie impossible — clé : '
+      toast_copied:'Code d\u2019activation copié — ', toast_fail:'Copie impossible — code : '
     },
     ar:{
       title:'Screenify 1.8.0 بيتا — التحميلات (جوال · تلفاز · أجهزة ضعيفة)',
       nav_dl:'التحميلات', nav_new:'ما الجديد', nav_install:'التثبيت',
       live_label:'القناة التجريبية',
-      eyebrow:'القناة التجريبية /// الإصدار 1.8.0 /// دروب 08',
+      eyebrow:'القناة التجريبية /// الإصدار 1.8.0 /// دروب 08 — نسخة مصلحة',
       h1:'اختر شاشتك.<br><em>وحمّل نسختك.</em>',
-      lede:'تحديث ضخم: <b>6 سيرفرات للترفيه</b>، و<b>بث مباشر بأُسرة جديدة بالكامل</b>، و<b>جوالك صار هو الريموت</b> لتطبيق التلفاز — وكل شيء أسرع وأسلس. ثلاث نسخ APK بالأسفل: حمّل نسختك وانتهى الأمر.',
+      lede:'تحديث ضخم: <b>6 سيرفرات للترفيه</b>، و<b>بث مباشر بأُسرة جديدة بالكامل</b>، و<b>جوالك صار هو الريموت</b> لتطبيق التلفاز — وكل شيء أسرع وأسلس. ثلاث نسخ APK بالأسفل، مجانية 100%. حمّل نسختك وانتهى الأمر.',
       btn_get:'حمّل التطبيق', btn_new:'ما الجديد في 1.8.0',
-      meta_line:'ترفيه من 2 إلى 6 /// بث مباشر بأساس جديد /// جوالك ريموت /// المفاتيح بالأسفل',
+      meta_line:'ترفيه من 2 إلى 6 /// بث مباشر بأساس جديد /// جوالك ريموت /// الأكواد بالأسفل',
       fig_cap:'شكل.01 — SCREENIFY 1.8.0 BETA /// لقطة شاشة حقيقية، نسخة الجوال',
       matrix_cap:'شكل.02 — رقم الإصدار 1.8.0 /// مباشر',
       matrix_hint:'حرّكها بمؤشر الفأرة',
@@ -692,13 +741,16 @@
       chip2:'<b>البث المباشر</b> /// أساس جديد',
       chip3:'<b>ريموت</b> /// جوالك يتحكم بالتلفاز',
       chip4:'<b>الملفات الشخصية</b> /// جديدة',
-      chip5:'<b>SCREENIFY+</b> /// بدون مفتاح',
-      marquee:'SCREENIFY 1.8.0 BETA /// متاح الآن /// جوال — تلفاز — أجهزة ضعيفة /// 6 سيرفرات ترفيه /// جوالك ريموت للتلفاز /// المفاتيح بالداخل /// ',
+      chip5:'<b>مجاني 100%</b> /// بدون إعلانات · بدون اشتراكات',
+      marquee:'SCREENIFY 1.8.0 BETA /// متاح الآن /// مجاني 100% — بدون إعلانات /// جوال — تلفاز — أجهزة ضعيفة /// النسخ المصلحة جاهزة /// انضم لتيليجرام — T.ME/SCREENIFYPLUS /// ',
       sec1_h2:'اختر جهازك', sec1_tip:'نصيحة — اضغط 1 · 2 · 3 للتبديل',
       dn_phone:'جوال', ds_phone:'هواتف وتابلت أندرويد',
       dn_tv:'تلفاز', ds_tv:'أندرويد تي في والشاشات الكبيرة',
       dn_low:'الأجهزة الضعيفة', ds_low:'أجهزة قديمة ومحدودة الإمكانيات',
-      q_label:'نسخ سريع — كل المفاتيح', q_phone:'جوال', q_tv:'تلفاز', q_low:'أجهزة ضعيفة',
+      q_label:'نسخ سريع — كل الأكواد', q_phone:'جوال', q_tv:'تلفاز', q_low:'أجهزة ضعيفة',
+      tg_h2:'انضم لتيليجرام',
+      tg_p:'كن أول من يحصل على كل إصلاح وتحديث وإصدار جديد — يوصلك مباشرة من الفريق لحظة نزوله.',
+      tg_btn:'انضم للقناة',
       sec2_h2:'ما الجديد في 1.8.0',
       n1_tag:'الأبرز /// تحكم', n1_h3:'جوالك صار هو الريموت',
       n1_p:'الجوال والتلفاز على نفس الواي فاي؟ افتح Screenify على جوالك وتحكم بتطبيق التلفاز — تنقّل، اكتب، شغّل، كل شيء. بدون إعدادات أو أسلاك، ووداعًا لعناء الريموت العادي.',
@@ -714,27 +766,26 @@
       n6_p:'بعض الأجهزة بتعلق مع كيبورد النظام — فبنينا كيبورد خاص فينا. الكتابة داخل التطبيق صارت فورية، على كل جهاز وبدون تأخير.',
       n7_tag:'الواجهة', n7_h3:'تحسينات على الواجهة',
       n7_p:'لمسات كثيرة في كل التطبيق — عناصر غير متراصة، مسافات غريبة، وزوايا عنيدة. لقيناها، أصلحناها، وخلاص.',
-      n8_tag:'للمعلومية /// إعلانات', n8_h3:'إعلانات قليلة جدًا — وقصد',
-      n8_p:'الإصدار 1.8.0 أضاف إعلانات لإبقاء Screenify مجانيًا. عدد قليل جدًا ومواضع محترمة — بدون إعلانات تملأ الشاشة أو تقطع عليك المشاهدة. بالكاد ستلاحظها، وما بتخرب تجربة التطبيق أبدًا.',
+      n8_tag:'مجاني /// للأبد', n8_h3:'مجاني 100%. بجد.',
+      n8_p:'بدون اشتراكات، بدون حواجز دفع، بدون ميزات مقفلة، وبدون إعلانات. كل سيرفر، كل قناة، كل أداة في التطبيق — متاحة للجميع ومجانًا. هذي مش عرض مؤقت، هذي فلسفتنا.',
       sec3_h2:'التثبيت في خطوتين',
       st1_h3:'حمّل نسختك', st1_p:'اختر جوال أو تلفاز أو أجهزة ضعيفة بالأعلى وحمّل ملف APK من ميديا فاير. الرابط يفتح في تبويب جديد.',
-      st2_h3:'ثبّت وافتح', st2_p:'افتح الملف الذي حمّلته. إذا سأل أندرويد، اسمح بالتثبيت من مصادر غير معروفة لمتصفحك — مرة واحدة فقط. ثم افتح Screenify وابدأ المشاهدة.',
+      st2_h3:'ثبّت وافتح', st2_p:'افتح الملف الذي حمّلته. إذا سأل أندرويد، اسمح بالتثبيت من مصادر غير معروفة لمتصفحك — مرة واحدة فقط. ثم افتح Screenify، وأدخل كود التفعيل الظاهر بجانب التحميل إذا طلبه التطبيق، وابدأ المشاهدة.',
       f_span:'القناة التجريبية',
-      f_note:'مفاتيح التفعيل مخصصة لإصدار 1.8.0 التجريبي — يرجى إبقاؤها داخل مجموعة التجربة.',
-      f_meta:'BUILD 08 /// v1.8.0-BETA /// SCREENIFYPLUS.ONLINE /// ملفات APK على ميديا فاير',
+      f_note:'أكواد التفعيل مخصصة لإصدار 1.8.0 التجريبي — شارك الصفحة، وليس الأكواد فقط.',
+      f_meta:'BUILD 08 /// v1.8.0-BETA /// تيليجرام @SCREENIFYPLUS /// ملفات APK على ميديا فاير',
       panel_file:'ملف', panel_type:'النوع', panel_type_val:'APK · أندرويد',
-      panel_channel:'القناة', panel_channel_val:'بيتا — دروب 08',
-      key_head_l:'مفتاح التفعيل', key_head_r:'للنسخة المجانية فقط',
-      panel_copy:'انسخ المفتاح', panel_dl:'تحميل من ميديا فاير',
+      panel_channel:'القناة', panel_channel_val:'بيتا — دروب 08 (نسخة مصلحة)',
+      key_head_l:'كود التفعيل', key_head_r:'يُطلب عند أول تشغيل',
+      panel_copy:'انسخ الكود', panel_dl:'تحميل من ميديا فاير',
       panel_host:'مستضاف على ميديا فاير /// يفتح في تبويب جديد',
-      panel_plus:'<b>SCREENIFY+</b> ما يحتاج مفتاح — التفعيل للنسخة المجانية فقط.',
       dev_phone_tag:'للهواتف والتابلت أندرويد',
       dev_phone_desc:'تجربة Screenify الكاملة المصممة للمس. ستة سيرفرات ترفيه، وبث مباشر بأُسرة جديدة — ويشتغل ريموت لتلفازك كمان.',
       dev_tv_tag:'لأندرويد تي في والشاشات الكبيرة',
       dev_tv_desc:'مصمم للشاشات الكبيرة. صار يتحكم فيه جوالك مباشرة عبر نفس الواي فاي، وأثبت من أي وقت في الجلسات الطويلة.',
       dev_low_tag:'للأجهزة القديمة ومحدودة الإمكانيات',
       dev_low_desc:'نسخة خفيفة جدًا تحذف كل ما هو غير ضروري — ومع الكيبورد الافتراضي المدمج، الكتابة ما عادت تتأخر.',
-      toast_copied:'تم نسخ المفتاح — ', toast_fail:'تعذّر النسخ — المفتاح: '
+      toast_copied:'تم نسخ كود التفعيل — ', toast_fail:'تعذّر النسخ — الكود: '
     }
   };
 
@@ -748,17 +799,16 @@
     cpu:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg>',
     copy:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
     download:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
-    out:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>',
-    plus:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/></svg>'
+    out:'<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>'
   };
 
   const DEVICES = {
-    phone:{ icon:'phone', file:'screenifyPHONE8beta.apk', key:'9622656',
-      url:'https://www.mediafire.com/file/l47fc8fd3motrmr/screenifyPHONE8beta.apk/file' },
-    tv:{ icon:'tv', file:'screenifyTV8beta.apk', key:'4079956',
-      url:'https://www.mediafire.com/file/k9skfibsvxhmfw6/screenifyTV8beta.apk/file' },
-    low:{ icon:'cpu', file:'screenifyLOW8beta.apk', key:'2449714',
-      url:'https://www.mediafire.com/file/5zbcs13usevzq6l/screenifyLOW8beta.apk/file' }
+    phone:{ icon:'phone', file:'screenifyPHONE8beta_fix.apk', key:'5706973',
+      url:'https://www.mediafire.com/file/aomryyhze8k2sui/screenifyPHONE8beta_fix.apk/file' },
+    tv:{ icon:'tv', file:'screenifyTV8beta_fix.apk', key:'3184143',
+      url:'https://www.mediafire.com/file/grbk0zz8kuzfa9i/screenifyTV8beta_fix.apk/file' },
+    low:{ icon:'cpu', file:'screenifyLOW8beta_fix.apk', key:'5619126',
+      url:'https://www.mediafire.com/file/8s0mtmxqvkbn180/screenifyLOW8beta_fix.apk/file' }
   };
   const NAMES = { phone:'dn_phone', tv:'dn_tv', low:'dn_low' };
   const ORDER = ['phone','tv','low'];
@@ -826,7 +876,6 @@
         <div class="pm"><span>${t.panel_type}</span><b>${t.panel_type_val}</b></div>
         <div class="pm"><span>${t.panel_channel}</span><b>${t.panel_channel_val}</b></div>
       </div>
-      <div class="plus-strip">${ICONS.plus}<span>${fmt(t.panel_plus)}</span></div>
       <div class="key-block">
         <div class="key-head"><span>${t.key_head_l}</span><span>${t.key_head_r}</span></div>
         <div class="key-row">
@@ -938,7 +987,7 @@
     }
     function pointerPos(t){
       if(mouse.active && performance.now()-mouse.last < 2500) return {x:mouse.x, y:mouse.y};
-      const t2 = t*0.001; // idle: a virtual pointer stirs the pixels on its own
+      const t2 = t*0.001;
       return { x: W/2 + Math.cos(t2*0.7)*W*0.33, y: H/2 + Math.sin(t2*1.1)*H*0.28 };
     }
     function drawStatic(){
@@ -953,7 +1002,7 @@
       ctx.fillStyle='rgba(245,237,235,.05)';
       GRID.forEach(g=>ctx.fillRect(g.x-.75,g.y-.75,1.5,1.5));
       const p = pointerPos(t);
-      const scanX = -cell*2 + ((t % 5200)/5200)*(W+cell*4); // slow refresh sweep
+      const scanX = -cell*2 + ((t % 5200)/5200)*(W+cell*4);
       for(const d of dots){
         d.vx += (d.hx-d.x)*0.085; d.vy += (d.hy-d.y)*0.085;
         const dx=d.x-p.x, dy=d.y-p.y, dist=Math.hypot(dx,dy), R=cell*4.5;
