@@ -1,0 +1,11 @@
+[
+  { "server": 1, "real_name": "Vidsrc",       "link": "https://vidsrc.sh" },
+  { "server": 2, "real_name": "Vixsrc",       "link": "https://vixsrc.to" },
+  { "server": 3, "real_name": "VidKing",      "link": "https://vidking.net" },
+  { "server": 4, "real_name": "CineSrc",      "link": "https://cinesrc.st" },
+  { "server": 5, "real_name": "VidLink",      "link": "https://vidlink.pro" },
+  { "server": 6, "real_name": "Vidup",        "link": "https://vidup.to" },
+  { "server": 7, "real_name": "Movy",         "link": "https://www.movy.sx" },
+  { "server": 8, "real_name": "VidSrc.sh",    "link": "https://vidsrc.sh" },
+  { "server": 9, "real_name": "Frembed",      "link": "https://frembed.surf" }
+]
